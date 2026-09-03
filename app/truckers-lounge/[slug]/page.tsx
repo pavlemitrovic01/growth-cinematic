@@ -1,4 +1,6 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@/components/StructuredData';
+import { SITE_URL } from '@/lib/seo';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import PageShell from '@/components/PageShell';
@@ -31,6 +33,7 @@ export async function generateMetadata({
     path: `/truckers-lounge/${post.slug}`,
     title: `${post.title} | GROWTH.CO`,
     description: post.body[0].text,
+    article: true,
   });
 }
 
@@ -96,6 +99,7 @@ export default async function TruckersLoungePost({
 
   return (
     <PageShell eyebrow="TRUCKERS LOUNGE" title={post.title}>
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Article', headline: post.title, datePublished: post.date, mainEntityOfPage: SITE_URL + '/truckers-lounge/' + post.slug, publisher: { '@id': SITE_URL + '/#organization' } }} />
       <p className="post-back">
         <Link href="/truckers-lounge">↖ Back to Truckers Lounge</Link>
       </p>

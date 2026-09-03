@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { JsonLd } from '@/components/StructuredData';
 import Accordion from '@/components/Accordion';
 import PageShell from '@/components/PageShell';
 import { FAQ_ITEMS } from '@/lib/faq';
@@ -31,6 +32,7 @@ export default function FAQ() {
         </>
       }
     >
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ_ITEMS.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) }} />
       <Accordion items={FAQ_ITEMS} />
     </PageShell>
   );

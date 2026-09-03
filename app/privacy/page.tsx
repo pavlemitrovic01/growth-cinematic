@@ -60,9 +60,9 @@ const SECTIONS = [
     n: '05',
     h: 'Where Your Information Is Stored',
     body: [
-      'When you submit an application, two things happen. Your details are emailed to our recruiting team so a person can call you back, and a copy is saved to our own database so your application is not lost if that email fails to send.',
-      'The saved copy includes your name, contact details, CDL class, experience, and whether you answered yes or no to the questions about violations and SAP. It also includes a record of your consent — what the consent text said, when you agreed, and the IP address and browser you agreed from — so that we can show your permission was given.',
-      'The free-text notes you write about violations or SAP status are deliberately not saved to that database. They are sent to our recruiting team by email and discussed with you on the call, and nowhere else.',
+      'Validated submissions are saved to our database hosted on Cloudflare. When email delivery is configured, we also send a notification to our recruiting team through Resend. If delivery is unavailable, the form displays an error; a database copy may still have been saved.',
+      'The saved copy includes your name, contact details, CDL class, experience, and whether you answered yes or no to the questions about violations and SAP. It also includes a record of your consent — the consent scope and text version, the submission time, and the IP address and browser you agreed from — so that we can show your permission was given.',
+      'The free-text notes you write about violations or SAP status are deliberately not saved to that database. When email delivery is available, those notes are included in the recruiting notification. If it is unavailable, please discuss those details with your recruiter.',
       'You can ask us to delete any of this at any time. See "Your state privacy rights" below.',
     ],
   },
@@ -92,37 +92,8 @@ export default function Privacy() {
         {/* ⚠️ `id="cookies"` MORA ostati na h2 — footer i `/privacy#cookies` cilja na njega. */}
         <section>
           <h2 id="cookies">Cookies, Analytics, and Your Privacy Choices</h2>
-          <p>
-            We do not set analytics or advertising cookies unless you turn them on. The site, and
-            your application, work with everything off.
-          </p>
-          <p>These are two separate choices, because they are not the same thing:</p>
-          <ul>
-            <li>
-              <strong>Analytics</strong> — aggregate measurement of which pages drivers actually
-              use, so we can fix what is confusing. Not sold, and not shared with advertising
-              platforms.
-            </li>
-            <li>
-              <strong>Advertising</strong> — lets ad platforms such as Meta or TikTok recognize
-              your browser away from our site. Under California law this counts as{' '}
-              <strong>sharing</strong> personal information for cross-context behavioral
-              advertising. It is off unless you turn it on.
-            </li>
-          </ul>
-          <p>
-            <strong>We do not sell your personal information</strong> — not for money, and not for
-            anything else of value.
-          </p>
-          <p>
-            <strong>Global Privacy Control.</strong> If your browser or an extension sends a GPC
-            signal, we treat it as a binding opt-out of advertising and turn that category off
-            automatically. You do not have to do anything.
-          </p>
-          <p>
-            <strong>Changing your mind.</strong> You can change or withdraw either choice at any
-            time. We remember what you picked and will not ask again unless we add a new category.
-          </p>
+          <p>This version of the site does not run analytics or advertising trackers. You do not need to enable tracking to read the site or submit a form.</p>
+          <p>If optional tracking is introduced, this policy and the available privacy controls will be updated before it is enabled.</p>
           <p>
             <strong>Your state privacy rights.</strong> Depending on where you live, you may have
             the right to know what personal information we hold about you, to get a copy of it, to

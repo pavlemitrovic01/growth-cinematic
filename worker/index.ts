@@ -1,5 +1,7 @@
 /** Cloudflare Worker entry point for the vinext-starter template. */
 import { handleImageOptimization, DEFAULT_DEVICE_SIZES, DEFAULT_IMAGE_SIZES } from "vinext/server/image-optimization";
+import { protectResponse, rejectCrossOrigin } from '../lib/security';
+import { IS_LIVE } from '../lib/seo';
 import handler from "vinext/server/app-router-entry";
 
 interface Env {
@@ -56,18 +58,23 @@ const worker = {
     hydrateProcessEnv(env);
     const url = new URL(request.url);
 
+    const api = url.pathname.startsWith('/api/');
+    const protect = (response: Response) => protectResponse(response, { dev: process.env.NODE_ENV === 'development', live: IS_LIVE, api });
+    if (api && request.method === 'POST' && rejectCrossOrigin(request)) {
+      return protect(Response.json({ error: 'Cross-origin request rejected' }, { status: 403 }));
+    }
     if (url.pathname === "/_vinext/image") {
       const allowedWidths = [...DEFAULT_DEVICE_SIZES, ...DEFAULT_IMAGE_SIZES];
-      return handleImageOptimization(request, {
+      return protect(await handleImageOptimization(request, {
         fetchAsset: (path) => env.ASSETS.fetch(new Request(new URL(path, request.url))),
         transformImage: async (body, { width, format, quality }) => {
           const result = await env.IMAGES.input(body).transform(width > 0 ? { width } : {}).output({ format, quality });
           return result.response();
         },
-      }, allowedWidths);
+      }, allowedWidths));
     }
 
-    return handler.fetch(request, env, ctx);
+    return protect(await handler.fetch(request, env, ctx));
   },
 };
 
