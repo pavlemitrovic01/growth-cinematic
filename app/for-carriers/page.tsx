@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import CarrierForm from '@/components/CarrierForm';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import PageShell from '@/components/PageShell';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
@@ -21,41 +20,18 @@ export const metadata: Metadata = pageMeta({
  */
 export default function ForCarriersPage() {
   return (
-    <main className="subpage">
-      <header className="sub-header">
-        <Link className="brand" href="/" aria-label="GROWTH home">
-          <span className="brand-mark">G↗</span>
-          <span>GROWTH</span>
-        </Link>
-        <a className="sub-call" href={PHONE_TEL_HREF}>
-          {PHONE_DISPLAY}
-        </a>
-      </header>
-
-      <section className="sub-hero">
-        <p className="eyebrow">FOR CARRIERS</p>
-        <h1>
+    <PageShell
+      eyebrow="FOR CARRIERS"
+      title={
+        <>
           Road-ready drivers,
           <br />
           <em>matched to your lanes.</em>
-        </h1>
-        <p className="sub-lede">
-          Qualified CDL-A drivers matched to your lanes. You pay only for successful placements.
-        </p>
-      </section>
-
-      <section className="sub-body">
-        <CarrierForm />
-      </section>
-
-      <footer className="sub-footer">
-        <p>
-          GROWTH.CO is a driver recruiting agency (intermediary), not a motor carrier or employer.
-        </p>
-        <p className="sub-legal">
-          <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
-        </p>
-      </footer>
-    </main>
+        </>
+      }
+      lede="Qualified CDL-A drivers matched to your lanes. You pay only for successful placements."
+    >
+      <CarrierForm />
+    </PageShell>
   );
 }

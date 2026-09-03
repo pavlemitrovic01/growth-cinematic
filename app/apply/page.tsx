@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import ApplyForm from '@/components/ApplyForm';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import PageShell from '@/components/PageShell';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
@@ -23,45 +22,22 @@ export const metadata: Metadata = pageMeta({
  */
 export default function ApplyPage() {
   return (
-    <main className="subpage">
-      <header className="sub-header">
-        <Link className="brand" href="/" aria-label="GROWTH home">
-          <span className="brand-mark">G↗</span>
-          <span>GROWTH</span>
-        </Link>
-        <a className="sub-call" href={PHONE_TEL_HREF}>
-          {PHONE_DISPLAY}
-        </a>
-      </header>
-
-      <section className="sub-hero">
-        <p className="eyebrow">ALL 48 CONTINENTAL STATES</p>
-        <h1>
+    <PageShell
+      eyebrow="ALL 48 CONTINENTAL STATES"
+      title={
+        <>
           Apply in 2 minutes.
           <br />
           <em>We usually call back within 15–20 minutes during business hours.</em>
-        </h1>
-        <p className="sub-lede">
-          4 years in the industry. 20+ partner carriers. Free for drivers, always.
-        </p>
-        <div className="sub-trust">
-          <span>No hidden fees</span>
-          <span>Call or text us daily — weekends included</span>
-        </div>
-      </section>
-
-      <section className="sub-body">
-        <ApplyForm />
-      </section>
-
-      <footer className="sub-footer">
-        <p>
-          GROWTH.CO is a driver recruiting agency (intermediary), not a motor carrier or employer.
-        </p>
-        <p className="sub-legal">
-          <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
-        </p>
-      </footer>
-    </main>
+        </>
+      }
+      lede="4 years in the industry. 20+ partner carriers. Free for drivers, always."
+    >
+      <div className="sub-trust">
+        <span>No hidden fees</span>
+        <span>Call or text us daily — weekends included</span>
+      </div>
+      <ApplyForm />
+    </PageShell>
   );
 }

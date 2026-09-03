@@ -109,7 +109,11 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      const payload = await res.json().catch(() => ({}));
+      // Oblik koji rute stvarno vracaju: `error` uvek, `fields` samo na validaciji.
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        fields?: string[];
+      };
       if (!res.ok) {
         // ⚠️ Prenet fix iz MAIN-a (LEAD1/SEC-2b) — najveci pojedinacni gubitak leadova koji
         // je taj projekat imao. Server VEC salje `fields` sa imenom polja koje je palo, a

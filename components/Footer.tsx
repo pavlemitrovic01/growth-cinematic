@@ -1,0 +1,92 @@
+import Link from 'next/link';
+import { PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
+
+/**
+ * Footer. Struktura i tekst preneti iz MAIN-a (`components/Footer.jsx`).
+ *
+ * ⚠️ DISCLAIMER JE PRAVNI TEKST, PRENET DOSLOVNO. U MAIN-u je footer disclaimer u lock
+ * zoni — izmene samo kroz STRICT batch. Ovde te ceremonije nema, ali razlog za oprez
+ * ostaje isti: recenica razdvaja agenciju od prevoznika i poslodavca, sto je tvrdnja
+ * o pravnom odnosu, ne marketinski tekst.
+ *
+ * ⚠️ Ime firme je „Capljinac LLC" (MAIN D17, Pavlova direktna potvrda), ne
+ * „GROWTH.CO Recruiting Group LLC" — ta druga varijanta je bila halucinacija koju je
+ * CL2 uklonio sa 8 mesta.
+ *
+ * ⚠️ FMCSA/USDOT/MC red NE POSTOJI namerno. U MAIN-u je uklonjen iz footera dok se ne
+ * potvrdi sta firma zaista poseduje — nikad ne izmisljati legal brojeve.
+ */
+export default function Footer() {
+  return (
+    <footer className="foot">
+      <div className="foot-grid">
+        <div className="foot-brand">
+          <Link className="brand" href="/" aria-label="GROWTH home">
+            <span className="brand-mark">G↗</span>
+            <span>GROWTH</span>
+          </Link>
+          <p className="foot-tag">
+            Honest CDL-A driver recruiting. We match drivers with partner carriers across all 48
+            states — free for drivers, always.
+          </p>
+        </div>
+
+        <div>
+          <h2>Drivers</h2>
+          <ul>
+            <li>
+              <Link href="/how-it-works">How it works</Link>
+            </li>
+            <li>
+              <Link href="/truckers-lounge">Truckers Lounge</Link>
+            </li>
+            <li>
+              <Link href="/faq">FAQ</Link>
+            </li>
+            <li>
+              <Link href="/apply">Apply</Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Company</h2>
+          <ul>
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+              <Link href="/for-carriers">For carriers</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact</Link>
+            </li>
+          </ul>
+        </div>
+
+        <div>
+          <h2>Get in touch</h2>
+          <ul>
+            <li>
+              <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>
+            </li>
+            <li>
+              <a href={EMAIL_HREF}>{EMAIL}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="foot-legal">
+        <p>
+          GROWTH.CO is a driver recruiting agency and acts as an intermediary. We are not a motor
+          carrier or an employer.
+        </p>
+        <p>
+          © {new Date().getFullYear()} Capljinac LLC. All rights reserved. ·{' '}
+          <Link href="/privacy">Privacy Policy</Link> · <Link href="/terms">Terms</Link>
+        </p>
+      </div>
+    </footer>
+  );
+}

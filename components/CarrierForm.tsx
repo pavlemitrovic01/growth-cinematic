@@ -71,7 +71,11 @@ export default function CarrierForm() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
-      const payload = await res.json().catch(() => ({}));
+      // Oblik koji ruta stvarno vraca: `error` uvek, `fields` samo na validaciji.
+      const payload = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        fields?: string[];
+      };
       if (!res.ok) {
         // Isti SEC-2b fix kao u ApplyForm — server salje `fields`, klijent ih prevodi
         // u recenicu umesto da prikaze doslovno „Validation failed".
