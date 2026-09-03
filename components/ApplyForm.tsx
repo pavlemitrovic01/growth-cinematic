@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
+import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
 import { PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
 import {
@@ -169,7 +170,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
     }
 
     return (
-      <form className="qa" onSubmit={handleSubmit} noValidate={false}>
+      <><NoScriptContact /><form method="post" action="/api/apply" className="qa" onSubmit={handleSubmit} noValidate={false}>
         <Honeypot id="hp_apply_quick" />
 
         <div className="qa-copy">
@@ -220,7 +221,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
         </label>
 
         {errorBlock}
-      </form>
+      </form></>
     );
   }
 
@@ -238,7 +239,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
   }
 
   return (
-    <form className="af" onSubmit={handleSubmit}>
+    <><NoScriptContact /><form method="post" action="/api/apply" className="af" onSubmit={handleSubmit}>
       <Honeypot id="hp_apply_full" />
 
       <div className="af-row">
@@ -395,6 +396,6 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
       </button>
 
       {errorBlock}
-    </form>
+    </form></>
   );
 }

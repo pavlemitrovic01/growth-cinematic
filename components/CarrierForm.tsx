@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from 'react';
 import Link from 'next/link';
+import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
 import { PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
 import { messageForFields } from '@/lib/form-options';
@@ -101,7 +102,7 @@ export default function CarrierForm() {
   }
 
   return (
-    <form className="af" onSubmit={handleSubmit}>
+    <><NoScriptContact /><form method="post" action="/api/carrier-inquiry" className="af" onSubmit={handleSubmit}>
       <Honeypot id="hp_carrier" />
 
       <div className="af-row">
@@ -176,6 +177,6 @@ export default function CarrierForm() {
           <a href={PHONE_SMS_HREF}>Text us</a>
         </div>
       )}
-    </form>
+    </form></>
   );
 }

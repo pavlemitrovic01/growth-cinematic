@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { securityHeaders, protectResponse, rejectCrossOrigin, HERO_SCRIPT } from '../lib/security';
+import { securityHeaders, protectResponse, rejectCrossOrigin } from '../lib/security';
 describe('security policy', () => {
-  it('restricts production while permitting the current hero', () => {
+  it('restricts production while loading scripts only from the same origin', () => {
     const h = securityHeaders(false, false);
-    expect(h['Content-Security-Policy']).toContain(HERO_SCRIPT);
+    expect(h['Content-Security-Policy']).not.toContain('jsdelivr');
     expect(h['Content-Security-Policy']).not.toContain('unsafe-eval');
     expect(h['Content-Security-Policy']).not.toContain(' ws:');
     expect(h['Content-Security-Policy']).toContain("frame-ancestors 'none'");

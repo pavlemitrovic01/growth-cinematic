@@ -9,7 +9,7 @@ Work remains local; no public launch or domain switch was performed.
 - Removed broken og.jpg metadata. No social image generated.
 - CSP is enforced in next.config.ts and on Worker responses, including error responses. API responses are no-store. Cross-origin browser POSTs are rejected at the Worker boundary.
 - CSP retains unsafe-inline for App Router hydration and styles. This is not a nonce-based XSS defense. Production does not permit unsafe-eval or arbitrary third-party script origins.
-- The exact jsDelivr three@0.160.1 script URL remains a temporary exception for the existing hero. Remove it when the hero is bundled locally in step 5.
+- Step 5 removed the temporary jsDelivr exception. The hero is now bundled locally and deferred on eligible desktop viewports.
 - Analytics and advertising remain disabled; no unused consent banner is presented.
 - Privacy now describes optional delivery and the database's actual consent scope/version fields. The database does NOT currently store the full consent text, despite earlier progress messages claiming otherwise.
 - Legal copy remains a draft for owner review before launch.

@@ -45,7 +45,7 @@ interface ExecutionContext {
  */
 function hydrateProcessEnv(env: Env): void {
   const target = globalThis.process?.env;
-  if (!target) return;
+  if (!target || !env) return;
   // `Env` nema index potpis, pa direktan cast na Record TypeScript odbija — ide preko
   // `unknown`, sto je i tacnije: ovde se namerno gleda oblik koji tip ne opisuje.
   for (const [key, value] of Object.entries(env as unknown as Record<string, unknown>)) {

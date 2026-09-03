@@ -36,3 +36,23 @@ test('FAQ schema matches visible questions, no fabricated jobs', async () => {
   assert.ok(!html.includes('JobPosting'));
   assert.ok(!html.includes('AggregateRating'));
 });
+
+test('homepage includes the full story, navigation and a real application path in server HTML', async () => {
+  const response = await get('/');
+  const html = await response.text();
+  assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
+  for (const text of ['Your next route.', 'Partner carriers.', 'Cost to drivers.', 'get-started', '/for-carriers', '/about', '/truckers-lounge']) assert.ok(html.includes(text), text);
+  assert.ok(!html.includes('cdn.jsdelivr.net'));
+  assert.ok(!html.includes('verified carriers'));
+  assert.ok(!html.includes('+10000000000'));
+  assert.ok(html.includes('method="post"'));
+  assert.ok(html.includes('The online form needs JavaScript.'));
+  assert.ok(!response.headers.get('content-security-policy').includes('jsdelivr'));
+});
+test('contact forms have a no-JS contact alternative and never fall back to GET submission', async () => {
+  for (const path of ['/apply','/for-carriers','/contact']) {
+    const html = await (await get(path)).text();
+    assert.ok(html.includes('The online form needs JavaScript.'), path);
+    assert.ok(html.includes('method="post"'), path);
+  }
+});
