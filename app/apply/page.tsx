@@ -1,0 +1,67 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
+import ApplyForm from '@/components/ApplyForm';
+import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { pageMeta } from '@/lib/seo';
+
+export const metadata: Metadata = pageMeta({
+  path: '/apply',
+  title: 'Apply — CDL-A Driver Recruiting | GROWTH.CO',
+  description:
+    'Apply in 2 minutes. A real recruiter usually calls you back within 15–20 minutes during business hours — free for drivers, always.',
+});
+
+/**
+ * ⚠️ COPY JE PRENET IZ MAIN-a DOSLOVNO, ne prepisan. Svaka recenica ispod je prosla
+ * kroz `docs/CLAIMS.md` registar i vise claims batch-eva:
+ *  · „20+ partner carriers" — C10 zabranjuje „vetted"/„verified" kao goli pridev
+ *  · „4 years in the industry" — C9; svaka formulacija koja implicira VOZNJU kamiona
+ *    („in the seat", „behind the wheel", „on the road") je trajno zabranjena §2.4
+ *  · „usually … during business hours" — C12, goli oblik „15–20 minuta" je zabranjen
+ *  · „All 48 continental states" — C8 (pokrivenost), ne „now placing" (C41 je OPEN)
+ * Ne parafrazirati bez provere protiv registra.
+ */
+export default function ApplyPage() {
+  return (
+    <main className="subpage">
+      <header className="sub-header">
+        <Link className="brand" href="/" aria-label="GROWTH home">
+          <span className="brand-mark">G↗</span>
+          <span>GROWTH</span>
+        </Link>
+        <a className="sub-call" href={PHONE_TEL_HREF}>
+          {PHONE_DISPLAY}
+        </a>
+      </header>
+
+      <section className="sub-hero">
+        <p className="eyebrow">ALL 48 CONTINENTAL STATES</p>
+        <h1>
+          Apply in 2 minutes.
+          <br />
+          <em>We usually call back within 15–20 minutes during business hours.</em>
+        </h1>
+        <p className="sub-lede">
+          4 years in the industry. 20+ partner carriers. Free for drivers, always.
+        </p>
+        <div className="sub-trust">
+          <span>No hidden fees</span>
+          <span>Call or text us daily — weekends included</span>
+        </div>
+      </section>
+
+      <section className="sub-body">
+        <ApplyForm />
+      </section>
+
+      <footer className="sub-footer">
+        <p>
+          GROWTH.CO is a driver recruiting agency (intermediary), not a motor carrier or employer.
+        </p>
+        <p className="sub-legal">
+          <a href="/privacy">Privacy</a> · <a href="/terms">Terms</a>
+        </p>
+      </footer>
+    </main>
+  );
+}

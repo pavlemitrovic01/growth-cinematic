@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach } from 'vitest';
-import { readFileSync } from 'node:fs';
+import { HONEYPOT_FIELD as HONEYPOT_FIELD_SOURCE } from '../lib/honeypot.js';
 import {
   checkRateLimit,
   isHoneypotTripped,
@@ -37,13 +37,18 @@ describe('honeypot', () => {
     expect(isHoneypotTripped({ [HONEYPOT_FIELD]: 'http://spam.example' })).toBe(true);
   });
 
-  it('ime polja je isto u lib-u i u OBE forme', () => {
-    // Ime je u formama LITERAL, jer bi import iz `lib/rate-limit.js` povukao `ioredis`
-    // u klijentski bundle. Ovaj test je jedino sto cuva da se dve strane ne raziju.
-    const apply = readFileSync('components/ApplyForm.jsx', 'utf8');
-    const carrier = readFileSync('components/CarrierForm.jsx', 'utf8');
-    expect(apply).toContain(`name="${HONEYPOT_FIELD}"`);
-    expect(carrier).toContain(`name="${HONEYPOT_FIELD}"`);
+  it('rate-limit i honeypot modul nose ISTU vrednost — jedan izvor, dva ulaza', () => {
+    // ⚠️ ZAMENJEN TEST. Original je citao `components/ApplyForm.jsx` i `CarrierForm.jsx`
+    // kao TEKST i trazio `name="company_website"` u njima, jer je ime polja u formama bilo
+    // literal — import iz `lib/rate-limit.js` bi povukao `ioredis` u klijentski bundle.
+    //
+    // Ovde forme uvoze `HONEYPOT_FIELD` iz `lib/honeypot.js` (modul bez zavisnosti), pa
+    // razilazenje koje je original cuvao vise nije moguce — nema dve vrednosti da se raziju.
+    // Test nad tekstom fajla je uz to bio krhak: preimenovanje `.jsx` u `.tsx` ga obara
+    // iako je ugovor netaknut. Ostaje provera da re-export nije slucajno prekinut.
+    expect(HONEYPOT_FIELD).toBe(HONEYPOT_FIELD_SOURCE);
+    expect(typeof HONEYPOT_FIELD).toBe('string');
+    expect(HONEYPOT_FIELD.length).toBeGreaterThan(0);
   });
 });
 

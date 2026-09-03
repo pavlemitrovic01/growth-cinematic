@@ -88,7 +88,18 @@ export async function POST(req) {
     // Zapis o pristanku — belezi se STVARNA vrednost, trenutak i IP, ne hardkodovano "Yes".
     const consentRecord = buildConsentRecord('Capljinac LLC only (one-to-one)', clientIp(req));
 
+    // ⚠️ Upis IDE I OVDE, pre 503-a. Bez ovoga baza ne pokriva bas slucaj zbog kojeg
+    // postoji: mejl nije podesen -> ruta izlazi rano -> lead nestaje bez traga.
+    // Vozac i dalje dobija 503 "pozovite nas" — pravilo da uspeh znaci poslat mejl
+    // ostaje netaknuto; ovo menja samo da li je prijava povratljiva.
     if (!isEmailConfigured()) {
+      await recordLead({
+        source: 'apply',
+        payload: data,
+        consent: consentRecord,
+        emailDelivered: false,
+        userAgent: req.headers.get('user-agent'),
+      });
       console.error('[apply] RESEND_API_KEY / LEAD_NOTIFICATION_EMAIL nisu podeseni — lead NIJE poslat.', {
         leadType: isQuick ? 'quick' : 'full',
         name: `${firstName} ${lastName || ''}`.trim(),

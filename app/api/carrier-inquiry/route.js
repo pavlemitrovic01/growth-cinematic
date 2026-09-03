@@ -48,7 +48,18 @@ export async function POST(req) {
 
     const consentRecord = buildConsentRecord('Capljinac LLC only (one-to-one)', clientIp(req));
 
+    // ⚠️ Upis IDE I OVDE, pre 503-a. Bez ovoga baza ne pokriva bas slucaj zbog kojeg
+    // postoji: mejl nije podesen -> ruta izlazi rano -> lead nestaje bez traga.
+    // Vozac i dalje dobija 503 "pozovite nas" — pravilo da uspeh znaci poslat mejl
+    // ostaje netaknuto; ovo menja samo da li je prijava povratljiva.
     if (!isEmailConfigured()) {
+      await recordLead({
+        source: 'carrier-inquiry',
+        payload: body,
+        consent: consentRecord,
+        emailDelivered: false,
+        userAgent: req.headers.get('user-agent'),
+      });
       console.error('[carrier-inquiry] Email nije podesen — upit NIJE poslat.', { companyName });
       return NextResponse.json(
         { error: 'Inquiries are temporarily unavailable. Please email us directly.' },
