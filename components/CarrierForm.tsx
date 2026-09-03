@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
@@ -56,9 +56,13 @@ type Status = 'idle' | 'submitting' | 'success' | 'error';
 export default function CarrierForm() {
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const feedback = useRef<HTMLDivElement>(null);
+  const submitting = useRef(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting.current) return;
+    submitting.current = true;
     setStatus('submitting');
     setErrorMsg('');
 
@@ -71,24 +75,30 @@ export default function CarrierForm() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+        signal: AbortSignal.timeout(15000),
       });
       // Oblik koji ruta stvarno vraca: `error` uvek, `fields` samo na validaciji.
       const payload = (await res.json().catch(() => ({}))) as {
+        success?: boolean;
         error?: string;
         fields?: string[];
       };
-      if (!res.ok) {
+      if (!res.ok || payload.success !== true) {
         // Isti SEC-2b fix kao u ApplyForm — server salje `fields`, klijent ih prevodi
         // u recenicu umesto da prikaze doslovno „Validation failed".
         const fallback = payload.error || 'Something went wrong. Please call or text us instead.';
         setErrorMsg(messageForFields(payload.fields, fallback));
         setStatus('error');
+        requestAnimationFrame(() => feedback.current?.focus());
         return;
       }
       setStatus('success');
     } catch {
       setErrorMsg('We could not reach our server. Please call or text us instead.');
       setStatus('error');
+      requestAnimationFrame(() => feedback.current?.focus());
+    } finally {
+      submitting.current = false;
     }
   }
 
@@ -102,7 +112,7 @@ export default function CarrierForm() {
   }
 
   return (
-    <><NoScriptContact /><form method="post" action="/api/carrier-inquiry" className="af" onSubmit={handleSubmit}>
+    <><NoScriptContact /><form method="post" action="/api/carrier-inquiry" className="af" aria-busy={status === 'submitting'} onSubmit={handleSubmit}>
       <Honeypot id="hp_carrier" />
 
       <div className="af-row">
@@ -145,7 +155,7 @@ export default function CarrierForm() {
             aria-describedby="cf-phone-hint"
           />
           <span className="field-hint" id="cf-phone-hint">
-            10 digits, any format
+            Include your area code
           </span>
         </div>
         <div className="af-field">
@@ -169,7 +179,7 @@ export default function CarrierForm() {
       </button>
 
       {status === 'error' && (
-        <div role="alert" className="form-error">
+        <div ref={feedback} tabIndex={-1} role="alert" className="form-error">
           {errorMsg}
           <br />
           <a href={PHONE_TEL_HREF}>Call us</a>

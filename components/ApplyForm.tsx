@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, type FormEvent } from 'react';
+import { useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
@@ -24,7 +24,7 @@ import {
 
 const PHONE_PATTERN = '[0-9\\s\\(\\)\\.\\+\\-]{7,25}';
 const PHONE_TITLE = 'Enter all 10 digits, including the area code.';
-const PHONE_HINT = '10 digits, any format';
+const PHONE_HINT = 'Include your area code';
 
 /**
  * ⚠️ TCPA — PRAVNI TEKST, PRENET DOSLOVNO IZ MAIN-a. Ne parafrazirati, ne skracivati.
@@ -90,11 +90,15 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
   const isQuick = variant === 'quick';
   const [status, setStatus] = useState<Status>('idle');
   const [errorMsg, setErrorMsg] = useState('');
+  const feedback = useRef<HTMLDivElement>(null);
+  const submitting = useRef(false);
   const [hasViolations, setHasViolations] = useState(false);
   const [hasSAP, setHasSAP] = useState(false);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (submitting.current) return;
+    submitting.current = true;
     setStatus('submitting');
     setErrorMsg('');
 
@@ -109,13 +113,15 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
+        signal: AbortSignal.timeout(15000),
       });
       // Oblik koji rute stvarno vracaju: `error` uvek, `fields` samo na validaciji.
       const payload = (await res.json().catch(() => ({}))) as {
+        success?: boolean;
         error?: string;
         fields?: string[];
       };
-      if (!res.ok) {
+      if (!res.ok || payload.success !== true) {
         // ⚠️ Prenet fix iz MAIN-a (LEAD1/SEC-2b) — najveci pojedinacni gubitak leadova koji
         // je taj projekat imao. Server VEC salje `fields` sa imenom polja koje je palo, a
         // klijent je tu informaciju bacao i prikazivao doslovno „Validation failed".
@@ -123,17 +129,21 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
         const fallback = payload.error || 'Something went wrong. Please call or text us instead.';
         setErrorMsg(messageForFields(payload.fields, fallback));
         setStatus('error');
+        requestAnimationFrame(() => feedback.current?.focus());
         return;
       }
       setStatus('success');
     } catch {
       setErrorMsg('We could not reach our server. Please call or text us instead.');
       setStatus('error');
+      requestAnimationFrame(() => feedback.current?.focus());
+    } finally {
+      submitting.current = false;
     }
   }
 
   const errorBlock = status === 'error' && (
-    <div role="alert" className="form-error">
+    <div ref={feedback} tabIndex={-1} role="alert" className="form-error">
       {errorMsg}
       <br />
       <a href={PHONE_TEL_HREF}>Call us</a>
@@ -170,7 +180,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
     }
 
     return (
-      <><NoScriptContact /><form method="post" action="/api/apply" className="qa" onSubmit={handleSubmit} noValidate={false}>
+      <><NoScriptContact /><form method="post" action="/api/apply" className="qa" aria-busy={status === 'submitting'} onSubmit={handleSubmit} noValidate={false}>
         <Honeypot id="hp_apply_quick" />
 
         <div className="qa-copy">
@@ -210,15 +220,15 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
           </span>
         </div>
 
-        <button className="qa-submit" type="submit" disabled={status === 'submitting'}>
-          <span>{status === 'submitting' ? 'SENDING…' : 'GET MY CALLBACK'}</span>
-          <b aria-hidden="true">↗</b>
-        </button>
-
         <label className="consent consent--compact">
           <input required type="checkbox" name="tcpaConsent" />
           <span>{CONSENT_TEXT}</span>
         </label>
+
+        <button className="qa-submit" type="submit" disabled={status === 'submitting'}>
+          <span>{status === 'submitting' ? 'SENDING…' : 'GET MY CALLBACK'}</span>
+          <b aria-hidden="true">↗</b>
+        </button>
 
         {errorBlock}
       </form></>
@@ -239,7 +249,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
   }
 
   return (
-    <><NoScriptContact /><form method="post" action="/api/apply" className="af" onSubmit={handleSubmit}>
+    <><NoScriptContact /><form method="post" action="/api/apply" className="af" aria-busy={status === 'submitting'} onSubmit={handleSubmit}>
       <Honeypot id="hp_apply_full" />
 
       <div className="af-row">

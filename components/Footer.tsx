@@ -22,12 +22,12 @@ export default function Footer() {
       <div className="foot-grid">
         <div className="foot-brand">
           <Link className="brand" href="/" aria-label="GROWTH home">
-            <span className="brand-mark">G↗</span>
+            <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" /><path d="M25 17a10 10 0 1 0 1 14v-7h-9" fill="none" stroke="currentColor" strokeWidth="3" /><path d="m29 20 8-8m-8 0h8v8" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg></span>
             <span>GROWTH</span>
           </Link>
           <p className="foot-tag">
-            Honest CDL-A driver recruiting. We match drivers with partner carriers across all 48
-            states — free for drivers, always.
+            Honest CDL-A driver recruiting. We match drivers with partner carriers across the 48
+            contiguous states — free for drivers, always.
           </p>
         </div>
 

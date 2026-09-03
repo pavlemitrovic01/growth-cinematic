@@ -8,7 +8,12 @@ it('uses distinct absolute canonicals and matching social metadata without a mis
   expect(m.alternates.canonical).toBe('https://preview.example/about');
   expect(m.openGraph.url).toBe(m.alternates.canonical);
   expect(m.twitter.title).toBe('About');
-  expect(m.openGraph.images).toBeUndefined();
+  expect(m.openGraph.images[0].url).toBe('https://preview.example/og.png');
+  expect(m.twitter.card).toBe('summary_large_image');
+  const article = pageMeta({ path: '/truckers-lounge/test', title: 'Article', description: 'Article details', article: true });
+  expect(article.openGraph.images).toEqual([]);
+  expect(article.twitter.images).toEqual([]);
+  expect(article.twitter.card).toBe('summary');
   vi.unstubAllEnvs();
 });
 it('keeps preview sitemap empty and exposes pages plus articles only at launch', async () => {

@@ -11,18 +11,6 @@ export const metadata: Metadata = pageMeta({
     'The whole process, start to finish: apply in 2 minutes, usually get a callback within 15–20 minutes during business hours. No fees for drivers.',
 });
 
-/**
- * ⚠️ COPY PRENET DOSLOVNO IZ MAIN-a (`app/how-it-works/page.jsx`). Dve recenice ovde
- * su kanonske reference u `docs/CLAIMS.md`:
- *  · korak 04 „Ready drivers can start in as little as 3–5 days" — C11
- *  · „One honest caveat: we can't promise a 3–5 day start…" — TO je caveat koji cini
- *    C11 dozvoljenim. Brisanjem caveata gornja recenica postaje ZABRANJENA tvrdnja.
- * Ne razdvajati te dve.
- *
- * ⚠️ Cetiri koraka su namerno ista kao na naslovnoj (WIREFRAMES §2) — ista prica, vise
- * detalja. Ne uvoditi peti korak ovde a da naslovna ostane na cetiri.
- */
-
 const STEPS = [
   {
     n: '01',
@@ -37,7 +25,7 @@ const STEPS = [
   {
     n: '03',
     h: 'We match you',
-    p: 'We go to the carriers that fit what you told us, not the ones paying us most that week. You see the offers and pick. If none fit, we keep looking.',
+    p: 'We look for carriers that fit your experience and priorities. We explain the offers, including pay and deductions. You decide whether any of them work for you.',
   },
   {
     n: '04',
@@ -57,7 +45,7 @@ export default function HowItWorks() {
           <em>— no surprises.</em>
         </>
       }
-      lede="Most recruiters keep the process vague so you keep calling back. We'd rather you know every step before you start — including the parts that depend on you."
+      lede="From the first conversation to onboarding: here is what we do, what you decide and what depends on the carrier."
     >
       <div className="sub-trust">
         <span>Call or text us daily — weekends included</span>
@@ -100,7 +88,7 @@ export default function HowItWorks() {
               </article>
               <article className="card">
                 <h3>What we handle</h3>
-                <p>Everything between your application and your first load:</p>
+                <p>Support from your application through onboarding:</p>
                 <p>
                   Finding carriers · matching you to lanes that fit · help with the paperwork ·
                   chasing recruiters and onboarding on your behalf · and staying reachable after
@@ -114,14 +102,13 @@ export default function HowItWorks() {
               u koraku 04 postaje gola, zabranjena tvrdnja. */}
           <p className="sub-caveat">
             <strong>One honest caveat:</strong> we can&apos;t promise a 3–5 day start to a driver
-            who isn&apos;t ready — paperwork, physicals, and drug tests move at their own pace. But
-            we&apos;ll never be the reason you wait.
+            who isn&apos;t ready — paperwork, physicals, and drug tests move at their own pace. We help you track the next steps, but a start date is not guaranteed.
           </p>
         </div>
 
         <aside className="sub-rail">
           <div className="card card--cta">
-            <h3>Ready when you are</h3>
+            <h2>Ready when you are</h2>
             <p>
               Two minutes to apply. A real recruiter usually calls back within 15–20 minutes during
               business hours.

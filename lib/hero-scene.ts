@@ -112,10 +112,10 @@ export function createHeroScene(host: HTMLElement) {
       const truck = new THREE.Group();
       truck.position.set(0, 0, 7);
       scene.add(truck);
-      const olive = new THREE.MeshPhysicalMaterial({ color: "#263420", metalness: 0.62, roughness: 0.24, clearcoat: 0.8, clearcoatRoughness: 0.16 });
+      const olive = new THREE.MeshStandardMaterial({ color: "#263420", metalness: 0.62, roughness: 0.24 });
       const dark = new THREE.MeshStandardMaterial({ color: "#101511", metalness: 0.62, roughness: 0.27 });
       const chrome = new THREE.MeshStandardMaterial({ color: "#b9b9ad", metalness: 0.95, roughness: 0.15 });
-      const glass = new THREE.MeshPhysicalMaterial({ color: "#172921", roughness: 0.08, metalness: 0.35 });
+      const glass = new THREE.MeshStandardMaterial({ color: "#172921", roughness: 0.08, metalness: 0.35 });
       const tire = new THREE.MeshStandardMaterial({ color: "#080a09", roughness: 0.9 });
       const trailer = new THREE.MeshStandardMaterial({ color: "#d8d3c5", metalness: 0.35, roughness: 0.34 });
       const addBox = (w: number, h: number, d: number, material: THREE.Material, x: number, y: number, z: number) => {

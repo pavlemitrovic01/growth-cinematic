@@ -7,7 +7,7 @@ import { pageMeta } from '@/lib/seo';
 export const metadata: Metadata = pageMeta({
   path: '/truckers-lounge',
   title: 'Truckers Lounge: CDL-A Driver Resources | GROWTH.CO',
-  description: 'Resources, news, and tips for CDL-A drivers.',
+  description: 'Practical guides to CDL training, return-to-duty questions and the details to check before accepting a driving job.',
 });
 
 /**
@@ -26,22 +26,20 @@ export default function TruckersLounge() {
           <em>Lounge</em>
         </>
       }
-      lede="Real talk for CDL-A drivers. We break down the industry BS so you can make informed decisions."
+      lede="Before the next offer, know what to ask. Practical guides to training, your record and the numbers in a driving job."
     >
       <div className="post-list">
         {POSTS.map((post) => (
           <article className="post-card" key={post.slug}>
             <div className="post-meta">
               <span className="post-tag">{post.tag}</span>
-              <span>
-                {post.dateDisplay} · {post.readTime}
-              </span>
+              <span><time dateTime={post.date}>{post.dateDisplay}</time> · {post.readTime}</span>
             </div>
             <h2>
               <Link href={`/truckers-lounge/${post.slug}`}>{post.title}</Link>
             </h2>
-            <p>{post.body[0].text}</p>
-            <Link className="post-read" href={`/truckers-lounge/${post.slug}`}>
+            <p>{post.description}</p>
+            <Link className="post-read" aria-label={`Read more: ${post.title}`} href={`/truckers-lounge/${post.slug}`}>
               Read more ↗
             </Link>
           </article>

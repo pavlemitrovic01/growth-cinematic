@@ -32,6 +32,7 @@ const SECTIONS = [
     n: '01',
     h: 'Information We Collect',
     body: [
+      'For a carrier inquiry, we collect your company name, contact name, phone number, optional email address and communication consent. We use these details to respond about recruiting services.',
       'When you apply for a driving position through our platform, we collect personal information you provide, including but not limited to: your name, phone number, email address, CDL class, driving experience, violation history, and SAP program status.',
     ],
   },

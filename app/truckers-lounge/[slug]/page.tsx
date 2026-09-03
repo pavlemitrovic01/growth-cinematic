@@ -7,15 +7,8 @@ import PageShell from '@/components/PageShell';
 import { getPostBySlug, allPostSlugs } from '@/lib/posts';
 import { pageMeta } from '@/lib/seo';
 
-/**
- * ⚠️ `dynamicParams = false` — staticno generisan skup, proizvoljan slug daje 404 u
- * produkciji umesto da pokusa render. Prenета odluka iz MAIN-a: tiho 404 je gore od
- * jasnog, a ovde je 404 nameravano ponasanje.
- *
- * ⚠️ `params` je Promise u Next 15+ — MAIN je na Next 14 i tamo je sinhron objekat.
- * Ovo je jedna od retkih mesta gde prenos NIJE doslovan, i razlog je verzija runtime-a.
- */
-export const dynamicParams = false;
+// Unknown articles use the site's accessible 404 page.
+export const dynamicParams = true;
 
 export function generateStaticParams() {
   return allPostSlugs().map((slug: string) => ({ slug }));
@@ -32,7 +25,7 @@ export async function generateMetadata({
   return pageMeta({
     path: `/truckers-lounge/${post.slug}`,
     title: `${post.title} | GROWTH.CO`,
-    description: post.body[0].text,
+    description: post.description,
     article: true,
   });
 }
@@ -98,15 +91,15 @@ export default async function TruckersLoungePost({
   if (!post) notFound();
 
   return (
-    <PageShell eyebrow="TRUCKERS LOUNGE" title={post.title}>
-      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Article', headline: post.title, datePublished: post.date, mainEntityOfPage: SITE_URL + '/truckers-lounge/' + post.slug, publisher: { '@id': SITE_URL + '/#organization' } }} />
+    <PageShell variant="article" eyebrow="TRUCKERS LOUNGE" title={post.title}>
+      <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Article', headline: post.title, datePublished: post.date, ...(post.modified ? { dateModified: post.modified } : {}), mainEntityOfPage: SITE_URL + '/truckers-lounge/' + post.slug, publisher: { '@id': SITE_URL + '/#organization' } }} />
       <p className="post-back">
         <Link href="/truckers-lounge">↖ Back to Truckers Lounge</Link>
       </p>
       <div className="post-meta post-meta--article">
         <span className="post-tag">{post.tag}</span>
         <span>
-          {post.dateDisplay} · {post.readTime}
+          <time dateTime={post.date}>{post.dateDisplay}</time> · {post.readTime}{post.modified ? <> · Updated <time dateTime={post.modified}>{new Intl.DateTimeFormat('en-US', { month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(post.modified))}</time></> : null}
         </span>
       </div>
       <article className="post-body">

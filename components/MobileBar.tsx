@@ -11,12 +11,12 @@ import { PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
  */
 export default function MobileBar() {
   return (
-    <div className="mobar" aria-label="Quick actions">
+    <nav className="mobar" aria-label="Quick actions">
       <a href={PHONE_TEL_HREF}>Call</a>
       <a href={PHONE_SMS_HREF}>Text</a>
       <Link className="mobar-cta" href="/apply">
         Apply ↗
       </Link>
-    </div>
+    </nav>
   );
 }

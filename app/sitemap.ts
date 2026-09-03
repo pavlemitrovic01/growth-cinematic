@@ -6,6 +6,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   if (!IS_LIVE) return [];
   return [
     ...PAGE_PATHS.map(path => ({ url: SITE_URL + (path === '/' ? '/' : path) })),
-    ...POSTS.map(post => ({ url: `${SITE_URL}/truckers-lounge/${post.slug}`, lastModified: post.date })),
+    ...POSTS.map(post => ({ url: `${SITE_URL}/truckers-lounge/${post.slug}`, lastModified: post.modified || post.date })),
   ];
 }

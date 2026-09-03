@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
 import { pageMeta } from '@/lib/seo';
@@ -6,26 +7,8 @@ export const metadata: Metadata = pageMeta({
   path: '/about',
   title: 'About GROWTH.CO — CDL-A Recruiting',
   description:
-    'Why GROWTH.CO exists, who runs it, and how we work with CDL-A drivers. No fees, no fine print.',
+    'Why GROWTH.CO exists, who runs it, and how we work with CDL-A drivers. Free for drivers, with the details explained before you decide.',
 });
-
-/**
- * ⚠️ FOUNDER TEKST PRENET DOSLOVNO. Prethodna verzija u MAIN-u nosila je DVE zive
- * povrede koje je L3 uklonio 2026-08-24:
- *  · „people who mostly scam and cheat in this business" — negativna univerzalna
- *    tvrdnja o industriji, trajna zabrana §2.3
- *  · „We promise stable and secure earnings" — garancija zarade, C19 PROHIBITED
- * Ova verzija opisuje JAZ, bez izvrsioca i bez obecanog ishoda. Ne „popravljati" je
- * nazad ka jacoj formulaciji.
- *
- * ⚠️ C9: „four years in CDL-A recruiting" je founderova licna tvrdnja, NE starost
- * firme (GROWTH je nova). I: Nate Mikic NIKAD NIJE VOZIO KAMION — svaka formulacija
- * koja implicira voznju („in the seat", „behind the wheel", „on the road", „from the
- * cab") je trajna zabrana §2.4, ne evidenciona rupa.
- *
- * ⚠️ Potpis foundera stoji JEDNOM, na kraju price. MAIN ga je nosio dvaput dok ga L7
- * nije uklonio — ispod kartica nije potpisivao nista.
- */
 
 const STORY = [
   <>
@@ -51,11 +34,11 @@ const STORY = [
 const VALUES = [
   {
     h: 'Transparency',
-    p: 'What we tell you is what you get. No fine print, no surprises after orientation.',
+    p: 'We explain pay structure, deductions and the details of an offer before you make a decision.',
   },
   {
     h: 'Speed',
-    p: 'Ready drivers can start in as little as 3–5 days. Paperwork, physicals, and drug tests move at their own pace. We move fast because you need to.',
+    p: 'Ready drivers can start in as little as 3–5 days. Paperwork, physicals, and drug tests move at their own pace. We help you understand what is ready and what still needs to happen.',
   },
   {
     h: 'Honesty',
@@ -85,11 +68,12 @@ export default function About() {
       <div className="sub-3up">
         {VALUES.map((v) => (
           <article className="card" key={v.h}>
-            <h3>{v.h}</h3>
+            <h2>{v.h}</h2>
             <p>{v.p}</p>
           </article>
         ))}
       </div>
+      <div className="page-next"><p>Want to see how we work?</p><Link className="btn btn-primary" href="/how-it-works">See the process ↗</Link></div>
     </PageShell>
   );
 }

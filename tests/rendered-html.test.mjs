@@ -56,3 +56,23 @@ test('contact forms have a no-JS contact alternative and never fall back to GET 
     assert.ok(html.includes('method="post"'), path);
   }
 });
+
+test('unknown articles render a complete accessible 404, not a bare text response', async () => {
+  const response = await get('/truckers-lounge/unknown-article');
+  assert.equal(response.status, 404);
+  const html = await response.text();
+  assert.match(html, /<html[^>]+lang="en"/);
+  assert.match(html, /Wrong exit/);
+  assert.match(html, /id="main-content"/);
+  assert.ok(html.includes('href="/apply"'));
+});
+test('article metadata is concise, specific and does not inherit the generic social image', async () => {
+  const { POSTS } = await import('../lib/posts.js');
+  for (const post of POSTS) {
+    const html = await (await get('/truckers-lounge/' + post.slug)).text();
+    assert.match(html, /property="og:type" content="article"/);
+    assert.ok(!html.includes('property="og:image"'));
+    assert.ok(post.description.length <= 180);
+    assert.ok(html.includes(post.modified));
+  }
+});
