@@ -252,7 +252,8 @@ export function createHeroScene(host: HTMLElement) {
       wheels.forEach(wheel=>{wheel.rotation.x=drive*-48});
       cameraPath.getPointAt(clamp(p*.98),relative);
       camera.position.set(relative.x,relative.y,truck.position.z+relative.z);
-      lookAt.set(0,3.1,truck.position.z+(p>.82?-12:-3));
+      // Blend into the overhead view; switching the target at .82 caused a snap.
+      lookAt.set(0,3.1,truck.position.z-3-9*smoothstep(.74,.9,p));
       camera.lookAt(lookAt);
       const daylight=smoothstep(.42,.98,p);
       background.copy(night).lerp(dawnColor,daylight*.78);

@@ -14,6 +14,8 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
     const reduced = matchMedia('(prefers-reduced-motion: reduce)');
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const beats = Array.from(hero.querySelectorAll<HTMLElement>('[data-beat]'));
+    const progressBar = hero.querySelector<HTMLElement>('.journey-scroll b');
+    const dawn = hero.querySelector<HTMLElement>('.journey-dawn');
     let disposed = false;
     let generation = 0;
     let loading = false;
@@ -26,10 +28,11 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
 
     function resetContent() {
       hero!.classList.remove('is-enhanced');
-      hero!.style.removeProperty('--journey-progress');
+      progressBar?.style.removeProperty('transform');
+      dawn?.style.removeProperty('opacity');
       beats.forEach(beat => {
-        beat.style.removeProperty('--beat-opacity');
-        beat.style.removeProperty('--beat-shift');
+        beat.style.removeProperty('opacity');
+        beat.style.removeProperty('transform');
         beat.removeAttribute('aria-hidden');
         beat.inert = false;
       });
@@ -61,6 +64,7 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
         let target = 0;
         let lastTime = 0;
         let frames = 0;
+        let measure = true;
         const cancel = () => {
           cancelAnimationFrame(frame);
           frame = 0;
@@ -75,25 +79,37 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
         const paint = (time: number) => {
           frame = 0;
           if (!visible || document.hidden || !eligible()) return;
-          const dt = lastTime ? Math.min(64, time - lastTime) : 16;
+          // Read layout once per requested frame, before any style writes.
+          if (measure) {
+            const rect = hero!.getBoundingClientRect();
+            target = Math.min(1, Math.max(0, -rect.top / Math.max(1, rect.height - innerHeight)));
+            measure = false;
+          }
+          const dt = lastTime ? Math.min(64, time - lastTime) : 1000 / 60;
           lastTime = time;
-          current += (target - current) * (1 - Math.exp(-dt / 100));
-          if (Math.abs(target - current) < 0.0005) current = target;
+          // Match the prototype's gentle 60 Hz response at any refresh rate.
+          current += (target - current) * (1 - Math.exp(-dt / 280));
+          if (Math.abs(target - current) < 0.0002) current = target;
           const position = current * (beats.length - 1);
           const active = Math.round(position);
           beats.forEach((beat, index) => {
             const distance = position - index;
             const opacity = Math.max(0, 1 - Math.abs(distance) * 1.65);
-            beat.style.setProperty('--beat-opacity', String(opacity));
-            beat.style.setProperty('--beat-shift', `${distance * -35}px`);
+            // Animate compositor properties directly, without inherited CSS variables.
+            beat.style.opacity = String(opacity);
+            beat.style.transform = `translate3d(0, calc(-50% + ${distance * -35}px), 0)`;
             // Hidden CTAs cannot trap keyboard focus between story chapters.
             const focused = beat.contains(document.activeElement);
-            beat.inert = index !== active && !focused;
-            if (index !== active && !focused) beat.setAttribute('aria-hidden', 'true');
-            else beat.removeAttribute('aria-hidden');
-            if (focused) beat.style.setProperty('--beat-opacity', '1');
+            const hidden = index !== active && !focused;
+            if (beat.inert !== hidden) {
+              beat.inert = hidden;
+              if (hidden) beat.setAttribute('aria-hidden', 'true');
+              else beat.removeAttribute('aria-hidden');
+            }
+            if (focused) beat.style.opacity = '1';
           });
-          hero!.style.setProperty('--journey-progress', String(current));
+          if (progressBar) progressBar.style.transform = `scaleX(${current})`;
+          if (dawn) dawn.style.opacity = String(current);
           try {
             scene.render(current);
             host!.dataset.drawCalls = String(scene.drawCalls());
@@ -106,10 +122,11 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
           }
           // No perpetual idle animation. Scroll interpolation ends when settled.
           if (current !== target) frame = requestAnimationFrame(paint);
+          // Restart the frame clock for each gesture, excluding time spent idle.
+          else lastTime = 0;
         };
         const request = () => {
-          const rect = hero!.getBoundingClientRect();
-          target = Math.min(1, Math.max(0, -rect.top / Math.max(1, hero!.offsetHeight - innerHeight)));
+          measure = true;
           if (visible && !document.hidden && !frame) frame = requestAnimationFrame(paint);
         };
         const resize = () => { scene.resize(); request(); };
