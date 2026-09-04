@@ -7,8 +7,24 @@ import PageShell from '@/components/PageShell';
 import { getPostBySlug, allPostSlugs } from '@/lib/posts';
 import { pageMeta } from '@/lib/seo';
 
-// Unknown articles use the site's accessible 404 page.
-export const dynamicParams = true;
+/**
+ * Unknown articles use the site's accessible 404 page.
+ *
+ * ⚠️ `false`, I TO JE POPRAVKA IZ PRELASKA NA VERCEL, ne stilska promena. Sa `true` je
+ * nepoznat slug isao u render, tamo pogadjao `notFound()` — i vracao ISPRAVNO TELO sa
+ * POGRESNIM STATUSOM: izmereno 200 umesto 404, jer se `notFound()` okida posto je odgovor
+ * vec poceo da se strimuje, pa se status koji je otisao ne moze vise promeniti. To je isti
+ * mehanizam koji `docs/STATUS.md` opisuje za uhvacene serverske greske.
+ *
+ * Na Cloudflare/vinext stacku se to nije videlo. Posledica na Vercelu je stvarna: svaki
+ * izmisljen `/truckers-lounge/<bilo sta>` bi pretrazivacu izgledao kao validna stranica.
+ *
+ * `false` odbija nepoznat parametar na nivou rutiranja, pre renderovanja, pa 404 bude pravi.
+ * Sme jer `generateStaticParams` cita `lib/posts.js` — statican spisak, bez izvora novih
+ * clanaka u runtime-u. Ako clanci ikad krenu iz baze ili CMS-a, ovo se vraca na `true` i
+ * status se mora resiti drugacije.
+ */
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return allPostSlugs().map((slug: string) => ({ slug }));

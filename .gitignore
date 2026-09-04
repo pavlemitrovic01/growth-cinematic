@@ -33,11 +33,13 @@ yarn-error.log*
 # vercel
 .vercel
 
+# lokalni artefakti alata -- nikad u repo
+/.sites-runtime/
+/dist/
+
 # typescript
 next-env.d.ts
-/dist/
-/.wrangler/
-/.sites-runtime/
+
 /outputs/
 /work/
 

@@ -13,7 +13,7 @@
  * i uz to i dalje trazi stilove koji sakrivaju, jer su jeftini za proveru.
  *
  * Upotreba:
- *   node scripts/verify-nojs.mjs                # protiv servera na :5173
+ *   node scripts/verify-nojs.mjs                # protiv servera na :3000
  *   node scripts/verify-nojs.mjs --port 5199
  *
  * ⚠️ Trazi POKRENUT server (`npm run dev` ili `node scripts/preview.mjs`). Ne pokrece ga
@@ -22,7 +22,7 @@
 
 const PORT = (() => {
   const i = process.argv.indexOf('--port');
-  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '5173';
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '3000';
 })();
 const BASE = `http://localhost:${PORT}`;
 

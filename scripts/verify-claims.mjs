@@ -11,13 +11,13 @@
  * `lib/faq.js`), iz komponente ili iz metapodataka, a posetilac vidi samo ishod.
  *
  * Upotreba:
- *   node scripts/verify-claims.mjs                # protiv servera na :5173
+ *   node scripts/verify-claims.mjs                # protiv servera na :3000
  *   node scripts/verify-claims.mjs --port 5199
  */
 
 const PORT = (() => {
   const i = process.argv.indexOf('--port');
-  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '5173';
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '3000';
 })();
 const BASE = `http://localhost:${PORT}`;
 

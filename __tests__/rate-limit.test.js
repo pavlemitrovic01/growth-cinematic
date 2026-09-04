@@ -10,10 +10,15 @@ import {
   __resetMemoryForTests,
 } from '../lib/rate-limit.js';
 
-// Bez `RATELIMIT_REDIS_URL` u test okruzenju modul pada na in-memory sloj — sto je tacno
-// ono sto ovde i hocemo da testiramo. Redis putanja se meri uzivo, protiv prave baze.
+// Bez `DATABASE_URL` u test okruzenju modul pada na in-memory sloj — sto je tacno ono sto
+// ovde i hocemo da testiramo. Putanja kroz bazu se meri uzivo, protiv prave baze.
 function req(ip, headerName = 'x-forwarded-for') {
   return { headers: { get: (h) => (h === headerName ? ip : null) } };
+}
+
+/** Zahtev sa vise zaglavlja odjednom — za provere prvenstva. */
+function reqWith(headers) {
+  return { headers: { get: (h) => headers[h] ?? null } };
 }
 
 beforeEach(() => __resetMemoryForTests());
@@ -53,12 +58,45 @@ describe('honeypot', () => {
 });
 
 describe('clientIp', () => {
-  it('uzima PRVI unos iz x-forwarded-for — to je klijent, ostalo su proksiji', () => {
-    expect(clientIp(req('203.0.113.7, 70.41.3.18, 150.172.238.178'))).toBe('203.0.113.7');
+  // ⚠️ OVAJ BLOK JE PREOKRENUT PRI PRELASKU NA VERCEL. Ranije je tvrdio suprotno —
+  // „uzima PRVI unos iz x-forwarded-for" i da `cf-connecting-ip` ima prvenstvo. Oba
+  // pravila su vazila zbog Cloudflare edge-a, koji ta zaglavlja prepisuje sam. Vercel
+  // `cf-connecting-ip` uopste ne postavlja, pa bi ga posetilac postavljao umesto njega.
+  // Testovi ispod postoje da se stari redosled ne vrati necujno.
+  it('daje prvenstvo zaglavlju koje postavlja platforma', () => {
+    const ip = clientIp(
+      reqWith({
+        'x-vercel-forwarded-for': '203.0.113.7',
+        'x-real-ip': '198.51.100.4',
+        'x-forwarded-for': '192.0.2.1, 203.0.113.7',
+      }),
+    );
+    expect(ip).toBe('203.0.113.7');
   });
 
-  it('pada na x-real-ip kad x-forwarded-for ne postoji', () => {
+  it('IGNORISE cf-connecting-ip — na Vercelu ga postavlja posetilac, ne platforma', () => {
+    const ip = clientIp(
+      reqWith({ 'cf-connecting-ip': '9.9.9.9', 'x-real-ip': '198.51.100.4' }),
+    );
+    expect(ip).toBe('198.51.100.4');
+    expect(ip).not.toBe('9.9.9.9');
+  });
+
+  it('iz x-forwarded-for uzima POSLEDNJI unos — njega je dodao najblizi proxy', () => {
+    // Krajnje levi unos je onaj koji je poslao sam posetilac; uzimanje tog unosa je
+    // kocnica koja se zaobilazi jednim zaglavljem.
+    expect(clientIp(req('203.0.113.7, 70.41.3.18, 150.172.238.178'))).toBe('150.172.238.178');
+  });
+
+  it('pada na x-real-ip kad platformsko zaglavlje ne postoji', () => {
     expect(clientIp(req('198.51.100.4', 'x-real-ip'))).toBe('198.51.100.4');
+  });
+
+  it('x-real-ip ima prednost nad lancem x-forwarded-for', () => {
+    const ip = clientIp(
+      reqWith({ 'x-real-ip': '198.51.100.4', 'x-forwarded-for': '192.0.2.1' }),
+    );
+    expect(ip).toBe('198.51.100.4');
   });
 
   it('bez ijednog zaglavlja vraca "unknown" umesto da baci', () => {

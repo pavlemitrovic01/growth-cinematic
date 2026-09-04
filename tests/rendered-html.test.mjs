@@ -1,9 +1,39 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-const { default: worker } = await import('../dist/server/index.js');
-const env = { ASSETS: { fetch: async () => new Response('Not found', { status: 404 }) } };
-const ctx = { waitUntil() {}, passThroughOnException() {} };
-const get = (path, init) => worker.fetch(new Request('http://localhost:5173' + path, init), env, ctx);
+
+/**
+ * ⚠️ PREPISAN TRANSPORT, ISTE TVRDNJE. Do prelaska na Vercel je ovaj fajl uvozio
+ * `../dist/server/index.js` i zvao `worker.fetch(request, env, ctx)` direktno. Taj artefakt
+ * je bio Cloudflare Worker bundle i na Vercelu ne postoji — pa bi fajl ili nestao ili
+ * prestao da meri bilo sta.
+ *
+ * Umesto toga meri se preko HTTP-a, protiv POKRENUTOG servera. To je i tacnije nego ranije:
+ * `x-robots-tag` i CSP sada dolaze iz `headers()` u `next.config.ts`, a 403 na cross-origin
+ * POST iz `middleware.ts` — nijedno se ne bi videlo da se modul uvozi mimo lanca.
+ *
+ * Upotreba (server mora vec da radi):
+ *   npm run build && npm start
+ *   npm run test:rendered
+ *   node --test tests/rendered-html.test.mjs -- --port 3001
+ */
+const PORT = (() => {
+  const i = process.argv.indexOf('--port');
+  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '3000';
+})();
+const BASE = `http://localhost:${PORT}`;
+
+const get = (path, init) => fetch(BASE + path, { redirect: 'manual', ...init });
+
+test('server odgovara pre nego sto ostali testovi krenu', async () => {
+  try {
+    await get('/');
+  } catch (error) {
+    assert.fail(
+      `Nema servera na ${BASE}. Pokreni \`npm run build && npm start\` pa ponovo. (${error?.message})`,
+    );
+  }
+});
+
 test('production responses carry preview and security policy', async () => {
   for (const path of ['/', '/about', '/faq', '/apply', '/privacy', '/truckers-lounge', '/missing-page']) {
     const r = await get(path);
@@ -14,7 +44,7 @@ test('production responses carry preview and security policy', async () => {
     assert.ok(!r.headers.get('content-security-policy').includes('unsafe-eval'));
     const html = await r.text();
     assert.ok(!html.includes('codex-preview'));
-    if (path !== '/missing-page') assert.ok(html.includes('http://localhost:5173' + path));
+    if (path !== '/missing-page') assert.ok(html.includes(BASE + path));
   }
 });
 test('preview robots denies crawling and sitemap excludes public URLs', async () => {
@@ -25,10 +55,14 @@ test('preview robots denies crawling and sitemap excludes public URLs', async ()
   assert.equal(sitemap.status, 200);
   assert.ok(!(await sitemap.text()).includes('<loc>'));
 });
-test('worker rejects a cross-origin submission before reaching delivery', async () => {
+test('middleware rejects a cross-origin submission before reaching delivery', async () => {
   const r = await get('/api/apply', { method: 'POST', headers: { Origin: 'https://evil.example' } });
   assert.equal(r.status, 403);
   assert.equal(r.headers.get('cache-control'), 'no-store');
+  // ⚠️ Odgovor koji nastane u middleware-u ne prolazi kroz `headers()` iz next.config.ts.
+  // Zato `middleware.ts` sam pecati politiku — ovo je provera da to i dalje radi.
+  assert.ok(r.headers.get('content-security-policy').includes("frame-ancestors 'none'"));
+  assert.equal(r.headers.get('x-robots-tag'), 'noindex, nofollow');
 });
 test('FAQ schema matches visible questions, no fabricated jobs', async () => {
   const html = await (await get('/faq')).text();
