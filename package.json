@@ -16,7 +16,10 @@
     "db:generate": "bash scripts/sites-env.sh -- drizzle-kit generate",
     "test:artifact": "npm run build && node --test tests/rendered-html.test.mjs",
     "typecheck": "tsc --noEmit",
-    "preview:local": "node scripts/preview.mjs"
+    "preview:local": "node scripts/preview.mjs",
+    "verify:nojs": "node scripts/verify-nojs.mjs",
+    "verify:claims": "node scripts/verify-claims.mjs",
+    "verify": "node scripts/verify-nojs.mjs && node scripts/verify-claims.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

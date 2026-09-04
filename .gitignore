@@ -42,3 +42,6 @@ next-env.d.ts
 /work/
 
 !.env.example
+
+# TypeScript inkrementalni build artefakt -- menja se na svaki tsc
+*.tsbuildinfo
