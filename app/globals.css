@@ -270,6 +270,12 @@
 .journey-scroll b{display:block;width:100%;height:100%;background:var(--bone);transform:scaleX(0);transform-origin:left}
 .journey-dawn{display:none;position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(0deg,var(--bone),transparent 25%);opacity:0;will-change:opacity}
 @media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
+  /* Fotografska podloga se KRIJE tamo gde scena ionako dolazi, i to iz CSS-a — na prvi
+     paint. Klasa iz JS-a bi stigla tek posle hidracije, dakle posle bljeska koji resava.
+     .is-scene-off je vraca kad se ispostavi da scene nece biti (pad WebGL-a, saveData,
+     izlazak iz uslova); noscript blok je vraca kad JS uopste ne postoji. */
+  .journey-photo{opacity:0}
+  .journey.is-scene-off .journey-photo{opacity:1}
   .journey.is-enhanced{height:380svh}
   .is-enhanced .journey-stage{position:sticky;top:0;height:100svh}
   .is-enhanced .journey-story{position:absolute;inset:0;display:block;padding:0}

@@ -26,6 +26,25 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
     let pause: (() => void) | undefined;
     const eligible = () => desktop.matches && !reduced.matches && !connection?.saveData;
 
+    /**
+     * VRACA fotografsku podlogu kad scena ne moze da radi.
+     *
+     * ⚠️ Problem koji resava: `.journey-photo` stoji ispod platna (`z-index:-5`), a platno
+     * se pojavljuje tek posle prvog stvarnog frejma. Izmedju prvog paint-a i tog frejma
+     * stoji ucitavanje chunka i inicijalizacija WebGL-a — i sve to vreme se vidi
+     * fotografija, pa scena vizuelno „preskoci" preko nje.
+     *
+     * ⚠️ ZASTO JE LOGIKA OBRNUTA (CSS krije, JS vraca) a ne obrnuto: `useEffect` radi tek
+     * POSLE hidracije, a bljesak se desava PRE toga. Klasa dodata iz JS-a stigla bi
+     * prekasno da bi ista resila. Zato fotografiju krije media query u `globals.css` —
+     * na prvi paint — a ovde se samo VRACA kad se ispostavi da scene nece biti.
+     *
+     * ⚠️ Zasto se slika uopste ne brise: ona je jedini vizual za mobilni, reduced-motion,
+     * `saveData`, iskljucen JavaScript i pad WebGL-a. Bez nje bi hero na vecini saobracaja
+     * bio prazna tamna povrsina. No-JS slucaj pokriva `<noscript>` blok u markup-u.
+     */
+    const syncPhoto = () => hero!.classList.toggle('is-scene-off', !eligible() || failed);
+
     function resetContent() {
       hero!.classList.remove('is-enhanced');
       progressBar?.style.removeProperty('transform');
@@ -43,6 +62,9 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
       cleanup?.();
       cleanup = refresh = pause = undefined;
       resetContent();
+      // Vraca fotografiju kad scena nije (vise) u igri — pad, gubitak konteksta,
+      // ili posetilac koji je izasao iz uslova (uzi prozor, ukljucen reduced-motion).
+      syncPhoto();
       host!.dataset.sceneState = 'static';
     }
 
@@ -160,6 +182,9 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
       }
     }
     function sync() {
+      // Ide PRVO: kad posetilac udje u uslove (siri prozor, ugasen reduced-motion),
+      // fotografija nestaje odmah, a ne tek kad scena zavrsi ucitavanje.
+      syncPhoto();
       if (!eligible()) stop();
       else if (!visible || document.hidden) pause?.();
       else if (cleanup) refresh?.();
@@ -196,6 +221,14 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
             <img src="/images/hero-01-night.jpg" alt="" width="1672" height="941" fetchPriority="high" />
           </picture>
         </div>
+        {/*
+          Bez JavaScripta scena nikad ne krene, pa fotografija mora nazad — media query
+          koji je krije u `globals.css` ne zna da JS ne postoji. Ovo je jedini nacin da se
+          to razlikuje bez skripte.
+        */}
+        <noscript>
+          <style>{`.journey-photo{opacity:1}`}</style>
+        </noscript>
         <div className="journey-canvas" ref={mount} aria-hidden="true" data-scene-state="static" />
         <div className="journey-shade" aria-hidden="true" />
         <div className="journey-story">{children}</div>
