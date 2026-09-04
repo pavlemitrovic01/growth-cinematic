@@ -571,3 +571,47 @@ main:focus{outline:none}
   /* Na jednoj koloni labela ide iznad teksta, pa `min-width` vise nema svrhu. */
   .home-guard-list li>span{min-width:0}
 }
+
+/* ─── CONSENT BANER ───────────────────────────────────────────────────────────
+   Forest panel sa bone tekstom — isti par kao `.home-callback` i `.home-close`,
+   pa baner deluje kao deo sajta a ne kao tudja traka zalepljena na dno. */
+.consent-bar{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:16px 6vw 20px;background:var(--forest);border-top:1px solid var(--line);color:var(--bone)}
+.consent-panel{max-width:1100px;margin:0 auto}
+.consent-kicker{margin:0 0 10px;font-size:10px;font-weight:700;letter-spacing:.28em;color:#e2b183}
+.consent-body{margin:0 0 16px;max-width:78ch;font-size:14px;line-height:1.6;opacity:.82}
+.consent-body a{text-decoration:underline;text-underline-offset:3px}
+.consent-actions{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+
+/* ⚠️ `.btn` je definisan za KREM podlogu (ink tekst, ink okvir). Na forest panelu bi
+   se ghost dugme izgubilo, pa se oba preboje ovde — bez diranja osnovnih klasa. */
+.consent-panel .btn{font-family:inherit;cursor:pointer;border-width:1px;border-style:solid}
+.consent-panel .btn-primary{background:var(--bone);color:var(--ink);border-color:var(--bone)}
+.consent-panel .btn-primary:hover,.consent-panel .btn-primary:focus-visible{background:#fff}
+.consent-panel .btn-ghost{background:transparent;color:var(--bone);border-color:rgba(241,231,213,.5)}
+.consent-panel .btn-ghost:hover,.consent-panel .btn-ghost:focus-visible{background:rgba(241,231,213,.1)}
+
+/* „Choose what to allow" je trece po vaznosti, pa nije dugme — ali JESTE <button>,
+   jer otvara panel a ne vodi nikuda. Izgled prati `.home-text-link`. */
+.consent-link{padding:12px 0;border:0;border-bottom:1px solid currentColor;background:transparent;color:var(--bone);font:inherit;font-size:13px;font-weight:700;cursor:pointer;opacity:.8}
+.consent-link:hover,.consent-link:focus-visible{opacity:1}
+
+.consent-options{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:0 0 20px}
+.consent-option{display:flex;gap:13px;align-items:flex-start;padding:15px 16px;border:1px solid var(--line);border-radius:10px;cursor:pointer}
+.consent-option input{width:22px;height:22px;flex-shrink:0;margin:1px 0 0;accent-color:var(--clay)}
+.consent-option span{font-size:12.5px;line-height:1.55;opacity:.78}
+.consent-option strong{display:block;margin-bottom:5px;font-size:13px;opacity:1}
+/* GPC je obavezujuci opt-out, pa je polje zakljucano a ne samo odcekirano —
+   izgled to mora da pokaze, inace deluje kao kvar. */
+.consent-option.is-locked{cursor:not-allowed;opacity:.72}
+.consent-note{display:block;margin-top:7px;font-style:normal;color:#e2b183}
+
+.consent-settings{padding:0;border:0;border-bottom:1px solid currentColor;background:transparent;color:inherit;font:inherit;font-size:inherit;cursor:pointer}
+.foot-choices{margin-top:8px}
+
+@media(max-width:720px){
+  /* Iznad mobilnog akcionog bara (56px + ivica), da poziv i prijava ostanu dohvatljivi
+     dok baner stoji. Bez ovoga baner prekriva jedini CTA na telefonu. */
+  .consent-bar{bottom:57px;padding:14px 20px 16px}
+  .consent-options{grid-template-columns:1fr;gap:12px}
+  .consent-actions .btn{flex:1 1 100%;justify-content:center}
+}

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
+import ConsentSettingsButton from '@/components/ConsentSettingsButton';
+import { isConsentRequired } from '@/lib/consent';
 import { EMAIL, EMAIL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
@@ -26,6 +28,9 @@ export const metadata: Metadata = pageMeta({
  * „ne postavljamo dok ne ukljucis" ostaje istinito u oba stanja. Ne prepravljati u
  * „we use cookies" — to bi bila tvrdnja bez pokrica.
  */
+
+// Kapija se cita jednom, na build-u — ista vrednost koju vide baner i footer.
+const CONSENT_ON = isConsentRequired();
 
 const SECTIONS = [
   {
@@ -93,8 +98,58 @@ export default function Privacy() {
         {/* ⚠️ `id="cookies"` MORA ostati na h2 — footer i `/privacy#cookies` cilja na njega. */}
         <section>
           <h2 id="cookies">Cookies, Analytics, and Your Privacy Choices</h2>
-          <p>This version of the site does not run analytics or advertising trackers. You do not need to enable tracking to read the site or submit a form.</p>
-          <p>If optional tracking is introduced, this policy and the available privacy controls will be updated before it is enabled.</p>
+          {/*
+            ⚠️ TEKST SE GRANA NA ISTU KAPIJU KOJA GATUJE BANER. Dok je consent ugasen, sajt
+            stvarno ne ucitava nijedan tracker i prva varijanta je tacna. U trenutku kad se
+            kapija upali, ta recenica bi postala LAZ — zato se menja zajedno sa njom, a ne
+            rucno posle. Isto pravilo koje original nosi zapisano: privacy stranica i ono sto
+            sajt radi moraju se poklapati.
+          */}
+          {CONSENT_ON ? (
+            <>
+              <p>
+                We do not set analytics or advertising cookies unless you turn them on. The site,
+                and your application, work with everything off.
+              </p>
+              <p>These are two separate choices, because they are not the same thing:</p>
+              <ul>
+                <li>
+                  <strong>Analytics</strong> — aggregate measurement of which pages drivers
+                  actually use, so we can fix what is confusing. Not sold, and not shared with
+                  advertising platforms.
+                </li>
+                <li>
+                  <strong>Advertising</strong> — lets ad platforms such as Meta or TikTok recognize
+                  your browser away from our site. Under California law this counts as{' '}
+                  <strong>sharing</strong> personal information for cross-context behavioral
+                  advertising. It is off unless you turn it on.
+                </li>
+              </ul>
+              <p>
+                <strong>We do not sell your personal information</strong> — not for money, and not
+                for anything else of value.
+              </p>
+              <p>
+                <strong>Global Privacy Control.</strong> If your browser or an extension sends a
+                GPC signal, we treat it as a binding opt-out of advertising and turn that category
+                off automatically. You do not have to do anything.
+              </p>
+              <p>
+                <strong>Changing your mind.</strong> You can change or withdraw either choice at
+                any time. We remember what you picked and will not ask again unless we add a new
+                category.
+              </p>
+              {/* Dugme u sopstvenom pasusu — vidi napomenu u Footer.tsx. */}
+              <p>
+                <ConsentSettingsButton />
+              </p>
+            </>
+          ) : (
+            <>
+              <p>This version of the site does not run analytics or advertising trackers. You do not need to enable tracking to read the site or submit a form.</p>
+              <p>If optional tracking is introduced, this policy and the available privacy controls will be updated before it is enabled.</p>
+            </>
+          )}
           <p>
             <strong>Your state privacy rights.</strong> Depending on where you live, you may have
             the right to know what personal information we hold about you, to get a copy of it, to

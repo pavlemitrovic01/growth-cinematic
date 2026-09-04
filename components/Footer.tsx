@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import ConsentSettingsButton from './ConsentSettingsButton';
 import { PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
 
 /**
@@ -86,6 +87,12 @@ export default function Footer() {
           © {new Date().getFullYear()} Capljinac LLC. All rights reserved. ·{' '}
           <Link href="/privacy">Privacy Policy</Link> · <Link href="/terms">Terms</Link>
         </p>
+        {/*
+          ⚠️ U SOPSTVENOM pasusu, ne u sredini recenice iznad. Kontrola vraca `null` dok
+          consent nije ukljucen, a inline varijanta bi tada ostavila visak separatora
+          („Terms · ") — greska koju je originalni sajt vec jednom napravio i popravio.
+        */}
+        <ConsentSettingsButton className="consent-settings foot-choices" />
       </div>
     </footer>
   );
