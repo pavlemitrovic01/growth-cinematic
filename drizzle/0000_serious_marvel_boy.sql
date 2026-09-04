@@ -17,3 +17,5 @@ CREATE TABLE `rate_limit` (
 	`count` integer DEFAULT 0 NOT NULL,
 	`reset_at` integer NOT NULL
 );
+--> statement-breakpoint
+CREATE INDEX `rate_limit_reset_at_idx` ON `rate_limit` (`reset_at`);

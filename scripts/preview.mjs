@@ -10,6 +10,16 @@ import { securityHeaders } from '../lib/security.js';
 
 // Native vinext's asset URL cache uses Windows path separators. This local adapter
 // serves the unchanged built Worker and assets with normal HTTP compression.
+//
+// ⚠️ OVDE NEMA NIJEDNOG CLOUDFLARE BINDINGA. Adapter uvozi `dist/server/index.js` u
+// OBICAN Node, gde modul `cloudflare:workers` ne postoji — pa `getD1()` u
+// `lib/rate-limit.js` i `lib/leads.js` vraca null i oba tiho padaju na svoj fallback.
+// Log tada kaze „D1 nije vezan", sto NIJE kvar nego posledica ovog adaptera.
+//
+// Posledica za testiranje: sve sto dodiruje D1 (kocnica na deljenom sloju, upis leada,
+// ciscenje isteklih redova) mora se meriti protiv `npm run dev` (vite + Miniflare, koji
+// binding stvarno ima), a ne protiv ovog servera. Ovaj je za HTTP ponasanje: zaglavlja,
+// CSP, kompresija, statusi, renderovan HTML.
 const client = fileURLToPath(new URL('../dist/client/', import.meta.url));
 const types = { '.js':'application/javascript', '.css':'text/css', '.jpg':'image/jpeg', '.png':'image/png', '.svg':'image/svg+xml', '.woff2':'font/woff2' };
 const gzip = promisify(gzipCallback);

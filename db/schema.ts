@@ -13,11 +13,19 @@ import { index, integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
  * drizzle-ov `onConflictDoUpdate` ovde ne daje nista osim sloja. Schema postoji da
  * `npm run db:generate` proizvede migraciju — ne kao pristupni sloj.
  */
-export const rateLimit = sqliteTable("rate_limit", {
-  key: text("key").primaryKey(),
-  count: integer("count").notNull().default(0),
-  resetAt: integer("reset_at").notNull(),
-});
+export const rateLimit = sqliteTable(
+  "rate_limit",
+  {
+    key: text("key").primaryKey(),
+    count: integer("count").notNull().default(0),
+    resetAt: integer("reset_at").notNull(),
+  },
+  // ⚠️ Indeks postoji ZBOG BRISANJA, ne zbog citanja. Citanje ide po primarnom kljucu.
+  // `lib/rate-limit.js` povremeno brise istekle redove (`WHERE reset_at <= ?`); bez ovog
+  // indeksa to je pun skan tabele — a tabela je najveca bas kad je najmanje smes skenirati,
+  // pod raspodeljenim napadom sa mnogo IP-ova.
+  (table) => [index("rate_limit_reset_at_idx").on(table.resetAt)],
+);
 
 /**
  * Trajni zapis prijave.
