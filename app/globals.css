@@ -1,5 +1,5 @@
 @import "tailwindcss";
-:root{--forest:#08110d;--olive:#263420;--bone:#f1e7d5;--ink:#162019;--clay:#c8662e;--line:rgba(241,231,213,.25)}
+:root{--forest:#08110d;--bone:#f1e7d5;--ink:#162019;--clay:#c8662e;--line:rgba(241,231,213,.25)}
 *{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--forest)}body{margin:0;background:var(--forest);color:var(--bone);font-family:Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
 /* ─── FORME ───────────────────────────────────────────────────────────────────
    Cinematic jezik: verzal mikro-labele sa sirokim razmakom, tanke linije, clay
@@ -535,4 +535,33 @@ main:focus{outline:none}
 @media(max-width:720px){
   .error-page{padding:6vh 20px}
   .error-actions .btn{width:100%;justify-content:space-between}
+}
+
+/* ─── TRI SEKCIJE PRENETE IZ IZVORNOG PROJEKTA ────────────────────────────────
+   Sadrzaj je prenet doslovno; izgled je NOV. Nijedna maslinasto-zelena vrednost
+   ne prelazi — koriste se postojeci tokeni ove naslovne (`#e6dfce` kao druga krem
+   nijansa, `#86502b` kao akcenat, `#455044` kao telesni tekst).
+
+   Sve tri nose `.home-section`, pa nasledjuju postojece responsive ponasanje
+   (60px padding ispod 900px, 20px ispod 720px, h2 na 42px) — bez ijednog novog
+   media query-ja i bez izuzetka od sistema. */
+
+/* Potporni blok ispod forme, ne poglavlje: manji naslov od numerisanih sekcija. */
+.home-pay{background:#e6dfce}
+.home-pay h2{font-size:clamp(30px,3.6vw,50px);margin:24px 0 0}
+.home-pay p{font-size:16px;line-height:1.7;margin:0;color:#455044}
+.home-pay p em{font-style:italic}
+
+/* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.
+   `min-width` postoji da se „WE DON'T" i „WE DO" ne razidju, pa tekstualna
+   kolona ostaje poravnata niz celu listu. */
+.home-guard-list li>span{min-width:92px;font-weight:700;color:#5b6659}
+.home-guard-list li>span.is-do{color:#86502b}
+
+.home-stories{background:#e6dfce}
+.home-stories p{font-size:16px;line-height:1.7;margin:0 0 16px;color:#455044}
+
+@media(max-width:720px){
+  /* Na jednoj koloni labela ide iznad teksta, pa `min-width` vise nema svrhu. */
+  .home-guard-list li>span{min-width:0}
 }
