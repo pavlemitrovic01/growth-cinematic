@@ -1,6 +1,6 @@
 # STATUS — gde je projekat i šta je sledeće
 
-Poslednji put ažurirano: 2026-09-04. Piše se na kraju sesije, čita se na početku sledeće.
+Poslednji put ažurirano: 2026-09-05. Piše se na kraju sesije, čita se na početku sledeće.
 
 ## Šta je ovo
 
@@ -8,7 +8,7 @@ Novi CDL-A sajt (`C:/dev/growth-cinematic`), izgrađen na cinematic prototipu, u
 svega upotrebljivog iz postojećeg sajta. **Ovo je poseban projekat sa sopstvenim git-om**, a
 ne grana postojećeg.
 
-**Stek: Next.js → Vercel, Neon (Postgres) za bazu.** Do 2026-09-04 je ciljao Cloudflare
+**Stek: Next.js → Vercel, Neon (Postgres) za bazu.** Do 2026-09-05 je ciljao Cloudflare
 Workers kroz `vinext`; taj sloj je uklonjen (vidi „Prelazak na Vercel" niže).
 
 ## ⚠️ Tvrdo ograničenje
@@ -47,7 +47,7 @@ npm run test:rendered  # traži pokrenut server
 Poslednje dve gađaju `:3000` po difoltu (`--port` menja) i ne pokreću server same —
 pokreni `npm run build && npm start` pa meri protiv njega.
 
-## Prelazak na Vercel (2026-09-04)
+## Prelazak na Vercel (2026-09-05)
 
 Otkriveno merenjem: `app/` i `components/` nisu bili vezani za Cloudflare uopšte — uvoze
 samo standardni Next, pa `next build` prolazi bez izmene izvora stranica. Uklonjeno je
@@ -110,6 +110,14 @@ Kolona je zato `bigint`.
 3. **Resend ključ i adresa za notifikacije** — čeka Pavla.
 4. **Analitika**, pa uz nju upaliti consent kapiju.
 5. **Odluka o prelasku** — tek kad postoje brojke.
+
+## Šta je nedovršeno
+
+`docs/AUDIT.md` (2026-09-05) nosi izmeren spisak po stranici, sa redosledom rada u pet faza.
+Ukratko: nema nijednog TODO-a ni lorema — nedovršenost je u izostavljenim sekcijama, u copy-ju
+koji je pri prenosu prepisan kraći od originala, i u tome što pokret postoji samo na heroju.
+Tri stavke su tamo označene kao **pogrešne sada, ne nedovršene**: netačan procesor podataka u
+privacy politici, kršenje C53 na 404 stranici i otvorena C52 površina na `/how-it-works`.
 
 ## Otvoreno, svesno
 
