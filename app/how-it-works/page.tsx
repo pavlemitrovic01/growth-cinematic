@@ -8,7 +8,7 @@ export const metadata: Metadata = pageMeta({
   path: '/how-it-works',
   title: 'How CDL-A Driver Placement Works | GROWTH.CO',
   description:
-    'The whole process, start to finish: apply in 2 minutes, usually get a callback within 15–20 minutes during business hours. No fees for drivers.',
+    'The whole process, start to finish: apply in 2 minutes, usually get a callback within 15–20 minutes during staffed hours. No fees for drivers.',
 });
 
 const STEPS = [
@@ -20,7 +20,7 @@ const STEPS = [
   {
     n: '02',
     h: 'We call you',
-    p: 'Usually within 15–20 minutes during business hours. A real recruiter walks through your priorities — pay, home time, equipment, lanes. Nothing is decided on this call.',
+    p: 'Usually within 15–20 minutes during staffed hours. A real recruiter walks through your priorities — pay, home time, equipment, lanes. Nothing is decided on this call.',
   },
   {
     n: '03',
@@ -111,7 +111,7 @@ export default function HowItWorks() {
             <h2>Ready when you are</h2>
             <p>
               Two minutes to apply. A real recruiter usually calls back within 15–20 minutes during
-              business hours.
+              staffed hours.
             </p>
             <Link className="btn btn-primary" href="/apply">
               Apply now ↗

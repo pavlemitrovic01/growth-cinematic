@@ -17,7 +17,7 @@ export default function ApplyPage() {
             <p className="rail-eyebrow">WHAT HAPPENS NEXT</p>
             <h2>A conversation first.</h2>
             <ol className="rail-steps">
-              <li>A recruiter usually calls within 15–20 minutes during business hours.</li>
+              <li>A recruiter usually calls within 15–20 minutes during staffed hours.</li>
               <li>We discuss pay, home time, equipment and your experience.</li>
               <li>You compare the options and decide. Applying does not commit you to a job.</li>
             </ol>

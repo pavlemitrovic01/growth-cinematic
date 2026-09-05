@@ -68,9 +68,22 @@ const CONDITIONAL = [
   },
   {
     id: 'C12',
+    /**
+     * ⚠️ KAPIJA JE BILA UZA OD REGISTRA KOJI SPROVODI. `hedge2` je do 2026-09-05 glasio
+     * `/business hours/i`, a C12 dozvoljena formulacija je „usually within 15–20 minutes
+     * during **business/staffed** hours" — dakle registar priznaje oba, kapija samo prvo.
+     *
+     * Otkriveno kad je copy prelazio na „staffed hours": provera bi pala na svih 13 ruta i
+     * izgledalo bi kao greska u tekstu, a greska je bila ovde. Kapija koja odbija ono sto
+     * registar dozvoljava tera pisca da prekrsi registar da bi prosao build.
+     *
+     * „staffed" je i tacniji za ovaj posao: tim ne radi po objavljenom radnom vremenu nego
+     * je dostupan svaki dan dok je za stolom. Objavljeni raspored bi suzio ono sto je istina,
+     * a „24/7" bi ga prosirio preko onoga sto C13 dozvoljava. „staffed hours" pogadja tacno.
+     */
     claim: /15[–-]20 minutes/,
     hedge: /usually/i,
-    hedge2: /business hours/i,
+    hedge2: /(business|staffed) hours/i,
     why: 'vreme odgovora vazi samo u radno vreme i nije zagarantovano',
   },
 ];

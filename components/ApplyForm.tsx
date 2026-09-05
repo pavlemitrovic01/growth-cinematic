@@ -154,13 +154,21 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
 
   /**
    * ⚠️ CLAIMS C12 — „15–20 minuta" je CONDITIONAL i goli oblik je trajno zabranjen.
-   * Dozvoljen je samo sa oba hedza: „usually" + „during business hours". Ista recenica
-   * stoji u MAIN-u i tamo je prosla cetiri claims batch-a; ne skracivati.
+   * Dozvoljen je samo sa OBA hedza zajedno: ucestalost („usually") + vremenski okvir.
+   * Registar za drugi hedz priznaje „business/staffed hours"; ovaj projekat koristi
+   * „staffed" jer tim ne radi po objavljenom radnom vremenu (vidi C13). Ne skracivati —
+   * ista recenica stoji u MAIN-u i tamo je prosla cetiri claims batch-a.
+   *
+   * ⚠️ Ovo je JEDINI izvor te recenice u formama, ali ne i na sajtu: ista tvrdnja je
+   * prekucana jos na pet mesta (`app/apply`, `app/contact`, `app/how-it-works` ×2,
+   * `components/CinematicHome`, `lib/faq.js`) u tri varijante glagola. Zaveden nalaz u
+   * `docs/AUDIT.md` § Faza 4 — recenica sa sopstvenim redom u registru treba da ima
+   * jedan izvor.
    */
   const successNote = (
     <>
       A recruiter <strong>usually</strong> calls you back within 15–20 minutes{' '}
-      <strong>during business hours</strong>.
+      <strong>during staffed hours</strong>.
     </>
   );
 

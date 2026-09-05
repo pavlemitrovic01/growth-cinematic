@@ -77,7 +77,7 @@ export default function CinematicHome() {
             <div><h2 id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
             <ol className="home-steps">
               <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
-              <li><span>02</span><div><h3>Have a real conversation.</h3><p>A recruiter usually calls back within 15–20 minutes during business hours. We go through your priorities and qualifications.</p></div></li>
+              <li><span>02</span><div><h3>Have a real conversation.</h3><p>A recruiter usually calls back within 15–20 minutes during staffed hours. We go through your priorities and qualifications.</p></div></li>
               <li><span>03</span><div><h3>Compare the details.</h3><p>Pay structure, deductions, home-time schedule, equipment and miles. Ask your questions before choosing a carrier.</p></div></li>
               <li><span>04</span><div><h3>Choose your next route.</h3><p>We help with the next steps. Start dates depend on your paperwork and the carrier’s requirements.</p></div></li>
             </ol>
@@ -186,6 +186,20 @@ export default function CinematicHome() {
           <span className="home-kicker">THE NEXT MILE IS YOURS</span>
           <h2 id="close-heading">Ready for<br /><em>your next route?</em></h2>
           <div className="journey-actions"><ApplyLink>START MY APPLICATION</ApplyLink><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
+          {/*
+            CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
+            tacno jednom mestu (`app/how-it-works`, i to skracena na prvu polovinu) — a pripada
+            ovde, uz sam broj telefona, jer opisuje bas taj poziv.
+
+            ⚠️ Druga recenica NIJE ukras nego granica. C13 je ALLOWED za ovaj oblik i
+            PROHIBITED za „Available 24/7", „around the clock" i sve sto implicira garantovan
+            odgovor van radnih sati. Tim je dostupan svaki dan do kasno, pa je iskusenje da se
+            to napise jace — ali vozac koji posalje poruku u 4 ujutru odgovor nece dobiti.
+            „Daily — weekends included" nosi ceo adut; „staffed hours" cuva istinu.
+
+            Bez objavljenog rasporeda namerno: raspored bi suzio ono sto je stvarno tacno.
+          */}
+          <p>Call or text us daily — weekends included. We typically respond quickly during staffed hours.</p>
           <p>Hiring for your fleet? <Link href="/for-carriers">Let’s talk drivers ↗</Link></p>
           <Link className="home-text-link" href="/truckers-lounge">Explore the Truckers Lounge ↗</Link>
         </section>

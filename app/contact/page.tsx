@@ -14,7 +14,7 @@ export default function Contact() {
       <p className="contact-email">Prefer email? <a href={EMAIL_HREF}>{EMAIL}</a></p>
       <section className="contact-callback" aria-labelledby="callback-title">
         <h2 id="callback-title">Want us to call you?</h2>
-        <p>A recruiter usually calls back within 15–20 minutes during business hours. No obligation.</p>
+        <p>A recruiter usually calls back within 15–20 minutes during staffed hours. No obligation.</p>
         <div className="contact-quick"><ApplyForm variant="quick" /></div>
       </section>
     </PageShell>
