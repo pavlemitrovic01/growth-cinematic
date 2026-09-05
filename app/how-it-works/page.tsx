@@ -114,7 +114,7 @@ export default function HowItWorks() {
               </article>
               <article className="card">
                 <h3>What we handle</h3>
-                <p>Support from your application through onboarding:</p>
+                <p>Everything between your application and your first load:</p>
                 <p>
                   Finding carriers · matching you to lanes that fit · help with the paperwork ·
                   chasing recruiters and onboarding on your behalf · and staying reachable after
@@ -122,6 +122,33 @@ export default function HowItWorks() {
                 </p>
               </article>
             </div>
+          </section>
+
+          {/*
+            ⚠️ SEKCIJA 03 JE DODATA 2026-09-05 JER JE LINK VEC OBECAVAO. Naslovna
+            (`components/CinematicHome.tsx`) ispod sekcije „How we get paid" nosi link
+            „How it works ↗" ka ovoj stranici — a stranica model naknade NIGDE nije
+            objasnjavala. Obecanje i odrediste su stajali razdvojeni.
+
+            Tekst je prenet doslovno sa naslovne, gde je vec prosao registar: C5 izricito
+            dozvoljava „100% free for drivers", a dopuna L1 dozvoljava i negativno obecanje
+            izvedeno iz modela („we don't get paid unless you actually start").
+          */}
+          <section className="sub-section">
+            <div className="sub-head">
+              <span className="sub-num">03</span>
+              <h2>How we get paid</h2>
+            </div>
+            <p>
+              We make our money by charging a flat placement fee to the carrier <em>only</em>{' '}
+              after you successfully start driving for them. Our incentives are aligned with
+              yours: we don&apos;t get paid unless you actually start. No hidden cuts from your
+              paycheck. Just straightforward recruiting.
+            </p>
+            <p>
+              That is the whole model. It is also why applying costs you nothing and why nobody
+              here is paid to talk you into a truck you don&apos;t want.
+            </p>
           </section>
 
           {/* ⚠️ Ovaj pasus je kanonski C11 caveat. Ne brisati — bez njega „3–5 days"

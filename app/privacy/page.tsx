@@ -1,8 +1,9 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import ConsentSettingsButton from '@/components/ConsentSettingsButton';
 import { isConsentRequired } from '@/lib/consent';
-import { EMAIL, EMAIL_HREF } from '@/lib/contact';
+import { EMAIL, EMAIL_HREF, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
@@ -100,6 +101,9 @@ export default function Privacy() {
           &quot;our&quot;) collects, uses, and shares your personal information when you use our
           website or services.
         </p>
+        {/* Do 2026-09-05 nijedna od dve pravne stranice nije imala datum stupanja na snagu,
+            iako ga MAIN ima na obe. Izvor je zajednicki (`LEGAL_UPDATED`) da se ne raziju. */}
+        <p className="legal-updated">Last updated: {LEGAL_UPDATED}</p>
 
         {SECTIONS.map((s) => (
           <section key={s.n}>
@@ -114,7 +118,12 @@ export default function Privacy() {
 
         {/* ⚠️ `id="cookies"` MORA ostati na h2 — footer i `/privacy#cookies` cilja na njega. */}
         <section>
-          <h2 id="cookies">Cookies, Analytics, and Your Privacy Choices</h2>
+          {/* ⚠️ `id="cookies"` MORA ostati na h2 — footer i `/privacy#cookies` cilja na njega.
+              Broj sekcije je dodat 2026-09-05: niz 01–05 se ovde prekidao, pa su poslednje
+              dve sekcije stajale bez broja usred numerisanog dokumenta. */}
+          <h2 id="cookies">
+            <span className="sub-num">06</span> Cookies, Analytics, and Your Privacy Choices
+          </h2>
           {/*
             ⚠️ TEKST SE GRANA NA ISTU KAPIJU KOJA GATUJE BANER. Dok je consent ugasen, sajt
             stvarno ne ucitava nijedan tracker i prva varijanta je tacna. U trenutku kad se
@@ -177,12 +186,27 @@ export default function Privacy() {
         </section>
 
         <section>
-          <h2>Contact Us</h2>
+          <h2>
+            <span className="sub-num">07</span> Contact Us
+          </h2>
           <p>
             If you have any questions about this Privacy Policy, please contact us at{' '}
-            <a href={EMAIL_HREF}>{EMAIL}</a>.
+            <a href={EMAIL_HREF}>{EMAIL}</a>, or call{' '}
+            <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>. The terms that govern use of the site
+            are in our <Link href="/terms">Terms of Service</Link>.
           </p>
         </section>
+      </div>
+
+      {/* Zavrsni blok — stari sajt ga je imao na svakoj podstranici, ovaj projekat ga je
+          izgubio bas na tri: `/truckers-lounge`, `/privacy` i `/terms`. */}
+      <div className="contact-actions">
+        <Link className="btn btn-primary" href="/apply">
+          Start your application ↗
+        </Link>
+        <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+          Call {PHONE_DISPLAY}
+        </a>
       </div>
     </PageShell>
   );

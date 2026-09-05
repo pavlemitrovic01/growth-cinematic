@@ -28,7 +28,7 @@ export default function TruckersLounge() {
       }
       lede="Before the next offer, know what to ask. Practical guides to training, your record and the numbers in a driving job."
     >
-      <div className="post-list">
+      <div className="post-list" data-stagger>
         {POSTS.map((post) => (
           <article className="post-card" key={post.slug}>
             <div className="post-meta">
@@ -44,6 +44,19 @@ export default function TruckersLounge() {
             </Link>
           </article>
         ))}
+      </div>
+
+      {/*
+        ⚠️ Zavrsni CTA. Audit je nasao da je ovo bila JEDINA stranica na celom sajtu bez
+        ijednog sledeceg koraka: vozac koji dodje sa naslovne („Explore the Truckers Lounge")
+        i ne otvori clanak nema kuda dalje. Stari sajt je ovde imao `CallToAction`
+        (`C:/dev/growth/app/truckers-lounge/page.jsx:54`).
+      */}
+      <div className="page-next">
+        <p>Read enough? A recruiter can go through the same details with you.</p>
+        <Link className="btn btn-primary" href="/apply">
+          Start your application ↗
+        </Link>
       </div>
     </PageShell>
   );

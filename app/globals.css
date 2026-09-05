@@ -197,6 +197,9 @@
 .prose--legal section{display:flex;flex-direction:column;gap:14px;margin-top:14px}
 .prose--legal h2{margin:26px 0 0;font-size:17px;letter-spacing:-.02em}
 .prose--legal ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:9px}
+/* Datum stupanja na snagu. Tiho, ali mora biti vidljivo — pravni dokument bez datuma
+   se ne moze citirati. Jedan izvor za obe stranice: `LEGAL_UPDATED` u `lib/contact.js`. */
+.legal-updated{margin:0;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--clay-mid)}
 .signature{font-weight:700}
 
 /* ─── FAQ ─────────────────────────────────────────────────────────────────────*/

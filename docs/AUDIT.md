@@ -242,7 +242,78 @@ stanje, pa je na telefonu **jedini CTA bez taktilnog odgovora**. Uspeh forme
 
 ---
 
-## Faza 3 — podstranice, redom po šteti
+## Faza 3 — ✅ URAĐENO 2026-09-05 (osim onoga što traži advokata i Pavla)
+
+**Načelo:** sav dodat tekst je **prenet, ne napisan**. Svaka nova rečenica dolazi sa mesta gde
+je već prošla registar tvrdnji — naslovna, `lib/faq.js`, `Footer.tsx`, ili MAIN. Tamo gde bi
+trebalo napisati nov tekst, nije napisan nego zaveden kao otvoreno.
+
+**Obim sadržaja u serverskom HTML-u, izmereno pre/posle:**
+
+| Ruta | Pre | Posle |
+|---|---|---|
+| `/for-carriers` | 1743 | **2548** (+46%) |
+| `/contact` | 1620 | **2181** (+35%) |
+| `/apply` | 2028 | **2541** |
+| `/how-it-works` | 2536 | **2985** |
+| `/terms` | 1886 | **2190** |
+| `/privacy` | 4326 | **4651** |
+| `/truckers-lounge` | 1552 | 1644 |
+| `/about` | 1858 | 1928 |
+
+Kapije: typecheck 0 · lint 0 · test 120/120 · build 0 · verify PASS+PASS · rendered 9/9.
+
+### Šta je urađeno po stranici
+
+- **`/for-carriers`** — pojas poverenja, tri numerisane sekcije (model naknade doslovno sa
+  naslovne, pokrivenost doslovno iz `lib/faq.js`, pravni odnos doslovno iz `Footer.tsx`),
+  i izlazi ka `/how-it-works` i `/about`. Fajl više nije bez ijednog internog linka.
+- **`/contact`** — vraćena „No phone tree, no ticket number" (fraza koja u repou nije
+  postojala nigde), vraćeno „free for drivers, always", i dodato **grananje po publici**
+  u tri sekcije. Carrier više ne dobija formu za vozače.
+- **`/terms`** — brojevi sekcija 01–06, `Last updated`, imenovano pravno lice, Contact
+  sekcija, završni CTA.
+- **`/privacy`** — `Last updated`, numeracija dovršena (Cookies → 06, Contact → 07),
+  završni CTA. Datum je zajednički izvor sa `/terms` (`LEGAL_UPDATED` u `lib/contact.js`),
+  jer ih MAIN drži odvojeno i već su se razišle.
+- **`/apply`** — pojas poverenja iznad forme (`.sub-trust` je postojao i bio ostilizovan, a
+  koristila ga je samo `/how-it-works`), i mikro-FAQ o prekršajima/SAP-u koji se **čita iz
+  `lib/faq.js`**, ne prekucava — taj tekst nosi C36 i C19.
+- **`/how-it-works`** — dodata sekcija „03 · How we get paid", jer je naslovna već linkovala
+  ovamo obećavajući objašnjenje naknade a stranica ga nije imala.
+- **`/about`** — završetak promenjen sa jednog linka na dva konverziona izlaza.
+- **`/truckers-lounge`** — završni CTA; bila je jedina slepa ulica na sajtu.
+
+### ⚠️ Tri predloga audita koje sam odbio, i zašto
+
+Agent je predložio vraćanje četiri „oslabljena" pasusa sa `/how-it-works`. Vratio sam **jedan**;
+tri nisam, i to je neslaganje sa auditom, ne propust:
+
+- **„Most recruiters keep the process vague so you keep calling back."** Negativna univerzalna
+  tvrdnja o konkurenciji. `verify-claims.mjs` ima pravilo D20 baš protiv te klase, ali njegov
+  regex gađa konkretne fraze (`scam and cheat`, `most recruiters lie`) — ova bi **prošla
+  kapiju** a prekršila njen smisao.
+- **„not the ones paying us most that week"** — implicira da konkurencija to radi. Ista klasa.
+- **„But we'll never be the reason you wait."** — apsolutno obećanje o sopstvenom učinku
+  („never"), bez ijednog reda u registru.
+
+Nijedna od te tri nema red u `CLAIMS.md` (provereno grep-om). Vraćeno je samo
+„Everything between your application and your first load:" — opis obima, bez ocene.
+
+### ⚠️ Otvoreno — traži Pavla ili advokata, ne mene
+
+- **Rok odgovora za carrier-a.** Vozač ga dobija na četiri mesta (15–20 min, uz oba C12
+  hedža), carrier nijedan. MAIN-ova formulacija („within 24 hours") je tvrdnja bez reda u
+  registru i ovaj projekat ju je svesno izbacio. Nov rok traži Pavlov input.
+- **`/terms`: governing law, arbitraža, intelektualna svojina, uslovi prekida.** Sve četiri
+  traže kvalifikovanog američkog advokata. Stranica je do njih nepotpuna.
+- **C52** ostaje OPEN (vidi Fazu 0).
+- **`KnowBeforeYouGo`** — najveći sadržajni gubitak (jedanaest redova registra sa citiranim
+  FMCSA/BLS izvorima) i dalje nije vraćen. Po obimu je zaseban posao, ne stavka u fazi.
+
+### Original plana
+
+
 
 **`/for-carriers` (2/5)** — jedina strana publike koja plaća, i najtanja na sajtu. Lede tvrdi
 „You pay only for successful placements" bez potpornog bloka, a taj blok već postoji doslovno

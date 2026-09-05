@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
+import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
@@ -65,7 +66,7 @@ export default function About() {
         <p className="signature">— Nate Mikic, Founder, GROWTH.CO</p>
       </div>
 
-      <div className="sub-3up">
+      <div className="sub-3up" data-stagger>
         {VALUES.map((v) => (
           <article className="card" key={v.h}>
             <h2>{v.h}</h2>
@@ -73,7 +74,26 @@ export default function About() {
           </article>
         ))}
       </div>
-      <div className="page-next"><p>Want to see how we work?</p><Link className="btn btn-primary" href="/how-it-works">See the process ↗</Link></div>
+      {/*
+        ⚠️ Zavrsetak je promenjen sa jednog linka na dva konverziona izlaza. `/about` je bila
+        JEDINA od cetiri glavne strane cija poslednja akcija ne vodi ni ka prijavi ni ka
+        telefonu — vodila je na `/how-it-works`, dakle dublje u citanje. Stari sajt je ovde
+        imao `CallToAction` sa „Apply now + Call us". Link na proces ostaje, ali kao sporedan.
+      */}
+      <div className="page-next">
+        <p>Ready to talk about your next route?</p>
+        <div className="contact-actions">
+          <Link className="btn btn-primary" href="/apply">
+            Start your application ↗
+          </Link>
+          <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+            Call {PHONE_DISPLAY}
+          </a>
+        </div>
+        <p className="contact-email">
+          Or see <Link href="/how-it-works">how the process works</Link>.
+        </p>
+      </div>
     </PageShell>
   );
 }
