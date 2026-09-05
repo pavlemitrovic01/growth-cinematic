@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMeta({ path: '/apply', title: 'Apply — C
 export default function ApplyPage() {
   return (
     <PageShell variant="form" eyebrow="DRIVER APPLICATION" title={<>Your next route.<br /><em>Starts here.</em></>} lede="About two minutes. No resume or account needed. Free for drivers, always.">
-      <div className="sub-grid form-layout">
+      <div className="sub-grid">
         <section id="application" aria-labelledby="application-title">
           <div className="form-heading"><h2 id="application-title">Tell us about yourself</h2><p>All fields are required. Select the answer that matches where you are today.</p></div>
           <ApplyForm />

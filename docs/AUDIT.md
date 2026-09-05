@@ -79,10 +79,43 @@ izloženost tamo postoji i nije uklonjena ovim radom.
 
 ---
 
-## Faza 1 — tokeni i mrtav CSS
+## Faza 1 — ✅ URAĐENO 2026-09-05
 
-Preduslov za sve što sledi. Bez ovoga svaki novi primitiv dodaje još tvrdih vrednosti u fajl
-koji ih već ima previše.
+Preduslov za sve što sledi. Bez ovoga bi svaki novi primitiv dodavao još tvrdih vrednosti u
+fajl koji ih već ima previše.
+
+**Šta je urađeno:** šest boja koje su se već ponašale kao tokeni dobilo je ime (`--moss`,
+`--bone-dim`, `--clay-deep`, `--clay-mid`, `--clay-soft`, `--clay-light`) — **47 zamena**;
+dodata su četiri tokena za pokret (`--dur-fast`, `--dur`, `--dur-slow`, `--ease-out`,
+gde je krivulja ista koju stari sajt koristi u sve četiri reveal komponente); uklonjene su
+dve mrtve tranzicije i tri mrtve klase.
+
+**Dokaz da se izgled nije pomerio.** Nije uzet uzorak elemenata nego je poređen **razrešen
+izvor**: u novom fajlu su `var()` reference vraćene u heks vrednosti, komentari uklonjeni, i
+rezultat diffovan protiv `globals.css` iz prethodnog commita. Diff sadrži **tačno četiri
+izmene i nijednu drugu** — dodate `:root` deklaracije, uklonjen `.proof-section` prefiks,
+uklonjena dva `.nav-links a` pravila, uklonjena mrtva polovina `.foot ul a`. Svih 47 zamena
+vraća bajt-identičnu vrednost.
+
+**Dve ispravke audita, otkrivene pri radu:**
+
+- ⚠️ **`.proof-section` nije imao dva mrtva pravila nego jedno i po.** `globals.css:17` je bio
+  **deljeni** selektor `.proof-section :focus-visible,.af :focus-visible` — a `.af` je apply
+  forma i živa je. Brisanje celog pravila, kako je nalaz sugerisao, oborilo bi boju fokus
+  prstena na formi. Uklonjen je samo prefiks.
+- ⚠️ **`.foot ul a` hover nije bio potpuno mrtav.** Mrtav je bio `opacity:1` (baza je već 1 iz
+  kasnijeg bloka), ali **podvlačenje je radilo**. Uklonjena je samo mrtva polovina.
+
+**Posledica koju treba znati:** nav linkovi sada nemaju **nijedno** hover stanje. Nisu ga imali
+ni pre — pravilo je postojalo ali je animiralo `1 → 1`, pa je samo *izgledalo* kao da postoji.
+Pravo hover stanje je posao Faze 2 (primitiv `nudge`).
+
+**Nije rešeno i čeka svoj prolaz:** `rgba(22,32,25,…)` je `--ink` prekucan ručno u 17 različitih
+alfa vrednosti (~45 pojava), a za greške postoje **četiri** crvene (`#e0714f`, `#ffa68b`,
+`#9d2e16`, `#942b14`). Svođenje crvenih na dve je vizuelna odluka, ne čišćenje, pa nije išlo u
+ovu fazu.
+
+### Zatečeno stanje pre ove faze
 
 **Izmereno stanje:** `:root` (`app/globals.css:2`) nosi **5 tokena**. U istom fajlu stoji
 **27 unikatnih hex boja i 32 unikatne rgba vrednosti**. Šest boja se ponaša kao token a nema

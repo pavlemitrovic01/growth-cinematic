@@ -7,7 +7,7 @@ export const metadata: Metadata = pageMeta({ path: '/for-carriers', title: 'Hire
 export default function ForCarriersPage() {
   return (
     <PageShell variant="form" eyebrow="FOR CARRIERS" title={<>The right drivers.<br /><em>For your operation.</em></>} lede="Tell us about your lanes, equipment and hiring requirements. You pay only for successful placements.">
-      <div className="sub-grid form-layout">
+      <div className="sub-grid">
         <section aria-labelledby="carrier-title">
           <div className="form-heading"><h2 id="carrier-title">Let’s talk recruiting</h2><p>Leave your contact details. All fields except email are required.</p></div>
           <CarrierForm />

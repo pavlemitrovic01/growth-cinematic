@@ -35,7 +35,7 @@ export default function CinematicHome() {
             <h2><strong className="journey-number">$0</strong> Cost to drivers.<br /><em>Always.</em></h2>
             <p className="journey-lede">Carriers pay our placement fee. You pay nothing to apply, talk to us or get matched. It never comes out of your paycheck.</p>
           </article>
-          <article className="journey-beat journey-final" data-beat>
+          <article className="journey-beat" data-beat>
             <p className="journey-eyebrow">03 / THE NEXT MILE</p>
             <h2>A better route<br /><em>starts with a call.</em></h2>
             <p className="journey-lede">One conversation about what matters to you. Clear options. The decision stays yours.</p>
