@@ -24,7 +24,7 @@ potpornim blokom, svaka sekcija sa izlazom. Podstranice se mere prema njoj.
 | `/truckers-lounge` | 3/5 | Završni CTA — jedina slepa ulica na sajtu |
 | `/privacy` | 3/5 | Datum, ispravan procesor, dovršena numeracija |
 | `/for-carriers` | 2/5 | Blok o naknadi, rok odgovora, sekcija „šta radimo pre" |
-| `/contact` | 2/5 | Radno vreme, „No phone tree", grananje po publici |
+| `/contact` | 2/5 | „No phone tree", grananje po publici (radno vreme rešeno 09-05) |
 | `/terms` | 2/5 | Datum, numeracija, pravni subjekt, governing law, kontakt |
 
 ---
@@ -223,11 +223,32 @@ Prefiks pristanka „By checking this box," stoji u tri od četiri forme — a t
 verzija upisuje u bazu uz svaki pristanak, pa jedan `CONSENT_TEXT_VERSION` sada pokriva dve
 rečenice. `lib/posts.js` meša prave i tipografske navodnike između članka 1 i članaka 2–3.
 
-**Rupa koju treba popuniti pre oba prolaza:** sajt se ograđuje sa „during business hours" na
-**devet mesta**, i nigde — ni u jednom fajlu — ne kaže koje su to sate. Nema ih na `/contact`,
-nema u footeru, nema `openingHours` u `StructuredData.tsx`. Glavno obećanje sajta visi o
-uslovu koji posetilac ne može proveriti. Nije nova tvrdnja nego podatak koji Pavle daje u
-jednoj rečenici.
+**Rupa zatvorena 2026-09-05 — i nije zatvorena onako kako je nalaz predlagao.** Nalaz je
+glasio: sajt se ograđuje sa „during business hours" na devet mesta a nigde ne kaže koje su to
+sate, pa treba objaviti radno vreme. Pavlov odgovor ga je preokrenuo — tim je dostupan svaki
+dan od jutra do kasno u noć, dakle **hedž nije bio nedovoljno definisan nego pogrešan**:
+„business hours" opisuje firmu sa centralom i rasporedom, što je suprotno od pozicije sajta
+(„no phone tree, a real person"), a objavljen raspored bi **suzio** ono što je stvarno tačno.
+
+Rešeno kroz registar, bez objavljivanja rasporeda:
+
+- C12 dozvoljena formulacija već priznaje „business/**staffed** hours" — svih devet pojava
+  prešlo na „staffed".
+- ⚠️ **Kapija je bila uža od registra koji sprovodi.** `verify-claims.mjs` je za drugi hedž
+  tražio doslovno `/business hours/i`, pa bi ispravan copy oborio `npm run verify` na svih 13
+  ruta i izgledalo bi kao greška u tekstu. Regex proširen na `/(business|staffed) hours/i`
+  **pre** izmene copy-ja. Pouka šira od ovog slučaja: kapija koja odbija ono što registar
+  dozvoljava tera pisca da prekrši registar da bi prošao build.
+- Kanonska C13 rečenica („Call or text us daily — weekends included. We typically respond
+  quickly during staffed hours.") vraćena na naslovnu, uz telefon u `home-close`.
+
+⚠️ **Granica koja ostaje živa:** C13 je PROHIBITED za „Available 24/7", „around the clock" i
+sve što implicira garantovan odgovor van radnih sati. Istina je blizu te granice, utoliko je
+lakše preći je pri sledećem prolazu kroz copy. Provereno na renderovanom HTML-u: nijedan
+zabranjen oblik nije prisutan.
+
+Ostaje otvoreno: `openingHours` u `StructuredData.tsx` i dalje ne postoji — svesno, jer bi
+strukturirani podaci objavili raspored koji sajt namerno ne objavljuje.
 
 ---
 
