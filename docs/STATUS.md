@@ -1,6 +1,6 @@
 # STATUS — gde je projekat i šta je sledeće
 
-Poslednji put ažurirano: 2026-09-05. Piše se na kraju sesije, čita se na početku sledeće.
+Poslednji put ažurirano: 2026-09-06. Piše se na kraju sesije, čita se na početku sledeće.
 
 ## Šta je ovo
 
@@ -10,6 +10,10 @@ ne grana postojećeg.
 
 **Stek: Next.js → Vercel, Neon (Postgres) za bazu.** Do 2026-09-05 je ciljao Cloudflare
 Workers kroz `vinext`; taj sloj je uklonjen (vidi „Prelazak na Vercel" niže).
+
+**Živ pod `noindex` na https://growth-cinematic.vercel.app.** Repo:
+`github.com/pavlemitrovic01/growth-cinematic` (privatan). Do 2026-09-05 repo nije imao
+remote uopšte — ceo rad je stajao na jednoj kopiji na disku.
 
 ## ⚠️ Tvrdo ograničenje
 
@@ -25,14 +29,16 @@ folder briše, D28 i PB1.md odlaze s njim.
 
 ## Stanje
 
-Sajt je funkcionalno kompletan i nikad nije deploy-ovan.
+Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `noindex`.
 
 | | |
 |---|---|
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 120 u 8 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`vercel-migration`**, 8 commita, **nije spojena u `master`** |
+| Grana | **`master`** (32 commita); `vercel-migration` spojena fast-forward-om |
+| Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
+| Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
 **Kapije** — sve moraju biti zelene pre commita:
 
@@ -45,8 +51,17 @@ npm run verify         # verify:nojs + verify:claims, traži pokrenut server
 npm run test:rendered  # traži pokrenut server
 ```
 
-Poslednje dve gađaju `:3000` po difoltu (`--port` menja) i ne pokreću server same —
-pokreni `npm run build && npm start` pa meri protiv njega.
+Poslednje dve ne pokreću server same — pokreni `npm run build && npm start` pa meri protiv
+njega. Po difoltu gađaju `:3000`.
+
+**Meta merenja se bira, i uvek se ISPISUJE** (`meri se: <origin>`):
+
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
+
+⚠️ Za `test:rendered` MORA `VERIFY_BASE`, nikad `-- --base`: `node --test` ne prosleđuje
+argumente posle `--` test fajlu, pa bi merenje tiho otišlo na `localhost` i prijavilo PASS
+na pogrešnoj meti. Desilo se već jednom — vidi `2accf84`.
 
 ## Prelazak na Vercel (2026-09-05)
 
@@ -96,8 +111,43 @@ Kolona je zato `bigint`.
   tekst to tačno kaže. Pali se **u istom trenutku kad i analitika**, ne pre.
 - **Resend** (`RESEND_API_KEY`, `LEAD_NOTIFICATION_EMAIL`) — rute rade i bez njega: vraćaju
   503 „pozovite nas", nikad lažnu potvrdu.
-- **`DATABASE_URL`** — bez njega rute rade, ali se lead ne upisuje trajno i kočnica pada na
-  slabiji in-memory sloj. Vercel Marketplace Neon integracija ubacuje promenljivu sama.
+- **`DATABASE_URL`** — **postavljen 2026-09-05** kroz Neon Marketplace integraciju. Prefiks
+  je zadat kao `DATABASE`, pa je ime tačno ono koje `db/index.ts:31` traži; da je ostao
+  difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
+  Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
+  ih**, integracija ih sama održava.
+
+## Sesija 2026-09-05 (nastavak) — deploy
+
+Četiri commita na `master`. **Sve merenje od ovog trenutka ide protiv deploy-a, ne localhost-a.**
+
+| Commit | Šta |
+|---|---|
+| `0b2b747` | `next` 16.3.4 — četiri high iz produkcije zatvorene (`npm audit --omit=dev`: 0) |
+| `9c125be` | `--base` u tri kapije |
+| `2accf84` | ⚠️ ispravka: `node --test` ne prosleđuje argv → meta preko `VERIFY_BASE`, i ispisuje se |
+
+Uz to, van commita: GitHub repo napravljen i obe grane pušene; `vercel-migration` spojena
+u `master` fast-forward-om; Vercel projekat + Neon kroz Marketplace; migracija puštena.
+
+**⚠️ `master` je pre merge-a bio mina.** Nosio je `worker/index.ts` i `vite.config.ts`, a
+**nije imao `middleware.ts`**. Pošto i GitHub i Vercel po difoltu gađaju default granu,
+import bi objavio tri javne POST rute bez cross-origin zaštite i bez ijednog bezbednosnog
+zaglavlja — tačno tiho otkazivanje na koje ovaj dokument upozorava kao na glavni rizik
+migracije. Uhvaćeno pre uvoza u Vercel.
+
+**Izmereno protiv `https://growth-cinematic.vercel.app`:**
+
+`verify:nojs` PASS 11 ruta · `verify:claims` PASS 13 ruta · `test:rendered` **9/9**
+
+Prvo stvarno merenje `middleware`-a cross-origin zaštite na pravom sajtu — **prolazi**.
+`noindex` drži na sva četiri sloja (HTTP zaglavlje, HTML meta, `robots.txt`, prazan `sitemap`).
+
+**Lanac prijave dokazan do baze.** Test POST na `/api/apply` vratio je očekivani 503
+(„call or text us instead"), a red je svejedno upisan: `source=apply`,
+`consent_granted=t`, `consent_version=2026-09-02`, `email_delivered=f`. Upis stoji **ispred**
+503-a namerno — bez toga bi prijava nestala bez traga baš u slučaju zbog kog baza i postoji.
+Test-red obrisan. Ostaje nedokazana samo poslednja karika: Resend → inbox.
 
 ## Sesija 2026-09-05 — šta je urađeno
 
@@ -119,36 +169,39 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**Pogledaj sajt u pravom browseru.** Pet faza je prošlo bez da ga je Pavle video. Konkretno:
-`npm run build && npm start`, pa `http://localhost:3000`.
+**Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. Jedina preostala stavka koja ne zavisi
+ni od Pavla, ni od advokata, ni od spoljnog servisa.
 
-Jedina stvar koju iz Claude browser panela **nije bilo moguće proveriti** je okidanje
-`IntersectionObserver`-a na skrol — panel drži tab u `visibilityState: "hidden"`, gde browser
-ne isporučuje te callback-ove (provereno kontrolnim observer-om). Isto ograničenje zbog kog se
-ni 3D hero ne može proveriti odatle. Polaritet, CSS mehanika i degradacija **jesu** izmereni.
+Browser provera je **odrađena 2026-09-05** — Pavle je pogledao sajt i odobrio izgled
+(„ima još stvari koje ćemo raditi", ali ništa što blokira). Ograničenje Claude browser
+panela i dalje važi: panel drži tab u `visibilityState: "hidden"`, pa se okidanje
+`IntersectionObserver`-a na skrol i 3D hero odatle ne mogu proveriti.
+
+**Deploy je otključao dve stvari koje još nisu iskorišćene:** 3D hero na pravom hardveru
+(otvori sajt na telefonu) i Lighthouse na hostingu umesto lokalno.
 
 ## Sledeće, po redosledu
 
-0. **Pogledati sajt u browseru** (vidi gore) i odlučiti da li grana ide u `master`.
-   Grana `vercel-migration` sadrži ceo rad ove sesije i **nije spojena**.
-1. **`next` na 16.3.4.** `npm audit` daje 4 high (`postcss`, `sharp`), sve rešive tim
-   podizanjem. Hitnije je nego na Cloudflare-u: Next-ov optimizator slika radi u
-   deploy-ovanom runtime-u i `sharp` je u njemu. Namerno ostavljeno van migracije da ne meša
-   dva izvora regresije — ide sa svojim prolaskom kapija.
-2. **Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. Prvi vraća dva odobrena reda koja su
-   pri prepisu ispala iz `lib/faq.js` (C15 lead-brokeri, obim TCPA pristanka); drugi rešava
-   nedoslednosti: sedam labela za `/apply`, tri varijante C12 rečenice, prefiks pristanka
-   u tri od četiri forme.
-3. **Vercel projekat + Neon baza.** Nalog je isti na kom živi original
-   (`team_lFVUISCch3euonXJEBmOdfiA`, projekat `growth`) — novi sajt ide kao **zaseban
-   projekat**, domen se ne dira. Uz projekat: Neon kroz Marketplace, pa migracija
-   `drizzle/0000_steep_hannibal_king.sql` na pravu bazu.
-4. **Deploy sa `noindex`.** Otključava četiri stvari koje se lokalno ne mogu proveriti: 3D
-   na pravom hardveru, Lighthouse na hostingu, prijava kroz ceo lanac (forma → Neon →
-   Resend → inbox), i pokazivanje sajta bilo kome.
-5. **Resend ključ i adresa za notifikacije** — čeka Pavla.
+0. **✅ Urađeno 2026-09-05.** Sajt pogledan u pravom browseru, izgled odobren, grana
+   `vercel-migration` spojena u `master` fast-forward-om.
+1. **✅ Urađeno** — `next` 16.3.4, `0b2b747`.
+2. **Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. **← SLEDEĆE.** Prvi prolaz vraća dva
+   odobrena reda koja su pri prepisu ispala iz `lib/faq.js` (C15 lead-brokeri, obim TCPA
+   pristanka) i kanonsku C21 formulaciju; drugi rešava nedoslednosti: sedam labela za
+   `/apply`, tri varijante C12 rečenice u šest instanci, prefiks pristanka u tri od četiri
+   forme. Najveći pojedinačni gubitak je `KnowBeforeYouGo` — vidi `AUDIT.md`.
+3. **✅ Urađeno** — Vercel projekat + Neon kroz Marketplace, migracija puštena.
+   ⚠️ **Ali na ličnom Hobby nalogu**, ne na timu na kom živi original
+   (`team_lFVUISCch3euonXJEBmOdfiA`). Hobby je po Vercel uslovima nekomercijalan, a ovaj
+   sajt prima prave prijave. **Pre pravog saobraćaja projekat treba premestiti na tim** —
+   što znači ponovo env promenljive i ponovo Neon integraciju.
+4. **✅ Urađeno** — deploy pod `noindex`. Od četiri stvari koje otključava, dve su
+   iskorišćene (prijava kroz lanac do baze, pokazivanje linka); **Lighthouse na hostingu i
+   3D na pravom hardveru još nisu.**
+5. **Resend ključ i adresa za notifikacije** — čeka Pavla. `lib/email.js:13` traži **i**
+   ključ **i** adresu; dok oba ne postoje, rute vraćaju 503, a lead se svejedno upisuje u bazu.
 6. **Analitika**, pa uz nju upaliti consent kapiju.
-7. **Odluka o prelasku** — tek kad postoje brojke.
+7. **Odluka o prelasku** — tek kad postoje brojke. Original ostaje živ i indeksiran do tada.
 
 ### Blokirano na Pavlu ili advokatu — ne može se raditi bez odgovora
 
@@ -160,7 +213,12 @@ ni 3D hero ne može proveriti odatle. Polaritet, CSS mehanika i degradacija **je
 - **C52 (OPEN):** zabranjena površina je uklonjena sa `/how-it-works` 2026-09-05, ali red
   ostaje otvoren. ⚠️ **Isti tekst i dalje stoji u MAIN-u**
   (`C:/dev/growth/app/how-it-works/page.jsx:129-130`), na sajtu koji je indeksiran i prima
-  prave prijave.
+  prave prijave. **Ponovo provereno 2026-09-05, stoji doslovno:** „documents showing you're
+  authorized to work in the US · enough English to handle dispatch and DOT" — lista uslova
+  za zaposlenje po imigracionom statusu i jeziku, tačno obrazac koji `docs/CLAIMS.md:666`
+  imenuje kao zabranjen dok je red OPEN. Vlasnik reda je **kvalifikovani američki advokat**;
+  nijedan agent ne sme doneti taj zaključak sam. Popravka traži svoj batch u `GROWTH`
+  repo-u — ovaj projekat MAIN ne dira.
 - **Pravni pregled** privacy i TCPA teksta. Kad se završi, `LEGAL_UPDATED` u
   `lib/contact.js` se postavlja na dan pregleda.
 
@@ -174,11 +232,15 @@ privacy politici, kršenje C53 na 404 stranici i otvorena C52 površina na `/how
 
 ## Otvoreno, svesno
 
-- **`npm audit`: 4 high u produkcijskim zavisnostima** (`postcss`, `sharp`), sve rešive
-  podizanjem `next`-a na 16.3.4. ⚠️ **Ovo je sada hitnije nego na Cloudflare-u.** Ranije
-  je stajalo da nijedna nije u worker bundle-u; na Vercelu Next-ov optimizator slika radi u
-  deploy-ovanom runtime-u i `sharp` je u njemu. Bump je namerno ostavljen izvan migracije
-  da ne meša dva izvora regresije — ide kao prvi sledeći posao, sa svojim prolaskom kapija.
+- **`npm audit` u produkciji: čisto.** Četiri high (`postcss` — XSS + tri path-traversal
+  preko `sourceMappingURL`; `sharp` — libvips CVE-2026-33327/33328/35590/35591) zatvorene
+  su bump-om `next`-a na 16.3.4 (`0b2b747`). `npm audit --omit=dev` daje
+  `found 0 vulnerabilities`. Nije se moglo zakrpiti odozdo: `next@16.2.6` je nosio **svoj**
+  `postcss@8.4.31` unutar svog stabla, a advisory pogađa sve `<=8.5.22`.
+  ⚠️ **Pun `npm audit` (sa dev-om) i dalje daje 9** (1 low, 4 moderate, 4 high) — ali su to
+  **drugi** nalazi: `brace-expansion`, `browserslist`, `js-yaml`, `vite`. Svi dev-only;
+  ništa od toga se ne deploy-uje. Pun dev audit **nije** izmeren pre bump-a, pa se ne tvrdi
+  da li je tih 9 zatečeno ili pomereno.
 - **Cold start baze pada u putanju POST-a forme.** Neon gasi compute posle 5 min mirovanja
   i budi se sam za ~300–800 ms, a prvi dodir baze u zahtevu je rate-limit provera. Prva
   prijava posle zatišja je sporija za oko sekundu; ne pada, jer in-memory sloj stoji ispod.
