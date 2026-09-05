@@ -14,8 +14,11 @@ import test from 'node:test';
  * Upotreba (server mora vec da radi):
  *   npm run build && npm start
  *   npm run test:rendered
- *   node --test tests/rendered-html.test.mjs -- --port 3001
- *   node --test tests/rendered-html.test.mjs -- --base https://primer.vercel.app
+ *   VERIFY_PORT=3001 node --test tests/rendered-html.test.mjs
+ *   VERIFY_BASE=https://primer.vercel.app node --test tests/rendered-html.test.mjs
+ *
+ * ⚠️ NE koristiti `-- --port` / `-- --base`: `node --test` te argumente ne prosledjuje
+ * fajlu, pa bi merenje tiho islo na difolt umesto na trazenu metu.
  */
 /**
  * Origin koji se meri. `--base` gadja bilo koji origin (deploy), `--port` ostaje za localhost.
@@ -25,23 +28,37 @@ import test from 'node:test';
  * ni na cemu. Tiha laz je gora od pada, pa se ovde pada glasno.
  */
 const BASE = (() => {
-  const b = process.argv.indexOf('--base');
-  if (b === -1 || !process.argv[b + 1]) {
+  /**
+   * ⚠️ ZASTO ENV, NE SAMO ARGV. `node --test` NE prosledjuje argumente posle `--` test
+   * fajlu — `process.argv` u njemu ih ne vidi. Dokazano: sa `-- --port 9999` i sa
+   * `-- --base https://nepostojeci` test je i dalje prolazio 9/9, jer je tiho merio
+   * difolt `localhost:3000`. Kapija koja meri pogresnu metu a prijavi PASS je gora od
+   * kapije koja padne. `VERIFY_BASE` prolazi u child proces i radi u oba slucaja.
+   */
+  const raw0 = process.env.VERIFY_BASE || (() => {
+    const b = process.argv.indexOf('--base');
+    return b !== -1 && process.argv[b + 1] ? process.argv[b + 1] : null;
+  })();
+  if (!raw0) {
     const p = process.argv.indexOf('--port');
-    return `http://localhost:${p !== -1 && process.argv[p + 1] ? process.argv[p + 1] : '3000'}`;
+    const port = process.env.VERIFY_PORT || (p !== -1 && process.argv[p + 1] ? process.argv[p + 1] : '3000');
+    return `http://localhost:${port}`;
   }
-  const raw = process.argv[b + 1].replace(/\/$/, '');
+  const raw = raw0.replace(/\/$/, '');
   let origin;
   try {
     origin = new URL(raw);
   } catch {
-    throw new Error(`--base nije URL: ${raw} (ocekivano npr. https://primer.vercel.app)`);
+    throw new Error(`base nije URL: ${raw} (ocekivano npr. https://primer.vercel.app)`);
   }
   if (!['http:', 'https:'].includes(origin.protocol) || origin.pathname !== '/' || origin.search || origin.hash) {
-    throw new Error(`--base mora biti cist origin bez putanje: ${raw}`);
+    throw new Error(`base mora biti cist origin bez putanje: ${raw}`);
   }
   return raw;
 })();
+
+// Meta merenja se ISPISUJE — da se nikad vise ne desi da PASS znaci "merio sam nesto drugo".
+console.log(`meri se: ${BASE}`);
 
 const get = (path, init) => fetch(BASE + path, { redirect: 'manual', ...init });
 
