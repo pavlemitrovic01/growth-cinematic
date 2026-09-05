@@ -30,8 +30,9 @@ Sajt je funkcionalno kompletan i nikad nije deploy-ovan.
 | | |
 |---|---|
 | Ruta | 14 (+3 API) |
-| Sadržaj | ~85% obima originala; podstranice na paritetu ili iznad |
+| Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 120 u 8 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
+| Grana | **`vercel-migration`**, 8 commita, **nije spojena u `master`** |
 
 **Kapije** — sve moraju biti zelene pre commita:
 
@@ -98,18 +99,70 @@ Kolona je zato `bigint`.
 - **`DATABASE_URL`** — bez njega rute rade, ali se lead ne upisuje trajno i kočnica pada na
   slabiji in-memory sloj. Vercel Marketplace Neon integracija ubacuje promenljivu sama.
 
+## Sesija 2026-09-05 — šta je urađeno
+
+Osam commita na grani `vercel-migration`, 55 fajlova, +1992 / −3394 linija.
+
+| Commit | Šta |
+|---|---|
+| `ece2157` | Prelazak Cloudflare Workers → Vercel + Neon |
+| `00b5251` | `docs/AUDIT.md` — audit dovršenosti, četiri paralelna prolaza |
+| `d328f4c` | „staffed hours" + kapija koja je to blokirala |
+| `de7e40c` | **Faza 0** — tri stvari koje su bile netačne, ne nedovršene |
+| `d5356c6` | **Faza 1** — tokeni i mrtav CSS, izgled dokazano nepromenjen |
+| `c110e66` | **Faza 2** — rečnik pokreta, šest primitiva, nula zavisnosti |
+| `b8ce4b8` | **Faza 3** — podstranice dopunjene, sve preneto |
+
+Kapije na kraju sesije, sve izmereno protiv `npm run build && npm start` na `:3000`:
+`typecheck 0` · `lint 0` · `test 120/120` · `build 0` · `verify PASS 11 ruta no-JS + PASS 13
+ruta claims` · `test:rendered 9/9`.
+
+## ⚠️ Prvo što sledeća sesija treba da uradi
+
+**Pogledaj sajt u pravom browseru.** Pet faza je prošlo bez da ga je Pavle video. Konkretno:
+`npm run build && npm start`, pa `http://localhost:3000`.
+
+Jedina stvar koju iz Claude browser panela **nije bilo moguće proveriti** je okidanje
+`IntersectionObserver`-a na skrol — panel drži tab u `visibilityState: "hidden"`, gde browser
+ne isporučuje te callback-ove (provereno kontrolnim observer-om). Isto ograničenje zbog kog se
+ni 3D hero ne može proveriti odatle. Polaritet, CSS mehanika i degradacija **jesu** izmereni.
+
 ## Sledeće, po redosledu
 
-1. **Vercel projekat + Neon baza.** Nalog je isti na kom živi original
+0. **Pogledati sajt u browseru** (vidi gore) i odlučiti da li grana ide u `master`.
+   Grana `vercel-migration` sadrži ceo rad ove sesije i **nije spojena**.
+1. **`next` na 16.3.4.** `npm audit` daje 4 high (`postcss`, `sharp`), sve rešive tim
+   podizanjem. Hitnije je nego na Cloudflare-u: Next-ov optimizator slika radi u
+   deploy-ovanom runtime-u i `sharp` je u njemu. Namerno ostavljeno van migracije da ne meša
+   dva izvora regresije — ide sa svojim prolaskom kapija.
+2. **Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. Prvi vraća dva odobrena reda koja su
+   pri prepisu ispala iz `lib/faq.js` (C15 lead-brokeri, obim TCPA pristanka); drugi rešava
+   nedoslednosti: sedam labela za `/apply`, tri varijante C12 rečenice, prefiks pristanka
+   u tri od četiri forme.
+3. **Vercel projekat + Neon baza.** Nalog je isti na kom živi original
    (`team_lFVUISCch3euonXJEBmOdfiA`, projekat `growth`) — novi sajt ide kao **zaseban
    projekat**, domen se ne dira. Uz projekat: Neon kroz Marketplace, pa migracija
    `drizzle/0000_steep_hannibal_king.sql` na pravu bazu.
-2. **Deploy sa `noindex`.** Otključava četiri stvari koje se lokalno ne mogu proveriti: 3D
+4. **Deploy sa `noindex`.** Otključava četiri stvari koje se lokalno ne mogu proveriti: 3D
    na pravom hardveru, Lighthouse na hostingu, prijava kroz ceo lanac (forma → Neon →
    Resend → inbox), i pokazivanje sajta bilo kome.
-3. **Resend ključ i adresa za notifikacije** — čeka Pavla.
-4. **Analitika**, pa uz nju upaliti consent kapiju.
-5. **Odluka o prelasku** — tek kad postoje brojke.
+5. **Resend ključ i adresa za notifikacije** — čeka Pavla.
+6. **Analitika**, pa uz nju upaliti consent kapiju.
+7. **Odluka o prelasku** — tek kad postoje brojke.
+
+### Blokirano na Pavlu ili advokatu — ne može se raditi bez odgovora
+
+- **Rok odgovora za carrier-a.** Vozač ga dobija na četiri mesta (15–20 min, uz oba C12
+  hedža), carrier nijedan. MAIN-ovo „within 24 hours" je tvrdnja bez reda u registru i ovaj
+  projekat ju je svesno izbacio. **Koji rok se sme obećati?**
+- **`/terms`:** governing law / jurisdikcija, arbitraža, intelektualna svojina, uslovi
+  prekida. Sve četiri traže kvalifikovanog američkog advokata.
+- **C52 (OPEN):** zabranjena površina je uklonjena sa `/how-it-works` 2026-09-05, ali red
+  ostaje otvoren. ⚠️ **Isti tekst i dalje stoji u MAIN-u**
+  (`C:/dev/growth/app/how-it-works/page.jsx:129-130`), na sajtu koji je indeksiran i prima
+  prave prijave.
+- **Pravni pregled** privacy i TCPA teksta. Kad se završi, `LEGAL_UPDATED` u
+  `lib/contact.js` se postavlja na dan pregleda.
 
 ## Šta je nedovršeno
 
