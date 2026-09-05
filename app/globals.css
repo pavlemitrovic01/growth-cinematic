@@ -651,3 +651,87 @@ main:focus{outline:none}
   .consent-options{grid-template-columns:1fr;gap:12px}
   .consent-actions .btn{flex:1 1 100%;justify-content:center}
 }
+
+/* ─── MOTION ──────────────────────────────────────────────────────────────────
+   Recnik pokreta, Faza 2. Sest primitiva, nula novih zavisnosti.
+
+   ⚠️ ZASTO JE OVAJ BLOK NA KRAJU FAJLA. Blok „Shared editorial rhythm" (oko :400)
+   sistematski pregazuje sve iznad sebe i vec je proizveo dve mrtve tranzicije. Nova
+   pravila su zato ovde, gde ih niko ne pregazuje — ne iz lenjosti nego da se isti
+   sudar ne ponovi.
+
+   ⚠️ POLARITET, I OD NJEGA ZAVISI DA LI SAJT RADI BEZ JAVASCRIPTA.
+   Podrazumevano stanje je VIDLJIVO. Skriveno stanje postoji samo iza DVE kapije
+   odjednom: klase `js-motion` koju dodaje JS, i `prefers-reduced-motion:no-preference`.
+   Bez JS-a klasa nikad ne stigne, pravilo se nikad ne poklopi, sadrzaj se vidi.
+   To je suprotno od framer-motion-a, koji pece `opacity:0` u SSR HTML.
+
+   ⚠️ KAPIJA OVO NE PROVERAVA. `scripts/verify-nojs.mjs` gleda iskljucivo inline
+   `style="…"` (opacity:0 / display:none / visibility:hidden). Klasno skrivanje ne vidi.
+   Ovaj pristup je bezbedan PO KONSTRUKCIJI, ne po proveri — ako se polaritet obrne,
+   kapija ce cutati. Svaka izmena ovog bloka trazi rucnu proveru sa ugasenim JS-om.
+
+   ⚠️ Kill switch na :414 nosi `animation:none!important;transition:none!important` pod
+   `reduced-motion:reduce`. Zato hover/focus stanja NISU u media upitu — kill switch im
+   ukloni animaciju a zadrzi krajnje stanje, sto je tacno zeljeno ponasanje. U media upit
+   ide samo ono sto SAKRIVA sadrzaj, jer bi tamo ugasena tranzicija znacila trajno skriven
+   sadrzaj.
+   ─────────────────────────────────────────────────────────────────────────── */
+
+/* ── 3 · lift — kartica reaguje na kursor i na fokus ── */
+.card,.post-card{transition:transform var(--dur) var(--ease-out),border-color var(--dur) var(--ease-out)}
+.card:hover,.card:focus-within,.post-card:hover,.post-card:focus-within{transform:translateY(-3px)}
+
+/* ── 4 · nudge — strelica i link priznaju kursor ──
+   ⚠️ `.journey-cta b` je do sada imao samo `:hover` (globals.css:300), bez `:focus-visible`
+   — korisnik tastature nije dobijao nikakav odgovor. Ovde se dodaje parnjak. */
+.journey-cta:focus-visible b{transform:rotate(45deg)}
+.home-text-link,.post-read{transition:opacity var(--dur-fast) var(--ease-out)}
+.home-text-link:hover,.home-text-link:focus-visible,.post-read:hover,.post-read:focus-visible{opacity:.72}
+
+/* ⚠️ Nav hover je VRACEN, ne dodat. Faza 1 je uklonila pravilo koje je animiralo
+   `opacity: 1 → 1`, pa su nav linkovi ostali bez ijednog hover stanja. Podvlaka iz
+   `::after` je zamena koja stvarno radi. Tekuca stranica se izuzima — ona vec nosi
+   `text-decoration:underline` iz `[aria-current=page]`, pa bi se dve linije udvostrucile. */
+.nav-links a:not([aria-current=page])::after{content:'';position:absolute;left:0;right:0;bottom:6px;height:1px;background:currentColor;transform:scaleX(0);transform-origin:left;transition:transform var(--dur-fast) var(--ease-out)}
+.nav-links a:not([aria-current=page]):hover::after,.nav-links a:not([aria-current=page]):focus-visible::after{transform:scaleX(1)}
+
+/* ── 5 · settle — stanja forme ──
+   ⚠️ `box-shadow` je dodat u listu tranzicije. Do sada je `.af-field …:focus` (oko :81)
+   menjao i `border-color` i `box-shadow`, a tranzicija je pokrivala samo prvo — prsten je
+   upadao trenutno dok se ivica prelivala. Polu-animirano stanje deluje kao kvar. */
+.af-field input,.af-field select,.af-field textarea{transition:border-color var(--dur) var(--ease-out),box-shadow var(--dur) var(--ease-out)}
+
+@keyframes motion-pulse{50%{opacity:.5}}
+/* `aria-busy` vec postoji na sve tri forme — puls se kaci na postojeci atribut, ne na nov. */
+[aria-busy=true] .qa-submit b,[aria-busy=true] .af-submit b{animation:motion-pulse 1.1s ease-in-out infinite}
+
+@keyframes motion-rise{from{opacity:0;transform:translateY(8px)}}
+/* Uspeh i greska su ULAZNE animacije — nemaju skriveno pocetno stanje koje bi moglo da
+   zaglavi. Uspeh forme je najvazniji trenutak u toku konverzije i do sada je iskakao bez
+   ijednog signala. */
+.qa--done,.form-done,.form-error{animation:motion-rise var(--dur-slow) var(--ease-out)}
+
+/* ── 6 · sweep — prelaz rute ──
+   ⚠️ ISKLJUCIVO `opacity`, nikad `transform`. Animiran transform pravi containing block za
+   `position:fixed` potomke, a ovaj projekat ih ima tri (`.mobar`, `.consent-bar`,
+   `.route-loading`) plus `.skip-link`. Stari sajt je na to naleteo i zapisao u svom
+   `PageTransition.jsx`. */
+@keyframes motion-fade{from{opacity:0}}
+.route-in{animation:motion-fade var(--dur) var(--ease-out)}
+
+/* ── 1 · reveal i 2 · stagger — jedino sto sakriva, i jedino iza dve kapije ── */
+[data-reveal]{transition:opacity var(--dur-slow) var(--ease-out),transform var(--dur-slow) var(--ease-out)}
+[data-stagger]>*{transition:opacity var(--dur-slow) var(--ease-out),transform var(--dur-slow) var(--ease-out)}
+/* Kasnjenje kroz `nth-child` umesto kroz `--i` u markupu: ista stepenica, nula izmena u
+   komponentama, i nemoguce je zaboraviti da se indeks doda. */
+[data-stagger]>*:nth-child(2){transition-delay:70ms}
+[data-stagger]>*:nth-child(3){transition-delay:140ms}
+[data-stagger]>*:nth-child(4){transition-delay:210ms}
+[data-stagger]>*:nth-child(5){transition-delay:280ms}
+[data-stagger]>*:nth-child(n+6){transition-delay:350ms}
+
+@media(prefers-reduced-motion:no-preference){
+  html.js-motion [data-reveal]:not(.is-in){opacity:0;transform:translateY(18px)}
+  html.js-motion [data-stagger]:not(.is-in)>*{opacity:0;transform:translateY(14px)}
+}

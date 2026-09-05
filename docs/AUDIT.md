@@ -144,7 +144,51 @@ dve mrtve tranzicije i tri mrtve klase.
 
 ---
 
-## Faza 2 — rečnik pokreta
+## Faza 2 — ✅ URAĐENO 2026-09-05 (primenjeno na naslovnu; podstranice u Fazi 3)
+
+Šest primitiva, ~90 linija CSS-a u jednom bloku na **kraju** `globals.css` (namerno: blok od
+`:400` sistematski pregazuje sve iznad sebe i već je proizveo dve mrtve tranzicije), jedan
+klijentski `components/Motion.tsx`, i jedna inline skripta u `app/layout.tsx`. Nula novih
+zavisnosti.
+
+Naslovna je dobila **8 `data-reveal` sekcija i 3 `data-stagger` kontejnera**. Hero nije
+dodirnut — ima svoj kontroler i svoju izmerenu podešenost (`HERO-MOTION-FIX.md`).
+
+### Šta je dokazano merenjem
+
+| Provera | Ishod |
+|---|---|
+| Serverski HTML nosi `<html lang="en">` bez ijedne klase | ✅ pravilo se bez JS-a ne može poklopiti |
+| Nula inline `opacity:0` / `display:none` u serverskom HTML-u | ✅ |
+| Uklanjanje `js-motion` → svih 8 sekcija na `opacity: 1` | ✅ **polaritet dokazan** |
+| Dodavanje `.is-in` → `opacity: 1`, `transform: none` | ✅ CSS mehanika radi |
+| Skriven tab → watchdog otkriva sadržaj posle 3s | ✅ degradacija radi |
+| `verify` · `test:rendered` · `test` | PASS+PASS · 9/9 · 120/120 |
+
+### ⚠️ Bug koji je merenje otkrilo, i popravka
+
+Prva verzija je postavljala `data-motion-ready` odmah po montiranju komponente. Izmereno:
+**u tabu sa `visibilityState === "hidden"` browser uopšte ne isporučuje IntersectionObserver
+callback-ove** — provereno kontrolnim observer-om koji nema veze sa ovim kodom, i ni on se
+nije okinuo. Posledica: komponenta je živa, observer ćuti, a atribut je **razoružao watchdog**
+— sadržaj bi ostao skriven zauvek.
+
+Realan scenario nije egzotičan: otvaranje sajta u pozadinskom tabu (srednji klik, „open in new
+tab"). Popravka je da se odgovornost preuzima tek kad tab stvarno postane vidljiv; do tada
+watchdog radi i posle 3s otkriva sve bez animacije. Lošije izgleda, ali se **vidi** — a to je
+jedini ishod koji sme da postoji.
+
+### ⚠️ Šta NIJE moglo da se proveri odavde
+
+**Okidanje observer-a na skrol u vidljivom tabu.** Browser panel drži tab u
+`visibilityState: "hidden"`, gde IntersectionObserver ne isporučuje callback-ove — isto
+ograničenje zbog kog se ni 3D hero ne može proveriti odatle. Traži pravi browser.
+
+Sve ostalo — polaritet, CSS mehanika, degradacija — jeste izmereno i prolazi.
+
+### Original plana
+
+
 
 **Arhitektonsko pravilo koje sve drži:** podrazumevano stanje je **VIDLJIVO**. Skriveno stanje
 sme da postoji samo iza dvostruke kapije — klase koju doda JS **i** `prefers-reduced-motion:
