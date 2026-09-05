@@ -21,8 +21,14 @@ export const metadata: Metadata = pageMeta({
  * ⚠️ SEKCIJA 05 („Where your information is stored") JE NOVA I MORA POSTOJATI.
  * MAIN je nema zato sto tamo prijava zivi ISKLJUCIVO u telu notifikacionog mejla —
  * baza nikad nije provisionovana (F1c parkiran). Ovaj sajt prijave UPISUJE u bazu
- * (`lib/leads.js` -> D1), pa privacy stranica koja o tome cuti ne bi bila tacna.
+ * (`lib/leads.js` -> Neon), pa privacy stranica koja o tome cuti ne bi bila tacna.
  * Tekst opisuje tacno ono sto kod radi, ukljucujuci sta se NE upisuje.
+ *
+ * ⚠️ IME PROCESORA SE MENJA KAD SE MENJA STACK, I TO JE OVDE VEC JEDNOM PROPUSTENO.
+ * Prelazak sa Cloudflare D1 na Neon (2026-09-05) je azurirao STATUS i README, a ovu
+ * stranicu ne — pa je ovde jedan dan stajalo da podaci vozaca, ukljucujuci odgovore o
+ * prekrsajima i SAP statusu, stoje kod procesora kod kog vise ne stoje. Kad se sledeci
+ * put menja gde podaci zive, ovaj fajl ide u istom commitu, ne posle.
  *
  * ⚠️ Sekcija „Cookies" je namerno tacna I PRE I POSLE uvodjenja analitike:
  * „ne postavljamo dok ne ukljucis" ostaje istinito u oba stanja. Ne prepravljati u
@@ -44,8 +50,19 @@ const SECTIONS = [
   {
     n: '02',
     h: 'How We Use Your Information',
+    /**
+     * ⚠️ „only with the specific carriers" je uklonjeno, i to je faktička ispravka.
+     * Sekcija 05 ispod imenuje Neon i Resend kao procesore — dakle podaci idu i njima,
+     * pa je „samo sa carrier-ima" bilo netačno u istom dokumentu koji dva pasusa nize
+     * tacno nabraja data-flow. CLAIMS C15 tu protivrecnost izricito predvidja i nosi
+     * unapred odobrenu privremenu formulaciju; ovo je ona, uklopljena u glas stranice.
+     *
+     * ⚠️ „we never sell it" OSTAJE — C15 to izricito dozvoljava. Ono sto C15 zabranjuje
+     * je apsolutna tvrdnja da se podaci ne dele NI SA KIM, jer se dele: sa carrier-ima
+     * i sa operativnim servisima.
+     */
     body: [
-      'We use this information exclusively to evaluate your qualifications and match you with carriers. By submitting the application, you consent to us sharing your details only with the specific carriers we are actively matching you to, for the sole purpose of finding you a driving job. We do not broadcast your application to our whole network, and we never sell it.',
+      'We use this information exclusively to evaluate your qualifications and match you with carriers. By submitting the application, you consent to us sharing your details with the specific carriers we are actively matching you to, for the sole purpose of finding you a driving job, and with the services we need to operate — for example email delivery and secure storage — always with appropriate consent. We do not broadcast your application to our whole network, and we never sell it.',
     ],
   },
   {
@@ -66,7 +83,7 @@ const SECTIONS = [
     n: '05',
     h: 'Where Your Information Is Stored',
     body: [
-      'Validated submissions are saved to our database hosted on Cloudflare. When email delivery is configured, we also send a notification to our recruiting team through Resend. If delivery is unavailable, the form displays an error; a database copy may still have been saved.',
+      'Validated submissions are saved to our database hosted on Neon, and the site itself runs on Vercel. When email delivery is configured, we also send a notification to our recruiting team through Resend. If delivery is unavailable, the form displays an error; a database copy may still have been saved.',
       'The saved copy includes your name, contact details, CDL class, experience, and whether you answered yes or no to the questions about violations and SAP. It also includes a record of your consent — the consent scope and text version, the submission time, and the IP address and browser you agreed from — so that we can show your permission was given.',
       'The free-text notes you write about violations or SAP status are deliberately not saved to that database. When email delivery is available, those notes are included in the recruiting notification. If it is unavailable, please discuss those details with your recruiter.',
       'You can ask us to delete any of this at any time. See "Your state privacy rights" below.',

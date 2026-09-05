@@ -20,8 +20,21 @@ export default function NotFound() {
       lede="That page doesn't exist — or it moved. Here's where most drivers are headed."
     >
       <div className="contact-actions">
+        {/*
+          ⚠️ CLAIMS C53. Ovde je do 2026-09-05 stajalo „Apply in 2 minutes ↗", sto je
+          krsenje: C53 dozvoljava „2 minutes" ISKLJUCIVO kao opisni tekst uz samu formu ili
+          u meta opisu stranice na kojoj je forma, a na dugmetu je izricito zabranjeno —
+          obecanje i odrediste stoje razdvojeno, sto je palo kao acceptance FAIL na F5c
+          prototipu. Dugme kaze STA RADI, ne koliko traje.
+
+          Regresija, ne nasledje: stari sajt na istom mestu kaze „Apply for a job".
+          Ostalih pet pojava „2 minutes" u projektu je ispravno — sve su uz formu.
+
+          ⚠️ Automatska kapija ovo NE HVATA. `verify-claims.mjs` nema C53 pravilo, pa je
+          nalaz dosao iz rucnog audita. Predlog za mehanizaciju je u `docs/AUDIT.md`.
+        */}
         <Link className="btn btn-primary" href="/apply">
-          Apply in 2 minutes ↗
+          Start your application ↗
         </Link>
         <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
           Call {PHONE_DISPLAY}

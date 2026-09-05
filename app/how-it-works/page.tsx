@@ -77,13 +77,39 @@ export default function HowItWorks() {
               <h2>What to expect from us</h2>
             </div>
             <div className="sub-2up">
+              {/*
+                ⚠️ CLAIMS C52 JE **OPEN** I OVA KARTICA JE BILA NJEGOVA ZIVA POVRSINA.
+                Do 2026-09-05 je spisak glasio: „A valid CDL-A · documents showing you're
+                authorized to work in the US · enough English to handle dispatch and DOT ·
+                a record that's clean… · genuine readiness to start."
+
+                C52 zabranjuje „svaku listu uslova za zaposlenje po nacionalnosti,
+                imigracionom statusu ili jeziku". Dodirna povrsina je federalno i drzavno
+                anti-diskriminaciono pravo i I-9 pravila. Dve stavke su bile tacno na te dve
+                ose i uklonjene su; preostale tri (CDL-A, voznja, spremnost) nisu ni na
+                jednoj od zabranjenih osa i ostaju.
+
+                Poslednja recenica je propisani BEZBEDAN OBLIK dok je C52 OPEN: ne iznositi
+                kriterijume podobnosti na sajtu, uputiti na razgovor.
+
+                ⚠️ OVO NE ZATVARA C52. Vlasnik reda je kvalifikovan americki advokat i samo
+                on sme doneti taj zakljucak; ovde je uklonjena zabranjena povrsina, nije
+                doneta odluka. Status ostaje OPEN do pravnog pregleda.
+
+                ⚠️ ISTI TEKST STOJI I U MAIN-u (`app/how-it-works/page.jsx:129-130`), na
+                sajtu koji je indeksiran i prima prave prijave. MAIN se ne dira iz ovog
+                projekta — ali izlozenost tamo postoji i zavedena je u `docs/AUDIT.md`.
+              */}
               <article className="card">
                 <h3>What we need from you</h3>
                 <p>Straight list, so nobody wastes a week finding out:</p>
                 <p>
-                  A valid CDL-A · documents showing you&apos;re authorized to work in the US ·
-                  enough English to handle dispatch and DOT · a record that&apos;s clean or that
-                  you can explain honestly · and genuine readiness to start.
+                  A valid CDL-A · a record that&apos;s clean or that you can explain honestly ·
+                  and genuine readiness to start.
+                </p>
+                <p>
+                  Carrier requirements vary. Anything else that matters for a specific carrier,
+                  we go through with you on the call.
                 </p>
               </article>
               <article className="card">

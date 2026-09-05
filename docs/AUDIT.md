@@ -29,32 +29,53 @@ potpornim blokom, svaka sekcija sa izlazom. Podstranice se mere prema njoj.
 
 ---
 
-## Faza 0 — ovo je pogrešno upravo sada
+## Faza 0 — ✅ URAĐENO 2026-09-05
 
-Nije nedovršeno nego netačno. Ide pre svega ostalog jer se tiče pravnog teksta i registra tvrdnji.
+Nije bilo nedovršeno nego netačno. Išlo je pre svega ostalog jer se tiče pravnog teksta i
+registra tvrdnji. Sve provereno na renderovanom HTML-u, ne samo u izvoru.
 
-**0.1 · `app/privacy/page.tsx:69` — netačan procesor podataka.** Piše „our database hosted on
-Cloudflare"; baza je Neon od prelaska 2026-09-05. Jedina korisnički vidljiva pojava u repou
-(provereno grep-om — ostalo su komentari). Zaglavlje istog fajla (`:21-25`) zahteva da tekst
-opisuje tačno ono što kod radi. Klasa popravke: faktička korekcija imena procesora, ne nova
-tvrdnja — ne traži nov red u registru.
+**0.1 · `app/privacy/page.tsx` — netačan procesor podataka. ✅** Pisalo je „our database hosted
+on Cloudflare"; baza je Neon od prelaska istog dana. Ispravljeno na „hosted on Neon, and the
+site itself runs on Vercel". Provereno: `Cloudflare` sada ima **nula pogodaka** u renderovanoj
+stranici. Klasa popravke: faktička korekcija imena procesora, ne nova tvrdnja.
 
-**0.2 · `app/not-found.tsx:24` — kršenje C53, i to regresija.** „Apply in 2 minutes ↗" stoji
-kao **label dugmeta**. C53 je CONDITIONAL i dozvoljava tu formulaciju isključivo kao opisni
-tekst uz formu ili u meta opisu; na dugmetu je izričito zabranjena, uz obrazloženje da je
-pala kao acceptance FAIL na F5c prototipu. Stari sajt na istom mestu kaže „Apply for a job".
-Bezbedna zamena koja se već koristi na `CinematicHome.tsx:174`: „Start your application ↗".
-Ostalih pet pojava „2 minutes" u projektu je ispravno.
+**0.1b · Ista stranica, sekcija 02 — protivrečnost sa sekcijom 05. ✅** *(prošireni obim,
+vidi napomenu)* Sekcija 02 je tvrdila da se podaci dele „**only with** the specific carriers",
+dok sekcija 05 dva pasusa niže imenuje Neon i Resend kao procesore. C15 tu protivrečnost
+izričito predviđa i nosi **unapred odobrenu privremenu formulaciju**; ona je uklopljena u glas
+stranice. „we never sell it" ostaje — C15 to dozvoljava; ono što zabranjuje je apsolutna
+tvrdnja da se podaci ne dele ni sa kim.
 
-**0.3 · `app/how-it-works/page.tsx:84-86` — otvorena C52 površina.** Tekst nabraja uslove
-podobnosti: „documents showing you're authorized to work in the US · enough English to handle
-dispatch and DOT". C52 je **OPEN**, vlasnik je kvalifikovani američki advokat, a bezbedan
-oblik dok je OPEN glasi: ne iznositi kriterijume podobnosti na sajtu, uputiti na razgovor.
-Dodirna površina je federalno anti-diskriminaciono pravo i I-9.
+> ⚠️ **Napomena o obimu.** Ovo nije bilo u Fazi 0 nego u Fazi 3. Urađeno je ovde jer ispravka
+> 0.1 čini sekciju 05 eksplicitnijom o procesorima, čime **pojačava** protivrečnost sa
+> sekcijom 02 — ostaviti je značilo bi svesno pogoršati pravni dokument koji se u istom potezu
+> popravlja. Tekst je registarski odobren, ne nov. Revertibilno zasebno ako se ne slažeš.
 
-⚠️ **Isti tekst stoji i u MAIN-u** (`C:/dev/growth/app/how-it-works/page.jsx:129-130`), dakle
-izloženost postoji na živom, indeksiranom sajtu — ne samo ovde. Formulacija se ne predlaže;
-registar izričito kaže da taj zaključak ne sme doneti niko osim advokata.
+**0.2 · `app/not-found.tsx` — kršenje C53. ✅** „Apply in 2 minutes ↗" je stajalo kao **label
+dugmeta**; C53 to dozvoljava isključivo kao opisni tekst uz formu ili u meta opisu, a na
+dugmetu izričito zabranjuje (palo kao acceptance FAIL na F5c prototipu). Zamenjeno sa „Start
+your application ↗", formulacijom koja se već koristi na `CinematicHome.tsx:174`. Provereno:
+`Apply in 2 minutes` ima **nula pogodaka** u renderovanoj stranici. Ostalih pet pojava
+„2 minutes" u projektu je ispravno i netaknuto.
+
+**0.3 · `app/how-it-works/page.tsx` — otvorena C52 površina. ✅ uklonjena, ⚠️ C52 OSTAJE OPEN.**
+Spisak je nabrajao „documents showing you're authorized to work in the US · enough English to
+handle dispatch and DOT". C52 zabranjuje svaku listu uslova za zaposlenje **po nacionalnosti,
+imigracionom statusu ili jeziku**; te dve stavke su bile tačno na te dve ose i uklonjene su.
+Preostale tri (CDL-A, vozački dosije, spremnost) nisu ni na jednoj zabranjenoj osi i ostaju.
+Dodata je rečenica koja primenjuje **propisani bezbedan oblik dok je C52 OPEN** — uputiti na
+razgovor: „Carrier requirements vary. Anything else that matters for a specific carrier, we go
+through with you on the call."
+
+Provereno u renderovanom HTML-u: `authorized to work`, `enough English` i `work authorization`
+vraćaju **nula pogodaka**.
+
+> ⚠️ **Ovo ne zatvara C52.** Uklonjena je zabranjena površina; odluka nije doneta. Vlasnik reda
+> je kvalifikovan američki advokat i samo on sme doneti taj zaključak. Status ostaje OPEN.
+
+⚠️ **Isti tekst i dalje stoji u MAIN-u** (`C:/dev/growth/app/how-it-works/page.jsx:129-130`),
+na sajtu koji je indeksiran i prima prave prijave. MAIN se iz ovog projekta ne dira — ali
+izloženost tamo postoji i nije uklonjena ovim radom.
 
 ---
 
