@@ -13,13 +13,34 @@
  * Upotreba:
  *   node scripts/verify-claims.mjs                # protiv servera na :3000
  *   node scripts/verify-claims.mjs --port 5199
+ *   node scripts/verify-claims.mjs --base https://primer.vercel.app   # deploy
  */
 
-const PORT = (() => {
-  const i = process.argv.indexOf('--port');
-  return i !== -1 && process.argv[i + 1] ? process.argv[i + 1] : '3000';
+/**
+ * Origin koji se meri. `--base` gadja bilo koji origin (deploy), `--port` ostaje za localhost.
+ *
+ * ⚠️ Trazi CIST origin, isto pravilo kao `lib/seo.js:3`. Putanja u base-u bi se udvostrucila
+ * pri `BASE + path` — merenje bi gadjalo nepostojece rute, dobijalo 404 i prijavilo PASS
+ * ni na cemu. Tiha laz je gora od pada, pa se ovde pada glasno.
+ */
+const BASE = (() => {
+  const b = process.argv.indexOf('--base');
+  if (b === -1 || !process.argv[b + 1]) {
+    const p = process.argv.indexOf('--port');
+    return `http://localhost:${p !== -1 && process.argv[p + 1] ? process.argv[p + 1] : '3000'}`;
+  }
+  const raw = process.argv[b + 1].replace(/\/$/, '');
+  let origin;
+  try {
+    origin = new URL(raw);
+  } catch {
+    throw new Error(`--base nije URL: ${raw} (ocekivano npr. https://primer.vercel.app)`);
+  }
+  if (!['http:', 'https:'].includes(origin.protocol) || origin.pathname !== '/' || origin.search || origin.hash) {
+    throw new Error(`--base mora biti cist origin bez putanje: ${raw}`);
+  }
+  return raw;
 })();
-const BASE = `http://localhost:${PORT}`;
 
 const ROUTES = [
   '/', '/apply', '/for-carriers', '/how-it-works', '/about', '/faq', '/contact',
