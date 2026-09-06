@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 120 u 8 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (32 commita); `vercel-migration` spojena fast-forward-om |
+| Grana | **`master`** (39 commita); `vercel-migration` i `faza-4-copy` spojene fast-forward-om |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -117,6 +117,48 @@ Kolona je zato `bigint`.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
 
+## Sesija 2026-09-06 — Faza 4 (copy)
+
+Šest commita, grana `faza-4-copy` spojena u `master` fast-forward-om i deploy-ovana.
+
+| Commit | Šta |
+|---|---|
+| `b3cfb09` | **Prolaz 1** — tri odobrena reda vraćena, doslovno iz izvora |
+| `eb7c469` | prefiks pristanka u sam `CONSENT_TEXT` + `CONSENT_TEXT_VERSION` → `2026-09-06` |
+| `3ece835` | jedan natpis za CTA — `lib/cta.js` |
+| `11d4484` | ⚠️ ispravka: konsolidacija je promašila **hero dugme** |
+| `41e277c` | C12 rečenica u jedan izvor + navodnici u `posts.js` |
+| `d012863` | hero dobio „Applying does not commit you to a job.", preneto sa `/apply` |
+
+**Izmereno protiv `https://growth-cinematic.vercel.app` posle deploy-a:**
+`verify` PASS 11 ruta no-JS + PASS 13 ruta claims · `test:rendered` 9/9 · `noindex` drži.
+
+**Tri stvari koje su ispale veće nego što je AUDIT procenio:**
+
+1. **Pristanak nije bio kozmetika.** Quick i full forma prikazivale su **različit tekst pod
+   istom verzijom**, a obe šalju `source: 'apply'` — iz `leads.consent_version` se nije moglo
+   razlučiti šta je vozač video, što je jedina svrha te kolone. (Razlika vozač/carrier **jeste**
+   razlučiva, preko `source`, i namerna je — nije dirana.)
+2. **C12 je bio rizik, ne neurednost.** Devet pojava u pet varijanti, ne šest u tri. Goli oblik
+   te tvrdnje je **trajno zabranjen**; devet kopija je devet prilika da ispadne hedž.
+3. **Velika slova su bila u izvoru, ne u CSS-u**, pa se natpis nije mogao deliti bez promene
+   izgleda. Prebačena su u prezentaciju (`text-transform` na `.journey-cta`).
+
+⚠️ **Konsolidacija je jednom prijavljena kao gotova a nije bila.** `FIND MY NEXT ROUTE` nije
+stajao ni na jednom pozivu nego kao **podrazumevana vrednost propa**, pa ga pretraga po
+pozivima nije našla — i hero dugme, najvidljiviji CTA, ostalo je sa starim natpisom.
+Otkriveno **gledanjem stranice**, ne brojanjem po izvoru (`11d4484`).
+
+⚠️ **Zaostao server je dao lažan prolaz — treći put.** Kapije su prijavile zeleno dok je
+pozadinski server pao na zauzet port, pa se merio **prethodni build**. Od tada: ubij po PID-u
+(`taskkill /PID <pid> /T /F`), potvrdi da je port slobodan, pa tek onda meri.
+
+⚠️ **Hidracioni nesklad na `js-motion` — ISPITAN I ZATVOREN.** Dev je prijavio da klasa koja
+otključava ceo rečnik pokreta nestaje sa `<html>`. Iz Claude browser panela se nije moglo
+razlučiti (panel drži tab u `visibilityState: "hidden"`, pa se watchdog uvek okine pre
+merenja). **Pavle proverio u pravom browseru 2026-09-06: pokret radi.** Bio je dev artefakt
+React error overlay-a, ne produkcijsko ponašanje.
+
 ## Sesija 2026-09-05 (nastavak) — deploy
 
 Četiri commita na `master`. **Sve merenje od ovog trenutka ide protiv deploy-a, ne localhost-a.**
@@ -169,23 +211,39 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. Jedina preostala stavka koja ne zavisi
-ni od Pavla, ni od advokata, ni od spoljnog servisa.
+**`KnowBeforeYouGo`** — najveći preostali deo Faze 4, i jedina veća stavka koja ne zavisi
+ni od Pavla, ni od advokata, ni od spoljnog servisa. Naslov „02 / KNOW BEFORE YOU GO" stoji
+na naslovnoj, ali sadržaj su **tri generičke kartice** umesto tri trampe sa po tri „Ask the
+carrier" pitanja i citiranim FMCSA/FDA/BLS izvorima — copy zaveden pod **jedanaest redova
+registra**. Isti naslov sa ispražnjenim sadržajem čita se kao propust, ne kao odluka o obimu.
 
-Browser provera je **odrađena 2026-09-05** — Pavle je pogledao sajt i odobrio izgled
-(„ima još stvari koje ćemo raditi", ali ništa što blokira). Ograničenje Claude browser
-panela i dalje važi: panel drži tab u `visibilityState: "hidden"`, pa se okidanje
-`IntersectionObserver`-a na skrol i 3D hero odatle ne mogu proveriti.
+⚠️ **Ovo nije prepis nego odluka o obimu i mestu.** `AUDIT.md` kaže da po sadržaju pripada
+`/apply` ili `/how-it-works`, ne naslovnoj. Traži Pavlovu odluku pre pisanja.
 
-**Deploy je otključao dve stvari koje još nisu iskorišćene:** 3D hero na pravom hardveru
-(otvori sajt na telefonu) i Lighthouse na hostingu umesto lokalno.
+### Sitnije, nagomilano
+
+- **Navigacioni chrome** — Nav („APPLY NOW"), MobileBar („Apply ↗"), Footer („Apply") nisu
+  u konsolidaciji natpisa; razlog u `lib/cta.js`. Pavle je tražio „sve na jednu labelu",
+  odstupljeno svesno i objašnjeno. **Njegova odluka.**
+- **`AGENTS.md` i `CLAUDE.md`** — `next dev` ih generiše sam na svaki pokretanje, stoje
+  neispraćeni. ⚠️ `CLAUDE.md` u korenu se automatski učitava u kontekst agenta u budućim
+  sesijama, pa nije svejedno. Predlog: `agentRules: false` u `next.config.ts`.
+- **`middleware` → `proxy`** — deprecated u Next 16 (`npx @next/codemod@canary
+  middleware-to-proxy .`). Radi i dalje, ali je to baš fajl koji nosi cross-origin zaštitu.
+- **Lighthouse na hostingu** i **3D hero na telefonu** — deploy ih je otključao, još
+  neiskorišćeno.
+
+**Ograničenje Claude browser panela i dalje važi:** panel drži tab u `visibilityState:
+"hidden"`, pa se okidanje `IntersectionObserver`-a i 3D scena odatle ne mogu proveriti.
+Sve što zavisi od vidljivog taba traži pravi browser — vidi nalaz o `js-motion` gore.
 
 ## Sledeće, po redosledu
 
 0. **✅ Urađeno 2026-09-05.** Sajt pogledan u pravom browseru, izgled odobren, grana
    `vercel-migration` spojena u `master` fast-forward-om.
 1. **✅ Urađeno** — `next` 16.3.4, `0b2b747`.
-2. **Faza 4 iz `docs/AUDIT.md`** — copy, dva prolaza. **← SLEDEĆE.** Prvi prolaz vraća dva
+2. **✅ Urađeno 2026-09-06** — Faza 4, oba prolaza (osim `KnowBeforeYouGo`, vidi dole).
+   Original opisa: Prvi prolaz vraća dva
    odobrena reda koja su pri prepisu ispala iz `lib/faq.js` (C15 lead-brokeri, obim TCPA
    pristanka) i kanonsku C21 formulaciju; drugi rešava nedoslednosti: sedam labela za
    `/apply`, tri varijante C12 rečenice u šest instanci, prefiks pristanka u tri od četiri

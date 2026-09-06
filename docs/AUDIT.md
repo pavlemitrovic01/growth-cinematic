@@ -359,7 +359,55 @@ interni link iz tela** — tok je jednosmeran: uđeš na formu ili odustaneš.
 
 ---
 
-## Faza 4 — copy, dva prolaza
+## Faza 4 — ✅ URAĐENO 2026-09-06 (osim `KnowBeforeYouGo`)
+
+Pet commita, grana `faza-4-copy` spojena u `master` (`b3cfb09`, `eb7c469`, `3ece835`,
+`11d4484`, `41e277c`, `d012863`).
+
+### Šta je urađeno
+
+**Prolaz 1** — vraćena sva tri odobrena mesta, doslovno iz izvora: C15 lead-brokeri i obim
+TCPA pristanka u `lib/faq.js`, i kanonska C21 formulacija na naslovnoj.
+
+**Prolaz 2** — prefiks pristanka ušao u sam `CONSENT_TEXT` uz novu `CONSENT_TEXT_VERSION`;
+C12 rečenica svedena na jedan izvor (`CALLBACK_SENTENCE` u `lib/contact.js`); CTA natpis
+sveden na jedan (`APPLY_CTA` u `lib/cta.js`); navodnici u `lib/posts.js` ujednačeni.
+
+**Dodato van plana:** hero je dobio „Applying does not commit you to a job." — prenetu iz
+bočne trake `/apply`, gde ju je vozač video tek pošto klikne.
+
+### ⚠️ Gde je ovaj dokument bio netačan
+
+Pisan je pre nego što je Faza 3 završena, pa su mu tri brojke odlutale. Izmereno 2026-09-06:
+
+| Ovde piše | Stvarno stanje |
+|---|---|
+| C12: „šest instanci i tri varijante" | **devet pojava, pet varijanti** (+ `callback`, `Usually within`) |
+| prefiks pristanka: „tri od četiri forme" | **dve od tri površine** — četvrta forma ne postoji |
+| C21: navodi varijantu iz `ValueCards.jsx` | registar (`CLAIMS.md:300`) imenuje **drugu**, iz `StackingDeck.jsx` — uzeta je ta, registar je merodavan |
+
+⚠️ **A gde je bio u pravu, a ja nisam.** Spisak labela ovde navodi `FIND MY NEXT ROUTE` —
+tvrdio sam da ne postoji, jer je moja pretraga išla po pozivima a natpis je stajao kao
+**podrazumevana vrednost propa** (`ApplyLink`). Zbog toga je prva konsolidacija promašila
+**hero dugme**, najvidljiviji CTA na sajtu. Otkriveno tek gledanjem stranice, ne brojanjem
+(`11d4484`).
+
+⚠️ **C53 je presudio pitanje natpisa pre nego što je postavljeno.** Registar kaže da dugme
+mora reći **šta radi**, imenuje „Start your application" kao primer, i beleži da je
+neodređen CTA već jednom pao kao acceptance FAIL na F5c prototipu. `FIND MY NEXT ROUTE` je
+tačno taj tip — vraćanje bi ponovilo grešku koju je projekat sam zapisao.
+
+### ⚠️ Šta ostaje otvoreno iz ove faze
+
+**`KnowBeforeYouGo`** — opisan niže kao najveći pojedinačni gubitak. Nije rađen: to je
+odluka o obimu i mestu (AUDIT sam kaže da pripada `/apply` ili `/how-it-works`), ne prepis.
+
+**Navigacioni chrome** — Nav („APPLY NOW"), MobileBar („Apply ↗") i Footer („Apply") nisu
+uključeni u konsolidaciju natpisa. Nisu CTA dugmad nego chrome pored jednorečnih suseda
+(`Call`, `Text`, `FAQ`); duga rečenica bi tamo bila regresija izgleda. Razlog je upisan u
+`lib/cta.js`. Čeka Pavlovu odluku.
+
+### Original plana
 
 **Prolaz 1 — vratiti ono što je pri prepisu ispalo.** FAQ ima svih 8 pitanja i isti redosled,
 ali su svi odgovori **prepisani**, ne preneti: prosečna dužina je pala sa ~85 na ~55 reči.
