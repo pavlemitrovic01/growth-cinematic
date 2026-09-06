@@ -239,6 +239,19 @@ registra**. Isti naslov sa ispražnjenim sadržajem čita se kao propust, ne kao
 ⚠️ **Ovo nije prepis nego odluka o obimu i mestu.** `AUDIT.md` kaže da po sadržaju pripada
 `/apply` ili `/how-it-works`, ne naslovnoj. Traži Pavlovu odluku pre pisanja.
 
+### ⚠️ Tri odluke koje čekaju Pavla — bez njih se ne kreće
+
+1. **`KnowBeforeYouGo`:** **(a)** napuniti sadržaj na naslovnoj, ili **(b)** preseliti pun
+   sadržaj na `/how-it-works` i preimenovati naslov na naslovnoj. **Preporuka: (b)** —
+   naslovna je izlog, a jedanaest redova registra sa citiranim izvorima traži stranicu na
+   kojoj se čita. Prenos je doslovan u oba slučaja.
+2. **Chrome labele:** idu u konsolidaciju ili ostaju kratke. **Preporuka: ostaju** (razlog
+   u `lib/cta.js`). Ako idu — izmeriti širinu nav pilule i mobilne trake **na granici
+   breakpointa**, ne na zatečenoj širini (L59).
+3. **`AGENTS.md` / `CLAUDE.md`:** commit-ovati ih ili `agentRules: false` u
+   `next.config.ts`. **Preporuka: commit** — Next ih regeneriše deterministički, sa
+   BEGIN/END markerima, pa gašenje samo pravi razliku koju neko mora da čisti.
+
 ### Sitnije, nagomilano
 
 - **Navigacioni chrome** — Nav („APPLY NOW"), MobileBar („Apply ↗"), Footer („Apply") nisu
@@ -275,8 +288,18 @@ Sve što zavisi od vidljivog taba traži pravi browser — vidi nalaz o `js-moti
 4. **✅ Urađeno** — deploy pod `noindex`. Od četiri stvari koje otključava, dve su
    iskorišćene (prijava kroz lanac do baze, pokazivanje linka); **Lighthouse na hostingu i
    3D na pravom hardveru još nisu.**
-5. **Resend ključ i adresa za notifikacije** — čeka Pavla. `lib/email.js:13` traži **i**
-   ključ **i** adresu; dok oba ne postoje, rute vraćaju 503, a lead se svejedno upisuje u bazu.
+5. **Resend** — ⚠️ **najveći efekat po uloženom vremenu, i manje je blokiran nego što je
+   ovaj dokument ranije tvrdio.** Sajt trenutno **skuplja prijave a nikoga ne obaveštava**:
+   lead se upiše u bazu, vozač dobije 503 „pozovite nas", i tu se lanac prekida.
+
+   Izmereno 2026-09-06: **verifikovan domen NE treba.** `lib/email.js:106` uzima
+   `LEAD_FROM_EMAIL || SANDBOX_FROM`, a `SANDBOX_FROM` je `GROWTH.CO
+   <onboarding@resend.dev>` — Resend-ov sandbox pošiljalac. `lib/email.js:13` traži samo
+   `RESEND_API_KEY` **i** `LEAD_NOTIFICATION_EMAIL`.
+
+   Koraci: Resend kroz Vercel Marketplace (kao Neon) ubaci ključ sam → dodaš
+   `LEAD_NOTIFICATION_EMAIL` → redeploy → test-prijava kroz `/api/apply` → **potvrdiš da je
+   mejl stigao**. Petnaest minuta, i time je lanac forma → Neon → Resend → inbox zatvoren.
 6. **Analitika**, pa uz nju upaliti consent kapiju.
 7. **Odluka o prelasku** — tek kad postoje brojke. Original ostaje živ i indeksiran do tada.
 
