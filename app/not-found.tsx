@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { APPLY_CTA } from '@/lib/cta';
 import PageShell from '@/components/PageShell';
 import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
@@ -34,7 +35,7 @@ export default function NotFound() {
           nalaz dosao iz rucnog audita. Predlog za mehanizaciju je u `docs/AUDIT.md`.
         */}
         <Link className="btn btn-primary" href="/apply">
-          Start your application ↗
+          {APPLY_CTA} ↗
         </Link>
         <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
           Call {PHONE_DISPLAY}

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import ConsentSettingsButton from '@/components/ConsentSettingsButton';
@@ -202,7 +203,7 @@ export default function Privacy() {
           izgubio bas na tri: `/truckers-lounge`, `/privacy` i `/terms`. */}
       <div className="contact-actions">
         <Link className="btn btn-primary" href="/apply">
-          Start your application ↗
+          {APPLY_CTA} ↗
         </Link>
         <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
           Call {PHONE_DISPLAY}

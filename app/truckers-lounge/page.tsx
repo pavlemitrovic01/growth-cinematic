@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import { POSTS } from '@/lib/posts';
@@ -55,7 +56,7 @@ export default function TruckersLounge() {
       <div className="page-next">
         <p>Read enough? A recruiter can go through the same details with you.</p>
         <Link className="btn btn-primary" href="/apply">
-          Start your application ↗
+          {APPLY_CTA} ↗
         </Link>
       </div>
     </PageShell>

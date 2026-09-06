@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import { EMAIL, EMAIL_HREF, LEGAL_ENTITY, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
@@ -105,7 +106,7 @@ export default function Terms() {
       */}
       <div className="contact-actions">
         <Link className="btn btn-primary" href="/apply">
-          Start your application ↗
+          {APPLY_CTA} ↗
         </Link>
         <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
           Call {PHONE_DISPLAY}
