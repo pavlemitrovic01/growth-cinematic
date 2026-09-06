@@ -78,7 +78,7 @@ export default function CinematicHome() {
             <ol data-stagger className="home-steps">
               <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
               <li><span>02</span><div><h3>Have a real conversation.</h3><p>A recruiter usually calls back within 15–20 minutes during staffed hours. We go through your priorities and qualifications.</p></div></li>
-              <li><span>03</span><div><h3>Compare the details.</h3><p>Pay structure, deductions, home-time schedule, equipment and miles. Ask your questions before choosing a carrier.</p></div></li>
+              <li><span>03</span><div><h3>Compare the details.</h3><p>Pay rates, home time schedule, equipment models, and average weekly miles — we give you the real deal up front, not after you sign. Ask about deductions before choosing a carrier.</p></div></li>
               <li><span>04</span><div><h3>Choose your next route.</h3><p>We help with the next steps. Start dates depend on your paperwork and the carrier’s requirements.</p></div></li>
             </ol>
           </div>
