@@ -39,7 +39,30 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    /**
+     * ⚠️ `suppressHydrationWarning` JE OBAVEZAN OVDE, nije gusenje greske.
+     *
+     * `MOTION_GATE` je inline skripta koja SINHRONO dodaje `js-motion` na <html> pre nego
+     * sto React hidrira -- to joj je cela svrha (klasa iz `useEffect`-a bi stigla posle
+     * bljeska). React zato pri hidraciji zatice atribut koji njegov render ne deklarise i
+     * prijavljuje nesklad na svakom ucitavanju.
+     *
+     * ⚠️ Nije bezopasno upozorenje: React poruka kaze "This won't be patched up", ali je
+     * izmereno da klasa u nekim uslovima NESTANE sa <html>. Ako nestane pre nego sto
+     * `Motion.tsx` proveri (`Motion.tsx:31`), komponenta odustaje i CEO recnik pokreta iz
+     * Faze 2 tiho ne radi nista. Sadrzaj ostaje vidljiv (fail-safe drzi, zato `verify-nojs`
+     * prolazi) -- dakle nijedna kapija to ne bi uhvatila.
+     *
+     * Ovo je dokumentovan React obrazac za skripte koje menjaju <html> pre hidracije.
+     * Deluje SAMO na ovaj element i njegove atribute, ne na stablo ispod.
+     */
+    /*
+     * ⚠️ `data-scroll-behavior="smooth"` je POTVRDA Next-u, ne stil. `globals.css:20` ima
+     * `html{scroll-behavior:smooth}`; bez ovog atributa Next pri promeni rute pusti browser
+     * da GLATKO skroluje kroz celu stranicu do vrha umesto da skoci. Sa njim Next privremeno
+     * iskljuci glatko skrolovanje za prelaz rute, a sidra u stranici ga zadrze.
+     */
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body className="antialiased">
         <script dangerouslySetInnerHTML={{ __html: MOTION_GATE }} />
         <StructuredData />

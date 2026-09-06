@@ -11,7 +11,9 @@ export default function PageShell({ eyebrow, title, lede, children, wide = false
     <div className={'subpage subpage--' + variant}>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav />
-      <main id="main-content" tabIndex={-1}>
+      {/* ⚠️ suppressHydrationWarning -- vidi `components/CinematicHome.tsx`: `route-in` stize
+          imperativno iz `Motion.tsx`, van React-ovog rendera. */}
+      <main id="main-content" tabIndex={-1} suppressHydrationWarning>
         <header className="sub-hero">
           <p className="eyebrow">{eyebrow}</p>
           <h1>{title}</h1>

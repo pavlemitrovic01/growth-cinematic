@@ -19,7 +19,14 @@ export default function CinematicHome() {
     <div className="home subpage">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav />
-      <main id="main-content">
+      {/*
+        ⚠️ suppressHydrationWarning -- isti razlog kao na <html> u `app/layout.tsx`, drugo
+        mesto. `Motion.tsx:111-113` dodaje `route-in` na ovaj element IMPERATIVNO pri
+        promeni rute (fade prelaza), dakle van React-ovog rendera. React zato pri sledecoj
+        hidraciji zatice klasu koju njegovo stablo ne deklarise i prijavljuje nesklad.
+        Deluje samo na ovaj element, ne na stablo ispod.
+      */}
+      <main id="main-content" suppressHydrationWarning>
         <HeroExperience>
           <article className="journey-beat journey-intro" data-beat>
             <p className="journey-eyebrow">CDL-A RECRUITING / YOUR ROAD FORWARD</p>

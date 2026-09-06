@@ -153,11 +153,30 @@ Otkriveno **gledanjem stranice**, ne brojanjem po izvoru (`11d4484`).
 pozadinski server pao na zauzet port, pa se merio **prethodni build**. Od tada: ubij po PID-u
 (`taskkill /PID <pid> /T /F`), potvrdi da je port slobodan, pa tek onda meri.
 
-⚠️ **Hidracioni nesklad na `js-motion` — ISPITAN I ZATVOREN.** Dev je prijavio da klasa koja
-otključava ceo rečnik pokreta nestaje sa `<html>`. Iz Claude browser panela se nije moglo
-razlučiti (panel drži tab u `visibilityState: "hidden"`, pa se watchdog uvek okine pre
-merenja). **Pavle proverio u pravom browseru 2026-09-06: pokret radi.** Bio je dev artefakt
-React error overlay-a, ne produkcijsko ponašanje.
+⚠️ **Hidracioni nesklad — BIO JE STVARAN, POPRAVLJEN.** Dev je prijavio da `js-motion`
+nestaje sa `<html>`. **Prvo sam ga zatvorio kao „dev artefakt" — pogrešno**, na osnovu
+pretpostavke umesto dokaza. Pavlov screenshot Next overlay-a pokazao je suprotno: legenda
+`+ Client − Server` sa crvenim `− className="js-motion"` na `<html>` iz `layout.tsx`, dakle
+**stvaran nesklad u kodu**, ne posledica overlay-a.
+
+Uzrok je isti obrazac na tri mesta — element koji se menja **imperativno, van React-ovog
+rendera**, pa React pri hidraciji zatiče atribut koji njegovo stablo ne deklariše:
+
+| Element | Ko ga menja | Popravka |
+|---|---|---|
+| `<html>` | `MOTION_GATE` inline skripta, sinhrono pre hidracije | `suppressHydrationWarning` |
+| `<main>` naslovna (`CinematicHome.tsx`) | `Motion.tsx:111-113`, `route-in` pri promeni rute | isto |
+| `<main>` podstranice (`PageShell.tsx`) | isto | isto |
+
+⚠️ **Zašto je vredelo:** da je React skinuo `js-motion` kod pravog posetioca, `Motion.tsx:31`
+bi odustao i **ceo rečnik pokreta iz Faze 2 tiho ne bi radio ništa**. Sadržaj bi ostao vidljiv
+(fail-safe drži), pa **nijedna kapija to ne bi uhvatila** — `verify-nojs` gleda inline
+stilove, ne klase.
+
+Uz to `data-scroll-behavior="smooth"` na `<html>`: bez njega Next pri promeni rute pušta
+browser da **glatko skroluje kroz celu stranicu** umesto da skoči.
+
+Provereno klijentskom navigacijom u oba smera i potvrđeno u Pavlovom browseru: konzola čista.
 
 ## Sesija 2026-09-05 (nastavak) — deploy
 
