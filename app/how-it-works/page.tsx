@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { CALLBACK_SENTENCE } from '@/lib/contact';
 import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
@@ -164,8 +165,7 @@ export default function HowItWorks() {
           <div className="card card--cta">
             <h2>Ready when you are</h2>
             <p>
-              Two minutes to apply. A real recruiter usually calls back within 15–20 minutes during
-              staffed hours.
+              Two minutes to apply. {CALLBACK_SENTENCE}
             </p>
             <Link className="btn btn-primary" href="/apply">
               {APPLY_CTA} ↗

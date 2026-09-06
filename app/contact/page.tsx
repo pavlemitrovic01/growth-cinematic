@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { CALLBACK_SENTENCE } from '@/lib/contact';
 import Link from 'next/link';
 import ApplyForm from '@/components/ApplyForm';
 import PageShell from '@/components/PageShell';
@@ -104,7 +105,7 @@ export default function Contact() {
       <section className="contact-callback" aria-labelledby="callback-title">
         <h2 id="callback-title">Want us to call you?</h2>
         <p>
-          A recruiter usually calls back within 15–20 minutes during staffed hours. No obligation,
+          {CALLBACK_SENTENCE} No obligation,
           and it’s free for drivers, always.
         </p>
         <div className="contact-quick">
