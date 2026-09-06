@@ -10,7 +10,7 @@ import Accordion from './Accordion';
 import { homeFaqItems } from '@/lib/faq';
 import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
-function ApplyLink({ children = 'FIND MY NEXT ROUTE' }: { children?: React.ReactNode }) {
+function ApplyLink({ children = APPLY_CTA }: { children?: React.ReactNode }) {
   return <Link className="journey-cta" href="/apply"><span>{children}</span><b aria-hidden="true">↗</b></Link>;
 }
 
@@ -41,7 +41,7 @@ export default function CinematicHome() {
             <p className="journey-eyebrow">03 / THE NEXT MILE</p>
             <h2>A better route<br /><em>starts with a call.</em></h2>
             <p className="journey-lede">One conversation about what matters to you. Clear options. The decision stays yours.</p>
-            <ApplyLink>{APPLY_CTA}</ApplyLink>
+            <ApplyLink />
           </article>
         </HeroExperience>
 
@@ -187,7 +187,7 @@ export default function CinematicHome() {
         <section data-reveal className="home-close home-section" aria-labelledby="close-heading">
           <span className="home-kicker">THE NEXT MILE IS YOURS</span>
           <h2 id="close-heading">Ready for<br /><em>your next route?</em></h2>
-          <div className="journey-actions"><ApplyLink>{APPLY_CTA}</ApplyLink><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
+          <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
           {/*
             CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
             tacno jednom mestu (`app/how-it-works`, i to skracena na prvu polovinu) — a pripada
