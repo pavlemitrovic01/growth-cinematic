@@ -302,6 +302,7 @@
 .journey-cta b{display:grid;place-items:center;width:40px;height:40px;flex-shrink:0;background:var(--clay);border-radius:50%;color:#fff;font-size:22px;transition:transform .2s}
 .journey-cta:hover b{transform:rotate(45deg)}
 .journey-call{font-size:14px;line-height:1.5;padding:12px 0;text-decoration:underline;text-underline-offset:5px;color:var(--bone)}
+.journey-reassure{margin:16px 0 0;font-size:13px;line-height:1.5;color:#e3ded1;opacity:.72}
 .journey-tools{padding:0 6vw 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
 .journey-tools>a{font-size:12px;color:var(--bone);min-height:44px;display:flex;align-items:center;text-decoration:underline;text-underline-offset:5px}
 .journey-scroll{display:none;font-size:11px;letter-spacing:.2em;align-items:center;gap:14px}

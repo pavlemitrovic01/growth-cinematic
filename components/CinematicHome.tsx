@@ -26,6 +26,14 @@ export default function CinematicHome() {
             <h1>Your next route.<br /><em>Straight answers.</em></h1>
             <p className="journey-lede">Pay, home time, equipment. Know the details before you commit. We connect CDL-A drivers with partner carriers — free for drivers, always.</p>
             <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Or call {PHONE_DISPLAY}</a></div>
+            {/*
+              PRENETO iz `app/apply/page.tsx:49`, gde je stajalo u bocnoj traci -- dakle vozac
+              ga je video TEK POSTO klikne. C53 zabranjuje da dugme obecava bilo sta osim onoga
+              sto radi („Start your application"), pa mekoca ide PORED dugmeta, ne u njega.
+              Nije konstanta: obicna recenica bez reda u registru, i u izvoru stoji kao deo
+              duze recenice, pa bi izdvajanje dodalo indirekciju bez zastite.
+            */}
+            <p className="journey-reassure">Applying does not commit you to a job.</p>
           </article>
           <article className="journey-beat" data-beat>
             <p className="journey-eyebrow">01 / THE PEOPLE</p>
