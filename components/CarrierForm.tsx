@@ -26,10 +26,11 @@ const PHONE_TITLE = 'Enter all 10 digits, including the area code.';
  */
 const CONSENT_TEXT = (
   <>
-    I agree that <strong>Capljinac LLC</strong> may contact me by phone call, text message (SMS)
-    and email at the number and address I provided — including by automated means — about driver
-    recruiting services. This consent is for Capljinac LLC only. Consent is not a condition of any
-    service, and I can opt out at any time by replying STOP. Message and data rates may apply. See
+    By checking this box, I agree that <strong>Capljinac LLC</strong> may contact me by phone
+    call, text message (SMS) and email at the number and address I provided — including by
+    automated means — about driver recruiting services. This consent is for Capljinac LLC only.
+    Consent is not a condition of any service, and I can opt out at any time by replying STOP.
+    Message and data rates may apply. See
     our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms</Link>.
   </>
 );
@@ -170,7 +171,7 @@ export default function CarrierForm() {
 
       <label className="consent">
         <input required type="checkbox" name="tcpaConsent" />
-        <span>By checking this box, {CONSENT_TEXT}</span>
+        <span>{CONSENT_TEXT}</span>
       </label>
 
       <button className="af-submit" type="submit" disabled={status === 'submitting'}>

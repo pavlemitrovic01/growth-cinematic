@@ -182,7 +182,12 @@ describe('buildConsentRecord', () => {
     // ⚠️ LEAD1 je podigao verziju sa '2026-07-30' jer je LEG-1 promenio Chatbot consent
     // tekst. `textVersion` identifikuje TEKST koji je vozac video — da je ostala stara,
     // zapis bi tvrdio da je prikazan stari tekst, tj. isti kvar koji LEG-1 popravlja.
-    expect(record.textVersion).toBe('2026-09-02');
+    //
+    // ⚠️ Faza 4 je podigla sa '2026-09-02' na '2026-09-06': prefiks "By checking this box,"
+    // je usao u sam `CONSENT_TEXT` (obe forme), pa se vidljivi tekst promenio. Do tada su
+    // quick i full forma prikazivale RAZLICIT tekst pod ISTOM verzijom, obe kao
+    // `source: apply` — iz zapisa se nije moglo razluciti sta je vozac video.
+    expect(record.textVersion).toBe('2026-09-06');
 
     const grantedAtMs = new Date(record.grantedAt).getTime();
     expect(record.grantedAt).toBe(new Date(grantedAtMs).toISOString());
