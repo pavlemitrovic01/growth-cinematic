@@ -36,6 +36,73 @@ const STEPS = [
   },
 ];
 
+/**
+ * „Know before you go" — preneto iz izvornog projekta (`components/KnowBeforeYouGo.jsx`).
+ *
+ * ⚠️ ZASTO OVDE, A NE NA NASLOVNOJ. Naslovna je do 2026-09-06 nosila naslov
+ * „02 / KNOW BEFORE YOU GO" nad tri genericke kartice — isti naslov sa ispraznjenim sadrzajem,
+ * sto se cita kao propust a ne kao odluka o obimu. Jedanaest redova registra sa citiranim
+ * FMCSA obavezama trazi stranicu na kojoj se cita; naslovna sada tease-uje i linkuje ovamo.
+ *
+ * ⚠️ COPY JE POD CLAIMS UGOVOROM — svaka trampa nosi hedz koji NE SME nestati pri skracivanju.
+ * Redovi: C23–C25 (home time) · C27, C40 (milje i plata) · C30–C33 (teret) · C34 (nov CDL) ·
+ * C35 (iskustvo) · C37 (violations/SAP). Prenet je doslovno; jedina izmena su tipografski
+ * apostrofi, po konvenciji ovog projekta (Faza 4, `41e277c`).
+ *
+ * ⚠️ NEMA obecanja da se odgovori prenose u prijavu. Bez tehnickog prenosa to bi bilo lazno
+ * UI obecanje. Zato su pitanja za vozaca — ne polja forme.
+ *
+ * ⚠️ CTA iz izvora („Review your choices" → `#apply`) NIJE prenet: stranica vec nosi CTA u
+ * bocnoj traci, a nov natpis bi vratio varijantu koju je Faza 4 upravo svela na `APPLY_CTA`.
+ */
+const TRADEOFFS = [
+  {
+    title: 'Home time',
+    tradeoff:
+      'Home daily is realistic. It usually comes with fewer weekly miles than long-haul, and a smaller pool of carriers depending on where you live.',
+    questions: [
+      'How many miles per week — realistically, not best case?',
+      'Is the lane fixed, or does it change week to week?',
+      'What happens on a week the lane falls through?',
+    ],
+  },
+  {
+    title: 'Miles & pay',
+    tradeoff:
+      'Comparing offers is harder: cents per mile, hourly, and percentage of revenue don’t measure the same thing, and neither do the route miles they count.',
+    questions: [
+      'Is this cents per mile, hourly, or a percentage — and a percentage of what?',
+      'Are those practical-route miles or shortest-route miles?',
+      'What did drivers on this account average last month — not the top earner?',
+    ],
+  },
+  {
+    title: 'Type of freight',
+    tradeoff:
+      'Dry van, reefer, and flatbed come with different operating demands. Some temperature-controlled food loads add temperature, sanitation, training, and record procedures. Flatbed work requires close attention to cargo securement; the driver may need to inspect or adjust it.',
+    questions: [
+      'Is this no-touch, drop and hook, or live load?',
+      'What year is the equipment, and who handles maintenance and breakdowns?',
+      'How much of this account is actually the freight you just described?',
+    ],
+  },
+];
+
+const MODIFIERS = [
+  {
+    label: 'New CDL',
+    body: 'After truck-driving school and hiring, drivers normally receive several weeks of on-the-job training. Ask how the carrier’s program works, what it pays, and what happens before solo release.',
+  },
+  {
+    label: '1+ year',
+    body: 'Use your experience to ask harder questions before you sign.',
+  },
+  {
+    label: 'Violations or SAP',
+    body: 'Expect carriers to review your state driving record and prior safety history. FMCSA-regulated employers must also check the Clearinghouse before hiring for safety-sensitive CDL work.',
+  },
+];
+
 export default function HowItWorks() {
   return (
     <PageShell
@@ -151,6 +218,41 @@ export default function HowItWorks() {
               That is the whole model. It is also why applying costs you nothing and why nobody
               here is paid to talk you into a truck you don&apos;t want.
             </p>
+          </section>
+
+          <section className="sub-section" id="know-before-you-go">
+            <div className="sub-head">
+              <span className="sub-num">04</span>
+              <h2>Know before you go</h2>
+            </div>
+            <p className="kbyg-lead">
+              Three trade-offs nobody explains until after you&apos;ve signed.
+            </p>
+            <div className="sub-3up">
+              {TRADEOFFS.map((t) => (
+                <article className="card" key={t.title}>
+                  <h3>{t.title}</h3>
+                  <p>{t.tradeoff}</p>
+                  <p className="kbyg-ask">Ask the carrier</p>
+                  <ol className="kbyg-questions">
+                    {t.questions.map((q) => (
+                      <li key={q}>{q}</li>
+                    ))}
+                  </ol>
+                </article>
+              ))}
+            </div>
+            <div className="kbyg-mods">
+              <p className="kbyg-mods-lead">Where you are right now changes the answers:</p>
+              <dl>
+                {MODIFIERS.map((m) => (
+                  <div className="kbyg-mod" key={m.label}>
+                    <dt>{m.label}</dt>
+                    <dd>{m.body}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
           </section>
 
           {/* ⚠️ Ovaj pasus je kanonski C11 caveat. Ne brisati — bez njega „3–5 days"

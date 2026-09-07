@@ -102,7 +102,24 @@ export default function CinematicHome() {
         </section>
 
         <section data-reveal className="home-values home-section" aria-labelledby="values-heading">
-          <span className="home-kicker">02 / KNOW BEFORE YOU GO</span>
+          {/*
+            ⚠️ NASLOV JE PREIMENOVAN 2026-09-06, SADRZAJ PRESELJEN. Do tada je ovde stajalo
+            „02 / KNOW BEFORE YOU GO" nad tri genericke kartice, dok pun sadrzaj te sekcije —
+            tri trampe, devet „Ask the carrier" pitanja i tri modifikatora, ukupno jedanaest
+            redova registra — nije postojao nigde na sajtu. Isti naslov sa ispraznjenim
+            sadrzajem cita se kao propust, ne kao odluka o obimu.
+
+            Pun sadrzaj sada zivi na `/how-it-works#know-before-you-go`. Kartice ispod OSTAJU
+            jer rade svoj posao na naslovnoj — tri pitanja koja otvaraju temu — ali naslov vise
+            ne obecava ono sto nije tu, a link vodi na ono sto jeste. Obecanje i odrediste su
+            ovim spojeni; razdvojeni su vec jednom kostali (vidi `app/how-it-works` sekciju 03).
+          */}
+          <div className="home-section-top">
+            <span className="home-kicker">02 / WHAT TO COMPARE</span>
+            <Link className="home-text-link" href="/how-it-works#know-before-you-go">
+              Know before you go ↗
+            </Link>
+          </div>
           <h2 id="values-heading">A bigger number isn’t<br /><em>the whole offer.</em></h2>
           <div data-stagger className="home-value-grid">
             <article><span>01 — PAY</span><h3>What reaches your paycheck?</h3><p>Ask how pay is calculated, which miles count and what deductions apply.</p></article>
@@ -180,8 +197,23 @@ export default function CinematicHome() {
           <div className="home-editorial">
             <h2 id="stories-heading">Be one of<br /><em>the first.</em></h2>
             <div>
+              {/*
+                ⚠️ CLAIMS C41 (status OPEN) — popravljeno 2026-09-06. Do tada je ovde stajalo
+                „the drivers we place right now", a C41 zabranjuje SVAKU konstrukciju u prezentu
+                koja tvrdi aktivno plasiranje: GROWTH je nova firma bez zabelezenih plasmana.
+
+                ⚠️ ZASTO JE PROSLO KROZ SEDAM CLAIMS BATCH-EVA. Ovaj pasus je u `CLAIMS.md`
+                KEEP tabeli zaveden pod C16 (testimonijali) jos u CL1 — a C41 je nastao tek u
+                L1, 2026-08-24. Red je bio zatvoren za jedan tag pre nego sto je drugi postojao,
+                i nikad nije ponovo procitan protiv njega. Isti obrazac koji LESSONS L29 imenuje.
+
+                Recenica zadrzava istu ulogu (zasto je biti prvi dobro), ali vise ne tvrdi da se
+                plasiranje desava — tvrdi samo ono sto jeste istina: ko dodje prvi, dobija punu
+                paznju. Ista povreda i dalje stoji u MAIN-u (`app/page.jsx:223`); taj repo se
+                odavde ne dira.
+              */}
               <p>
-                GROWTH is new. That means the drivers we place right now get our full attention —
+                GROWTH is new. That means the first drivers who come to us get our full attention —
                 and their stories land here, with their names and their permission, as they roll in.
               </p>
               <p>

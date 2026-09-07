@@ -454,6 +454,23 @@ main:focus{outline:none}
 .card{padding:28px;border-radius:0;border-width:1px 0 0;background:transparent}
 .card h2,.card h3{font-size:23px;line-height:1.2;letter-spacing:-.035em;margin:0 0 14px}
 .card--cta{background:var(--bone-dim);border:1px solid rgba(22,32,25,.25);position:static;padding:28px}
+
+/* ─── KNOW BEFORE YOU GO — preneto sa naslovne 2026-09-06 (Faza 6) ──────────────
+   ⚠️ MAIN-ov `.kbyg-*` grid NIJE prenet. Sekcija koristi `.sub-3up` i `.card` koje stranica
+   vec ima; uvoz drugog sistema razmaka na istu stranicu je tacno ono sto je BD3 u izvornom
+   projektu morao da razmrsuje. Novo je samo ono cega ovde nema: labela „Ask the carrier",
+   numerisana pitanja i lista modifikatora.
+   Pravila stoje u ovom bloku jer `.card` iz linije 182 ovde biva pregazen — nova pravila
+   moraju stajati posle njega da bi uopste vazila. */
+.kbyg-lead{margin:0 0 8px;max-width:34ch;font-size:clamp(1.15rem,2vw,1.6rem);line-height:1.25;letter-spacing:-.035em;text-wrap:balance}
+.kbyg-ask{margin:18px 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep);opacity:1}
+.kbyg-questions{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.65}
+.kbyg-mods{margin-top:44px;padding-top:28px;border-top:1px solid rgba(22,32,25,.2)}
+.kbyg-mods-lead{margin:0 0 20px;font-size:16px;font-weight:700;letter-spacing:-.02em}
+.kbyg-mods dl{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.kbyg-mod dt{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep)}
+.kbyg-mod dd{margin:0;font-size:15px;line-height:1.7}
+@media(max-width:900px){.kbyg-mods dl{grid-template-columns:1fr}}
 .card--cta p{color:var(--moss)}
 .btn{min-height:48px;font-size:13px;letter-spacing:.065em;text-align:center}
 .rail-eyebrow{font-size:12px!important;letter-spacing:.13em;font-weight:700;color:var(--clay-mid)!important;margin:0 0 12px!important}
