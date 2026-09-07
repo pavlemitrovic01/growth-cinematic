@@ -21,6 +21,8 @@
  * ⚠️ Trazi POKRENUT server (`npm run dev` ili `node scripts/preview.mjs`). Ne pokrece ga
  * sam — pozivalac bira da li meri dev ili build.
  */
+import { PAGE_PATHS } from '../lib/routes.js';
+import { POSTS } from '../lib/posts.js';
 
 /**
  * Origin koji se meri. `--base` gadja bilo koji origin (deploy), `--port` ostaje za localhost.
@@ -78,8 +80,29 @@ const ROUTES = [
   { path: '/privacy', min: 2000, needs: ['Where Your Information Is Stored', 'Telephone Consumer Protection Act'] },
   { path: '/terms', min: 900, needs: ['not a motor carrier'] },
   { path: '/truckers-lounge', min: 500, needs: ['Truckers'] },
+  /**
+   * ⚠️ CLANCI SE IZVODE IZ `POSTS`, NE PREKUCAVAJU. Do 2026-09-06 ova kapija clanke nije
+   * merila UOPSTE — spisak je imao 11 tvrdih ruta, a `lib/posts.js` je bas povrsina koja je
+   * vec jednom prepisana. Cetvrti clanak bi se objavio bez ijedne provere no-JS ugovora.
+   *
+   * Prag je IZMEREN protiv deploy-a 2026-09-06 (6362 / 4362 / 3420 znakova), ne izabran:
+   * 2500 hvata slomljen render, a ne pada na obicnom skracivanju copy-ja.
+   */
+  ...POSTS.map((post) => ({ path: `/truckers-lounge/${post.slug}`, min: 2500, needs: [], postTitle: post.title })),
   { path: '/nepostojeca-ruta-za-proveru', min: 200, needs: ['Wrong exit'], status: 404 },
 ];
+
+/**
+ * ⚠️ POREDI SA IZVOROM, NE BROJI. Spisak gore ostaje rucni jer svaka ruta nosi svoj prag i
+ * svoje markere — ali sme da bude rucni samo ako se DOKAZE da pokriva sve staticke rute.
+ * Bez ovoga bi nova stranica koju niko ne dopise ostala nemerena, a kapija bi i dalje
+ * prijavljivala PASS. Isti obrazac koji je zatvoren u `verify-claims.mjs` i `app/sitemap.ts`.
+ */
+const uncovered = PAGE_PATHS.filter((path) => !ROUTES.some((route) => route.path === path));
+if (uncovered.length) {
+  console.error(`FAIL — ${uncovered.length} ruta iz lib/routes.js nije u spisku ove kapije: ${uncovered.join(', ')}`);
+  process.exit(1);
+}
 
 /** Telefon mora biti dohvatljiv sa SVAKE rute — bez JS-a je to jedini izlaz. */
 const PHONE = '(240) 226-3786';
@@ -144,6 +167,12 @@ for (const route of ROUTES) {
     if (missing.length) {
       fails.push(`${route.path} — ${missing.length}/${FAQ_ITEMS.length} FAQ odgovora nije u HTML-u: ${missing.map((m) => m.id).join(', ')}`);
     }
+  }
+
+  // Naslov clanka mora biti u serverskom HTML-u. Poredi se kroz `textOf` na obe strane, jer
+  // naslovi nose tipografske navodnike koje bi doslovno `includes` uporedjivanje promasilo.
+  if (route.postTitle && !text.includes(textOf(route.postTitle))) {
+    fails.push(`${route.path} — naslov clanka nije u serverskom HTML-u`);
   }
 
   if (!html.includes(PHONE)) fails.push(`${route.path} — telefon nije dohvatljiv bez JS-a`);

@@ -10,12 +10,18 @@
  * Meri se RENDEROVAN HTML, ne izvorni kod: tvrdnja moze doci iz podatka (`lib/posts.js`,
  * `lib/faq.js`), iz komponente ili iz metapodataka, a posetilac vidi samo ishod.
  *
+ * Sama PRAVILA zive u `scripts/claims-rules.mjs` da bi bila dokaziva testom; ovde je samo
+ * merenje. Vidi `__tests__/claims-rules.test.js`.
+ *
  * Upotreba:
  *   node scripts/verify-claims.mjs                # protiv servera na :3000
  *   node scripts/verify-claims.mjs --port 5199
  *   node scripts/verify-claims.mjs --base https://primer.vercel.app   # deploy
  *   VERIFY_BASE=https://primer.vercel.app node scripts/verify-claims.mjs
  */
+import { PAGE_PATHS } from '../lib/routes.js';
+import { POSTS } from '../lib/posts.js';
+import { checkPage } from './claims-rules.mjs';
 
 /**
  * Origin koji se meri. `--base` gadja bilo koji origin (deploy), `--port` ostaje za localhost.
@@ -57,71 +63,15 @@ const BASE = (() => {
 // Meta merenja se ISPISUJE — da se nikad vise ne desi da PASS znaci "merio sam nesto drugo".
 console.log(`meri se: ${BASE}`);
 
+/**
+ * ⚠️ RUTE SE IZVODE, NE PREKUCAVAJU. Do 2026-09-06 je ovde stajao tvrd spisak od 13 putanja,
+ * ukljucujuci tri slug-a clanaka doslovno. Posledica: cetvrti clanak — a `lib/posts.js` je bas
+ * povrsina na koju zaglavlje gore upozorava — objavio bi se NEIZMEREN, i kapija bi i dalje
+ * prijavljivala PASS. Provera koja broji ne vidi ono cega u njenom spisku nema.
+ */
 const ROUTES = [
-  '/', '/apply', '/for-carriers', '/how-it-works', '/about', '/faq', '/contact',
-  '/privacy', '/terms', '/truckers-lounge',
-  '/truckers-lounge/new-cdl-graduate-what-training-provided-actually-means',
-  '/truckers-lounge/sap-and-violations-how-the-return-to-duty-process-works',
-  '/truckers-lounge/how-to-spot-hidden-costs-before-signing-a-contract',
-];
-
-/**
- * ZABRANJENE formulacije. Svaka nosi oznaku reda iz registra i razlog — bez razloga se
- * pravilo posle godinu dana ne moze ni proveriti ni ukloniti.
- */
-const PROHIBITED = [
-  {
-    id: 'C10',
-    why: 'proces provere carrier-a nije definisan, pa „vetted/verified" tvrdi nepostojeci postupak',
-    re: /vetted|verified carrier/i,
-  },
-  {
-    id: 'C9',
-    why: 'founder nikad nije vozio kamion — svaka formulacija koja implicira voznju je trajna zabrana',
-    re: /in the seat|behind the wheel|years driving|from the cab|years on the road/i,
-  },
-  {
-    id: 'C19',
-    why: 'garancija zarade',
-    re: /guarantee[a-z]* (earnings|pay|income)|stable and secure earnings|we promise[^.]{0,30}(earn|pay)/i,
-  },
-  { id: 'C8', why: 'pokrivenost je 48 kontinentalnih drzava, ne 50', re: /all 50 states/i },
-  { id: 'S1', why: 'izmisljen broj plasiranih vozaca', re: /\b\d{2,}\+\s*(drivers|placements) placed|\b70\+\s*drivers/i },
-  { id: 'S2', why: 'testimonijal bez izvora', re: /—\s*[A-Z][a-z]+ [A-Z]\.,?\s*(driver|OTR|CDL)/ },
-  { id: 'D20', why: 'negativna univerzalna tvrdnja o industriji', re: /scam and cheat|most recruiters lie|everyone in this business/i },
-];
-
-/**
- * USLOVNE tvrdnje: smeju da postoje ISKLJUCIVO uz svoj hedz. Gol oblik je zabranjen trajno,
- * jer zavisi od promenljive koju GROWTH ne kontrolise.
- */
-const CONDITIONAL = [
-  {
-    id: 'C11',
-    claim: /3[–-]5 days/,
-    hedge: /as little as|isn['’]t ready|paperwork, physicals|depends on|own pace/i,
-    why: 'vreme do plasmana zavisi od vozacevog papirnog traga',
-  },
-  {
-    id: 'C12',
-    /**
-     * ⚠️ KAPIJA JE BILA UZA OD REGISTRA KOJI SPROVODI. `hedge2` je do 2026-09-05 glasio
-     * `/business hours/i`, a C12 dozvoljena formulacija je „usually within 15–20 minutes
-     * during **business/staffed** hours" — dakle registar priznaje oba, kapija samo prvo.
-     *
-     * Otkriveno kad je copy prelazio na „staffed hours": provera bi pala na svih 13 ruta i
-     * izgledalo bi kao greska u tekstu, a greska je bila ovde. Kapija koja odbija ono sto
-     * registar dozvoljava tera pisca da prekrsi registar da bi prosao build.
-     *
-     * „staffed" je i tacniji za ovaj posao: tim ne radi po objavljenom radnom vremenu nego
-     * je dostupan svaki dan dok je za stolom. Objavljeni raspored bi suzio ono sto je istina,
-     * a „24/7" bi ga prosirio preko onoga sto C13 dozvoljava. „staffed hours" pogadja tacno.
-     */
-    claim: /15[–-]20 minutes/,
-    hedge: /usually/i,
-    hedge2: /(business|staffed) hours/i,
-    why: 'vreme odgovora vazi samo u radno vreme i nije zagarantovano',
-  },
+  ...PAGE_PATHS,
+  ...POSTS.map((post) => `/truckers-lounge/${post.slug}`),
 ];
 
 const fails = [];
@@ -138,19 +88,11 @@ for (const path of ROUTES) {
   }
 }
 
-for (const rule of PROHIBITED) {
-  const hits = ROUTES.filter((p) => pages[p] && rule.re.test(pages[p]));
-  if (hits.length) fails.push(`${rule.id} ZABRANJENO (${rule.why}) — ${hits.join(', ')}`);
-}
-
-for (const rule of CONDITIONAL) {
-  for (const path of ROUTES) {
-    const html = pages[path];
-    if (!html || !rule.claim.test(html)) continue;
-    const ok = rule.hedge.test(html) && (!rule.hedge2 || rule.hedge2.test(html));
-    if (ok) notes.push(`${rule.id} na ${path} — hedz prisutan`);
-    else fails.push(`${rule.id} GOL OBLIK (${rule.why}) — ${path}`);
-  }
+for (const path of ROUTES) {
+  if (!pages[path]) continue;
+  const result = checkPage(path, pages[path]);
+  fails.push(...result.fails);
+  notes.push(...result.notes);
 }
 
 for (const n of notes) console.log('  ok  ' + n);
@@ -160,4 +102,4 @@ if (fails.length) {
   for (const f of fails) console.error('  · ' + f);
   process.exit(1);
 }
-console.log(`PASS — ${ROUTES.length} ruta, nijedna zabranjena tvrdnja, svaka uslovna hedzovana.`);
+console.log(`PASS — ${ROUTES.length} ruta (${PAGE_PATHS.length} stranica + ${POSTS.length} clanaka), nijedna zabranjena tvrdnja, svaka uslovna hedzovana.`);

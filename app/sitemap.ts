@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 import { IS_LIVE, SITE_URL } from '@/lib/seo';
 import { POSTS } from '@/lib/posts';
-export const PAGE_PATHS = ['/', '/apply', '/for-carriers', '/how-it-works', '/about', '/faq', '/contact', '/privacy', '/terms', '/truckers-lounge'];
+import { PAGE_PATHS } from '@/lib/routes';
 export default function sitemap(): MetadataRoute.Sitemap {
   if (!IS_LIVE) return [];
   return [

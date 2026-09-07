@@ -23,9 +23,54 @@ it('keeps preview sitemap empty and exposes pages plus articles only at launch',
   expect((await import('../app/sitemap')).default()).toEqual([]);
   vi.stubEnv('NEXT_PUBLIC_SITE_LIVE', 'true');
   vi.resetModules();
+  const { PAGE_PATHS } = await import('../lib/routes.js');
+  const { POSTS } = await import('../lib/posts.js');
   const urls = (await import('../app/sitemap')).default().map(x => x.url);
-  expect(urls).toHaveLength(13);
-  expect(new Set(urls).size).toBe(13);
+  // ⚠️ Broj se IZVODI iz izvora, ne prekucava. Tvrdo `13` je do 2026-09-06 prolazilo i kad bi
+  // nova ruta ostala van sitemap-a — test je merio sam sebe. Da spisak i dalje prati stablo
+  // ruta cuva zaseban test ispod; ovde se cuva da sitemap ne ispusti nista iz oba izvora.
+  const expected = PAGE_PATHS.length + POSTS.length;
+  expect(urls).toHaveLength(expected);
+  expect(new Set(urls).size).toBe(expected);
+  for (const path of PAGE_PATHS) {
+    expect(urls).toContain('https://preview.example' + (path === '/' ? '/' : path));
+  }
   expect(urls.every(url => url.startsWith('https://preview.example/'))).toBe(true);
   vi.unstubAllEnvs();
+});
+
+it('svaka staticka ruta u app/ ima svoj red u lib/routes.js', async () => {
+  /**
+   * ⚠️ OVO JE PRAVA INVARIJANTA. Sitemap i obe `verify` kapije citaju `lib/routes.js`, pa se
+   * medjusobno slazu bez obzira na to sta je u njemu — slazu se i kad je nepotpun. Jedino
+   * stablo ruta u `app/` moze da kaze da spisku nesto NEDOSTAJE.
+   *
+   * Scenario koji ovo hvata: neko doda `app/nova-stranica/page.tsx` i ne dopise je u
+   * `lib/routes.js`. Do 2026-09-06 su sitemap, oba `verify`-ja i ovaj test ostajali zeleni,
+   * a stranica ne bi bila ni objavljena ni izmerena.
+   */
+  const { readdirSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { PAGE_PATHS } = await import('../lib/routes.js');
+
+  const found = [];
+  const walk = (dir, segments) => {
+    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+      if (entry.isDirectory()) {
+        if (entry.name === 'api') continue;        // API rute nisu indeksabilne stranice
+        if (entry.name.startsWith('[')) continue;  // dinamicke rute pokriva POSTS
+        // `_folder` iskljucuje sebe i sve podfoldere iz rutiranja; `@slot` je paralelna ruta,
+        // ne samostalan URL. Oba po `next/dist/docs/01-app/01-getting-started/02-project-structure.md`.
+        // (Segment sa doslovnom donjom crtom pise se `%5F…` i pocinje procentom, pa ovde ne upada.)
+        if (entry.name.startsWith('_') || entry.name.startsWith('@')) continue;
+        // Rutne grupe `(ime)` ne ucestvuju u URL-u.
+        walk(join(dir, entry.name), entry.name.startsWith('(') ? segments : [...segments, entry.name]);
+      } else if (/^page\.(?:tsx|jsx|ts|js)$/.test(entry.name)) {
+        found.push('/' + segments.join('/'));
+      }
+    }
+  };
+  walk('app', []);
+
+  expect([...found].sort()).toEqual([...PAGE_PATHS].sort());
 });
