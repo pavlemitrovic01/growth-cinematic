@@ -275,16 +275,19 @@ svoj posao) → analitika + consent → pravni pregled → odluka o prelasku.
 `KnowBeforeYouGo` je **zatvoren u Fazi 6**, `middleware` → `proxy` **2026-09-08** — ne
 raditi ponovo.
 
-### ⚠️ Dve odluke koje čekaju Pavla
+### ✅ Dve odluke — donete 2026-09-08
 
-1. **Chrome labele:** idu u konsolidaciju ili ostaju kratke. Nav („APPLY NOW"), MobileBar
-   („Apply ↗"), Footer („Apply"). **Preporuka: ostaju** (razlog u `lib/cta.js`). Ako idu —
-   izmeriti širinu nav pilule i mobilne trake **na granici breakpointa**, ne na zatečenoj
-   širini (L59).
-2. **`AGENTS.md` / `CLAUDE.md`:** commit-ovati ih ili `agentRules: false` u
-   `next.config.ts`. **Preporuka: commit** — Next ih regeneriše deterministički, sa
-   BEGIN/END markerima, pa gašenje samo pravi razliku koju neko mora da čisti.
-   ⚠️ `CLAUDE.md` u korenu se **automatski učitava u kontekst agenta**, pa nije svejedno.
+1. **Chrome labele: OSTAJU kratke.** Nav („APPLY NOW"), MobileBar („Apply ↗"), Footer
+   („Apply") se ne uključuju u `APPLY_CTA` konsolidaciju. Nisu CTA dugmad nego navigacioni
+   chrome pored jednorečnih suseda (`Call`, `Text`, `FAQ`) — duga rečenica bi tamo bila
+   regresija izgleda, ne doslednost. Razlog stoji u `lib/cta.js`. **Ne otvarati ponovo bez
+   nove odluke.**
+2. **`AGENTS.md` / `CLAUDE.md`: COMMIT-ovani.** Next ih regeneriše deterministički, između
+   `BEGIN:nextjs-agent-rules` / `END` markera; gašenje kroz `agentRules: false` bi samo
+   pravilo razliku koju neko mora da čisti pri svakom `next dev`. Provereno pre commita:
+   `AGENTS.md` 678 B, `CLAUDE.md` 11 B (`@AGENTS.md`), ništa osim Next-ovog bloka.
+   ⚠️ `CLAUDE.md` u korenu se **automatski učitava u kontekst agenta** — ako Next ikad
+   promeni sadržaj tog bloka, promena stiže kroz `git diff`, ne tiho.
 
 ### Sitnije, nagomilano
 

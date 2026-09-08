@@ -409,7 +409,7 @@ proverila istom merom i zatvorila.
 **Navigacioni chrome** — Nav („APPLY NOW"), MobileBar („Apply ↗") i Footer („Apply") nisu
 uključeni u konsolidaciju natpisa. Nisu CTA dugmad nego chrome pored jednorečnih suseda
 (`Call`, `Text`, `FAQ`); duga rečenica bi tamo bila regresija izgleda. Razlog je upisan u
-`lib/cta.js`. **Čeka Pavlovu odluku — jedina preostala stavka iz Faze 4.**
+`lib/cta.js`. **✅ Odlučeno 2026-09-08: ostaju kratki.** Time je Faza 4 zatvorena u celosti.
 
 ### Original plana
 
