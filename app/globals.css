@@ -345,12 +345,7 @@
 .home-steps li:first-child{border-top:1px solid rgba(22,32,25,.22)}
 .home-steps li>span{font-size:12px;color:var(--clay-mid);padding-top:5px;letter-spacing:.1em}
 .home-steps h3{font-size:22px;line-height:1.2;letter-spacing:-.025em;margin:0 0 10px}
-.home-steps p,.home-value-grid p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--moss)}
-.home-values{background:var(--bone-dim)}
-.home-value-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:36px}
-.home-value-grid article{border-top:1px solid rgba(22,32,25,.4);padding-top:22px}
-.home-value-grid span{font-size:12px;letter-spacing:.1em;color:var(--clay-mid)}
-.home-value-grid h3{font-size:24px;line-height:1.2;letter-spacing:-.035em;margin:26px 0 15px;max-width:19ch}
+.home-steps p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--moss)}
 .home-founder blockquote{font:clamp(24px,2.4vw,34px)/1.45 Georgia,serif;margin:30px 0}
 .home-founder .home-signature{font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 30px}
 .home-faq .faqlist{max-width:none}
@@ -389,7 +384,6 @@
 @media(max-width:900px){
   .home-editorial{grid-template-columns:1fr;gap:28px;margin-top:20px}
   .home-section{padding:60px 6vw}
-  .home-value-grid{grid-template-columns:1fr;gap:28px}
   .journey-story{grid-template-columns:1fr;padding:0 6vw}
   .journey-intro{min-height:calc(100svh - 140px);padding:48px 0}
   .journey-beat:not(.journey-intro){padding:28px 0;border-top:1px solid var(--line)}
@@ -655,6 +649,39 @@ main:focus{outline:none}
   /* Na 15ch labeli i vrednosti od 22px zajedno ostaje ~10ch za vrednost — labela ide iznad. */
   .pay-rows>div{grid-template-columns:1fr;gap:10px}
   .pay-rows dt{padding-top:0}
+}
+
+/* ── `values` — UTILITY (D1, 2026-09-09) ──────────────────────────────────────
+   Druga sekcija posle `pay`. Do 2026-09-09 je bila `.home-value-grid`: tri kartice
+   u kojima je osa 12px labela a pitanje 24px naslov, ispod naslova od 82px.
+
+   ⚠️ DISPLAY ELEMENT JE IME OSE, NE BROJ — i to nije simetrija sa `pay` nego njena
+   suprotnost. `pay` utility nosi brojem (`$0`); ovde bi veliki broj oborio sopstvenu
+   rečenicu, jer sekcija tvrdi „A bigger number isn't the whole offer." Podatak je
+   sama taksonomija: tri ose, imenovane, i ništa drugo.
+
+   ⚠️ Raspored ostaje 3-up grid, obrće se hijerarhija UNUTAR ćelije. Time je oblik i
+   dalje različit od `pay` (jedna figura + redovi) i od `home-steps` / `home-guard-list`
+   (naslagani redovi) — tri utility sekcije ne bi smele da konvergiraju u istu stvar.
+
+   ⚠️ `.home-value-grid p` je skinut iz DELJENOG selektora na :348, a ne ceo red —
+   `.home-steps p` i `.home-founder p` su živi. Isti obrazac koji je već jednom
+   zamalo oborio `.af` kroz `.proof-section`.
+
+   `.home-values{background}` je preseljen ovamo iz bloka na ~:349, nepromenjene
+   vrednosti — da sva pravila ove sekcije stoje na jednom mestu. */
+.home-values{background:var(--bone-dim)}
+.home-values h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
+.value-axes{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;list-style:none;padding:0;margin:38px 0 0}
+.value-axes li{border-top:1px solid rgba(22,32,25,.4);padding-top:20px}
+.value-num{display:block;font-size:12px;letter-spacing:.1em;color:var(--clay-mid)}
+.value-axes h3{margin:16px 0 0;font-size:clamp(30px,3.5vw,52px);line-height:.95;letter-spacing:-.055em;text-transform:uppercase;font-weight:800;color:var(--ink)}
+.value-q{margin:20px 0 0;font-size:17px;line-height:1.35;letter-spacing:-.02em;color:var(--ink)}
+.value-axes p:last-child{margin:10px 0 0;font-size:15px;line-height:1.65;color:var(--moss)}
+
+@media(max-width:900px){
+  /* Tri ose od 30px+ ne stoje u tri kolone ispod 900 — „EQUIPMENT" bi se lomio. */
+  .value-axes{grid-template-columns:1fr;gap:26px}
 }
 
 /* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.

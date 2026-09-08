@@ -168,12 +168,50 @@ export default function CinematicHome() {
               Know before you go ↗
             </Link>
           </div>
-          <h2 id="values-heading">A bigger number isn’t<br /><em>the whole offer.</em></h2>
-          <div data-stagger className="home-value-grid">
-            <article><span>01 — PAY</span><h3>What reaches your paycheck?</h3><p>Ask how pay is calculated, which miles count and what deductions apply.</p></article>
-            <article><span>02 — HOME TIME</span><h3>What does the schedule mean?</h3><p>Get the actual time out and time home. Make sure it works with your life.</p></article>
-            <article><span>03 — EQUIPMENT</span><h3>What will you be driving?</h3><p>Ask about equipment, maintenance and the support available when plans change.</p></article>
-          </div>
+          {/*
+            ⚠️ OBLIK PROMENJEN 2026-09-09 — `D1`, druga sekcija iz **editorial** u **utility**,
+            posle `pay`. Do tada: naslov 82px sa outline `<em>`, pa tri kartice u kojima je
+            osa bila 12px labela a pitanje 24px naslov. Nosivi sadržaj — *da postoje tačno
+            TRI ose poređenja* — bio je najmanje vidljiva stvar na ekranu, a naslov je nosio
+            isti tretman kao `What we don't do.` odmah ispod njega.
+
+            ⚠️ DISPLAY ELEMENT NIJE BROJ, I TO NIJE PROPUST NEGO JEDINI TAČAN ODGOVOR.
+            `pay` je utility nosila brojem (`$0`). Ovde bi veliki broj **oborio sopstvenu
+            rečenicu**: sekcija tvrdi *„A bigger number isn't the whole offer."* Display element
+            su zato **imena osa** — podatak je sama taksonomija: ovo troje se poredi, i ništa
+            drugo. Hijerarhija unutar ćelije je obrnuta, ne raspored sekcije.
+
+            ⚠️ COPY JE NEPROMENJEN, do slova. Menja se koji element nosi koji tekst:
+            `<h3>` prelazi sa pitanja na ime ose (bolji outline — „Pay" je podnaslov, pitanje
+            nije), pitanje ostaje vidljivo kao telo. Iz naslova ispada samo `<br />` i outline
+            `<em>` — po `D2`, i zato što outline na caption skali daje mutnu liniju.
+
+            ⚠️ VELIKA SLOVA IDU U CSS, NE U IZVOR. Do sada je u izvoru stajalo `01 — PAY`.
+            Faza 4 je već jednom platila to što su verzali bili u tekstu: natpis se nije mogao
+            deliti bez promene izgleda (`.journey-cta`, `3ece835`). Ovde stoji `Pay`, a
+            `text-transform` radi ostalo.
+          */}
+          <h2 id="values-heading">A bigger number isn’t the whole offer.</h2>
+          <ol data-stagger className="value-axes">
+            <li>
+              <span className="value-num">01</span>
+              <h3>Pay</h3>
+              <p className="value-q">What reaches your paycheck?</p>
+              <p>Ask how pay is calculated, which miles count and what deductions apply.</p>
+            </li>
+            <li>
+              <span className="value-num">02</span>
+              <h3>Home time</h3>
+              <p className="value-q">What does the schedule mean?</p>
+              <p>Get the actual time out and time home. Make sure it works with your life.</p>
+            </li>
+            <li>
+              <span className="value-num">03</span>
+              <h3>Equipment</h3>
+              <p className="value-q">What will you be driving?</p>
+              <p>Ask about equipment, maintenance and the support available when plans change.</p>
+            </li>
+          </ol>
         </section>
 
         {/*
