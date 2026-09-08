@@ -609,11 +609,53 @@ main:focus{outline:none}
    (60px padding ispod 900px, 20px ispod 720px, h2 na 42px) — bez ijednog novog
    media query-ja i bez izuzetka od sistema. */
 
-/* Potporni blok ispod forme, ne poglavlje: manji naslov od numerisanih sekcija. */
+/* ── `pay` — UTILITY (D1, 2026-09-09) ──────────────────────────────────────────
+   Do 2026-09-09 je ovde stajalo cetiri reda: `.home-pay h2` na `clamp(30px,3.6vw,50px)`
+   i `.home-pay p` / `.home-pay p em` za jedan pasus proze. Sekcija je nosila
+   `.home-editorial` — isti raspored kao `process`, `founder` i `stories`.
+
+   ⚠️ HIJERARHIJA JE OBRNUTA, I TO JE CELA IZMENA. U editorial sekciji naslov nosi
+   tezinu (`clamp(40px,5.4vw,82px)` iz `.home-section h2`); u utility bloku je nosi
+   **broj**. `h2` zato pada na caption skalu, a `$0` uzima raspon koji je naslov imao.
+   Bez tog obrtanja bi „utility" bio ista sekcija sa drugim markupom.
+
+   ⚠️ `.home-pay p` PRAVILA SU OBRISANA, ne pregazena — u sekciji vise nema `<p>` osim
+   `.pay-figure`, koji ima svoje. Ostavljena bi bila mrtav CSS, tacno ono sto je Faza 1
+   cistila iz ovog fajla.
+
+   ⚠️ Odnos kolona je IZMEREN, ne izabran. Prva verzija je figuri dala `.66fr` (411px na
+   1280) i `$0` je u njoj plivao — broj koji ne popunjava svoju kolonu ne cita se kao
+   display element nego kao zaostatak. `.42fr` (314px) mu daje kolonu koju popunjava.
+
+   Nijedna nova vrednost: `--bone-dim` podloga, `--clay-mid` labele, `--moss` telo,
+   `rgba(22,32,25,.22)` linija — ista alfa koju `.home-steps li` vec koristi. */
 .home-pay{background:var(--bone-dim)}
-.home-pay h2{font-size:clamp(30px,3.6vw,50px);margin:24px 0 0}
-.home-pay p{font-size:16px;line-height:1.7;margin:0;color:var(--moss)}
-.home-pay p em{font-style:italic}
+.home-pay h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
+.pay-ledger{display:grid;grid-template-columns:minmax(170px,.42fr) 1fr;gap:4vw;align-items:start;margin-top:38px}
+.pay-figure{margin:0}
+.pay-figure strong{display:block;font-size:clamp(84px,11vw,158px);line-height:.84;letter-spacing:-.07em;font-weight:800;color:var(--ink)}
+.pay-figure span{display:block;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-mid)}
+.pay-rows{margin:0}
+/* Ista konvencija linija kao `.home-steps`: ivica ispod svakog reda, plus jedna iznad
+   prvog. Ritam pravila na stranici tako ostaje jedan, iako je oblik nov. */
+.pay-rows>div{display:grid;grid-template-columns:15ch 1fr;gap:6px 24px;padding:22px 0;border-bottom:1px solid rgba(22,32,25,.22)}
+.pay-rows>div:first-child{border-top:1px solid rgba(22,32,25,.22)}
+.pay-rows dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-mid);padding-top:6px}
+.pay-rows dd{margin:0}
+.pay-rows dd b{display:block;font-size:22px;line-height:1.2;letter-spacing:-.025em;color:var(--ink)}
+.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:var(--moss)}
+
+/* ⚠️ Dva lokalna preloma, jer ih dvokolonski ledger stvarno trazi — `.home-section`
+   nasledjuje padding i skalu naslova, ali ne i broj kolona. Tacke su postojece
+   (900 / 480), ne nove. */
+@media(max-width:900px){
+  .pay-ledger{grid-template-columns:1fr;gap:30px;margin-top:28px}
+}
+@media(max-width:480px){
+  /* Na 15ch labeli i vrednosti od 22px zajedno ostaje ~10ch za vrednost — labela ide iznad. */
+  .pay-rows>div{grid-template-columns:1fr;gap:10px}
+  .pay-rows dt{padding-top:0}
+}
 
 /* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.
    `min-width` postoji da se „WE DON'T" i „WE DO" ne razidju, pa tekstualna

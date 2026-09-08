@@ -71,20 +71,68 @@ export default function CinematicHome() {
           izvedeno iz modela („we don't get paid unless you actually start").
           Stoji odmah ispod forme jer podupire `$0` tvrdnju iz heroja; nema broj sekcije
           zato sto je potporni blok, ne poglavlje.
+
+          ⚠️ OBLIK PROMENJEN 2026-09-09 — `D1`, prva sekcija koja iz **editorial** prelazi u
+          **utility**. Do tada je nosila `home-editorial`: naslov levo, jedan pasus proze desno
+          — isti raspored kao `process`, `founder` i `stories`. To je bio ceo nalaz `MOTION.md`:
+          osam sekcija istog oblika.
+
+          ⚠️ STA UTILITY OVDE ZNACI, KONKRETNO. U editorial sekciji je **naslov** display
+          element; ovde je **broj**. `h2` zato pada sa `clamp(40px,5.4vw,82px)` na caption
+          skalu, a `$0` uzima mesto koje je naslov imao. Pasus se raspada na tri para
+          labela/vrednost, jer su to i bila tri podatka zapakovana u prozu: ko placa, kada,
+          i sta ide sa vozacevog ceka.
+
+          ⚠️ COPY SE NE PISE OVDE — SVAKA VREDNOST JE PRENETA. Ista disciplina kao Faza 4:
+            `$0` / „Cost to drivers, always"     -> C5 dozvoljena formulacija („$0 cost to
+                                                    drivers. Ever.", „Free for drivers, always")
+            „The carrier" / „A flat placement fee." -> zatecena proza, doslovno
+            „After you start driving"           -> zatecena proza („only after you successfully
+                                                    start driving for them")
+            „We don't get paid unless you actually start." -> zatecena proza; L1 dozvoljava bas
+                                                    ovo negativno obecanje
+            „Nothing" / „No hidden cuts."       -> zatecena proza („No hidden cuts from your
+                                                    paycheck."); „from your paycheck" nosi labela
+
+          ⚠️ DVE RECENICE SU ISPALE, i to je namerno, ne previd:
+            „Our incentives are aligned with yours:" — red „When" to sada POKAZUJE podatkom;
+              zadrzati je znacilo bi reci ono sto tabela vec dokazuje.
+            „Just straightforward recruiting."      — zatvaranje pasusa koji vise ne postoji.
+          Nijedna nema red u registru; obe su Pavlove da ih vrati ako ih hoce.
+
+          ⚠️ Naslov je izgubio `<em>` outline tretman — namerno, po `D2` („outline tipografija
+          svedena na 2-3 mesta"). U utility bloku bi outline takmicio sa brojem.
         */}
         <section data-reveal className="home-pay home-section" aria-labelledby="pay-heading">
-          <span className="home-kicker">100% FREE FOR DRIVERS</span>
-          <div className="home-editorial">
-            <h2 id="pay-heading">How we<br /><em>get paid.</em></h2>
-            <div>
-              <p>
-                We make our money by charging a flat placement fee to the carrier <em>only</em>{' '}
-                after you successfully start driving for them. Our incentives are aligned with
-                yours: we don’t get paid unless you actually start. No hidden cuts from your
-                paycheck. Just straightforward recruiting.
-              </p>
-              <Link className="home-text-link" href="/how-it-works">How it works ↗</Link>
-            </div>
+          <div className="home-section-top">
+            <span className="home-kicker">100% FREE FOR DRIVERS</span>
+            <Link className="home-text-link" href="/how-it-works">How it works ↗</Link>
+          </div>
+          <h2 id="pay-heading">How we get paid.</h2>
+          <div className="pay-ledger">
+            <p className="pay-figure">
+              <strong>$0</strong>
+              <span>Cost to drivers, always</span>
+            </p>
+            {/*
+              `<dl>` sa `<div>` omotacima je validan HTML5 i jedini nacin da par ostane par u
+              gridu. `data-stagger` gadja `>*`, dakle bas te omotace — isti mehanizam koji
+              `process` vec koristi na `<ol>`.
+            */}
+            <dl data-stagger className="pay-rows">
+              <div>
+                <dt>Who pays</dt>
+                <dd><b>The carrier</b><span>A flat placement fee.</span></dd>
+              </div>
+              <div>
+                <dt>When</dt>
+                <dd><b>After you start driving</b><span>We don’t get paid unless you actually start.</span></dd>
+              </div>
+              <div>
+                <dt>From your paycheck</dt>
+                <dd><b>Nothing</b><span>No hidden cuts.</span></dd>
+              </div>
+            </dl>
           </div>
         </section>
 
