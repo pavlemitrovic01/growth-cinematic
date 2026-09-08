@@ -1,8 +1,90 @@
-# MOTION — plan po površinama
+# DESIGN I MOTION — plan po površinama
 
 Pisano 2026-09-08. Odluka o pravcu je Pavlova: **pokret kao karakter, bez paralaksa, bez
 generičkih efekata**. Ovaj dokument je plan, ne implementacija — nijedan red CSS-a još nije
 napisan po njemu.
+
+---
+
+## ⚠️ Veći problem od pokreta — i zašto ovaj plan ide drugi
+
+Dopunjeno 2026-09-08, posle nezavisnog pregleda (ChatGPT) žive stranice.
+
+**Dva pregleda su nezavisno pala na isti nalaz.** Ovaj dokument je merenjem našao osam sekcija
+naslovne sa identičnim tretmanom i pet podstranica bez ijednog reveala. Spoljni pregled je to
+isto video na živom sajtu i formulisao oštrije:
+
+> *„Posle treće sekcije korisnik već zna kako će izgledati sve naredne."*
+
+Oblik svake sekcije je isti: **veliki naslov levo, tekst ili lista desno, tanka linija, isti
+outline tretman, fade-in.** Hero je jak i odvojen. Sajt se zato čita kao **jedan odličan ekran,
+pa dugačak ujednačen dokument.**
+
+⚠️ **Iz toga sledi da pokret nije prvi posao.** Bolji ulazak u nepromenjen zid je i dalje zid.
+Uz to, odluka o pokretu **zavisi** od toga šta sekcija jeste — utility blok sa brojkama i
+cinematic sekcija ne ulaze isto.
+
+**Redosled je zato: prvo oblik, pa pokret.**
+
+### Šta se uzima iz spoljnog pregleda
+
+| Uzeto | Zašto |
+|---|---|
+| **Tri tipa sekcije** — cinematic / editorial / utility | Jedina izmena koja rešava dijagnozu. Sada postoji jedan tip, ponovljen sedam puta. |
+| **Sticky proces sekcija** | Konkretna, izvodljiva, uklapa se u postojeću numeraciju `01–04`. |
+| **„What we don't do" kao manifest** | To je stvarni diferencijator sajta, a tretiran je kao još jedna sekcija. |
+| **Driver stories — preokvirivanje** | „Be one of the first" se čita kao *„nemamo klijente, vi ste test"*. Aktivna šteta, ne propuštena prilika. |
+| **Outline tipografija selektivno** | Efekat je jak prvi i drugi put; sada je šablon. |
+| **Copy je ~20–25% predugačak** | Poklapa se sa nalazom AUDIT-a da su FAQ odgovori prepisani kraći od originala. |
+
+### Šta se ne uzima, i zašto
+
+- **Video hero, preloader** — zamenili bi WebGL koji radi, odnosno dodali čekanje gde ga nema.
+- **Magnetni CTA, custom cursor, paper grain, inner glow** — generički ukras; custom cursor uz
+  to ne postoji na telefonu, gde je većina vozača.
+- **Ocene tipa „Art direction 8.3/10"** — nemaju rubriku iza sebe.
+- **Fotografije u hero** — Pavlova odluka: hero je 3D scena.
+
+### ⚠️ Copy predlozi iz spoljnog pregleda diraju registar
+
+Spoljni pregled ne zna za `docs/CLAIMS.md`. Četiri njegova predloga obaraju postojeće redove:
+
+| Predlog | Šta obara |
+|---|---|
+| „Compare my options" kao CTA | **C53** — dugme mora reći šta radi; registar imenuje „Start your application"; neodređen CTA je već pao kao acceptance FAIL na F5c |
+| „20+ **vetted**", „**trusted** partner carriers" | tvrdnje o proveri partnera — traže red u registru i dokaz |
+| „You're in." kao success state | implicira prihvatanje; sajt namerno nikad ne tvrdi da je prijava = posao |
+| „No lease presented as an easy path to ownership" | uvodi lease-purchase kao temu; mora biti tačno za GROWTH |
+
+⚠️ **A jedan predlog nije copy nego izmišljanje:** citat pripisan **Nate Mikicu**, stvarnoj
+osobi. Reči koje neko nije rekao ne idu pod njegovo ime. Bolji citat mora doći **od njega**.
+
+### Spojen redosled
+
+| | Posao | Vrsta | Traži |
+|---|---|---|---|
+| **D1** | **Taksonomija sekcija** — koja je cinematic, koja editorial, koja utility | odluka | **Pavla** |
+| **D2** | Outline tipografija svedena na 2–3 mesta | struktura | — |
+| **D3** | Utility blokovi — `$0`, `20+`, rok odgovora, 48 država kao podaci a ne proza | struktura | D1 |
+| **M1** | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi | pokret | — |
+| **M2** | `PageShell` ritam — pet stranica bez ijednog reveala | pokret | M1 |
+| **D4** | Sticky proces sekcija | struktura + pokret | D1, M1 |
+| **D5** | „What we don't do" kao manifest | struktura | D1 |
+| **M3** | Naslovi — maska po reči | pokret | M1 |
+| **D6** | Driver stories — preokvirivanje | **copy** | ⚠️ registar |
+| **M5** | View Transitions — usmeren prelaz, shared naslov | pokret | — |
+| **M4** | Hero sekvenca | pokret | M1, M3 |
+| **M6** | Pritisak i kartice | pokret | M1 |
+
+**D1 je uslov za polovinu liste** i jedina stavka koja se ne može izvesti merenjem — traži tvoju
+odluku šta koja sekcija *jeste*.
+
+**M1 i M5 su nezavisni** i mogu ranije ako se čeka na D1.
+
+⚠️ **D6 ide kroz istu disciplinu kao Faza 4:** copy se prenosi ili odobrava, ne piše usput, i
+prolazi `verify-claims`.
+
+---
 
 ## Šta plan nasleđuje i ne sme da obori
 
@@ -149,8 +231,25 @@ Jedini `card → page` tok koji sajt ima: kartica u `/truckers-lounge` → stran
 | Nosilac | **naslov**, ne slika |
 | Mehanika | `<ViewTransition name>` na oba kraja |
 
-⚠️ **Slika ne može biti nosilac.** Sajt ima **jedan** `<Image>` u celom markupu; `public/`
-sadrži favicon i `og.png`. Zato je i `Fullscreen Image Expansion` odbijen — nema šta da uveća.
+⚠️ **Slika ne može biti nosilac** — ali ne zato što slika nema. **Ispravka prvobitne tvrdnje
+u ovom dokumentu (2026-09-08):** `public/images/` sadrži **šest fotografija**, ne nula.
+Prvobitno je globovan samo vrh `public/` i ceo folder je promašen.
+
+```
+hero-01-night.jpg    + mobile   ← u upotrebi, kao fallback ispod 3D scene
+hero-02-dawn.jpg     + mobile   ← NEISKORIŠĆENA
+hero-03-sunrise.jpg  + mobile   ← NEISKORIŠĆENA
+```
+
+Dawn je kadar iz kabine — ruke na volanu, papiri i olovka na klipbordu, zora kroz
+šoferšajbnu. Sunrise je kamion ka izlasku sunca na otvorenom putu. Obe su režirane kao set:
+tamna leva trećina za tekst, topli izvor svetla desno.
+
+⚠️ **U hero ne idu.** Odluka Pavlova, 2026-09-08: hero je 3D scena — kamion, pokret, izlazak
+sunca već postoje u njoj. Fotografija tamo ostaje **samo fallback** i to joj je jedina uloga.
+Gde (i da li) dve neiskorišćene idu drugde na sajtu je **otvoreno pitanje**, ne zadatak.
+
+Za shared element prelaz nosilac je i dalje **naslov** — kartice članaka nemaju slike.
 
 ### 8 · Pritisak — `OKRET` umesto skupljanja
 
