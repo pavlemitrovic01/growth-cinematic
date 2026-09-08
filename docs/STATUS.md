@@ -266,8 +266,15 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**Otvori [`docs/MOTION.md`](MOTION.md) i kreni od `D1`.** To je sada glavni kolosek; sve niže
-u ovom dokumentu čeka iza njega.
+**Otvori [`docs/MOTION.md`](MOTION.md) i kreni od `pay` → utility.** To je sada glavni
+kolosek; sve niže u ovom dokumentu čeka iza njega.
+
+`D1` (taksonomija sekcija) je **zaključan 2026-09-08** — deset sekcija, tip za svaku, uz
+obrazloženje. Ne otvarati ponovo. Prvi posao je prva sekcija iz te odluke.
+
+⚠️ **Zašto baš `pay`, a ne najveća stavka:** cela taksonomija stoji na tvrdnji da promena
+oblika rešava monotoniju. `pay` to **dokazuje ili obara na jednoj sekciji**, pre nego što se
+prepravi četiri. Ako ne proradi tamo, plan se preispituje pre nego što je skup.
 
 ### Zašto se redosled promenio 2026-09-08
 
@@ -281,13 +288,25 @@ outline, fade-in), a pet podstranica nema **nijedan** reveal.
 ⚠️ **Zbog toga pokret nije prvi posao.** Bolji ulazak u nepromenjen zid je i dalje zid, a
 odluka o pokretu **zavisi** od toga šta sekcija jeste. Redosled je: **prvo oblik, pa pokret.**
 
-### Šta blokira
+### Šta je odlučeno u `D1`
 
-**`D1` — taksonomija sekcija.** Koja je *cinematic*, koja *editorial*, koja *utility*.
-Jedina stavka u planu koja se **ne može izvesti merenjem** — traži Pavlovu odluku šta koja
-sekcija *jeste*. Blokira polovinu liste.
+```
+sada:      C · forma · E · E · E · E · E · E · E · C
+posle D1:  C · forma · U · E · U · C · C · E · C
+```
 
-**`M1` i `M5` su nezavisni** i mogu odmah, ako treba da se nešto pomera dok `D1` čeka:
+- `pay` i `values` → **utility** (podaci, ne proza)
+- `guard` i `founder` → **cinematic**, namerno jedan do drugog: tematski su celina „ko smo",
+  a razlikuju se po formi — manifest nosi tipografija, founder nosi čovek
+- **`stories` se briše.** Tvrdi isto što i `founder`, a *„Be one of the first"* se čita kao
+  *„nemamo klijente"*. Njena najjača rečenica — obećanje da nema izmišljenih recenzija —
+  **seli u `guard`**, jer je to `what we don't do` tvrdnja, ne stories tvrdnja
+- **callback forma namerno nema tip** — nije deo problema monotonije
+
+⚠️ **Cena:** četiri sekcije menjaju oblik, jedna nestaje. Veći posao od svega urađenog
+2026-09-08. Dira copy na dva mesta, pa ide kroz `verify-claims` disciplinu kao Faza 4.
+
+**`M1` i `M5` su nezavisni** i mogu bilo kada, ako treba nešto manje:
 - `M1` — dva nova primitiva (`OTKRIVANJE`, `CRTA`) uz postojećih šest, bez ijedne primene
 - `M5` — View Transitions, usmeren prelaz rute i shared naslov kartice
 

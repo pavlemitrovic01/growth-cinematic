@@ -63,7 +63,7 @@ osobi. Reči koje neko nije rekao ne idu pod njegovo ime. Bolji citat mora doći
 
 | | Posao | Vrsta | Traži |
 |---|---|---|---|
-| **D1** | **Taksonomija sekcija** — koja je cinematic, koja editorial, koja utility | odluka | **Pavla** |
+| ~~**D1**~~ | **Taksonomija sekcija** — ✅ **ZAKLJUČANA 2026-09-08**, vidi niže | odluka | — |
 | **D2** | Outline tipografija svedena na 2–3 mesta | struktura | — |
 | **D3** | Utility blokovi — `$0`, `20+`, rok odgovora, 48 država kao podaci a ne proza | struktura | D1 |
 | **M1** | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi | pokret | — |
@@ -76,10 +76,68 @@ osobi. Reči koje neko nije rekao ne idu pod njegovo ime. Bolji citat mora doći
 | **M4** | Hero sekvenca | pokret | M1, M3 |
 | **M6** | Pritisak i kartice | pokret | M1 |
 
-**D1 je uslov za polovinu liste** i jedina stavka koja se ne može izvesti merenjem — traži tvoju
-odluku šta koja sekcija *jeste*.
+**M1 i M5 su nezavisni** i mogu bilo kada.
 
-**M1 i M5 su nezavisni** i mogu ranije ako se čeka na D1.
+---
+
+## ✅ D1 — taksonomija sekcija, ZAKLJUČANA 2026-09-08
+
+Naslovna ima **deset** sekcija, ne osam — osam je broj `data-reveal` elemenata, što je ranije
+u ovom dokumentu pogrešno prošlo kao broj sekcija.
+
+| # | Sekcija | Tip | Odluka |
+|---|---|---|---|
+| 1 | hero · *Your next route.* | **cinematic** | nepromenjeno |
+| 2 | callback · *YOUR NEXT STEP* | **forma** | nepromenjeno — vidi niže |
+| 3 | pay · *How we get paid.* | **utility** | proza → podatak, nosi `$0` |
+| 4 | process · *The details make the difference.* | **editorial** | + sticky (`D4`) |
+| 5 | values · *A bigger number isn't the whole offer.* | **utility** | tri dimenzije poređenja kao blokovi |
+| 6 | guard · *What we don't do.* | **cinematic** | manifest; **prima obećanje iz `stories`** |
+| 7 | founder · *Built around the honest part.* | **cinematic** | **prima ostatak `stories`** |
+| 8 | ~~stories · *Be one of the first.*~~ | — | **BRIŠE SE** |
+| 9 | faq · *Before you take the next step.* | **editorial** | nepromenjeno |
+| 10 | close · *Ready for your next route?* | **cinematic** | nepromenjeno |
+
+```
+sada:      C · forma · E · E · E · E · E · E · E · C
+posle D1:  C · forma · U · E · U · C · C · E · C
+```
+
+### ⚠️ Callback forma namerno NEMA tip
+
+Taksonomija postoji da razbije **sedam sekcija istog oblika**. Forma nije jedna od njih —
+nije deo problema monotonije, i radi svoj posao. Izmišljati četvrti tip za jednu stvar koja
+nije pokvarena znači dodati rečnik bez ijedne rešene stvari. Vodi se kao „forma", ne kao tip.
+
+### ⚠️ Zašto se `stories` briše, a ne prepisuje
+
+`founder` i `stories` tvrde **istu stvar** — da je firma nova i poštena. Dve susedne sekcije
+sa istim argumentom su najskuplje ponavljanje na stranici. Uz to `stories` aktivno šteti:
+*„Be one of the first."* se čita kao *„nemamo klijente, vi ste test."*
+
+**Ali njena najjača rečenica ne ostaje bez doma.** Obećanje *„nema izmišljenih recenzija, nema
+stock testimonijala"* nije tvrdnja o pričama nego **`what we don't do` tvrdnja** — i u
+manifestu je jača nego gde sada stoji. Zato seli u `guard`, a ne nestaje.
+
+⚠️ **Ovo dira copy na dva mesta**, pa ide kroz istu disciplinu kao Faza 4: prenosi se ili
+odobrava, ne piše usput, i prolazi `verify-claims`.
+
+### ⚠️ Zašto `guard` i `founder` ostaju dva cinematic jedan do drugog
+
+Namerno, ne previdom. Tematski su jedna celina — „ko smo" — a **razlikuju se po formi**:
+manifest nosi tipografija, founder nosi čovek i citat. Dve tamne sekcije posle dve svetle
+čitaju se kao **prekid čina**, ne kao monotonija. To je upravo ono što stranici fali.
+
+### Čime se počinje: `pay` → utility
+
+Ne zato što je najlakše, nego zato što je **provera pretpostavke.** Cela taksonomija stoji na
+tvrdnji da promena oblika rešava monotoniju. `pay` to dokazuje ili obara na **jednoj** sekciji,
+pre nego što se prepravi četiri.
+
+Ako proradi: `values` → `guard`+`founder` → sticky `process`.
+
+⚠️ **Cena, iskreno:** četiri sekcije menjaju oblik, jedna nestaje. To je veći posao od svega
+urađenog 2026-09-08.
 
 ⚠️ **D6 ide kroz istu disciplinu kao Faza 4:** copy se prenosi ili odobrava, ne piše usput, i
 prolazi `verify-claims`.
