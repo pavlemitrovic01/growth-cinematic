@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (53 commita); `d1-pay-utility` spojena fast-forward-om i pušena 2026-09-09 |
+| Grana | **`d1-values-utility`** (54), nespojena; `master` na 53 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -119,6 +119,58 @@ Kolona je zato `bigint`.
   difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
+
+## Sesija 2026-09-09 (nastavak) — D1, druga sekcija: `values` → utility
+
+Jedan commit na grani **`d1-values-utility`** (`08debb5`), **nespojen**.
+
+### ⚠️ Otvoreno pitanje iz prethodnog bloka je zatvoreno — i odgovor je bio suprotan
+
+Pitanje je bilo: *„`values` nema broj, a `pay` ga je imala — šta je display element kad brojke
+nema?"* **Odgovor: broj tu ne SME da bude display element.** Sekcija tvrdi *„A bigger number
+isn't the whole offer."* Veliki broj bi oborio sopstvenu rečenicu u istom dahu.
+
+Display element su **imena osa** — `PAY` / `HOME TIME` / `EQUIPMENT`, 44.8 px na 1280 — jer je
+podatak **sama taksonomija**: ovo troje se poredi, i ništa drugo. `h2` pada na 28.16 px, ista
+caption skala kao `pay`.
+
+### ⚠️ Definicija „utility" koja važi šire nego ove dve sekcije
+
+**„Utility" ne znači „ima broj".** Znači da je nosivi sadržaj **podatak**, i da display element
+postaje **ono što taj podatak jeste**:
+
+| sekcija | podatak | display element |
+|---|---|---|
+| `pay` | jedna cifra — cena za vozača | **`$0`** |
+| `values` | taksonomija — tri ose poređenja | **imena osa** |
+
+Da je pravilo bilo „utility = veliki broj", `values` bi dobila uvećane `01/02/03` — ordinale
+bez sadržaja, i rečenicu koja sama sebi protivreči. **Simetrija je bila pogrešan kriterijum.**
+
+Raspored je ostao 3-up grid, obrnuta je hijerarhija **unutar ćelije** — namerno: `pay` je
+figura + redovi, `home-steps` i `home-guard-list` su naslagani redovi. Da je i `values` postala
+naslagani redovi, tri „različita" oblika bi konvergirala u jedan.
+
+### Copy nepromenjen, ali dve mehaničke stvari jesu
+
+Sve rečenice su preživele **do slova** — provereno frazu po frazu nad renderovanim HTML-om.
+Menja se samo koji element nosi koji tekst: `<h3>` prelazi sa pitanja na ime ose („Pay" je
+podnaslov, pitanje nije). Iz naslova ispada `<br />` i outline `<em>`, po `D2`.
+
+⚠️ **Verzali su prešli iz izvora u CSS.** Do sada je stajalo `01 — PAY`; sada `Pay` +
+`text-transform`. Faza 4 je to već jednom platila (`3ece835`), a uz to čitač ekrana sada dobija
+„Pay" umesto slova po slovo.
+
+⚠️ **`.home-value-grid p` je skinut iz DELJENOG selektora, ne ceo red** — `.home-steps p` i
+`.home-founder p` su živi. Isti obrazac koji je već jednom zamalo oborio `.af` kroz
+`.proof-section`. Ostala `.home-value-grid` pravila obrisana kao mrtva, uključujući ono u
+`@media 900`.
+
+**Kapije, sve protiv `npm run build && npm start` na `:3000`** (PID 24180):
+`typecheck 0` · `lint 0` · `test 132/132` · `build 0` · `verify:nojs PASS 14 ruta`
+(`/` 6725 znakova) · `verify:claims PASS 13 ruta` · `test:rendered 9/9`.
+Polaritet potvrđen u panelu; `reduce` po konstrukciji — nijedna nova tranzicija.
+Prelomi 1280 i 390 pogledani, `EQUIPMENT` staje na 390.
 
 ## Sesija 2026-09-09 — D1, prva sekcija: `pay` → utility
 
@@ -341,20 +393,32 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-✅ **`d1-pay-utility` je spojena, pušena i izmerena protiv deploy-a 2026-09-09.** Ništa ne
-stoji nespojeno; `git branch --no-merged master` je prazno.
+⚠️ **Prvo: `d1-values-utility` stoji nespojena.** `d1-pay-utility` je spojena, pušena i
+izmerena protiv deploy-a; `values` još nije. Spoji, pusti, pa **izmeri protiv deploy-a**:
 
-**`values` → utility, druga sekcija iz `D1`.** Definicija utility bloka je izmerena na
-`pay` i zapisana gore — obrnuta hijerarhija, broj kao display element. `values` nosi tri
-dimenzije poređenja (pay / home time / equipment) koje su danas tri generičke kartice; kao
-utility su tri para labela/vrednost.
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
 
-⚠️ **Ali `values` nema broj**, a `pay` ga je imala. Prva stvar koju treba odlučiti gledanjem,
-ne rasuđivanjem: **šta je display element kad brojke nema.** Ako odgovor ne postoji, `values`
-možda nije utility nego nešto treće — i to je nalaz, ne neuspeh.
+**Onda: `guard` + `founder` → cinematic, treći posao iz `D1`.** Ovo je **najveći od četiri** i
+jedini koji **dira copy**, pa ide kroz disciplinu Faze 4: prenosi se ili odobrava, ne piše
+usput, i prolazi `verify-claims`.
 
-`D1` (taksonomija sekcija) je **zaključan 2026-09-08**, `pay` je iz njega urađen 2026-09-09.
-Ostaju `values`, `guard`+`founder` (prima `stories`), pa sticky `process`.
+Dve stvari se dešavaju zajedno i ne smeju se razdvojiti:
+
+1. **`stories` se briše.** Njena najjača rečenica — *„No stock photos. No invented reviews."* —
+   **seli u `guard`**, jer je to `what we don't do` tvrdnja, ne stories tvrdnja. Ostatak
+   (GROWTH je nov, prvi vozači dobijaju punu pažnju) ide u `founder`.
+2. **`guard` i `founder` postaju cinematic** — tamne, jedna do druge, namerno. Razlikuju se po
+   formi: manifest nosi tipografija, founder nosi čovek i citat.
+
+⚠️ **`guard` već ima pet parova WE DON'T / WE DO.** Selidba dodaje šestu tvrdnju u listu koja
+je pisana kao pet — proveri da li ulazi kao par ili kao zasebna izjava manifesta **pre** nego
+što se piše CSS.
+
+⚠️ **C41 je već jednom promakla kroz sedam claims batch-eva baš u `stories`.** Tekst koji se
+seli čita se protiv registra **ponovo**, ne uzima se kao „već odobren".
+
+Posle toga ostaje samo sticky `process` (`D4`), i `D1` je zatvoren.
 
 ### Zašto se redosled promenio 2026-09-08
 

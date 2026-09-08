@@ -3,8 +3,8 @@
 Pisano 2026-09-08. Odluka o pravcu je Pavlova: **pokret kao karakter, bez paralaksa, bez
 generičkih efekata**.
 
-⚠️ **Više nije čist plan.** Prva stavka je implementirana 2026-09-09: `pay` → utility
-(`f541b72`). Sve ostalo je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
+⚠️ **Više nije čist plan.** Dve stavke su implementirane 2026-09-09: `pay` → utility
+(`f541b72`) i `values` → utility (`08debb5`). Sve ostalo je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
 da se iz ovog dokumenta uvek vidi šta stoji na disku a šta samo na papiru.
 
 ---
@@ -94,7 +94,7 @@ u ovom dokumentu pogrešno prošlo kao broj sekcija.
 | 2 | callback · *YOUR NEXT STEP* | **forma** | nepromenjeno — vidi niže |
 | 3 | pay · *How we get paid.* | **utility** | ✅ **URAĐENO 2026-09-09**, `f541b72` — proza → podatak, nosi `$0` |
 | 4 | process · *The details make the difference.* | **editorial** | + sticky (`D4`) |
-| 5 | values · *A bigger number isn't the whole offer.* | **utility** | tri dimenzije poređenja kao blokovi |
+| 5 | values · *A bigger number isn't the whole offer.* | **utility** | ✅ **URAĐENO 2026-09-09**, `08debb5` — ime ose je display element |
 | 6 | guard · *What we don't do.* | **cinematic** | manifest; **prima obećanje iz `stories`** |
 | 7 | founder · *Built around the honest part.* | **cinematic** | **prima ostatak `stories`** |
 | 8 | ~~stories · *Be one of the first.*~~ | — | **BRIŠE SE** |
@@ -164,7 +164,41 @@ popunjava svoju kolonu se ne čita kao display element nego kao zaostatak. `.42f
 i `11vw` to zatvaraju. **Drugi put da ista klasa greške prođe pretragu po izvoru** — prvi
 je bio hero CTA (`11d4484`). Vizuelna odluka se ne verifikuje čitanjem koda.
 
-Redosled dalje: `values` → `guard`+`founder` → sticky `process`.
+Redosled dalje: `guard`+`founder` → sticky `process`.
+
+### ✅ `values` → utility — URAĐENO 2026-09-09 (`08debb5`)
+
+Otvoreno pitanje koje je `pay` ostavio: **`values` nema broj, a `pay` ga je imala — šta je
+display element kad brojke nema?**
+
+⚠️ **Odgovor je da broj tu ne SME da bude display element.** Sekcija tvrdi *„A bigger number
+isn't the whole offer."* Veliki broj bi oborio sopstvenu rečenicu u istom dahu. Display element
+su **imena osa** — `PAY` / `HOME TIME` / `EQUIPMENT`, 44.8 px na 1280 — jer je podatak **sama
+taksonomija**: ovo troje se poredi, i ništa drugo.
+
+### ⚠️ Iz toga sledi definicija koja važi šire nego ove dve sekcije
+
+**„Utility" ne znači „ima broj".** Znači da je nosivi sadržaj **podatak**, i da display element
+postaje **ono što taj podatak jeste**:
+
+| sekcija | podatak | display element |
+|---|---|---|
+| `pay` | jedna cifra — cena za vozača | **`$0`** |
+| `values` | taksonomija — tri ose poređenja | **imena osa** |
+
+Da je pravilo bilo „utility = veliki broj", `values` bi dobila `01 / 02 / 03` uvećane u display
+— ordinale bez sadržaja, i rečenicu koja sama sebi protivreči. **Simetrija je bila pogrešan
+kriterijum; sadržaj je tačan.**
+
+⚠️ **Raspored je ostao 3-up grid, obrnuta je hijerarhija UNUTAR ćelije.** Namerno: `pay` je
+jedna figura + redovi, `home-steps` i `home-guard-list` su naslagani redovi. Da je i `values`
+postala naslagani redovi, tri „različita" oblika bi konvergirala u jedan — isti kvar koji
+taksonomija rešava, samo pomeren za jedan nivo.
+
+⚠️ **Copy nepromenjen do slova**, provereno frazu po frazu nad renderovanim HTML-om. Menja se
+samo koji element nosi koji tekst: `<h3>` prelazi sa pitanja na ime ose. Verzali su prešli iz
+izvora u `text-transform` — Faza 4 je to već jednom platila (`3ece835`), a čitač ekrana sada
+dobija „Pay" umesto slova po slovo.
 
 ⚠️ **Cena, iskreno:** četiri sekcije menjaju oblik, jedna nestaje. To je veći posao od svega
 urađenog 2026-09-08.
