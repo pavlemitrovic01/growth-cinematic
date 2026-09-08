@@ -1,6 +1,6 @@
 # STATUS — gde je projekat i šta je sledeće
 
-Poslednji put ažurirano: 2026-09-06. Piše se na kraju sesije, čita se na početku sledeće.
+Poslednji put ažurirano: 2026-09-09. Piše se na kraju sesije, čita se na početku sledeće.
 
 ## Šta je ovo
 
@@ -35,8 +35,8 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 |---|---|
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
-| Testovi | 120 u 8 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (44 commita); `vercel-migration`, `faza-4-copy` i `faza-6-kapije` spojene fast-forward-om |
+| Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
+| Grana | **`d1-pay-utility`** (52), nespojena; `master` na 51 — sve ranije grane spojene fast-forward-om |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -97,8 +97,11 @@ Kolona je zato `bigint`.
   Node proces — ide `taskkill /PID <pid> /T /F`, pa tek onda merenje.
 - **Browser panel drži tab u `visibilityState: "hidden"`**, pa se 3D scena namerno ne
   pokreće i `rAF` ne radi. Hero se ne može proveriti odatle — traži pravi browser.
-- **Migracija nikad nije puštena ni na jednu živu bazu.** Na D1 je bila primenjena samo
-  lokalno; Neon baza još ne postoji.
+- ~~**Migracija nikad nije puštena ni na jednu živu bazu.**~~ ⚠️ **Zastarelo, ispravljeno
+  2026-09-09.** Stavka je opisivala stanje pre 2026-09-05 i **protivrečila je dvema drugim
+  tvrdnjama u ovom istom dokumentu** — tabeli „Stanje" (`migracija puštena, obe tabele
+  postoje`) i sesiji od 2026-09-05. Neon baza postoji i migracija je puštena. Zamka koja
+  ostaje stvarna je poslednja karika: **Resend → inbox nije dokazan.**
 
 ## Šta je namerno ugašeno
 
@@ -116,6 +119,70 @@ Kolona je zato `bigint`.
   difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
+
+## Sesija 2026-09-09 — D1, prva sekcija: `pay` → utility
+
+Jedan commit na grani **`d1-pay-utility`** (`f541b72`), **nespojen i nepušen**.
+
+**Šta je urađeno:** `pay` je izašla iz `home-editorial` rasporeda (naslov levo, pasus proze
+desno) i postala **utility blok** — prva od četiri sekcije iz `D1`.
+
+### ⚠️ Pretpostavka na kojoj stoji cela taksonomija — DRŽI
+
+`pay` je birana baš zato što je najjeftinija provera: ako promena oblika ne razbija monotoniju
+na jednoj sekciji, plan se preispituje pre nego što se prepravi četiri. **Razbija je.** Šav
+`pay` → `process` se sada čita kao prelaz između dve različite stvari; do juče su to bile dve
+instance istog rasporeda. **Ostale tri sekcije iz `D1` mogu da krenu.**
+
+### Šta „utility" konkretno znači — definicija za preostale tri
+
+Nije markup nego **obrnuta hijerarhija**. U editorial sekciji naslov je display element; u
+utility bloku je **broj**.
+
+| | editorial | utility |
+|---|---|---|
+| display | naslov `clamp(40px,5.4vw,82px)` | **broj** — `$0`, izmereno 141px na 1280 |
+| naslov | nosi sekciju | caption, 28px |
+| telo | pasus proze | parovi labela / vrednost / napomena |
+
+Bez tog obrtanja je „utility" ista sekcija sa drugim imenima klasa.
+
+### ⚠️ Copy se nije pisao — i to je bilo izvodljivo
+
+Ista disciplina kao Faza 4. Sve četiri vrednosti postoje doslovno: tri u zatečenoj prozi,
+`$0` u C5 dozvoljenim formulacijama (`„$0 cost to drivers. Ever."`, `„Free for drivers,
+always"`). Negativno obećanje *„We don't get paid unless you actually start."* pokriva dopuna
+L1. `verify:claims` nepromenjen — PASS 13 ruta.
+
+⚠️ **Ispale su tačno dve rečenice, obe bez reda u registru, i obe su Pavlove da ih vrati:**
+
+- *„Our incentives are aligned with yours:"* — red `When` to sada **pokazuje** podatkom;
+  zadržati je značilo bi reći ono što tabela već dokazuje.
+- *„Just straightforward recruiting."* — zatvaranje pasusa koji više ne postoji.
+
+Uz to je naslov izgubio `<em>` outline tretman — namerno, po `D2`; u utility bloku bi outline
+takmičio sa brojem.
+
+### ⚠️ Vizuelna odluka je opet promašena iz izvora — drugi put
+
+Prva verzija je figuri dala `.66fr`, tj. 411 px na 1280, u kojima `$0` od 110 px **pliva**.
+Broj koji ne popunjava svoju kolonu ne čita se kao display element nego kao zaostatak. Kod je
+bio ispravan, brojevi su bili ispravni, i **pretraga po izvoru to ne bi našla nikad.**
+Nađeno gledanjem stranice, ispravljeno na `.42fr` + `11vw`.
+
+**Ista klasa greške kao hero CTA (`11d4484`).** Zaključak koji sada stoji dvaput: *vizuelna
+odluka se ne verifikuje čitanjem koda.*
+
+**Kapije, sve protiv `npm run build && npm start` na `:3000`** (PID 29464, potvrđeno da nije
+zaostao raniji server):
+
+`typecheck 0` · `lint 0` · `test 132/132` · `build 0` · `verify:nojs PASS 14 ruta`
+(`/` 6731 znakova) · `verify:claims PASS 13 ruta` · `test:rendered 9/9`
+
+Batch-kapije iz `MOTION.md`: **polaritet** potvrđen u panelu — watchdog je skinuo `js-motion`,
+sekcija ostala cela vidljiva; **`reduce`** važi po konstrukciji, novi CSS ne dodaje nijednu
+tranziciju ni animaciju; **bez JS-a** i **registar** nepromenjeni. Prelomi 1280 / 768 / 390
+pogledani.
 
 ## Sesija 2026-09-07 — Faza 6 (kapije + KnowBeforeYouGo)
 
@@ -266,15 +333,24 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**Otvori [`docs/MOTION.md`](MOTION.md) i kreni od `pay` → utility.** To je sada glavni
-kolosek; sve niže u ovom dokumentu čeka iza njega.
+**Prvo: spoji i pusti `d1-pay-utility`.** Grana nosi `f541b72` i **stoji samo na disku** —
+nije na `master`-u ni na GitHub-u. Tačno stanje koje je 2026-09-08 zamalo koštalo ponovnog
+pisanja iste Faze 6. Posle merge-a **izmeri protiv deploy-a**, ne localhost-a:
 
-`D1` (taksonomija sekcija) je **zaključan 2026-09-08** — deset sekcija, tip za svaku, uz
-obrazloženje. Ne otvarati ponovo. Prvi posao je prva sekcija iz te odluke.
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
 
-⚠️ **Zašto baš `pay`, a ne najveća stavka:** cela taksonomija stoji na tvrdnji da promena
-oblika rešava monotoniju. `pay` to **dokazuje ili obara na jednoj sekciji**, pre nego što se
-prepravi četiri. Ako ne proradi tamo, plan se preispituje pre nego što je skup.
+**Onda: `values` → utility, druga sekcija iz `D1`.** Definicija utility bloka je izmerena na
+`pay` i zapisana gore — obrnuta hijerarhija, broj kao display element. `values` nosi tri
+dimenzije poređenja (pay / home time / equipment) koje su danas tri generičke kartice; kao
+utility su tri para labela/vrednost.
+
+⚠️ **Ali `values` nema broj**, a `pay` ga je imala. Prva stvar koju treba odlučiti gledanjem,
+ne rasuđivanjem: **šta je display element kad brojke nema.** Ako odgovor ne postoji, `values`
+možda nije utility nego nešto treće — i to je nalaz, ne neuspeh.
+
+`D1` (taksonomija sekcija) je **zaključan 2026-09-08**, `pay` je iz njega urađen 2026-09-09.
+Ostaju `values`, `guard`+`founder` (prima `stories`), pa sticky `process`.
 
 ### Zašto se redosled promenio 2026-09-08
 

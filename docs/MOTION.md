@@ -1,8 +1,11 @@
 # DESIGN I MOTION — plan po površinama
 
 Pisano 2026-09-08. Odluka o pravcu je Pavlova: **pokret kao karakter, bez paralaksa, bez
-generičkih efekata**. Ovaj dokument je plan, ne implementacija — nijedan red CSS-a još nije
-napisan po njemu.
+generičkih efekata**.
+
+⚠️ **Više nije čist plan.** Prva stavka je implementirana 2026-09-09: `pay` → utility
+(`f541b72`). Sve ostalo je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
+da se iz ovog dokumenta uvek vidi šta stoji na disku a šta samo na papiru.
 
 ---
 
@@ -65,7 +68,7 @@ osobi. Reči koje neko nije rekao ne idu pod njegovo ime. Bolji citat mora doći
 |---|---|---|---|
 | ~~**D1**~~ | **Taksonomija sekcija** — ✅ **ZAKLJUČANA 2026-09-08**, vidi niže | odluka | — |
 | **D2** | Outline tipografija svedena na 2–3 mesta | struktura | — |
-| **D3** | Utility blokovi — `$0`, `20+`, rok odgovora, 48 država kao podaci a ne proza | struktura | D1 |
+| **D3** | Utility blokovi — ✅ `$0` urađen sa `pay` (`f541b72`); ostaju `20+`, rok odgovora, 48 država | struktura | D1 |
 | **M1** | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi | pokret | — |
 | **M2** | `PageShell` ritam — pet stranica bez ijednog reveala | pokret | M1 |
 | **D4** | Sticky proces sekcija | struktura + pokret | D1, M1 |
@@ -89,7 +92,7 @@ u ovom dokumentu pogrešno prošlo kao broj sekcija.
 |---|---|---|---|
 | 1 | hero · *Your next route.* | **cinematic** | nepromenjeno |
 | 2 | callback · *YOUR NEXT STEP* | **forma** | nepromenjeno — vidi niže |
-| 3 | pay · *How we get paid.* | **utility** | proza → podatak, nosi `$0` |
+| 3 | pay · *How we get paid.* | **utility** | ✅ **URAĐENO 2026-09-09**, `f541b72` — proza → podatak, nosi `$0` |
 | 4 | process · *The details make the difference.* | **editorial** | + sticky (`D4`) |
 | 5 | values · *A bigger number isn't the whole offer.* | **utility** | tri dimenzije poređenja kao blokovi |
 | 6 | guard · *What we don't do.* | **cinematic** | manifest; **prima obećanje iz `stories`** |
@@ -128,13 +131,40 @@ Namerno, ne previdom. Tematski su jedna celina — „ko smo" — a **razlikuju 
 manifest nosi tipografija, founder nosi čovek i citat. Dve tamne sekcije posle dve svetle
 čitaju se kao **prekid čina**, ne kao monotonija. To je upravo ono što stranici fali.
 
-### Čime se počinje: `pay` → utility
+### ✅ Čime se počelo: `pay` → utility — URAĐENO 2026-09-09 (`f541b72`)
 
-Ne zato što je najlakše, nego zato što je **provera pretpostavke.** Cela taksonomija stoji na
-tvrdnji da promena oblika rešava monotoniju. `pay` to dokazuje ili obara na **jednoj** sekciji,
-pre nego što se prepravi četiri.
+Ne zato što je bilo najlakše, nego zato što je bila **provera pretpostavke.** Cela taksonomija
+stoji na tvrdnji da promena oblika rešava monotoniju. `pay` je to trebalo da dokaže ili obori
+na **jednoj** sekciji, pre nego što se prepravi četiri.
 
-Ako proradi: `values` → `guard`+`founder` → sticky `process`.
+**Pretpostavka drži.** Šav `pay` → `process` se sada čita kao prelaz između dve različite
+stvari, a do juče su to bile dve instance istog rasporeda.
+
+⚠️ **Šta je „utility" ispalo konkretno — ovo je definicija za preostale tri sekcije.**
+Nije stvar u markupu nego u **obrnutoj hijerarhiji**:
+
+| | editorial | utility |
+|---|---|---|
+| display element | naslov, `clamp(40px,5.4vw,82px)` | **broj** (`$0`, izmereno 141px na 1280) |
+| naslov | nosi sekciju | caption, 28px |
+| telo | pasus proze | parovi labela / vrednost / napomena |
+| linije | ivica sekcije | ivica po redu — ista alfa kao `.home-steps` |
+
+Bez tog obrtanja bi „utility" bio ista sekcija sa drugim imenima klasa.
+
+⚠️ **Copy se nije pisao, i to je bilo izvodljivo.** Sve četiri vrednosti postoje doslovno —
+tri u zatečenoj prozi, `$0` u C5 dozvoljenim formulacijama. Ispale su tačno dve rečenice,
+obe bez reda u registru: *„Our incentives are aligned with yours:"* (red `When` to sada
+**pokazuje** podatkom) i *„Just straightforward recruiting."* (zatvaranje pasusa koji više
+ne postoji). **Obe su Pavlove da ih vrati ako ih hoće.**
+
+⚠️ **Odnos kolona je promašen iz izvora i ispravljen tek gledanjem stranice.** Prva verzija
+je figuri dala `.66fr` — 411 px na 1280, u kojima `$0` od 110 px pliva. Broj koji ne
+popunjava svoju kolonu se ne čita kao display element nego kao zaostatak. `.42fr` (314 px)
+i `11vw` to zatvaraju. **Drugi put da ista klasa greške prođe pretragu po izvoru** — prvi
+je bio hero CTA (`11d4484`). Vizuelna odluka se ne verifikuje čitanjem koda.
+
+Redosled dalje: `values` → `guard`+`founder` → sticky `process`.
 
 ⚠️ **Cena, iskreno:** četiri sekcije menjaju oblik, jedna nestaje. To je veći posao od svega
 urađenog 2026-09-08.
