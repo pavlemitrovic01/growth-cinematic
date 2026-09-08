@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 120 u 8 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (39 commita); `vercel-migration` i `faza-4-copy` spojene fast-forward-om |
+| Grana | **`master`** (44 commita); `vercel-migration`, `faza-4-copy` i `faza-6-kapije` spojene fast-forward-om |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -116,6 +116,42 @@ Kolona je zato `bigint`.
   difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
+
+## Sesija 2026-09-07 — Faza 6 (kapije + KnowBeforeYouGo)
+
+Dva commita, spojena u `master` i deploy-ovana **2026-09-08**.
+
+| Commit | Šta |
+|---|---|
+| `8599caa` | claims kapija **prestaje da broji i počinje da poredi** |
+| `358a812` | `KnowBeforeYouGo` dobija stranicu; C41 zatvorena |
+
+**Kapija je bila slabija nego što je izgledala.** Do tada je merila **prisustvo** hedža na
+stranici, ne njegovu **blizinu tvrdnji** — stranica sa „15–20 minutes" u jednom pasusu i
+„usually" u sasvim drugom prolazila je kao ispravna. Nov `scripts/claims-rules.mjs` poredi
+hedž uz samu tvrdnju. Uz to `lib/routes.js` kao jedan izvor spiska ruta.
+
+| | pre | posle |
+|---|---|---|
+| `test` | 120 | **132** |
+| `verify:nojs` | 11 ruta | **14 ruta** (tri su postojale a nisu merene) |
+| `verify:claims` | prisustvo hedža | **hedž uz tvrdnju** |
+
+**`KnowBeforeYouGo` zatvoren:** pun sadržaj na `/how-it-works#know-before-you-go`, naslovna
+dobila `02 / WHAT TO COMPARE` uz link. Obećanje i odredište spojeni.
+
+⚠️ **C41 zatvorena usput** — `„the drivers we place right now"` → `„the first drivers who come
+to us"`. Prezent koji tvrdi aktivno plasiranje, a GROWTH nema zabeleženih plasmana. **Promaklo
+kroz sedam claims batch-eva.**
+
+### ⚠️ Pouka o procesu, ne o kodu
+
+Rad iz ove faze je **postojao samo na lokalnoj grani, nepušen**, dok ga sesija od 2026-09-08
+nije slučajno otkrila — i to tek kad je krenula da piše **isti sadržaj ponovo**. `master` ga
+nije imao, GitHub ga nije imao, `STATUS.md` ga nije pominjao.
+
+**Zato: na početku sesije proveri `git branch -vv` i `git ls-remote --heads origin`, ne samo
+`git status`.** Čisto radno stablo ne znači da nema nespojenog rada.
 
 ## Sesija 2026-09-06 — Faza 4 (copy)
 
@@ -230,27 +266,24 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**`KnowBeforeYouGo`** — najveći preostali deo Faze 4, i jedina veća stavka koja ne zavisi
-ni od Pavla, ni od advokata, ni od spoljnog servisa. Naslov „02 / KNOW BEFORE YOU GO" stoji
-na naslovnoj, ali sadržaj su **tri generičke kartice** umesto tri trampe sa po tri „Ask the
-carrier" pitanja i citiranim FMCSA/FDA/BLS izvorima — copy zaveden pod **jedanaest redova
-registra**. Isti naslov sa ispražnjenim sadržajem čita se kao propust, ne kao odluka o obimu.
+**`middleware` → `proxy`.** Jedina preostala stavka koja ne traži nikakvu odluku i ne zavisi
+ni od koga — radi se sama. Next 16 je `middleware` konvenciju označio kao deprecated; postoji
+codemod (`npx @next/codemod@canary middleware-to-proxy .`). ⚠️ To je **baš fajl koji nosi
+cross-origin zaštitu**, pa ide sa punim prolaskom kapija i merenjem protiv deploy-a. Test
+`middleware rejects a cross-origin submission` u `tests/rendered-html.test.mjs` je pokriva.
 
-⚠️ **Ovo nije prepis nego odluka o obimu i mestu.** `AUDIT.md` kaže da po sadržaju pripada
-`/apply` ili `/how-it-works`, ne naslovnoj. Traži Pavlovu odluku pre pisanja.
+`KnowBeforeYouGo` je **zatvoren u Fazi 6** — ne raditi ponovo.
 
-### ⚠️ Tri odluke koje čekaju Pavla — bez njih se ne kreće
+### ⚠️ Dve odluke koje čekaju Pavla
 
-1. **`KnowBeforeYouGo`:** **(a)** napuniti sadržaj na naslovnoj, ili **(b)** preseliti pun
-   sadržaj na `/how-it-works` i preimenovati naslov na naslovnoj. **Preporuka: (b)** —
-   naslovna je izlog, a jedanaest redova registra sa citiranim izvorima traži stranicu na
-   kojoj se čita. Prenos je doslovan u oba slučaja.
-2. **Chrome labele:** idu u konsolidaciju ili ostaju kratke. **Preporuka: ostaju** (razlog
-   u `lib/cta.js`). Ako idu — izmeriti širinu nav pilule i mobilne trake **na granici
-   breakpointa**, ne na zatečenoj širini (L59).
-3. **`AGENTS.md` / `CLAUDE.md`:** commit-ovati ih ili `agentRules: false` u
+1. **Chrome labele:** idu u konsolidaciju ili ostaju kratke. Nav („APPLY NOW"), MobileBar
+   („Apply ↗"), Footer („Apply"). **Preporuka: ostaju** (razlog u `lib/cta.js`). Ako idu —
+   izmeriti širinu nav pilule i mobilne trake **na granici breakpointa**, ne na zatečenoj
+   širini (L59).
+2. **`AGENTS.md` / `CLAUDE.md`:** commit-ovati ih ili `agentRules: false` u
    `next.config.ts`. **Preporuka: commit** — Next ih regeneriše deterministički, sa
    BEGIN/END markerima, pa gašenje samo pravi razliku koju neko mora da čisti.
+   ⚠️ `CLAUDE.md` u korenu se **automatski učitava u kontekst agenta**, pa nije svejedno.
 
 ### Sitnije, nagomilano
 
@@ -274,7 +307,7 @@ Sve što zavisi od vidljivog taba traži pravi browser — vidi nalaz o `js-moti
 0. **✅ Urađeno 2026-09-05.** Sajt pogledan u pravom browseru, izgled odobren, grana
    `vercel-migration` spojena u `master` fast-forward-om.
 1. **✅ Urađeno** — `next` 16.3.4, `0b2b747`.
-2. **✅ Urađeno 2026-09-06** — Faza 4, oba prolaza (osim `KnowBeforeYouGo`, vidi dole).
+2. **✅ Urađeno 2026-09-06** — Faza 4, oba prolaza. `KnowBeforeYouGo` zatvoren u **Fazi 6**.
    Original opisa: Prvi prolaz vraća dva
    odobrena reda koja su pri prepisu ispala iz `lib/faq.js` (C15 lead-brokeri, obim TCPA
    pristanka) i kanonsku C21 formulaciju; drugi rešava nedoslednosti: sedam labela za

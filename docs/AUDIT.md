@@ -359,7 +359,7 @@ interni link iz tela** — tok je jednosmeran: uđeš na formu ili odustaneš.
 
 ---
 
-## Faza 4 — ✅ URAĐENO 2026-09-06 (osim `KnowBeforeYouGo`)
+## Faza 4 — ✅ URAĐENO 2026-09-06
 
 Pet commita, grana `faza-4-copy` spojena u `master` (`b3cfb09`, `eb7c469`, `3ece835`,
 `11d4484`, `41e277c`, `d012863`).
@@ -399,13 +399,17 @@ tačno taj tip — vraćanje bi ponovilo grešku koju je projekat sam zapisao.
 
 ### ⚠️ Šta ostaje otvoreno iz ove faze
 
-**`KnowBeforeYouGo`** — opisan niže kao najveći pojedinačni gubitak. Nije rađen: to je
-odluka o obimu i mestu (AUDIT sam kaže da pripada `/apply` ili `/how-it-works`), ne prepis.
+**`KnowBeforeYouGo` — ✅ ZATVOREN u Fazi 6** (`358a812`, 2026-09-07). Vidi sekciju Faza 6.
+
+⚠️ **Opis niže („najveći pojedinačni gubitak") bio je delimično netačan i pre toga.**
+Tvrdio je da sadržaj ne postoji nigde na sajtu; izmereno 2026-09-08, pun sadržaj je bio
+prenet na `/how-it-works` još u Fazi 3 — nedostajao je samo na naslovnoj. Faza 6 je to
+proverila istom merom i zatvorila.
 
 **Navigacioni chrome** — Nav („APPLY NOW"), MobileBar („Apply ↗") i Footer („Apply") nisu
 uključeni u konsolidaciju natpisa. Nisu CTA dugmad nego chrome pored jednorečnih suseda
 (`Call`, `Text`, `FAQ`); duga rečenica bi tamo bila regresija izgleda. Razlog je upisan u
-`lib/cta.js`. Čeka Pavlovu odluku.
+`lib/cta.js`. **Čeka Pavlovu odluku — jedina preostala stavka iz Faze 4.**
 
 ### Original plana
 
@@ -473,6 +477,41 @@ strukturirani podaci objavili raspored koji sajt namerno ne objavljuje.
 
 Najduže vreme čekanja, ne zavisi ni od jedne faze gore. C52 traži advokata. Privacy i TCPA
 tekstovi su nacrti za pregled. `/terms` treba pravni subjekt, governing law i kontakt.
+
+---
+
+## Faza 6 — ✅ URAĐENO 2026-09-07 (spojeno i deploy-ovano 2026-09-08)
+
+Nije bila u originalnom planu od pet faza. Nastala je iz onoga što je Faza 4 ostavila i iz
+jednog nalaza o samoj kapiji.
+
+### `8599caa` — kapije prestaju da broje i počinju da porede
+
+⚠️ **Claims kapija je do tada merila PRISUSTVO hedža na stranici, ne njegovu blizinu
+tvrdnji.** Stranica sa „15–20 minutes" u jednom pasusu i „usually" u sasvim drugom prolazila
+je kao ispravna. To je kapija koja umiruje, ne kapija koja hvata.
+
+Nov `scripts/claims-rules.mjs` (+262) poredi hedž **uz samu tvrdnju**; `verify-claims.mjs`
+sveden na pozivaoca. Uz to `lib/routes.js` kao jedan izvor spiska ruta — `verify:nojs` je
+time skočio sa 11 na **14 ruta**, jer su tri postojale a nisu bile merene. Testovi 120 → 132.
+
+### `358a812` — `KnowBeforeYouGo` dobija stranicu
+
+Pun sadržaj na `/how-it-works#know-before-you-go`: tri trampe sa hedžom, devet „Ask the
+carrier" pitanja, blok „Where you are right now" sa tri modifikatora. Redovi registra
+C23-C25, C27, C40, C30-C33, C34, C35, C37.
+
+Naslovna: kicker `02 / KNOW BEFORE YOU GO` → **`02 / WHAT TO COMPARE`**, uz link ka
+preseljenoj sekciji. Kartice ostaju — rade svoj posao na naslovnoj — ali naslov više ne
+obećava ono čega tu nema. **Obećanje i odredište spojeni**; razdvojeni su već jednom koštali.
+
+⚠️ **CTA iz izvora („Review your choices") NIJE prenet** — vratio bi varijantu natpisa koju
+je Faza 4 upravo svela na `APPLY_CTA`. Prenos koji poništava prethodnu fazu nije prenos.
+
+⚠️ **C41 (OPEN) zatvorena usput:** `„the drivers we place right now"` → `„the first drivers
+who come to us"`. C41 zabranjuje svaku konstrukciju u prezentu koja tvrdi aktivno plasiranje;
+GROWTH je nova firma bez zabeleženih plasmana. **Promaklo kroz sedam claims batch-eva** jer je
+pasus zaveden pod C16 još u CL1, a C41 je nastao tek u L1.
 
 ---
 
