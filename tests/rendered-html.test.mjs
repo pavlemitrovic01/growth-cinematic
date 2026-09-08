@@ -9,7 +9,7 @@ import test from 'node:test';
  *
  * Umesto toga meri se preko HTTP-a, protiv POKRENUTOG servera. To je i tacnije nego ranije:
  * `x-robots-tag` i CSP sada dolaze iz `headers()` u `next.config.ts`, a 403 na cross-origin
- * POST iz `middleware.ts` — nijedno se ne bi videlo da se modul uvozi mimo lanca.
+ * POST iz `proxy.ts` — nijedno se ne bi videlo da se modul uvozi mimo lanca.
  *
  * Upotreba (server mora vec da radi):
  *   npm run build && npm start
@@ -93,12 +93,12 @@ test('preview robots denies crawling and sitemap excludes public URLs', async ()
   assert.equal(sitemap.status, 200);
   assert.ok(!(await sitemap.text()).includes('<loc>'));
 });
-test('middleware rejects a cross-origin submission before reaching delivery', async () => {
+test('proxy rejects a cross-origin submission before reaching delivery', async () => {
   const r = await get('/api/apply', { method: 'POST', headers: { Origin: 'https://evil.example' } });
   assert.equal(r.status, 403);
   assert.equal(r.headers.get('cache-control'), 'no-store');
-  // ⚠️ Odgovor koji nastane u middleware-u ne prolazi kroz `headers()` iz next.config.ts.
-  // Zato `middleware.ts` sam pecati politiku — ovo je provera da to i dalje radi.
+  // ⚠️ Odgovor koji nastane u proxy-ju ne prolazi kroz `headers()` iz next.config.ts.
+  // Zato `proxy.ts` sam pecati politiku — ovo je provera da to i dalje radi.
   assert.ok(r.headers.get('content-security-policy').includes("frame-ancestors 'none'"));
   assert.equal(r.headers.get('x-robots-tag'), 'noindex, nofollow');
 });

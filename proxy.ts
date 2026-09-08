@@ -6,17 +6,22 @@ import { IS_LIVE } from './lib/seo';
 /**
  * Zamena za jedini deo `worker/index.ts` koji nije bio Cloudflare vodoinstalaterski posao.
  *
+ * ⚠️ IME FAJLA: Next 16 je konvenciju `middleware` preimenovao u `proxy`; funkcionalnost je
+ * nepromenjena (vidi `node_modules/next/dist/docs/01-app/01-getting-started/16-proxy.md`).
+ * Preimenovano 2026-09-08. Stari naziv jos stoji u istorijskim zapisima u `docs/` -- tamo
+ * opisuje sta je fajl bio u trenutku prelaska na Vercel, i to ostaje tacno.
+ *
  * ⚠️ Bez ovog fajla migracija bi tiho skinula zastitu: `rejectCrossOrigin` se u celom
  * projektu zvao ISKLJUCIVO iz workera (`grep` potvrdio), pa bi brisanje workera ostavilo
  * javne POST rute otvorene za cross-origin zahteve. Zaglavlja su druga prica — njih
  * `next.config.ts` vec postavlja na `/:path*`, tako da ih ovde ne treba ponavljati za
  * normalan saobracaj.
  *
- * Zasto se zaglavlja ipak rucno pecate na 403: odgovor koji nastane U middleware-u kratko
+ * Zasto se zaglavlja ipak rucno pecate na 403: odgovor koji nastane U proxy-ju kratko
  * spaja lanac i ne prolazi kroz `headers()` iz `next.config.ts`. Bez ovoga bi bas odbijeni
  * zahtev bio jedini odgovor sajta bez CSP-a i bez `noindex`-a.
  */
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   if (request.method !== 'POST') return NextResponse.next();
   if (!rejectCrossOrigin(request, request.nextUrl.origin)) return NextResponse.next();
 

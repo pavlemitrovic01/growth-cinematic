@@ -266,13 +266,14 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**`middleware` → `proxy`.** Jedina preostala stavka koja ne traži nikakvu odluku i ne zavisi
-ni od koga — radi se sama. Next 16 je `middleware` konvenciju označio kao deprecated; postoji
-codemod (`npx @next/codemod@canary middleware-to-proxy .`). ⚠️ To je **baš fajl koji nosi
-cross-origin zaštitu**, pa ide sa punim prolaskom kapija i merenjem protiv deploy-a. Test
-`middleware rejects a cross-origin submission` u `tests/rendered-html.test.mjs` je pokriva.
+⚠️ **Nema više posla koji se radi bez tebe.** Sve što je bilo samostalno je odrađeno; ostalo
+čeka odluku ili spoljni servis.
 
-`KnowBeforeYouGo` je **zatvoren u Fazi 6** — ne raditi ponovo.
+**Redosled:** dve odluke ispod (minut) → **Resend** (petnaest minuta, i sajt prvi put radi
+svoj posao) → analitika + consent → pravni pregled → odluka o prelasku.
+
+`KnowBeforeYouGo` je **zatvoren u Fazi 6**, `middleware` → `proxy` **2026-09-08** — ne
+raditi ponovo.
 
 ### ⚠️ Dve odluke koje čekaju Pavla
 
@@ -293,8 +294,9 @@ cross-origin zaštitu**, pa ide sa punim prolaskom kapija i merenjem protiv depl
 - **`AGENTS.md` i `CLAUDE.md`** — `next dev` ih generiše sam na svaki pokretanje, stoje
   neispraćeni. ⚠️ `CLAUDE.md` u korenu se automatski učitava u kontekst agenta u budućim
   sesijama, pa nije svejedno. Predlog: `agentRules: false` u `next.config.ts`.
-- **`middleware` → `proxy`** — deprecated u Next 16 (`npx @next/codemod@canary
-  middleware-to-proxy .`). Radi i dalje, ali je to baš fajl koji nosi cross-origin zaštitu.
+- **✅ `middleware` → `proxy`** — urađeno 2026-09-08. Fajl je `proxy.ts`, funkcija `proxy`,
+  `config` nepromenjen. Zaštita izmerena direktno posle preimenovanja: strani Origin → 403 sa
+  pečatiranom politikom, ispravni Origin → propušten, GET → propušten.
 - **Lighthouse na hostingu** i **3D hero na telefonu** — deploy ih je otključao, još
   neiskorišćeno.
 
