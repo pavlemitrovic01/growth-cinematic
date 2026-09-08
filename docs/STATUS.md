@@ -266,14 +266,45 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-⚠️ **Nema više posla koji se radi bez tebe.** Sve što je bilo samostalno je odrađeno; ostalo
-čeka odluku ili spoljni servis.
+**Otvori [`docs/MOTION.md`](MOTION.md) i kreni od `D1`.** To je sada glavni kolosek; sve niže
+u ovom dokumentu čeka iza njega.
 
-**Redosled:** dve odluke ispod (minut) → **Resend** (petnaest minuta, i sajt prvi put radi
-svoj posao) → analitika + consent → pravni pregled → odluka o prelasku.
+### Zašto se redosled promenio 2026-09-08
 
-`KnowBeforeYouGo` je **zatvoren u Fazi 6**, `middleware` → `proxy` **2026-09-08** — ne
-raditi ponovo.
+Do te sesije je sledeći posao bio Resend. Pavlova odluka ga je pomerila: **dizajn i pokret idu
+pre Resenda** — sajt je funkcionalno kompletan, ali je vizuelno „skelet".
+
+Dva nezavisna pregleda — merenje u ovom repou i spoljni pregled žive stranice — pala su na
+isti nalaz: **osam sekcija naslovne ima isti oblik** (naslov levo, tekst desno, linija,
+outline, fade-in), a pet podstranica nema **nijedan** reveal.
+
+⚠️ **Zbog toga pokret nije prvi posao.** Bolji ulazak u nepromenjen zid je i dalje zid, a
+odluka o pokretu **zavisi** od toga šta sekcija jeste. Redosled je: **prvo oblik, pa pokret.**
+
+### Šta blokira
+
+**`D1` — taksonomija sekcija.** Koja je *cinematic*, koja *editorial*, koja *utility*.
+Jedina stavka u planu koja se **ne može izvesti merenjem** — traži Pavlovu odluku šta koja
+sekcija *jeste*. Blokira polovinu liste.
+
+**`M1` i `M5` su nezavisni** i mogu odmah, ako treba da se nešto pomera dok `D1` čeka:
+- `M1` — dva nova primitiva (`OTKRIVANJE`, `CRTA`) uz postojećih šest, bez ijedne primene
+- `M5` — View Transitions, usmeren prelaz rute i shared naslov kartice
+
+### Odluke iz te sesije koje ne treba ponovo otvarati
+
+- **Pravac pokreta:** karakter, **bez paralaksa**, bez generičkih efekata
+- **Hero ostaje 3D scena.** Fotografije u njega **ne idu** — kamion, pokret i izlazak sunca
+  već postoje u sceni; fotografija je tamo samo fallback
+- **Resend ide posle** dizajna i pokreta
+- `KnowBeforeYouGo` zatvoren u Fazi 6, `middleware` → `proxy` urađen — ne raditi ponovo
+
+### ⚠️ Otvoreno pitanje, ne zadatak
+
+`public/images/` sadrži **šest** fotografija; `hero-02-dawn` i `hero-03-sunrise` su
+**neiskorišćene**. Dawn je kadar iz kabine (ruke na volanu, papiri, zora), sunrise je kamion
+ka izlasku sunca. Obe su režirane kao set — tamna leva trećina za tekst. U hero ne idu.
+**Da li i gde idu drugde nije odlučeno.**
 
 ### ✅ Dve odluke — donete 2026-09-08
 
@@ -326,8 +357,14 @@ Sve što zavisi od vidljivog taba traži pravi browser — vidi nalaz o `js-moti
 4. **✅ Urađeno** — deploy pod `noindex`. Od četiri stvari koje otključava, dve su
    iskorišćene (prijava kroz lanac do baze, pokazivanje linka); **Lighthouse na hostingu i
    3D na pravom hardveru još nisu.**
+4.5 **Dizajn i pokret** — ⚠️ **umetnuto 2026-09-08, ispred Resenda, Pavlovom odlukom.**
+   Plan je [`docs/MOTION.md`](MOTION.md), jedanaest stavki, `D1` blokira polovinu.
+   Sajt je funkcionalno kompletan ali vizuelno „skelet": jak hero, pa dugačak ujednačen
+   dokument. Ovo je jedini kolosek na kom se sada radi.
+
 5. **Resend** — ⚠️ **najveći efekat po uloženom vremenu, i manje je blokiran nego što je
-   ovaj dokument ranije tvrdio.** Sajt trenutno **skuplja prijave a nikoga ne obaveštava**:
+   ovaj dokument ranije tvrdio.** ⚠️ **Ide POSLE dizajna i pokreta** (odluka 2026-09-08).
+   Sajt trenutno **skuplja prijave a nikoga ne obaveštava**:
    lead se upiše u bazu, vozač dobije 503 „pozovite nas", i tu se lanac prekida.
 
    Izmereno 2026-09-06: **verifikovan domen NE treba.** `lib/email.js:106` uzima
