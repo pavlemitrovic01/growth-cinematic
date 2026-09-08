@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`d1-pay-utility`** (52), nespojena; `master` na 51 — sve ranije grane spojene fast-forward-om |
+| Grana | **`master`** (53 commita); `d1-pay-utility` spojena fast-forward-om i pušena 2026-09-09 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -122,7 +122,8 @@ Kolona je zato `bigint`.
 
 ## Sesija 2026-09-09 — D1, prva sekcija: `pay` → utility
 
-Jedan commit na grani **`d1-pay-utility`** (`f541b72`), **nespojen i nepušen**.
+Dva commita na grani **`d1-pay-utility`** (`f541b72` kod, `2217eb3` dokumenti), spojena u
+`master` fast-forward-om i **pušena istog dana**. `origin/master` na `2217eb3`.
 
 **Šta je urađeno:** `pay` je izašla iz `home-editorial` rasporeda (naslov levo, pasus proze
 desno) i postala **utility blok** — prva od četiri sekcije iz `D1`.
@@ -183,6 +184,13 @@ Batch-kapije iz `MOTION.md`: **polaritet** potvrđen u panelu — watchdog je sk
 sekcija ostala cela vidljiva; **`reduce`** važi po konstrukciji, novi CSS ne dodaje nijednu
 tranziciju ni animaciju; **bez JS-a** i **registar** nepromenjeni. Prelomi 1280 / 768 / 390
 pogledani.
+
+**Ponovo izmereno protiv deploy-a posle push-a** (`meri se: https://growth-cinematic.vercel.app`
+u oba izlaza, dakle meta je potvrđena a ne pretpostavljena):
+
+`verify:nojs PASS 14 ruta` (`/` 6731 znakova, isto kao lokalno) · `verify:claims PASS 13 ruta` ·
+`test:rendered 9/9`. `noindex` drži na sva četiri sloja — HTTP zaglavlje, HTML meta,
+`robots.txt` i prazan `sitemap`. Deploy je bio živ ~30 s posle push-a.
 
 ## Sesija 2026-09-07 — Faza 6 (kapije + KnowBeforeYouGo)
 
@@ -333,14 +341,10 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-**Prvo: spoji i pusti `d1-pay-utility`.** Grana nosi `f541b72` i **stoji samo na disku** —
-nije na `master`-u ni na GitHub-u. Tačno stanje koje je 2026-09-08 zamalo koštalo ponovnog
-pisanja iste Faze 6. Posle merge-a **izmeri protiv deploy-a**, ne localhost-a:
+✅ **`d1-pay-utility` je spojena, pušena i izmerena protiv deploy-a 2026-09-09.** Ništa ne
+stoji nespojeno; `git branch --no-merged master` je prazno.
 
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
-
-**Onda: `values` → utility, druga sekcija iz `D1`.** Definicija utility bloka je izmerena na
+**`values` → utility, druga sekcija iz `D1`.** Definicija utility bloka je izmerena na
 `pay` i zapisana gore — obrnuta hijerarhija, broj kao display element. `values` nosi tri
 dimenzije poređenja (pay / home time / equipment) koje su danas tri generičke kartice; kao
 utility su tri para labela/vrednost.
