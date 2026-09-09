@@ -68,7 +68,12 @@ export default function Motion() {
       if (claimWhenVisible) document.removeEventListener('visibilitychange', claimWhenVisible);
     };
 
-    const targets = document.querySelectorAll<HTMLElement>('[data-reveal],[data-stagger]');
+    /**
+     * ⚠️ `[data-wipe]` i `[data-line]` dodati u `M1` (2026-09-09). Oba primitiva drze
+     * skriveno pocetno stanje iza `:not(.is-in)`, pa im observer MORA dodeliti klasu —
+     * bez ovog prosirenja bi ostali skriveni dok watchdog ne odradi svoje posle 3s.
+     */
+    const targets = document.querySelectorAll<HTMLElement>('[data-reveal],[data-stagger],[data-wipe],[data-line]');
     if (!targets.length) return detach;
 
     const observer = new IntersectionObserver(

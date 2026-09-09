@@ -6,10 +6,14 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto.
-- **Sledeći:** **`M1`** — rečnik pokreta (`OTKRIVANJE` + `CRTA` kao primitivi, **bez ijedne
-  primene**). Ide kroz `/plan`. ⚠️ Pre planiranja pročitati `docs/MOTION.md` površine 3 i 4 —
-  **starije su od koda** (opisuju osam sekcija i fade-up koji više ne stoje).
+- **Aktivan batch:** **`M1` (STANDARD)** — grana `m1-motion-vocabulary`, manifest
+  `batches/M1.md` je **OPEN**. Rečnik pokreta: `OTKRIVANJE` + `CRTA` kao primitivi, **uz tačno
+  jednu dokaznu primenu** na sekciji `values`.
+  ⚠️ **Odstupanje od `MOTION.md`, odobreno:** plan je tražio `M1` „bez ijedne primene", ali
+  njegov sopstveni ugovor merenja traži dokaz polariteta i `reduce`-a — batch bez primene te
+  kapije ostavlja **prazne**. Isti slab dokaz koji je `D4` razotkrio.
+  ⚠️ **`manual` je obavezan iako je tier STANDARD** (`RULES §3`, posao dira skrol).
+- **Sledeći posle `M1`:** `M2` — površine 3, 4 i 5 (sekcije, brojke, `PageShell` ritam).
 - **Poslednji završen:** **`D4`** (2026-09-09, `3dbcc26`, `manual` PASS) — sticky lede u
   `process`. Time je **`D1` ceo zatvoren**: sve četiri strukturne izmene u `master`-u, pušene i
   izmerene protiv deploy-a.

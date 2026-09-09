@@ -673,7 +673,9 @@ main:focus{outline:none}
 .home-values{background:var(--bone-dim)}
 .home-values h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
 .value-axes{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;list-style:none;padding:0;margin:38px 0 0}
-.value-axes li{border-top:1px solid rgba(22,32,25,.4);padding-top:20px}
+.value-axes li{padding-top:20px}  /* ⚠️ `border-top` uklonjen u `M1`: liniju sada crta primitiv `CRTA` (`[data-line]`),
+     jer se ivica ne moze skalirati. Ton je isti — `currentColor` na `opacity:.4` daje
+     `rgba(22,32,25,.4)` na kremu, a na forest sekcijama se sam prilagodjava. */
 .value-num{display:block;font-size:12px;letter-spacing:.1em;color:var(--clay-mid)}
 .value-axes h3{margin:16px 0 0;font-size:clamp(30px,3.5vw,52px);line-height:.95;letter-spacing:-.055em;text-transform:uppercase;font-weight:800;color:var(--ink)}
 .value-q{margin:20px 0 0;font-size:17px;line-height:1.35;letter-spacing:-.02em;color:var(--ink)}
@@ -890,5 +892,61 @@ main:focus{outline:none}
 
 @media(prefers-reduced-motion:no-preference){
   html.js-motion [data-reveal]:not(.is-in){opacity:0;transform:translateY(18px)}
-  html.js-motion [data-stagger]:not(.is-in)>*{opacity:0;transform:translateY(14px)}
+  html.js-motion [data-stagger]:not(.is-in)>*:not([data-line]){opacity:0;transform:translateY(14px)}
+}
+
+/* ── 7 · OTKRIVANJE — otkrivanje s leva (M1, 2026-09-09) ──────────────────────
+   Novi primitiv. Zamenjuje fade-up, koji je najgenericka animacija na vebu i do
+   sada je bio JEDINA ulazna animacija na sajtu.
+
+   ⚠️ TVRDO OGRANICENJE — `data-wipe` SME ISKLJUCIVO NA LISTNE TEKSTUALNE ELEMENTE.
+   Nikad na `<main>`, `<section>`, ni na bilo sta sto moze da sadrzi `.mobar`,
+   `.consent-bar`, `.route-loading` ili `.skip-link`. Razlog: `clip-path` razlicit
+   od `none` pravi containing block za `position:fixed` potomke — isti mehanizam
+   zbog kog `.route-in` (blok 6 iznad) koristi ISKLJUCIVO `opacity` i nikad
+   `transform`. ⚠️ I gore je nego tamo: posledica ostaje I POSLE animacije, jer
+   krajnje stanje nije `none` nego `inset()`.
+
+   ⚠️ ZASTO `-.3em` SA SVE CETIRI STRANE. `clip-path` sece po border boxu. Meta
+   ovog primitiva su naslovi sa tesnim `line-height`-om i verzalima (`.value-axes h3`
+   ima `.95`) — bez negativnog inseta bi donji deo slova i fokus prsten bili
+   odseceni. Animira se SAMO desna vrednost, pa je pokret cisto otkrivanje s leva.
+
+   ⚠️ POLARITET, isti kao kod `[data-reveal]`: osnovno pravilo je VIDLJIVO stanje.
+   Skriveno postoji samo iza DVE kapije odjednom. Bez JS-a, bez podrske za
+   `clip-path`, ili pod `reduce` — sadrzaj se vidi. Fail-safe po konstrukciji. */
+[data-wipe]{clip-path:inset(-.3em);transition:clip-path var(--dur-slow) var(--ease-out)}
+
+/* ── 8 · CRTA — linija se iscrta s leva (M1, 2026-09-09) ──────────────────────
+   ⚠️ IZDVOJEN, NE IZMISLJEN. Isti gest vec radi na `.nav-links a::after` (blok 4
+   iznad). Nav se NAMERNO ne dira: radi, i vec je jednom bio slomljen — Faza 1 je
+   odatle uklonila pravilo koje je animiralo `opacity: 1 → 1`. Mehanika zato
+   nakratko zivi na dva mesta; spajanje ide kad druga povrsina zatrazi primitiv.
+
+   ⚠️ PSEUDO-ELEMENT, NE IVICA. `border` se ne moze skalirati, a `transform` na
+   samom elementu bi skalirao i sadrzaj. Pseudo-element nema potomke, pa ovde nema
+   containing-block posledice — za razliku od `OTKRIVANJA` iznad. */
+[data-line]{position:relative}
+[data-line]::before{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:currentColor;opacity:.4;transform-origin:left;transition:transform var(--dur-fast) var(--ease-out)}
+
+/* ── stepenica koja stize do pseudo-elementa i do potomka ──
+   ⚠️ POSTOJECA `transition-delay` PRAVILA IZNAD SE NE DIRAJU. `transition-delay`
+   na `<li>` vazi samo za tranzicije SAMOG `<li>`-ja — ne dopire ni do `::before`
+   ni do potomka. Zato ista stepenica ide jos jednom, kroz promenljivu koja se
+   NASLEDJUJE. Osam zivih `data-stagger` instanci (4 na naslovnoj, 4 na
+   podstranicama) nastavlja da radi identicno; ovo su nova pravila PORED njih.
+
+   `+ 90ms` je razmak koji `MOTION.md` povrsina 3 trazi: crta prvo, sadrzaj iza nje. */
+[data-stagger]>*:nth-child(2){--crta-delay:70ms}
+[data-stagger]>*:nth-child(3){--crta-delay:140ms}
+[data-stagger]>*:nth-child(4){--crta-delay:210ms}
+[data-stagger]>*:nth-child(5){--crta-delay:280ms}
+[data-stagger]>*:nth-child(n+6){--crta-delay:350ms}
+[data-line]::before{transition-delay:var(--crta-delay,0ms)}
+[data-wipe]{transition-delay:calc(var(--crta-delay,0ms) + 90ms)}
+
+/* Skrivena stanja novih primitiva — iza ISTE dve kapije kao sve gore. */
+@media(prefers-reduced-motion:no-preference){
+  html.js-motion [data-wipe]:not(.is-in){clip-path:inset(-.3em 100% -.3em -.3em)}
+  html.js-motion [data-line]:not(.is-in)::before{transform:scaleX(0)}
 }

@@ -321,6 +321,17 @@ Sajt već ima tri sopstvena poteza. Plan ih proglašava rečnikom i koristi svud
 
 | **OTKRIVANJE** | `clip-path` / maska s leva | novo — zamenjuje fade-up |
 
+✅ **`M1` (2026-09-09) je oba pretvorio u pozivljive primitive:** `[data-line]` i `[data-wipe]`.
+
+⚠️ **`CRTA` je IZDVOJENA, ne izmišljena** — `.nav-links a::after` je već radi. **Nav nije dirnut**
+(radi, i već je jednom bio slomljen u Fazi 1), pa mehanika nakratko živi na dva mesta. Spajanje
+ide kad druga površina zatraži primitiv, ne pre.
+
+⚠️ **`OTKRIVANJE` nosi tvrdo ograničenje:** `clip-path` različit od `none` **trajno** pravi
+containing block za `position:fixed` potomke — gore nego `transform`, jer posledica ostaje i
+posle animacije. `[data-wipe]` zato sme **isključivo na listne tekstualne elemente**, nikad na
+`<main>` ni `<section>`. Puno obrazloženje stoji u komentaru iznad pravila.
+
 ⚠️ **Fade-up (`opacity` + `translateY`) se povlači iz upotrebe.** To je ono što `[data-reveal]`
 danas radi i najgenerička je animacija na vebu. Ostaje samo tamo gde je ulazna animacija bez
 skrivenog stanja (`.form-done`, `.form-error`) — tamo radi posao i ne primećuje se.
@@ -372,7 +383,13 @@ mere isto što i danas. Deljenje na serveru bi im promenilo ulaz.
 
 ### 3 · Sekcije — `CRTA` uvodi, sadržaj je prosto tu
 
-Zamena za osam `data-reveal` fade-up-ova na naslovnoj.
+⚠️ **ISPRAVKA 2026-09-09 (`M1`):** ovde je pisalo „zamena za **osam** `data-reveal` fade-up-ova".
+Danas ih je **sedam** — `stories` je obrisana. Posle `M1` ih je **šest**: `values` je prva
+sekcija koja je prešla na nov rečnik.
+
+✅ **Primitivi postoje od `M1`** — `[data-line]` (CRTA) i `[data-wipe]` (OTKRIVANJE), oba u MOTION
+bloku `app/globals.css`. Ova površina je time iz „plana" prešla u „preostaje primeniti na šest
+sekcija", što je `M2`.
 
 | | |
 |---|---|
@@ -399,8 +416,14 @@ stvar u planu koja postoji samo zato što je sajt o vožnji.
 
 ### 5 · Podstranice — isto što i naslovna
 
-Danas: `PageShell.tsx` ima **nula** pokreta, pet stranica (`/apply`, `/faq`, `/how-it-works`,
-`/privacy`, `/terms`) nema **nijedan** reveal, četiri imaju po jedan.
+⚠️ **ISPRAVKA 2026-09-09 (`M1`), merenjem:** tvrdnja „`PageShell` ima nula pokreta" je
+**tačna samo za `reveal`**. `data-stagger` je već na **četiri podstranice** —
+`app/about`, `app/contact`, `app/for-carriers` (sve tri na `.sub-3up`) i `app/truckers-lounge`
+(`.post-list`). Dakle `stagger` je „procurio" u `PageShell` svet, `reveal` nije.
+
+Tačno stanje: `PageShell.tsx` sam po sebi nema nijedan motion atribut; pet stranica
+(`/apply`, `/faq`, `/how-it-works`, `/privacy`, `/terms`) nema **nijedan** pokret, četiri imaju
+po jedan `data-stagger`.
 
 ⚠️ **Ovo je propalo kroz procep između faza.** Faza 2 u naslovu kaže „podstranice u Fazi 3", a
 Faza 3 je ispala copy faza. Niko nije primetio.
@@ -492,7 +515,7 @@ ne pre.
 
 | Batch | Sadržaj | Zavisi od |
 |---|---|---|
-| **M1** | rečnik: `OTKRIVANJE` + `CRTA` kao primitivi, uz postojeća 6 | — |
+| ~~**M1**~~ | ✅ **URAĐENO 2026-09-09** — `OTKRIVANJE` + `CRTA`, **uz jednu dokaznu primenu** na `values` | — |
 | **M2** | površine 3, 4, 5 — sekcije, brojke, `PageShell` | M1 |
 | **M3** | površina 2 — naslovi, deljenje na reči | M1 |
 | **M4** | površina 1 — hero sekvenca | M1, M3 |
@@ -500,6 +523,18 @@ ne pre.
 | **M6** | površine 8, 9 — pritisak i kartice | M1 |
 
 M5 je nezavisan i može ranije ako se pokaže rizičnim.
+
+## ⚠️ Zašto `M1` NIJE isporučen „bez ijedne primene"
+
+Ovaj dokument je `M1` opisao kao čist rečnik, bez primene. **Tako ne može**, i razlog je u
+sledećem odeljku: ugovor merenja traži da svaki motion batch dokaže **polaritet** i **`reduce`**.
+Batch koji ništa ne primenjuje ostavlja **obe kapije prazne** — prošao bi time što je bez
+posledice. To je isti slab oblik dokaza koji je `D4` razotkrio: *pravilo se primenjuje ≠ pravilo
+se ponaša.*
+
+`M1` je zato isporučen sa **tačno jednom** dokaznom primenom, na `values`: tri hairline-a se
+iscrtaju s leva sa stepenicom, pa se imena osa otkriju 90 ms iza svoje linije. Isti postupak
+kojim je `pay` proverio pretpostavku `D1`-a pre nego što je prepravljeno četiri sekcije.
 
 ## Kako se svaki batch meri
 

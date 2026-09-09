@@ -149,7 +149,13 @@ export default function CinematicHome() {
           </div>
         </section>
 
-        <section data-reveal className="home-values home-section" aria-labelledby="values-heading">
+        {/*
+            ⚠️ `data-reveal` UKLONJEN u `M1` (2026-09-09) — jedina sekcija na sajtu koja ga
+            nema. Nije previd: ovo je dokazna primena novog recnika. Sadrzaj je prosto tu,
+            akter je LINIJA (`CRTA`), pa imena osa (`OTKRIVANJE`) 90 ms iza svoje linije.
+            Fade-up ostaje na preostalih sest sekcija dok ih `M2` ne prevede.
+          */}
+          <section className="home-values home-section" aria-labelledby="values-heading">
           {/*
             ⚠️ NASLOV JE PREIMENOVAN 2026-09-06, SADRZAJ PRESELJEN. Do tada je ovde stajalo
             „02 / KNOW BEFORE YOU GO" nad tri genericke kartice, dok pun sadrzaj te sekcije —
@@ -192,22 +198,27 @@ export default function CinematicHome() {
             `text-transform` radi ostalo.
           */}
           <h2 id="values-heading">A bigger number isn’t the whole offer.</h2>
+          {/*
+            `data-stagger` OSTAJE na `<ol>`-u — nosi stepenicu (0/70/140 ms) koju nova pravila
+            citaju kroz `--crta-delay`. Ali `<li>` vise NE dobija fade-up: pravilo u MOTION bloku
+            nosi `:not([data-line])`, jer bi inace dve mehanike isle preko iste stvari.
+          */}
           <ol data-stagger className="value-axes">
-            <li>
+            <li data-line>
               <span className="value-num">01</span>
-              <h3>Pay</h3>
+              <h3 data-wipe>Pay</h3>
               <p className="value-q">What reaches your paycheck?</p>
               <p>Ask how pay is calculated, which miles count and what deductions apply.</p>
             </li>
-            <li>
+            <li data-line>
               <span className="value-num">02</span>
-              <h3>Home time</h3>
+              <h3 data-wipe>Home time</h3>
               <p className="value-q">What does the schedule mean?</p>
               <p>Get the actual time out and time home. Make sure it works with your life.</p>
             </li>
-            <li>
+            <li data-line>
               <span className="value-num">03</span>
-              <h3>Equipment</h3>
+              <h3 data-wipe>Equipment</h3>
               <p className="value-q">What will you be driving?</p>
               <p>Ask about equipment, maintenance and the support available when plans change.</p>
             </li>
