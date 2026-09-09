@@ -13,8 +13,7 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M1` | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi, **uz jednu dokaznu primenu** na `values` | STANDARD | — | **OPEN** — čeka `manual` |
-| `G1` | Kapija: `data-wipe` nikad na `<section>`/`<main>`/`<body>`; broj motion atributa na `/` | LEAN | `M1` | OPEN |
+| `G1` | Kapija: `data-wipe` nikad na `<section>`/`<main>`/`<body>`; broj motion atributa na `/` | LEAN | `M1` | **SLEDEĆI** |
 | `M2` | Sekcije, brojke i `PageShell` ritam — pet podstranica nema nijedan reveal | STANDARD | `M1` | OPEN |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
@@ -64,6 +63,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `M1` | **Rečnik pokreta** — `OTKRIVANJE` + `CRTA` kao primitivi, uz dokaznu primenu na `values` | 2026-09-09 |
 | `D1` | **Taksonomija sekcija** — `pay`+`values` → utility, `guard`+`founder` → cinematic, `stories` obrisana, sticky `process` | 2026-09-09 |
 | `D4` | Sticky `process` (poslednji deo `D1`) | 2026-09-09, `manual` PASS |
 | Faza 6 | Claims kapija poredi hedž **uz tvrdnju**; `KnowBeforeYouGo` dobio stranicu | 2026-09-07 |

@@ -90,3 +90,37 @@ tvrdnje u njemu nađene su **slučajno**, u prolazu; jedna je **protivrečila dv
 tvrdnjama u istom fajlu**. Zato ovaj workflow i postoji.
 **Pravilo:** deklaracije žive u `CONTEXT.md`, pozicija u `STATE.md`, istorija u arhivi — i svaki
 blocking dokument ima cap.
+
+## L15 — Skriveno stanje iza kapije nije dovoljno; i VIDLJIVO mora biti iza nje.
+`M1` je `clip-path:inset(-.3em)` stavio u **bazno** pravilo, a samo skriveno stanje iza
+`html.js-motion` + `no-preference`. Sadržaj se video svuda, sve kapije zelene, i komentar je
+tvrdio *„fail-safe po konstrukciji"*.
+⚠️ **Tvrdnja je važila za VIDLJIVOST, ne za posledicu.** `clip-path ≠ none` pravi containing
+block za `position:fixed` **i `position:absolute`** potomke — pa ga je svaki `[data-wipe]`
+element nosio **trajno**: bez JS-a, pod `reduce`, kod posetioca koji nikad neće videti animaciju.
+**Pravilo:** kad primitiv ima posledicu i u vidljivom stanju, **oba** stanja idu iza kapije.
+Tada „nema pokreta → nema posledice" važi po konstrukciji, a ne po disciplini.
+Uzgred: kad watchdog skine `js-motion` usred otkrivanja, `clip-path` pada na `none`, što se ne
+interpolira — sadržaj se otkrije istog frejma. Tačno ono što watchdog i treba da uradi.
+
+## L16 — `position:relative` u primitivu tiho gasi `position:sticky` na istom elementu.
+`[data-line]{position:relative}` ima istu specifičnost (0,1,0) kao `.process-lede{position:sticky}`
+i `.card--cta{position:sticky}`, a stoji kasnije u fajlu — **pobeđuje**. Nema greške, nema kapije;
+element prosto prestane da se lepi. `M2` i `M6` idu baš na te površine.
+**Pravilo:** svaki primitiv koji postavlja `position` mora u komentaru imenovati šta gazi.
+
+## L17 — Pokret se ne sme ugnezditi u oba smera, i nijedna kapija to ne vidi.
+1. **`data-wipe` nikad ispod skrivenog `data-reveal`/`data-stagger` pretka.**
+   `IntersectionObserver` meri **geometriju, ne `opacity`** — unutrašnji wipe se okine i
+   **potroši** dok je predak još na `opacity:0`. Kad se predak pojavi, pokret je već gotov.
+   To je najjači razlog zašto je `data-reveal` skinut sa `values` sekcije — jači od estetskog.
+2. **`data-line` nikad unutar `data-wipe` elementa** — clip guta pseudo-element, pa linija ne
+   može da vodi. Zato je jedini ispravan raspored: linija na kontejneru, wipe na tekstu u njemu.
+
+## L18 — Provera koja prijavi defekt može biti pokvarena sama.
+Tri puta u `M1` je moj `grep`/regex prijavio problem kojeg nema: `transition:clip-path` sadrži
+`clip-path` kao **ime svojstva**, a `[data-wipe]{clip-path` je podstring od
+`html.js-motion [data-wipe]{clip-path`. Selektor iza `@media(...){` je uz to lomio regex koji
+je isključivao `{`.
+**Pravilo:** kad provera prijavi defekt, **prvo proveri proveru**. Lažan negativ košta isto
+koliko i lažan pozitiv, a ovde je tri puta poslao u pogrešnom smeru.

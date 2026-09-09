@@ -6,6 +6,45 @@
 
 ---
 
+## M1 (STANDARD) — rečnik pokreta: `OTKRIVANJE` + `CRTA` · 2026-09-09
+
+**Code:** `396d28c` · **Fix:** `30f471d` · **Docs:** `e425557` · **Grana:** `m1-motion-vocabulary`
+**Manifest:** `batches/M1.md` — **prvi batch ovog projekta koji je prošao ceo `/plan → /execute →
+/close` ciklus.**
+
+**Changed files (6):** `app/globals.css` · `components/Motion.tsx` · `components/CinematicHome.tsx` ·
+`docs/MOTION.md` · `batches/M1.md` · `ROADMAP.md` *(+ `STATE.md`, `LESSONS.md`, ovaj `LOG.md` na close)*
+
+Dva primitiva — `[data-wipe]` (OTKRIVANJE, `clip-path`) i `[data-line]` (CRTA, `scaleX` na
+`::before`) — uz **jednu dokaznu primenu** na `values`.
+
+⚠️ **Odstupanje od `MOTION.md`, odobreno:** plan je tražio `M1` „bez ijedne primene". Njegov
+sopstveni ugovor merenja traži dokaz **polariteta** i **`reduce`**-a; batch bez primene ostavlja
+obe kapije prazne. Isti slab dokaz koji je `D4` razotkrio.
+
+⚠️ **Nezavisan dizajn pregled našao je defekt koji je prošao SVE kapije** i koji bih bez njega
+merge-ovao. Bazno `[data-wipe]{clip-path:inset(-.3em)}` stajalo je **van obe kapije**, pa je svaki
+takav element nosio containing block **trajno** — i bez JS-a, i pod `reduce`. Komentar je pritom
+tvrdio „fail-safe po konstrukciji". Popravljeno u `30f471d`; još šest manjih nalaza uz to
+(1px regresija, preuska carve-out maska, `+90ms` pečen u primitiv, srpski naziv promenljive u
+kodu protiv `RULES §12`). → `LESSONS` L15–L18.
+
+**VERIFICATION:** `quick` 0 · `typecheck` 0 · `test` 132/132 · `full` 0 ·
+`verify:nojs` PASS 14 ruta (`/` **6343 znakova, nepromenjeno** — pokret ne dodiruje serverski
+HTML) · `verify:claims` PASS 13 ruta · `test:rendered` 9/9 — **lokalno i protiv deploy-a**.
+U živom build-u potvrđeno: `clip-path` na `[data-wipe]` postoji **isključivo** iza
+`html.js-motion` unutar `no-preference`.
+
+✅ **`manual` PASS (Pavle)** — pogledao u pravom browseru, ne vidi grešku.
+
+⚠️ **Zamka `L1` uhvaćena uživo, četvrti put:** port je držao server iz `D4` batcha sa build-om od
+**pre** ovih izmena. Da PID nije proveren, merio bi se pogrešan build.
+
+**NEXT STEP:** `G1` (LEAN) — pretvoriti ograničenje „`data-wipe` samo na listne elemente" iz
+komentara u mašinsku kapiju. Pavlova odluka: zaseban batch, ne proširenje `M1`-a.
+
+---
+
 ## non-batch — WORKFLOW postavljen · 2026-09-09
 
 **Changed files:** `workflow/**` (nov) · `docs/STATUS.md` · `docs/STATUS-ARCHIVE.md` (nov)
