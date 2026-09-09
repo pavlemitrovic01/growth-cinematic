@@ -139,7 +139,7 @@ export default function CinematicHome() {
         <section data-reveal className="home-process home-section" aria-labelledby="process-heading">
           <div className="home-section-top"><span className="home-kicker">01 / HOW IT WORKS</span><span className="home-kicker">FROM FIRST CALL TO NEXT MILE</span></div>
           <div className="home-editorial">
-            <div><h2 id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
+            <div className="process-lede"><h2 id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
             <ol data-stagger className="home-steps">
               <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
               <li><span>02</span><div><h3>Have a real conversation.</h3><p>{CALLBACK_SENTENCE} We go through your priorities and qualifications.</p></div></li>

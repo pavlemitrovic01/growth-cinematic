@@ -684,6 +684,45 @@ main:focus{outline:none}
   .value-axes{grid-template-columns:1fr;gap:26px}
 }
 
+/* ── `process` — STICKY LEDE (D4, 2026-09-09) ─────────────────────────────────
+   Poslednja stavka `D1`. `process` je jedina sekcija koja OSTAJE editorial —
+   naslov levo, koraci desno — pa se ne menja oblik nego ponasanje: naslov stoji
+   dok cetiri koraka `01–04` prolaze pored njega.
+
+   ⚠️ MEHANIZAM NIJE NOV U OVOM PROJEKTU. `position:sticky` vec zivi na
+   `.card--cta` (`top:24px`) i na `.is-enhanced .journey-stage` (`top:0`). Nista
+   se ne uvozi i nista se ne dodaje u recnik pokreta — zato `D4` NE ceka `M1`.
+
+   ⚠️ RADI ZATO STO JE `.home-editorial` GRID. Kod grid stavke je containing block
+   `grid area`, koja se proteze celom visinom reda, a ne visina same stavke — pa
+   `align-items:start` (koji stavku drzi na sadrzaju) ne obara sticky nego mu bas
+   daje prostor da klizi. Bez grida bi trebao dodatni omotac.
+
+   ⚠️ POD `prefers-reduced-motion: reduce` STICKY NAMERNO OSTAJE.
+   Kill switch na ~:414 gasi `animation` i `transition`, ne `position` — dakle ovo
+   prezivljava, i to je TACAN ishod, ne propust u kapiji. `reduce` postoji zbog
+   vestibularnih tegoba, a sticky element se NE POMERA: stoji dok se stranica
+   krece. To je manje pokreta nego alternativa, ne vise. Da je efekat bio
+   paralaks — pomeranje RAZLICITOM brzinom — morao bi da se gasi; zato paralaks
+   i nije u planu.
+
+   ⚠️ ALI SE GASI NA NISKOM PROZORU, I TO JE STVARNA ZAMKA. Ako je lede visi od
+   vidnog polja, sticky bi mu prikovao vrh a dno — ukljucujuci link „See the whole
+   process ↗" — ostalo bi trajno van ekrana i NEDOHVATLJIVO. Ne dogadja se na
+   uobicajenom laptopu, ali se dogadja na uvecanom tekstu (200% zoom) i na niskom
+   prozoru. `max-height` prelom vraca normalan tok; nijedna kapija ovo ne meri. */
+.process-lede{position:sticky;top:40px}
+
+@media(max-width:900px){
+  /* Jedna kolona: lede stoji IZNAD koraka, pa bi sticky pojeo vrh ekrana bez ijedne
+     dobijene stvari. Na telefonu je to najskuplji prostor koji sajt ima. */
+  .process-lede{position:static}
+}
+@media(max-height:640px){
+  /* Vidi upozorenje gore: nizak prozor ili uvecan tekst — link mora ostati dohvatljiv. */
+  .process-lede{position:static}
+}
+
 /* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.
    `min-width` postoji da se „WE DON'T" i „WE DO" ne razidju, pa tekstualna
    kolona ostaje poravnata niz celu listu. */
