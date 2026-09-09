@@ -6,25 +6,31 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
-  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
-- **Sledeći:** `M2` — površine 3, 4 i 5 (sekcije, brojke, `PageShell` ritam).
-  ⚠️ Pre `M2` pročitati `LESSONS` **L15–L18** — sva četiri su iz `M1` i sva četiri opisuju
-  zamke koje nijedna kapija ne vidi.
-  ⚠️ **`M2` će oboriti `G1` census (6/4/3/3) čim doda pokret — to je namerno.** Broj se ispravlja
-  u **istom** batchu koji menja markup, nikad kao zaseban „fix testa".
-- **Poslednji završen:** **`G1`** (2026-09-09, `3d9b55a`) — ograničenje „`data-wipe` samo na
-  listne elemente" je sada **mašinska kapija** na svih 10 ruta, plus census pokreta na `/`.
-  ⚠️ **Kapija je dokazano pocrvenela** na tri namerna prekršaja pre nego što je priznata; taj
-  postupak je istim batchem upisan u **`RULES §6`** kao trajno pravilo.
-- **Pretposlednji:** **`M1`** (2026-09-09, `396d28c` + `30f471d`, `manual` PASS) — rečnik pokreta.
-  ⚠️ Nezavisan dizajn pregled našao je defekt koji je prošao **sve** mašinske kapije. Baš taj
-  presedan je razlog zašto `G1` traži crveni dokaz.
+- **Aktivan batch:** **NONE** — nema OPEN manifesta, stablo čisto.
+  ⚠️ **Ali grana `g2-gate-coverage` NIJE spojena ni pušena** (vidi `Git`).
+- **Sledeći:** `M2` — **tanak oblik**, potvrđen nezavisnim pregledom: `<h1 data-wipe>` u
+  `PageShell`-u + `data-stagger` na dve mreže u `/how-it-works`. Nula novog CSS-a.
+  ⚠️ **Pregled je oborio prvu verziju `M2` plana — dva blokera.** `[data-stagger]>*:nth-child(2)`
+  (0,2,0) gazi `[data-wipe]` (0,1,0), pa bi `--wipe-lead` tiho nestao; i `CRTA` na `.sub-hero`
+  pada tačno na Nav-ovu ivicu. Zato `.sub-hero` **ne** dobija ni `data-line` ni `data-stagger`.
+  ⚠️ Pre `M2` pročitati `LESSONS` **L15–L18**.
+- **Poslednji završen:** **`G2`** (2026-09-09, `d685f78`) — `G1/A` i `G1/B` sada mere **14 ruta**
+  umesto 10: `PAGE_PATHS` + `allPostSlugs()` + `/missing-page`. Spisak se **izvodi**, pa četvrti
+  članak neće tražiti izmenu kapije. Obuhvat se ispisuje pri svakom pokretanju.
+  ⚠️ **Dokazano pocrvenela na obe nove površine, zasebno** — petlja puca na prvom prekršaju, pa
+  bi zajedničko merenje sakrilo 404.
+- **Pretposlednji:** **`G1`** (2026-09-09, `3d9b55a`) — ograničenje „`data-wipe` samo na listne
+  elemente" pretvoreno u mašinsku kapiju; postupak „kapija mora pocrveneti" upisan u `RULES §6`.
+- Starije (`M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
-  (`git branch --no-merged master` prazno).
+- Grana istine **`master`**, izjednačena sa `origin/master`.
+- ⚠️ **`g2-gate-coverage` STOJI NESPOJENA I NEPUŠENA** — dva commita (`d685f78` + close).
+  `/close` ne pushuje; **release je zasebna Pavlova odluka** (`/close §6`).
+  ⚠️ **Zato `M2` još NE sme da krene** — na `master`-u kapija i dalje meri 10 ruta, a `M2` piše
+  na 13. Merge pre `M2`, ne posle.
+  ⚠️ Iz istog razloga **merenje protiv deploy-a nije pokrenuto**, ne prijavljeno kao PASS.
 - `G1` spojen fast-forward-om `ddba710..7e73585` i pušen 2026-09-09. **Deploy živ i izmeren.**
 - Grane `d1-pay-utility`, `d1-values-utility`, `d1-cinematic-guard-founder`, `d4-sticky-process`,
   `g1-wipe-placement-gate` su spojene fast-forward-om i ostavljene kao bookmark-ovi.

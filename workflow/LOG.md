@@ -6,6 +6,64 @@
 
 ---
 
+## G2 (LEAN) — kapija pokriva sve što `PageShell` renderuje · 2026-09-09
+
+**Code:** `d685f78` · **Grana:** `g2-gate-coverage` · **Manifest:** `batches/G2.md`
+
+**Changed files (1 + workflow):** `tests/rendered-html.test.mjs`
+*(+ `batches/G2.md`, `ROADMAP.md`, `STATE.md`, `LESSONS.md`, ovaj `LOG.md` na close)*
+
+`G1` je postavljen tako da `M2` ne može da prekrši `data-wipe` ograničenje. **Nezavisan pregled
+`M2` plana je izmerio da rupa stoji tačno tamo gde će `M2` pisati:**
+
+| | |
+|---|---|
+| `<PageShell>` poziva | **11** |
+| Renderovanih površina | **13** — 9 podstranica + `/404` + 3 članka |
+| `G1/A` i `G1/B` merili | **10** |
+| **Negejtovano** | **4** |
+
+`scripts/verify-nojs.mjs` je taj obuhvat imao od početka; `G1` je jedini ostao na užem spisku.
+`GATED_ROUTES` = `PAGE_PATHS` + `allPostSlugs()` + `/missing-page` — **izvodi se, ne prekucava**,
+pa četvrti članak neće tražiti izmenu kapije. Obuhvat se **ispisuje** (`mere 14 ruta`).
+
+⚠️ **`/missing-page` vraća 404 i to je namerno** — `app/not-found.tsx` renderuje `PageShell` kao
+i svaka druga stranica. Zapisano u komentaru da neko kasnije ne „popravi" spisak izbacivanjem 404.
+
+### ⚠️ Falsifikacija je otkrila grešku u sopstvenom postupku
+
+Prva verzija je ubacila **oba** prekršaja odjednom. Kapija je pocrvenela **samo na članku** —
+obe rute pokriva ista tvrdnja (`G1/A`), a `assert` prekida petlju na prvom pogotku:
+
+```
+✖ /truckers-lounge/new-cdl-graduate-what-training-provided-actually-means:
+  <article> nosi data-wipe, a nije listni tekstualni element
+```
+
+**`/404` nikad nije ni izmeren.** Da je tu stalo, prijavio bih obuhvat koji nisam dokazao — u
+batchu čija je cela svrha nedokazan obuhvat. Razdvojeno i dokazano zasebno:
+
+```
+✖ /missing-page: <div> nosi data-wipe, a nije listni tekstualni element
+```
+
+Posle `git checkout --` i rebuild-a: **13/13 zeleno**, `app/` diff prazan. → **`LESSONS` L19.**
+
+**VERIFICATION:** `quick` 0 · `full` 0 · `test:rendered` **13/13, 14 ruta** · `typecheck` 0
+(van LEAN zahteva) · `test` 132/132 (van LEAN zahteva). `meri se: http://localhost:3000` ispisano
+pri svakom merenju; port provereno slobodan pre svakog dizanja servera (`L1`).
+
+⚠️ **`ACCEPTANCE 2` (merenje protiv deploy-a) — `NIJE POKRENUTO`**, ne PASS. Razlog: `/close §6`
+ne pushuje, release je zasebna Pavlova odluka.
+
+**SCOPE_DRIFT:** none — podskup EXPECTED-FILES. `LESSONS.md` je bio **uslovan** i **jeste**
+aktiviran: falsifikacija je otkrila novu grešku u postupku (L19), ne u kodu.
+
+**NEXT STEP:** merge + push (Pavlova odluka). ⚠️ **`M2` ne sme pre toga** — na `master`-u kapija
+i dalje meri 10 ruta, a `M2` piše na 13.
+
+---
+
 ## non-batch (release) — `G1` spojen i pušen · 2026-09-09
 
 Pavlova release odluka. `master` `ddba710..7e73585` **fast-forward**, push na

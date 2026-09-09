@@ -124,3 +124,15 @@ Tri puta u `M1` je moj `grep`/regex prijavio problem kojeg nema: `transition:cli
 je isključivao `{`.
 **Pravilo:** kad provera prijavi defekt, **prvo proveri proveru**. Lažan negativ košta isto
 koliko i lažan pozitiv, a ovde je tri puta poslao u pogrešnom smeru.
+
+## L19 — Više prekršaja u ISTOM testu se ne vidi; petlja puca na prvom.
+`G2` je falsifikovan sa dva prekršaja odjednom — jedan na članku, jedan na `/404`. Kapija je
+pocrvenela **samo na članku**: obe rute proverava ista tvrdnja (`G1/A`), a `assert` prekida
+petlju na prvom pogotku. `/404` nikad nije ni izmeren.
+⚠️ **Zeleno na `/404` u tom trenutku ne bi značilo „pokriveno" nego „nije stigao na red".** Da
+sam stao tu, prijavio bih obuhvat koji nisam dokazao — a `G2` je celom svojom svrhom baš batch
+o nedokazanom obuhvatu.
+`G1` je izgledao kao protivprimer (tri prekršaja, tri crvena) samo zato što su tamo bili u
+**tri različita** `test()` bloka; `node:test` ih izoluje.
+**Pravilo:** falsifikuj **jedan prekršaj po pokretanju** kad više njih pada pod istu tvrdnju.
+Dokaz obuhvata je po ruti, ne po batchu. Vidi [[verify-gates-before-commit]].
