@@ -13,13 +13,19 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M1` | Rečnik: `OTKRIVANJE` (maska s leva) + `CRTA` (`scaleX`) kao primitivi, **bez ijedne primene** | STANDARD | — | **SLEDEĆI** |
+| `M1` | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi, **uz jednu dokaznu primenu** na `values` | STANDARD | — | **OPEN** — čeka `manual` |
+| `G1` | Kapija: `data-wipe` nikad na `<section>`/`<main>`/`<body>`; broj motion atributa na `/` | LEAN | `M1` | OPEN |
 | `M2` | Sekcije, brojke i `PageShell` ritam — pet podstranica nema nijedan reveal | STANDARD | `M1` | OPEN |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
 | `M6` | Pritisak (`MobileBar` nema `:active`) i kartice (hover koji nije `translateY`) | LEAN | `M1` | OPEN |
 | `D2` | Outline tipografija svedena na 2–3 mesta | LEAN | — | OPEN |
+
+⚠️ **`G1` postoji zato što ograničenje danas živi samo kao komentar.** `data-wipe` pravi
+containing block za `position:fixed` i `position:absolute` potomke; pravilo „samo na listne
+elemente" nijedna kapija ne sprovodi. `M2` je prvi batch koji bi ga mogao prekršiti.
+**Pavlova odluka 2026-09-09: zaseban LEAN batch, ne proširenje `M1`-a.**
 
 ⚠️ **Plan pokreta (`docs/MOTION.md`) je stariji od koda.** Površine 3 i 4 opisuju „osam
 `data-reveal` fade-up-ova" i vezuju pokret za brojke. Naslovna sada ima **devet** sekcija,
