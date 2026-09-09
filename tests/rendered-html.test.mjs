@@ -3,6 +3,7 @@ import test from 'node:test';
 // ⚠️ UVOZ, NE PREKUCAN SPISAK. `lib/routes.js` je jedini izvor istine za staticke rute — isti
 // koji `scripts/verify-nojs.mjs:24` vec uvozi. Prekucan spisak bi BROJAO umesto da POREDI.
 import { PAGE_PATHS } from '../lib/routes.js';
+import { allPostSlugs } from '../lib/posts.js';
 
 /**
  * ⚠️ PREPISAN TRANSPORT, ISTE TVRDNJE. Do prelaska na Vercel je ovaj fajl uvozio
@@ -135,6 +136,31 @@ const descendantsOf = (toks, i) => {
  *  DECISION POINT — ako `M2` legitimno trazi nov tag, dopisuje se u istom batchu. */
 const WIPE_ALLOWED = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'span', 'li', 'dt', 'dd', 'strong', 'em', 'a']);
 
+/** Rute nad kojima rade tvrdnje A i B (G2, 2026-09-09).
+ *
+ * ⚠️ ZASTO SE OVAJ SPISAK PROSIRIO SA 10 NA 14. `G1` je merio samo `PAGE_PATHS`. Nezavisan
+ * pregled `M2` plana je izmerio da `<PageShell>` ima 11 poziva i renderuje 13 povrsina:
+ * devet podstranica, `/404` (`app/not-found.tsx`) i tri clanka (`[slug]/page.tsx`). Cetiri od
+ * njih nijedna kapija nije gledala — a `M2` menja bas `PageShell`, dakle sve njih odjednom.
+ * `scripts/verify-nojs.mjs` je taj obuhvat imao od pocetka; `G1` je jedini ostao na uzem spisku.
+ *
+ * ⚠️ IZVODI SE, NE PREKUCAVA. Cetvrti clanak ne trazi izmenu ove kapije. Isti razlog koji
+ * `lib/routes.js` navodi u svom zaglavlju: provera koja BROJI ne vidi ono cega nema.
+ *
+ * ⚠️ `/missing-page` VRACA 404, I TO JE NAMERNO. `app/not-found.tsx` renderuje `PageShell` kao
+ * i svaka druga stranica, pa isti motion atributi stizu i tamo. Tvrdnje A i B rade nad TELOM
+ * odgovora, status im je nebitan. Ko ovo kasnije bude „popravljao" izbacivanjem 404 — vraca
+ * rupu koju je `G2` zatvorio. */
+const GATED_ROUTES = [
+  ...PAGE_PATHS,
+  ...allPostSlugs().map((slug) => '/truckers-lounge/' + slug),
+  '/missing-page',
+];
+
+// Obuhvat se ISPISUJE, iz istog razloga iz kog se ispisuje i meta merenja: da „PASS" nikad ne
+// znaci „merio sam manje nego sto mislis".
+console.log(`G1/A i G1/B mere ${GATED_ROUTES.length} ruta`);
+
 test('server odgovara pre nego sto ostali testovi krenu', async () => {
   try {
     await get('/');
@@ -260,10 +286,11 @@ test('G1 fixture — parser vidi tacno ono sto tvrdi da vidi', () => {
   assert.ok(!descendantsOf(t2, j).some((t) => hasAttr(t.blob, 'data-line')), 'B ne sme pasti na ispravnom rasporedu');
 });
 
-/** A — `data-wipe` iskljucivo na listnim tekstualnim elementima, na SVIM statickim rutama.
- *  Kapija koja gleda samo `/` ne bi videla `M2` prekrsaj, a to joj je jedina svrha. */
+/** A — `data-wipe` iskljucivo na listnim tekstualnim elementima, na SVIM rutama iz
+ *  `GATED_ROUTES` (14 od `G2`). Kapija koja gleda samo `/` ne bi videla `M2` prekrsaj, a to
+ *  joj je jedina svrha. */
 test('G1/A — data-wipe nikad na elementu koji moze da sadrzi fixed potomka', async () => {
-  for (const path of PAGE_PATHS) {
+  for (const path of GATED_ROUTES) {
     const html = await (await get(path)).text();
     for (const t of openTagsWith(html, 'data-wipe')) {
       assert.ok(
@@ -282,7 +309,7 @@ test('G1/A — data-wipe nikad na elementu koji moze da sadrzi fixed potomka', a
  *  ⚠️ Preskace tagove van allowliste: njih je A vec prijavio, a void element bez close-taga
  *  bi ovde dao lazan pozitiv (dubina se nikad ne vrati na nulu). */
 test('G1/B — data-line nikad unutar data-wipe elementa', async () => {
-  for (const path of PAGE_PATHS) {
+  for (const path of GATED_ROUTES) {
     const html = await (await get(path)).text();
     const toks = tokenize(html);
     for (let i = 0; i < toks.length; i += 1) {
