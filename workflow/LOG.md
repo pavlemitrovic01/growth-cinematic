@@ -53,14 +53,33 @@ Posle `git checkout --` i rebuild-a: **13/13 zeleno**, `app/` diff prazan. → *
 (van LEAN zahteva) · `test` 132/132 (van LEAN zahteva). `meri se: http://localhost:3000` ispisano
 pri svakom merenju; port provereno slobodan pre svakog dizanja servera (`L1`).
 
-⚠️ **`ACCEPTANCE 2` (merenje protiv deploy-a) — `NIJE POKRENUTO`**, ne PASS. Razlog: `/close §6`
-ne pushuje, release je zasebna Pavlova odluka.
+✅ **`ACCEPTANCE 2` PASS — izmereno protiv deploy-a posle push-a** (Pavlova release odluka,
+2026-09-09). Fast-forward `1ff169b..930c33d`, pa mereno: `test:rendered` **13/13, 14 ruta** ·
+`verify:nojs` PASS 14 ruta · `verify:claims` PASS 13 ruta.
+`meri se: https://growth-cinematic.vercel.app` ispisano pri svakom merenju. Deploy
+`fra1::sw9mp-1788969665750-ebed308755a4`, `noindex` drži.
 
 **SCOPE_DRIFT:** none — podskup EXPECTED-FILES. `LESSONS.md` je bio **uslovan** i **jeste**
 aktiviran: falsifikacija je otkrila novu grešku u postupku (L19), ne u kodu.
 
-**NEXT STEP:** merge + push (Pavlova odluka). ⚠️ **`M2` ne sme pre toga** — na `master`-u kapija
-i dalje meri 10 ruta, a `M2` piše na 13.
+**NEXT STEP:** `M2` — sada slobodan. Kapija na `master`-u i u deploy-u meri svih 14 ruta, pa
+`M2` piše na površinu koja je pokrivena. To je bio ceo razlog da `G2` ide prvi.
+
+---
+
+## non-batch (release) — `G2` spojen i pušen · 2026-09-09
+
+Pavlova release odluka. `master` `1ff169b..930c33d` **fast-forward**, push, Vercel deploy
+automatski.
+
+**Izmereno protiv deploy-a:** `test:rendered` **13/13 na 14 ruta** · `verify:nojs` PASS 14 ruta ·
+`verify:claims` PASS 13 ruta. `meri se: https://growth-cinematic.vercel.app` ispisano svaki put.
+Time je zatvoren `ACCEPTANCE 2` iz `batches/G2.md`.
+
+⚠️ Kao i kod `G1`: `G2` nije dirnuo nijedan runtime fajl, pa merenje ne dokazuje „nov deploy",
+nego da kapija drži nad **stvarno serviranim** HTML-om na svih 14 ruta.
+
+Ne dira runtime kod (`RULES §10`).
 
 ---
 

@@ -6,8 +6,8 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, stablo čisto.
-  ⚠️ **Ali grana `g2-gate-coverage` NIJE spojena ni pušena** (vidi `Git`).
+- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
+  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
 - **Sledeći:** `M2` — **tanak oblik**, potvrđen nezavisnim pregledom: `<h1 data-wipe>` u
   `PageShell`-u + `data-stagger` na dve mreže u `/how-it-works`. Nula novog CSS-a.
   ⚠️ **Pregled je oborio prvu verziju `M2` plana — dva blokera.** `[data-stagger]>*:nth-child(2)`
@@ -25,15 +25,13 @@
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`.
-- ⚠️ **`g2-gate-coverage` STOJI NESPOJENA I NEPUŠENA** — dva commita (`d685f78` + close).
-  `/close` ne pushuje; **release je zasebna Pavlova odluka** (`/close §6`).
-  ⚠️ **Zato `M2` još NE sme da krene** — na `master`-u kapija i dalje meri 10 ruta, a `M2` piše
-  na 13. Merge pre `M2`, ne posle.
-  ⚠️ Iz istog razloga **merenje protiv deploy-a nije pokrenuto**, ne prijavljeno kao PASS.
-- `G1` spojen fast-forward-om `ddba710..7e73585` i pušen 2026-09-09. **Deploy živ i izmeren.**
-- Grane `d1-pay-utility`, `d1-values-utility`, `d1-cinematic-guard-founder`, `d4-sticky-process`,
-  `g1-wipe-placement-gate` su spojene fast-forward-om i ostavljene kao bookmark-ovi.
+- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
+  (`git branch --no-merged master` prazno).
+- `G1` (`ddba710..7e73585`) i `G2` (`1ff169b..930c33d`) spojeni fast-forward-om i pušeni
+  2026-09-09. **Deploy živ i izmeren protiv oba.**
+- Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
+  `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
+  `g2-gate-coverage`.
 
 ## Žive prepreke
 
