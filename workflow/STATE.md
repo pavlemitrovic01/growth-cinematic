@@ -6,9 +6,8 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — `M2` zatvoren, nema OPEN manifesta.
-  ⚠️ **ALI grana nije spojena** — vidi `Git` niže. „Nema aktivnog batcha" **nije** isto što i
-  „ništa ne stoji nespojeno" (`LESSONS` L13).
+- **Aktivan batch:** **NONE** — `M2` zatvoren, spojen i pušen; nema OPEN manifesta.
+  Provereno `git branch --no-merged master` (prazno), ne samo `git status` (`LESSONS` L13).
 - **Sledeći:** `M2b` — naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja.
   ⚠️ **Dva ograničenja koja `M2` predaje `M2b`-u:** wipe **nikad** kao direktno dete
   `data-stagger` kontejnera (`nth-child` 0,2,0 gazi `[data-wipe]` 0,1,0 i `--wipe-lead` tiho
@@ -21,23 +20,24 @@
   ⚠️ **Izmereno: `G1/A` je do danas prolazila prazna na 13 od 14 ruta** — `data-wipe` je
   postojao samo na `/`. Sada je 16 elemenata na 14 ruta, praznih ruta **nula**. Obuhvat rute
   nije obuhvat tvrdnje.
-  ⚠️ **ACCEPTANCE 2 stoji otvoren** — merenje protiv **deploy-a** traži push.
+  ✅ **ACCEPTANCE 2 zatvoren izmereno** protiv deploy-a (`a362c20`).
+  ⚠️ **Pregled posle `/close`-a našao je netačnu tvrdnju u komentaru** (`error.tsx` NE koristi
+  `PageShell`); ispravljeno u `a362c20`, upisano kao `LESSONS` **L20** i **L21**.
 - **Pretposlednji:** **`G2`** (2026-09-09, `d685f78`) — `G1/A` i `G1/B` mere **14 ruta** umesto
   10, spisak se **izvodi** iz `PAGE_PATHS` + `allPostSlugs()` + `/missing-page`.
 - Starije (`G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
 
 ## Git
 
-- ⚠️ **`m2-pageshell-ritam` stoji NESPOJENA i NEPUŠENA** — dva commita
-  (`1a3bca5` implementacija, close commit). `master` je i dalje na `bb8c407`.
-  **Release je zasebna Pavlova odluka**; dok ne padne, `M2` nije na deploy-u i
-  `ACCEPTANCE 2` iz `batches/M2.md` ostaje `NIJE POKRENUTO`.
-- Grana istine **`master`**, izjednačena sa `origin/master`.
+- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
+  (`git branch --no-merged master` prazno).
+- `M2` (`bb8c407..a362c20`) spojen fast-forward-om i pušen 2026-09-09, uz release pregled koji je
+  našao i ispravio netačnu tvrdnju u komentaru. **Deploy živ i izmeren protiv njega.**
 - `G1` (`ddba710..7e73585`) i `G2` (`1ff169b..930c33d`) spojeni fast-forward-om i pušeni
   2026-09-09. **Deploy živ i izmeren protiv oba.**
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
-  `g2-gate-coverage`.
+  `g2-gate-coverage`, `m2-pageshell-ritam`.
 
 ## Žive prepreke
 

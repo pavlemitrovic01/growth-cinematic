@@ -6,6 +6,50 @@
 
 ---
 
+## non-batch(release) — `M2` spojen i pušen; pregled našao netačnu tvrdnju · 2026-09-09
+
+**Code:** `a362c20` · `master` `bb8c407..a362c20` fast-forward, push, Vercel deploy automatski.
+Pavlova odluka: *„pregledaj detaljno šta je odrađeno, ako nađeš rupe popravi pa spoji i pushuj."*
+
+### Pregled posle `/close`-a — jedna stvarna rupa
+
+`components/PageShell.tsx` je u komentaru tvrdio da shell renderuje i `app/error.tsx`.
+**Ne renderuje** — `error.tsx` namerno ne koristi shell. Izvor greške: `grep -rl "PageShell" app/`
+uhvatio je rečenicu *„⚠️ NAMERNO BEZ `PageShell`-a"* **iz komentara**.
+
+⚠️ Tvrdnja je prošla `/plan`, `/execute` i `/close` i ušla u `1a3bca5` — **iako je isti batch
+izmerio census koji je demantuje** (13 × 1 + `/` × 3 = 16, bez `error.tsx`). Dokaz je postojao i
+nije pročitan kao dokaz. Ispravljeno u `a362c20`; izmena je isključivo unutar `{/* */}` bloka.
+
+Provereno i **nije** rupa: `docs/STATUS.md` — od postavljanja workflow-a (`89a2235`) nijedan close
+ga ne dira, pa ni `M2`. Tvrdnja „pre `M2` 13 praznih ruta" — potvrđena na `bb8c407`, nijedan
+`data-wipe` u markupu van `CinematicHome`.
+
+### ACCEPTANCE 2 zatvoren — izmereno protiv deploy-a
+
+```
+meri se: https://growth-cinematic.vercel.app
+verify:nojs      PASS 14 ruta
+verify:claims    PASS 13 ruta
+test:rendered    13/13, `mere 14 ruta`
+x-vercel-id      fra1::b9hgg-1788974128458-1b4a34dc4c7e
+x-robots-tag     noindex, nofollow  (drži)
+census           16 data-wipe na 14 ruta, praznih ruta 0
+```
+
+Novi build potvrđen **pre** merenja diskriminatorom koji stari nema — `<h1 data-wipe>` na
+`/about`. Bez toga bi merenje moglo proći na starom deploy-u i prijaviti PASS ni na čemu.
+
+⚠️ **Za razliku od `G1` i `G2`, `M2` JESTE dirnuo runtime kod**, pa ovo merenje dokazuje i nov
+deploy, ne samo da kapija drži.
+
+**LESSONS +2:** `L20` (zelena kapija ume da bude zelena jer nema šta da pregleda),
+`L21` (`grep -l` po izvoru broji i komentare).
+
+**NEXT:** `M2b` — naslovna na nov rečnik; namerno će oboriti `G1/C` census.
+
+---
+
 ## M2 (STANDARD) — `PageShell` ritam: rečnik pokreta stiže na podstranice · 2026-09-09
 
 **Code:** `1a3bca5` · **Grana:** `m2-pageshell-ritam` · **Manifest:** `batches/M2.md`
