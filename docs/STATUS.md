@@ -609,9 +609,27 @@ Sve što zavisi od vidljivog taba traži pravi browser — vidi nalaz o `js-moti
 
 ### Blokirano na Pavlu ili advokatu — ne može se raditi bez odgovora
 
-- **Rok odgovora za carrier-a.** Vozač ga dobija na četiri mesta (15–20 min, uz oba C12
-  hedža), carrier nijedan. MAIN-ovo „within 24 hours" je tvrdnja bez reda u registru i ovaj
-  projekat ju je svesno izbacio. **Koji rok se sme obećati?**
+- **Rok odgovora za carrier-a — ⚠️ ODLUČEN U NAČELU 2026-09-09, ALI NIJE ZA IMPLEMENTACIJU.**
+
+  Pavlova odluka: **carrier dobija isti rok kao vozač — 15–20 minuta.** Time pada pitanje
+  „koji rok se sme obećati"; MAIN-ovo „within 24 hours" ostaje izbačeno.
+
+  ⚠️ **Ali Pavle je izričito rekao da se formulacija NE piše usput:** *„To moramo da osmislimo
+  perfektno, pretražićemo dostupne podatke sa interneta i na ostalim recruiting sajtovima."*
+  **Vodi se kao `/terms`** — zaseban posao sa svojim istraživanjem i svojim izvorima, ne
+  stavka koja se zatvori u prolazu. Do tada carrier i dalje ne dobija rok nigde, i to je
+  svesno stanje, ne propust.
+
+  ⚠️ **Dve stvari koje onaj ko to bude pisao mora da zna unapred:**
+
+  1. **`verify:claims` će to presresti automatski, i to je dobro.** Pravilo `C12` traži oba
+     hedža — „usually" **i** „staffed/business hours" — **u istoj rečenici** sa samom
+     tvrdnjom, ne bilo gde na stranici (`local` doseg, pooštren 2026-09-06). Svaka carrier
+     formulacija sa „15–20 minutes" mora nositi oba, ili build pada.
+  2. **`C12` je red o VOZAČU.** Registar tu tvrdnju vezuje za regruterov poziv vozaču; carrier
+     upit ide kroz drugu formu i drugi red obaveštenja. Proširenje na carriera je **nova
+     poslovna tvrdnja**, pa traži ili dopunu `C12` ili sopstveni red — isto kao što je L1
+     dopunio `C5` umesto da se oslonio na sličnost.
 - **`/terms`:** governing law / jurisdikcija, arbitraža, intelektualna svojina, uslovi
   prekida. Sve četiri traže kvalifikovanog američkog advokata.
 - **C52 (OPEN):** zabranjena površina je uklonjena sa `/how-it-works` 2026-09-05, ali red
