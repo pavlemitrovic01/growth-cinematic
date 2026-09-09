@@ -145,7 +145,9 @@ export default function HowItWorks() {
               <span className="sub-num">02</span>
               <h2>What to expect from us</h2>
             </div>
-            <div className="sub-2up">
+            {/* ⚠️ `data-stagger` dodat u `M2`. Atribut stoji na OMOTACU — tekst unutar kartica
+                se ne dira, jer je donja kartica ziva povrsina reda `C52`, koji je jos OPEN. */}
+            <div className="sub-2up" data-stagger>
               {/*
                 ⚠️ CLAIMS C52 JE **OPEN** I OVA KARTICA JE BILA NJEGOVA ZIVA POVRSINA.
                 Do 2026-09-05 je spisak glasio: „A valid CDL-A · documents showing you're
@@ -228,7 +230,10 @@ export default function HowItWorks() {
             <p className="kbyg-lead">
               Three trade-offs nobody explains until after you&apos;ve signed.
             </p>
-            <div className="sub-3up">
+            {/* ⚠️ `data-stagger` dodat u `M2`, isti raspored koji `/about`, `/contact` i
+                `/for-carriers` vec nose na svom `.sub-3up`. Deca su `.card` — kombinacija je
+                dokazana u produkciji od Faze 2, pa nema novog CSS-a. */}
+            <div className="sub-3up" data-stagger>
               {TRADEOFFS.map((t) => (
                 <article className="card" key={t.title}>
                   <h3>{t.title}</h3>
