@@ -6,6 +6,76 @@
 
 ---
 
+## M2b (STANDARD) — naslovna na nov rečnik: `CRTA` uvodi, naslov stiže otkrivanjem · 2026-09-09
+
+**Code:** `d125e5f` · **Grana:** `m2b-naslovna-recnik` · **Manifest:** `batches/M2b.md`
+
+**Changed files (3 + workflow):** `components/CinematicHome.tsx`, `app/globals.css`,
+`tests/rendered-html.test.mjs`
+*(+ `batches/M2b.md`, `LESSONS.md`, `ROADMAP.md`, `STATE.md`, ovaj `LOG.md` na close)*
+
+Šest sekcija (`pay`, `process`, `guard`, `founder`, `faq`, `close`) prelazi sa `data-reveal` na
+par `[data-line]` + `[data-wipe]`. **`data-reveal` posle ovoga nema nijednog korisnika na celom
+sajtu** — primitiv ostaje u `globals.css` i u `Motion.tsx:76`, mrtav ali živ; brisanje je zasebna
+odluka.
+
+### Gate dokaz
+
+| Gate | Exit | Metrika |
+|---|---|---|
+| `quick` · `typecheck` · `full` | 0 | — |
+| `test` | 0 | 132/132 u 9 fajlova |
+| `verify` | 0 | `meri se: http://localhost:3000` · nojs 14 · claims 13 |
+| `rendered` | 0 | `mere 14 ruta` · 13/13 · census `0/4/9/9` |
+| `manual` | **PASS** | Pavle, pravi browser |
+
+⚠️ **ACCEPTANCE 4 stoji kao `NIJE POKRENUTO`** — merenje protiv deploy-a traži push. Zatvara ga
+release commit, kao kod `M2`.
+
+### Census falsifikovan PO ATRIBUTU, ne odjednom
+
+`ROADMAP` je unapred rekao da će `M2b` oboriti census i da se broj menja u istom batchu. Ali sva
+četiri reda padaju pod **istu** tvrdnju, a `assert` prekida petlju na prvom (`LESSONS` L19) — pa
+bi jedno pokretanje sa tri promene dokazalo samo prvu:
+
+```
+pokretanje 1   data-reveal   0 !== 6   CRVENO
+pokretanje 2   data-wipe     9 !== 3   CRVENO
+pokretanje 3   data-line     9 !== 3   CRVENO
+pokretanje 4   0/4/9/9                 ZELENO
+```
+
+`data-stagger` ostaje 4 i nikad ne pocrveni — tačno, nije dirnut.
+
+### CSS: selektor skraćen, ne obrisan (L4)
+
+`.home-section{border-top}` → `.home-section:not([data-line]){border-top}`. `home-values` nosi
+`.home-section` ali je na rečnik prešla drugačije (kroz `<li data-line>`) i `data-line` na sekciji
+nema — brisanje bi tiho pojelo **njen** razdelnik. `:not([data-line])` se održava sam.
+
+### Izmereno computed stilom, ne pogledom
+
+| | podloga | linija | `border-top` |
+|---|---|---|---|
+| `pay` · `process` · `faq` | svetla | `rgb(22,32,25)` | `0px` |
+| `guard` · `founder` · `close` | `rgb(8,17,13)` | `rgb(241,231,213)` | `0px` |
+| `values` (bez `data-line`) | — | — | **`1px rgba(22,32,25,.2)` ostao** |
+
+`currentColor` sam okreće polaritet, pa L8 zamka ne puca **po konstrukciji**. Raspored po tagu:
+`data-line` = `section` 6 + `li` 3; `data-wipe` = `h2` 6 + `h3` 3.
+
+⚠️ **Nalaz koji nijedna kapija ne vidi, predat Pavlu pre odluke:** primitiv ide na `opacity:.4`,
+stara ivica je bila `.2` — linija je na svetlim sekcijama **dvostruko jača**. Prihvaćeno kako
+jeste. **`LESSONS` L22.**
+
+**SCOPE_DRIFT:** none — 5 od 8 EXPECTED-FILES u implementaciji, ostalo u close commitu.
+`LESSONS.md` je ovog puta **bio** u spisku; `M2` ga je izostavio i pouka je morala da čeka
+zaseban commit.
+
+**NEXT:** release odluka (zatvara ACCEPTANCE 4), pa `M2c` — brojke stižu pre sadržaja.
+
+---
+
 ## non-batch(release) — `M2` spojen i pušen; pregled našao netačnu tvrdnju · 2026-09-09
 
 **Code:** `a362c20` · `master` `bb8c407..a362c20` fast-forward, push, Vercel deploy automatski.

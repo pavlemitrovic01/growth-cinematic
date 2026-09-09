@@ -13,7 +13,7 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M2b` | Naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja | STANDARD | `M2` | **SLEDEĆI** |
+| `M2c` | Brojke stižu pre sadržaja — kickeri `01 / …` pre naslova (`MOTION.md` površina 4) | STANDARD | `M2b` | **SLEDEĆI** |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
@@ -30,9 +30,14 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 dete stagger kontejnera, inače `--wipe-lead` tiho nestaje. I `CRTA` na `.sub-hero` pada tačno na
 Nav-ovu ivicu. Detalji u `batches/M2.md`.
 
-⚠️ **`M2b` će oboriti census čim doda pokret na `/` — to je namerno.** Broj se ispravlja **u
-istom batchu koji menja markup**, nikad kao zaseban „fix testa". Ako neki batch traži tag van
-allowliste, pad kapije je **decision point**, ne prepreka.
+⚠️ **`M2c` traži novo CSS pravilo, i zato je izdvojen iz `M2b`** (Pavlova odluka 2026-09-09).
+`--wipe-lead` se **nasleđuje** od `[data-line]`, pa kicker i `<h2>` u istoj sekciji dobijaju
+**isto** kašnjenje; razdvajanje traži novu promenljivu — u zoni specifičnosti koja je već jednom
+oborila `M2` plan.
+
+⚠️ **Census se menja samo u batchu koji menja markup**, nikad kao zaseban „fix testa". `M2b` ga je
+oborio namerno i falsifikovao **po atributu** (L19). Ako neki batch traži tag van allowliste, pad
+kapije je **decision point**, ne prepreka.
 
 ⚠️ **Plan pokreta (`docs/MOTION.md`) je stariji od koda.** Površine 3 i 4 opisuju „osam
 `data-reveal` fade-up-ova" i vezuju pokret za brojke. Naslovna sada ima **devet** sekcija,
@@ -71,6 +76,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `M2b` | **Naslovna na nov rečnik** — šest sekcija sa `data-reveal` na `CRTA`+`OTKRIVANJE`; census `6/4/3/3` → `0/4/9/9`, falsifikovan po atributu | 2026-09-09 |
 | `M2` | **`PageShell` ritam** — `<h1 data-wipe>` na svih 14 ruta + stagger na dve mreže u `/how-it-works`; tri atributa, nula CSS-a | 2026-09-09 |
 | `G2` | **Kapija pokriva sve što `PageShell` renderuje** — obuhvat 10 → 14 ruta, izveden iz `PAGE_PATHS` + `allPostSlugs()` | 2026-09-09 |
 | `G1` | **Kapija za `data-wipe` placement** + census pokreta na `/` — dokazano pocrvenela pre priznanja | 2026-09-09 |

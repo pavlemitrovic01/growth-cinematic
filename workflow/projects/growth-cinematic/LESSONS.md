@@ -158,3 +158,17 @@ Dokaz je postojao i nije bio pročitan kao dokaz.
 **Pravilo:** spisak fajlova koji nešto „koriste" izvodi se iz **poziva** (`grep -l '<PageShell'`),
 nikad iz pomena imena. Ista greška je razlog zašto `G1` meri renderovan HTML. Vidi L18.
 
+## L22 — Zamena statičnog stila primitivom donosi i primitivove VREDNOSTI, ne samo njegovo ponašanje.
+`M2b` je na šest sekcija zamenio `border-top:1px solid rgba(22,32,25,.2)` primitivom `CRTA`, koji
+crta `background:currentColor` na `opacity:.4`. Ponašanje je bilo cilj — linija se iscrtava umesto
+da stoji. **Ali je usput udvostručena i težina linije** na svetlim sekcijama: `.2` → `.4`.
+⚠️ **Nijedna kapija to ne vidi.** Census broji atribute, `verify:nojs` gleda inline stilove,
+`rendered` meri raspored. Ton naslovne se promenio a sve je ostalo zeleno — ista slepa mrlja koju
+L8 opisuje za kontrast.
+⚠️ Dobra vest je da je polaritet ovde bio ispravan **po konstrukciji**: `currentColor` na
+`--forest` podlozi sam daje svetlu liniju, pa tamna-na-tamnom nije bila moguća. Izmereno computed
+stilom, ne pogledom: `rgb(241,231,213)` na `rgb(8,17,13)`.
+**Pravilo:** kad primitiv menja postojeći statični stil, **izmeri obe vrednosti i stavi razliku
+pred Pavla pre `manual`-a**. „Isti gest" ne znači „ista težina", a razliku koju nijedna kapija ne
+meri mora neko da vidi namerno. Vidi L8, L4.
+

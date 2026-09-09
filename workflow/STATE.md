@@ -6,31 +6,32 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — `M2` zatvoren, spojen i pušen; nema OPEN manifesta.
-  Provereno `git branch --no-merged master` (prazno), ne samo `git status` (`LESSONS` L13).
-- **Sledeći:** `M2b` — naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja.
-  ⚠️ **Dva ograničenja koja `M2` predaje `M2b`-u:** wipe **nikad** kao direktno dete
-  `data-stagger` kontejnera (`nth-child` 0,2,0 gazi `[data-wipe]` 0,1,0 i `--wipe-lead` tiho
-  nestaje), i `CRTA` ne ide na `.sub-hero` — pada na Nav-ovu ivicu.
-  ⚠️ **`M2b` će namerno oboriti `G1/C` census** (`6/4/3/3`); broj se ispravlja u istom batchu
-  koji menja markup, nikad zasebno.
-- **Poslednji završen:** **`M2`** (2026-09-09, `1a3bca5`) — `PageShell` dobio `<h1 data-wipe>`,
-  `/how-it-works` `data-stagger` na `.sub-2up` i `.sub-3up`. Tri atributa, dva fajla, **nula
-  CSS-a**. `manual` PASS (Pavle, pravi browser).
-  ⚠️ **Izmereno: `G1/A` je do danas prolazila prazna na 13 od 14 ruta** — `data-wipe` je
-  postojao samo na `/`. Sada je 16 elemenata na 14 ruta, praznih ruta **nula**. Obuhvat rute
-  nije obuhvat tvrdnje.
-  ✅ **ACCEPTANCE 2 zatvoren izmereno** protiv deploy-a (`a362c20`).
-  ⚠️ **Pregled posle `/close`-a našao je netačnu tvrdnju u komentaru** (`error.tsx` NE koristi
-  `PageShell`); ispravljeno u `a362c20`, upisano kao `LESSONS` **L20** i **L21**.
-- **Pretposlednji:** **`G2`** (2026-09-09, `d685f78`) — `G1/A` i `G1/B` mere **14 ruta** umesto
-  10, spisak se **izvodi** iz `PAGE_PATHS` + `allPostSlugs()` + `/missing-page`.
-- Starije (`G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
+- **Aktivan batch:** **NONE** — `M2b` zatvoren, nema OPEN manifesta.
+  ⚠️ **ALI grana nije spojena** — vidi `Git` niže (`LESSONS` L13).
+- **Sledeći:** `M2c` — „brojke stižu pre sadržaja" (`MOTION.md` površina 4): kickeri
+  `01 / HOW IT WORKS` stižu pre naslova. ⚠️ **Traži novo CSS pravilo** — `--wipe-lead` se
+  **nasleđuje** od `[data-line]`, pa kicker i `<h2>` u istoj sekciji sada dobijaju **isto**
+  kašnjenje; razdvajanje traži novu promenljivu, i to u zoni specifičnosti koja je oborila prvu
+  verziju `M2` plana. Izdvojen iz `M2b` Pavlovom odlukom 2026-09-09.
+- **Poslednji završen:** **`M2b`** (2026-09-09, `d125e5f`) — šest sekcija naslovne sa
+  `data-reveal` na `CRTA` + `OTKRIVANJE`. Census `6/4/3/3` → **`0/4/9/9`**, falsifikovan **po
+  atributu** (tri crvena pokretanja, L19). `manual` PASS.
+  ⚠️ **`data-reveal` više nema nijednog korisnika na celom sajtu.** Primitiv ostaje u
+  `globals.css` i u `Motion.tsx:76`. Brisanje je zasebna odluka, nije doneta.
+  ⚠️ **Linija je na svetlim sekcijama dvostruko jača nego stara ivica** (`.4` vs `.2`) — Pavle
+  prihvatio kako jeste. `LESSONS` **L22**.
+  ⚠️ **ACCEPTANCE 4 stoji otvoren** — merenje protiv deploy-a traži push.
+- **Pretposlednji:** **`M2`** (2026-09-09, `1a3bca5`) — `PageShell` dobio `<h1 data-wipe>`;
+  `G1/A` prestala da prolazi prazna na 13 od 14 ruta. Release pregled našao netačnu tvrdnju u
+  komentaru (`error.tsx` NE koristi `PageShell`) → `L20`, `L21`.
+- Starije (`G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
-  (`git branch --no-merged master` prazno).
+- ⚠️ **`m2b-naslovna-recnik` stoji NESPOJENA i NEPUŠENA** — dva commita (`d125e5f`
+  implementacija, close commit). `master` je na `697b787`. **Release je zasebna Pavlova odluka**;
+  dok ne padne, `ACCEPTANCE 4` iz `batches/M2b.md` ostaje `NIJE POKRENUTO`.
+- Grana istine **`master`**, izjednačena sa `origin/master`.
 - `M2` (`bb8c407..a362c20`) spojen fast-forward-om i pušen 2026-09-09, uz release pregled koji je
   našao i ispravio netačnu tvrdnju u komentaru. **Deploy živ i izmeren protiv njega.**
 - `G1` (`ddba710..7e73585`) i `G2` (`1ff169b..930c33d`) spojeni fast-forward-om i pušeni
