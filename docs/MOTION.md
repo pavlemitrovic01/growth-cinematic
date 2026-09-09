@@ -3,8 +3,9 @@
 Pisano 2026-09-08. Odluka o pravcu je Pavlova: **pokret kao karakter, bez paralaksa, bez
 generičkih efekata**.
 
-⚠️ **Više nije čist plan.** Dve stavke su implementirane 2026-09-09: `pay` → utility
-(`f541b72`) i `values` → utility (`08debb5`). Sve ostalo je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
+⚠️ **Više nije čist plan.** `D1` je implementiran 2026-09-09 osim sticky `process`-a:
+`pay` → utility (`f541b72`), `values` → utility (`08debb5`), `guard`+`founder` → cinematic uz
+brisanje `stories` (`a1a43d3`). Ostatak dokumenta je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
 da se iz ovog dokumenta uvek vidi šta stoji na disku a šta samo na papiru.
 
 ---
@@ -95,10 +96,10 @@ u ovom dokumentu pogrešno prošlo kao broj sekcija.
 | 3 | pay · *How we get paid.* | **utility** | ✅ **URAĐENO 2026-09-09**, `f541b72` — proza → podatak, nosi `$0` |
 | 4 | process · *The details make the difference.* | **editorial** | + sticky (`D4`) |
 | 5 | values · *A bigger number isn't the whole offer.* | **utility** | ✅ **URAĐENO 2026-09-09**, `08debb5` — ime ose je display element |
-| 6 | guard · *What we don't do.* | **cinematic** | manifest; **prima obećanje iz `stories`** |
-| 7 | founder · *Built around the honest part.* | **cinematic** | **prima ostatak `stories`** |
-| 8 | ~~stories · *Be one of the first.*~~ | — | **BRIŠE SE** |
-| 9 | faq · *Before you take the next step.* | **editorial** | nepromenjeno |
+| 6 | guard · *What we don't do.* | **cinematic** | ✅ **URAĐENO 2026-09-09**, `a1a43d3` — ⚠️ **NE prima ništa**, vidi override niže |
+| 7 | founder · *Built around the honest part.* | **cinematic** | ✅ **URAĐENO 2026-09-09**, `a1a43d3` — ⚠️ **NE prima ništa**, vidi override niže |
+| 8 | ~~stories · *Be one of the first.*~~ | — | ✅ **OBRISANA 2026-09-09**, `a1a43d3` — cela, bez selidbe |
+| 9 | faq · *Before you take the next step.* | **editorial** | nepromenjeno; numeracija `06` → `05` |
 | 10 | close · *Ready for your next route?* | **cinematic** | nepromenjeno |
 
 ```
@@ -118,18 +119,43 @@ nije pokvarena znači dodati rečnik bez ijedne rešene stvari. Vodi se kao „f
 sa istim argumentom su najskuplje ponavljanje na stranici. Uz to `stories` aktivno šteti:
 *„Be one of the first."* se čita kao *„nemamo klijente, vi ste test."*
 
-**Ali njena najjača rečenica ne ostaje bez doma.** Obećanje *„nema izmišljenih recenzija, nema
-stock testimonijala"* nije tvrdnja o pričama nego **`what we don't do` tvrdnja** — i u
-manifestu je jača nego gde sada stoji. Zato seli u `guard`, a ne nestaje.
+~~**Ali njena najjača rečenica ne ostaje bez doma.**~~ ⚠️ **OVAJ DEO ODLUKE JE OBOREN
+2026-09-09, Pavlovom odlukom.** Plan je bio da obećanje *„No stock photos. No invented
+reviews."* pređe u `guard` kao `what we don't do` tvrdnja. Pavlova formulacija:
 
-⚠️ **Ovo dira copy na dva mesta**, pa ide kroz istu disciplinu kao Faza 4: prenosi se ili
-odobrava, ne piše usput, i prolazi `verify-claims`.
+> *„Nema potrebe da piše no stock photos, nemamo potrebe da se igde pravdamo što se toga tiče."*
+
+⚠️ **Razlog je jači od plana, i vredi ga zapamtiti šire:** obećanje da nema izmišljenih
+recenzija **pretpostavlja optužbu.** Sajt koji to eksplicitno negira sam uvodi sumnju koju niko
+nije izneo — ista klasa greške kao odbrana od pitanja koje nije postavljeno. **Brisanje je jače
+od selidbe.**
+
+⚠️ **`founder` takođe ne prima ništa.** Doslovan prenos ostatka (*„GROWTH is new. That means the
+first drivers who come to us get our full attention…"*) vratio bi **baš onu redundansu zbog koje
+se `stories` i briše** — `founder` već nosi *„GROWTH is built around that gap."* Redundansa se
+ne bi obrisala nego preselila unutar jedne sekcije.
+
+✅ **Posledica: u batch-u nije napisana nijedna nova reč — samo je brisano.** Registarski rizik
+je nula, i otpada ranije upozorenje da se tekst iz `stories` mora ponovo čitati protiv `C41`:
+tog teksta više nema.
 
 ### ⚠️ Zašto `guard` i `founder` ostaju dva cinematic jedan do drugog
 
 Namerno, ne previdom. Tematski su jedna celina — „ko smo" — a **razlikuju se po formi**:
 manifest nosi tipografija, founder nosi čovek i citat. Dve tamne sekcije posle dve svetle
 čitaju se kao **prekid čina**, ne kao monotonija. To je upravo ono što stranici fali.
+
+✅ **Provereno na renderovanoj stranici 2026-09-09, i drži.** Sekvenca `values` → `guard` →
+`founder` → `faq` gledana kao celina: krem spec-sheet, tamni manifest, tamni founder, krem
+editorial. Dve tamne se **ne stapaju**, jer im se razlikuje unutrašnja forma — lista parova
+protiv velikog naslova sa citatom u serifu.
+
+⚠️ **Cinematic je bio tehnički najjeftiniji od tri tipa** — par forest/bone već postoji na
+`.home-callback` i `.home-close`, pa se oblik nije izmišljao nego primenio. Ali pet pravila
+ispod nisu kozmetika nego **čitljivost**: sve nasleđeno je računalo na krem podlogu (telo u
+`--moss`, ivice u `rgba(22,32,25,.22)`, labele u `#5b6659` i `--clay-mid`). Ništa od toga se ne
+vidi na forestu, a **nijedna kapija to ne bi uhvatila** — `verify-nojs` gleda inline stilove,
+ne kontrast.
 
 ### ✅ Čime se počelo: `pay` → utility — URAĐENO 2026-09-09 (`f541b72`)
 

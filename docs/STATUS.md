@@ -33,10 +33,10 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 
 | | |
 |---|---|
-| Ruta | 14 (+3 API) |
+| Ruta | 14 (+3 API) — naslovna od 2026-09-09 ima **devet** sekcija, ne deset |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (55 commita); `d1-pay-utility` i `d1-values-utility` spojene fast-forward-om i pušene 2026-09-09 |
+| Grana | **`d1-cinematic-guard-founder`** (56), nespojena; `master` na 55 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -119,6 +119,69 @@ Kolona je zato `bigint`.
   difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
+
+## Sesija 2026-09-09 (nastavak 2) — D1, `guard`+`founder` cinematic, `stories` obrisana
+
+Jedan commit na grani **`d1-cinematic-guard-founder`** (`a1a43d3`), **nespojen**.
+
+Treće i četvrto od četiri iz `D1`, u jednom potezu — jer se `stories` po planu delila između
+njih. Odnosno, Pavlovom odlukom, **ne deli**.
+
+### Pavlov override same `D1` odluke — i razlog vredi zapamtiti šire
+
+`D1` je propisao brisanje `stories` **ali selidbu** njene najjače rečenice (*„No stock photos.
+No invented reviews."*) u `guard`. Pavlova odluka 2026-09-09:
+
+> *„Nema potrebe da piše no stock photos, nemamo potrebe da se igde pravdamo što se toga tiče."*
+
+**Obećanje da nema izmišljenih recenzija PRETPOSTAVLJA optužbu.** Sajt koji to eksplicitno
+negira sam uvodi sumnju koju niko nije izneo. **Brisanje je jače od selidbe.**
+
+⚠️ **`founder` takođe ne prima ništa.** Doslovan prenos ostatka bi vratio **baš onu redundansu
+zbog koje se `stories` i briše** — `founder` već nosi *„GROWTH is built around that gap."*
+Redundansa se ne bi obrisala nego preselila unutar jedne sekcije.
+
+### Posledica: u batch-u nije napisana nijedna nova reč
+
+Samo je brisano. **Registarski rizik je nula** — `verify:claims` može samo biti sigurniji nego
+pre. Time otpada i ranije upozorenje da se tekst iz `stories` mora ponovo čitati protiv `C41`:
+tog teksta više nema. Naslovna ima **devet** sekcija; `faq` je prešao sa `06` na `05`.
+
+### Cinematic je bio najjeftiniji od tri tipa — ali ne besplatan
+
+Par forest/bone već postoji na `.home-callback` i `.home-close`, pa se oblik nije izmišljao nego
+primenio. To je cela razlika prema `pay` i `values`, gde je oblik trebalo naći.
+
+⚠️ **Ali pet pravila ispod nisu kozmetika nego čitljivost.** Sve nasleđeno je računalo na krem
+podlogu: telo u `--moss` (`#455044`), ivice u `rgba(22,32,25,.22)`, labele u `#5b6659` i
+`--clay-mid` (`#86502b`). **Ništa od toga se ne vidi na forestu**, a nijedna kapija to ne bi
+uhvatila — `verify-nojs` gleda inline stilove, **ne kontrast**. Sekcija bi bila tamna i prazna,
+i prošla bi zeleno.
+
+⚠️ **Deljeni selektor `.home-steps p,.home-founder p` nije diran** — `process` ostaje krem;
+dodat je uži `.home-guard p,.home-founder p`. **Treći put isti obrazac** u ovom fajlu.
+
+### Provereno kao celina, ne po sekciji
+
+Sekvenca `values` → `guard` → `founder` → `faq` gledana zajedno: krem spec-sheet, tamni
+manifest, tamni founder, krem editorial. **Dve tamne se ne stapaju**, jer im se razlikuje
+unutrašnja forma — lista parova protiv velikog naslova sa citatom u serifu. To je „prekid čina"
+koji je `D1` tvrdio, sada izmeren a ne pretpostavljen.
+
+**Kapije, protiv `npm run build && npm start` na `:3000`** (PID 12844):
+`typecheck 0` · `lint 0` · `test 132/132` · `build 0` · `verify:nojs PASS 14 ruta`
+(`/` **6343** znakova, bilo 6725 — razlika je obrisana sekcija) · `verify:claims PASS 13 ruta` ·
+`test:rendered 9/9`. Prelomi 1180 i 390 pogledani.
+
+### Zapaženo usput, nije dirano
+
+- **`founder` ima praznu levu kolonu** ispod naslova — `.home-editorial` je `1fr 1fr`, a levo
+  stoji samo `h2`. Bilo je isto i na kremu; na forestu se prazan prostor primeti više. **Nije
+  regresija, i nije u obimu ovog posla.**
+- **Komentar uz `.home-guard-list` netačno opisuje ponašanje** — kaže da „na jednoj koloni
+  labela ide iznad teksta", ali `.home-steps li` ostaje `display:flex` na svim prelomima, pa
+  labela ostaje levo i prelama se u dva reda. Čitljivo je; ispravka bi značila odluku da li
+  labela TREBA da ide iznad, što je dizajn izmena.
 
 ## Sesija 2026-09-09 (nastavak) — D1, druga sekcija: `values` → utility
 
@@ -399,29 +462,27 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-✅ **Ništa ne stoji nespojeno.** `d1-pay-utility` i `d1-values-utility` su obe spojene,
-pušene i izmerene protiv deploy-a 2026-09-09. Polovina `D1` je gotova.
+⚠️ **Prvo: `d1-cinematic-guard-founder` stoji nespojena.** Spoji, pusti, pa **izmeri protiv
+deploy-a**:
 
-**`guard` + `founder` → cinematic, treći posao iz `D1`.** Ovo je **najveći od četiri** i
-jedini koji **dira copy**, pa ide kroz disciplinu Faze 4: prenosi se ili odobrava, ne piše
-usput, i prolazi `verify-claims`.
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
+    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
 
-Dve stvari se dešavaju zajedno i ne smeju se razdvojiti:
+**Onda: sticky `process` (`D4`) — poslednja stavka `D1`, i time je taksonomija zatvorena.**
 
-1. **`stories` se briše.** Njena najjača rečenica — *„No stock photos. No invented reviews."* —
-   **seli u `guard`**, jer je to `what we don't do` tvrdnja, ne stories tvrdnja. Ostatak
-   (GROWTH je nov, prvi vozači dobijaju punu pažnju) ide u `founder`.
-2. **`guard` i `founder` postaju cinematic** — tamne, jedna do druge, namerno. Razlikuju se po
-   formi: manifest nosi tipografija, founder nosi čovek i citat.
+`process` je jedina sekcija koja u `D1` ostaje **editorial** i dobija sticky ponašanje: naslov
+stoji dok četiri koraka `01–04` prolaze pored njega. Numeracija već postoji, pa se ne izmišlja.
 
-⚠️ **`guard` već ima pet parova WE DON'T / WE DO.** Selidba dodaje šestu tvrdnju u listu koja
-je pisana kao pet — proveri da li ulazi kao par ili kao zasebna izjava manifesta **pre** nego
-što se piše CSS.
+⚠️ **`D4` je jedina stavka `D1` koja je istovremeno struktura I pokret**, pa u planu zavisi i od
+`M1` (primitivi `OTKRIVANJE` + `CRTA`). Odluči na početku: da li sticky ide **bez** `M1` — čist
+CSS `position:sticky`, nula novih primitiva — ili se prvo radi `M1`. **`M1` je nezavisan i može
+bilo kada**, ali sticky sam po sebi ne traži rečnik pokreta.
 
-⚠️ **C41 je već jednom promakla kroz sedam claims batch-eva baš u `stories`.** Tekst koji se
-seli čita se protiv registra **ponovo**, ne uzima se kao „već odobren".
+⚠️ **Sticky je jedina stvar u planu koja menja PONAŠANJE skrola**, a `MOTION.md` ima tvrdo
+pravilo: pod `prefers-reduced-motion: reduce` sve staje. **Sticky nije animacija i kill switch
+ga neće ugasiti** — proveri šta se dešava pod `reduce` **pre** commita, ne posle.
 
-Posle toga ostaje samo sticky `process` (`D4`), i `D1` je zatvoren.
+Posle `D4` je `D1` zatvoren i ostaju čisti motion batch-evi (`M1`–`M6`) i `D2`/`D5`.
 
 ### Zašto se redosled promenio 2026-09-08
 
