@@ -155,7 +155,7 @@ export default function CinematicHome() {
             akter je LINIJA (`CRTA`), pa imena osa (`OTKRIVANJE`) 90 ms iza svoje linije.
             Fade-up ostaje na preostalih sest sekcija dok ih `M2` ne prevede.
           */}
-          <section className="home-values home-section" aria-labelledby="values-heading">
+        <section className="home-values home-section" aria-labelledby="values-heading">
           {/*
             ⚠️ NASLOV JE PREIMENOVAN 2026-09-06, SADRZAJ PRESELJEN. Do tada je ovde stajalo
             „02 / KNOW BEFORE YOU GO" nad tri genericke kartice, dok pun sadrzaj te sekcije —

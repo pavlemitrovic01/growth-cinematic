@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 
 /**
- * Pogon za `reveal`, `stagger` i `sweep` iz motion recnika (Faza 2).
+ * Pogon za `reveal`, `stagger` i `sweep` iz Faze 2, plus `wipe` i `line` iz `M1`.
  *
  * ⚠️ NE RENDERUJE NISTA. Cela svrha je da doda klasu `.is-in` elementima koje CSS drzi
  * skrivenim, i da na promenu rute pokrene jedan fade. Ako ova komponenta nikad ne
@@ -85,8 +85,11 @@ export default function Motion() {
           observer.unobserve(entry.target);
         }
       },
-      // Blago uvuceno odozdo da sekcija krene tek kad stvarno ulazi u kadar, a ne dok je
-      // jos jedan piksel visoka. Prag je nizak jer su mete cele sekcije, ne sitni elementi.
+      // Blago uvuceno odozdo da meta krene tek kad stvarno ulazi u kadar, a ne dok je
+      // jos jedan piksel visoka.
+      // ⚠️ Prag je od `M1` nizak iz DRUGOG razloga nego sto je pisalo: mete vise nisu samo
+      // cele sekcije. `data-wipe` stoji na pojedinacnim naslovima, pa niz prag sada znaci
+      // da i sitan element okine cim udje, a ne da mora da se pokaze pola njega.
       { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
     );
 
