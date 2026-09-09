@@ -336,7 +336,16 @@
 .home-callback .qa{max-width:none;padding-bottom:0}
 .home-noscript{padding:20px 6vw;font-size:16px}
 .home-noscript a{text-decoration:underline}
-.home-section{padding:80px 6vw;border-top:1px solid rgba(22,32,25,.2)}
+.home-section{padding:80px 6vw}
+/* ⚠️ SELEKTOR SKRACEN, NE OBRISAN (`LESSONS` L4). Do `M2b` je `border-top` stajao na
+   `.home-section` bezuslovno. Sest sekcija je tada preslo na primitiv `CRTA`, koji istu
+   liniju CRTA umesto da je staticno drzi — isti potez koji je `M1` napravio na
+   `.value-axes li` (~:676). Ali `.home-section` nose i sekcije koje `data-line` NEMAJU
+   (`home-values`, koja je na rednik presla drugacije, kroz `<li data-line>`), pa bi
+   brisanje tiho pojelo NJIHOV razdelnik.
+   `:not([data-line])` resava to samo od sebe: ko dobije primitiv, gubi staticnu ivicu —
+   bez spiska imena koji neko mora da odrzava. */
+.home-section:not([data-line]){border-top:1px solid rgba(22,32,25,.2)}
 .home-section h2{font-size:clamp(40px,5.4vw,82px);line-height:1;letter-spacing:-.055em;margin:30px 0 32px;font-weight:800}
 .home-editorial{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start;margin-top:28px}
 .home-text-link{display:inline-block;padding:12px 0;font-size:14px;font-weight:700;border-bottom:1px solid currentColor}
@@ -760,6 +769,12 @@ main:focus{outline:none}
    labele u `#5b6659` i `--clay-mid` (#86502b). Nista od toga se ne vidi na forestu.
    Bez ovih preboja sekcija bi bila tamna i prazna, a nijedna kapija to ne bi
    uhvatila — `verify-nojs` gleda inline stilove, ne kontrast. */
+/* ⚠️ `border-top-color` je od `M2b` INERTAN, i NAMERNO ostaje. Obe sekcije sada nose
+   `data-line`, pa ih `.home-section:not([data-line])` vise ne bordira — boju nema sta da
+   oboji. Liniju crta `[data-line]::before` preko `currentColor`, sto na `--forest` podlozi
+   samo od sebe daje svetlu liniju. Deklaracija stoji kao mreza: ako neko ikad skine
+   `data-line` sa ove dve, staticna ivica se vraca i mora se vratiti U SVETLOJ boji, inace
+   je tamna ivica na tamnoj podlozi — nevidljiva, i nijedna kapija to ne meri (L8). */
 .home-guard,.home-founder{background:var(--forest);color:var(--bone);border-top-color:var(--line)}
 .home-guard h2 em,.home-founder h2 em{-webkit-text-stroke-color:var(--bone)}
 .home-guard .home-kicker,.home-founder .home-kicker{color:var(--clay-light)}

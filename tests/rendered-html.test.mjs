@@ -335,7 +335,19 @@ test('G1/B — data-line nikad unutar data-wipe elementa', async () => {
  *  ispod, koji je ovde nuzno dupliran. */
 test('G1/C — census motion atributa na naslovnoj', async () => {
   const html = await (await get('/')).text();
-  const CENSUS = { 'data-reveal': 6, 'data-stagger': 4, 'data-wipe': 3, 'data-line': 3 };
+  /* ⚠️ BROJEVI POMERENI U `M2b` (2026-09-09), U ISTOM BATCHU KOJI JE PROMENIO MARKUP.
+   *  `6/4/3/3` -> `0/4/9/9`. Sest sekcija naslovne je preslo sa `data-reveal` na par
+   *  `CRTA` + `OTKRIVANJE`, pa je fade-up nestao a linija i wipe dosli na njegovo mesto.
+   *
+   *  ⚠️ `data-reveal` je sada 0 NA CELOM SAJTU, ne samo ovde. Nula NIJE greska i ne znaci
+   *  „obrisi tvrdnju" — dok primitiv postoji u `globals.css` i u `Motion.tsx:76`, ovaj red
+   *  je jedino sto ce primetiti ako se negde tiho vrati.
+   *
+   *  ⚠️ FALSIFIKOVANO PO ATRIBUTU, NE ODJEDNOM (`LESSONS` L19). Sva cetiri reda padaju pod
+   *  ISTU tvrdnju, a `assert` prekida petlju na prvom — pa bi jedno pokretanje sa sve tri
+   *  promene dokazalo samo prvu. Mereno u tri pokretanja: `data-reveal` 0!==6,
+   *  `data-wipe` 9!==3, `data-line` 9!==3. Crveni izlazi su u `LOG.md`. */
+  const CENSUS = { 'data-reveal': 0, 'data-stagger': 4, 'data-wipe': 9, 'data-line': 9 };
   for (const [attr, expected] of Object.entries(CENSUS)) {
     assert.equal(
       openTagsWith(html, attr).length, expected,

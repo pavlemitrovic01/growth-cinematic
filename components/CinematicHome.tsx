@@ -103,12 +103,12 @@ export default function CinematicHome() {
           ⚠️ Naslov je izgubio `<em>` outline tretman — namerno, po `D2` („outline tipografija
           svedena na 2-3 mesta"). U utility bloku bi outline takmicio sa brojem.
         */}
-        <section data-reveal className="home-pay home-section" aria-labelledby="pay-heading">
+        <section data-line className="home-pay home-section" aria-labelledby="pay-heading">
           <div className="home-section-top">
             <span className="home-kicker">100% FREE FOR DRIVERS</span>
             <Link className="home-text-link" href="/how-it-works">How it works ↗</Link>
           </div>
-          <h2 id="pay-heading">How we get paid.</h2>
+          <h2 data-wipe id="pay-heading">How we get paid.</h2>
           <div className="pay-ledger">
             <p className="pay-figure">
               <strong>$0</strong>
@@ -136,10 +136,10 @@ export default function CinematicHome() {
           </div>
         </section>
 
-        <section data-reveal className="home-process home-section" aria-labelledby="process-heading">
+        <section data-line className="home-process home-section" aria-labelledby="process-heading">
           <div className="home-section-top"><span className="home-kicker">01 / HOW IT WORKS</span><span className="home-kicker">FROM FIRST CALL TO NEXT MILE</span></div>
           <div className="home-editorial">
-            <div className="process-lede"><h2 id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
+            <div className="process-lede"><h2 data-wipe id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
             <ol data-stagger className="home-steps">
               <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
               <li><span>02</span><div><h3>Have a real conversation.</h3><p>{CALLBACK_SENTENCE} We go through your priorities and qualifications.</p></div></li>
@@ -231,12 +231,12 @@ export default function CinematicHome() {
           u koloni umesto mreze — labela nosi znacenje, nije ukras, i pet stavki popunjava
           redove bez usamljene celije.
         */}
-        <section data-reveal className="home-guard home-section" aria-labelledby="guard-heading">
+        <section data-line className="home-guard home-section" aria-labelledby="guard-heading">
           <div className="home-section-top">
             <span className="home-kicker">03 / STRAIGHT FROM US</span>
             <span className="home-kicker">WHAT YOU WON’T HEAR FROM US</span>
           </div>
-          <h2 id="guard-heading">What we<br /><em>don’t do.</em></h2>
+          <h2 data-wipe id="guard-heading">What we<br /><em>don’t do.</em></h2>
           <ol data-stagger className="home-steps home-guard-list">
             <li>
               <span>WE DON’T</span>
@@ -276,10 +276,10 @@ export default function CinematicHome() {
           </ol>
         </section>
 
-        <section data-reveal className="home-founder home-section" aria-labelledby="founder-heading">
+        <section data-line className="home-founder home-section" aria-labelledby="founder-heading">
           <span className="home-kicker">04 / WHY GROWTH</span>
           <div className="home-editorial">
-            <h2 id="founder-heading">Built around<br /><em>the honest part.</em></h2>
+            <h2 data-wipe id="founder-heading">Built around<br /><em>the honest part.</em></h2>
             <div><blockquote>“You get the real numbers before you commit — including the ones that don’t help us — and then you decide for yourself.”</blockquote><p className="home-signature">Nate Mikic / Founder</p><p>Four years in CDL-A recruiting taught our founder where the details get lost. GROWTH is built around that gap.</p><Link href="/about" className="home-text-link">Read our story ↗</Link></div>
           </div>
         </section>
@@ -305,15 +305,15 @@ export default function CinematicHome() {
 
           Numeracija: `faq` je time presao sa `06` na `05`.
         */}
-        <section data-reveal className="home-faq home-section" aria-labelledby="faq-heading">
+        <section data-line className="home-faq home-section" aria-labelledby="faq-heading">
           <div className="home-section-top"><span className="home-kicker">05 / STRAIGHT ANSWERS</span><Link className="home-text-link" href="/faq">All questions ↗</Link></div>
-          <h2 id="faq-heading">Before you<br /><em>take the next step.</em></h2>
+          <h2 data-wipe id="faq-heading">Before you<br /><em>take the next step.</em></h2>
           <Accordion items={homeFaqItems()} />
         </section>
 
-        <section data-reveal className="home-close home-section" aria-labelledby="close-heading">
+        <section data-line className="home-close home-section" aria-labelledby="close-heading">
           <span className="home-kicker">THE NEXT MILE IS YOURS</span>
-          <h2 id="close-heading">Ready for<br /><em>your next route?</em></h2>
+          <h2 data-wipe id="close-heading">Ready for<br /><em>your next route?</em></h2>
           <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
           {/*
             CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
