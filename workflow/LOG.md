@@ -37,6 +37,11 @@ U živom build-u potvrđeno: `clip-path` na `[data-wipe]` postoji **isključivo*
 
 ✅ **`manual` PASS (Pavle)** — pogledao u pravom browseru, ne vidi grešku.
 
+**Izmereno protiv deploy-a posle push-a:** `verify:nojs` PASS 14 ruta (`/` 6343, isto kao
+lokalno) · `verify:claims` PASS 13 ruta · `test:rendered` 9/9. Na živom CSS-u potvrđeno da
+`clip-path` na `[data-wipe]` postoji **isključivo** iza `html.js-motion`, i da nema **nijednog**
+pravila van kapije. `noindex` drži. Deploy živ ~30 s posle push-a.
+
 ⚠️ **Zamka `L1` uhvaćena uživo, četvrti put:** port je držao server iz `D4` batcha sa build-om od
 **pre** ovih izmena. Da PID nije proveren, merio bi se pogrešan build.
 

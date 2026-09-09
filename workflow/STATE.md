@@ -6,7 +6,8 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto.
+- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
+  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
 - **Sledeći:** **`G1` (LEAN)** — pretvoriti ograničenje „`data-wipe` samo na listne elemente" iz
   komentara u **mašinsku kapiju** (`tests/rendered-html.test.mjs`). Pavlova odluka 2026-09-09:
   zaseban batch, ne proširenje `M1`-a. ⚠️ `M2` je prvi koji bi ograničenje mogao prekršiti, pa
