@@ -136,3 +136,25 @@ o nedokazanom obuhvatu.
 **tri različita** `test()` bloka; `node:test` ih izoluje.
 **Pravilo:** falsifikuj **jedan prekršaj po pokretanju** kad više njih pada pod istu tvrdnju.
 Dokaz obuhvata je po ruti, ne po batchu. Vidi [[verify-gates-before-commit]].
+
+## L20 — Zelena kapija ume da bude zelena zato što nema šta da pregleda.
+`G2` je dokazao da `G1/A` i `G1/B` **posećuju** 14 ruta i taj obuhvat je bio tačan. `M2` je
+izmerio šta su tamo **nalazile**: `data-wipe` je do tada postojao samo na `/` (3 elementa), pa je
+na **13 od 14 ruta** petlja obilazila prazan spisak. Trinaest zelenih kvačica značilo je „nemam
+šta da proverim", ne „proverio sam".
+⚠️ **Dva različita pitanja:** *„koliko RUTA kapija pokriva"* i *„koliko ELEMENATA je stvarno
+pregledala"*. Prvo se vidi iz spiska ruta; drugo traži da se prebroji ono što tvrdnja obilazi.
+**Pravilo:** kad kapija štiti ograničenje nad atributom kojeg još skoro nigde nema, ispiši ili
+izmeri **broj pregledanih elemenata po ruti**, ne samo broj ruta. Inače prva stvarna upotreba
+atributa ulazi u kod uz kapiju koja do tada nije ništa tvrdila. Vidi [[verify-gates-before-commit]].
+
+## L21 — `grep -l` po izvoru broji i komentare, i mene je uhvatio u istom batchu koji to zna.
+`M2` je u komentar `PageShell`-a upisao da shell renderuje i `app/error.tsx`. Ne renderuje —
+`error.tsx` **namerno** ne koristi shell, i baš ta rečenica („NAMERNO BEZ `PageShell`-a") je ono
+što je `grep -rl "PageShell" app/` uhvatio.
+⚠️ Netačna tvrdnja je prošla `/plan`, `/execute` i `/close` i **ušla u commit** (`1a3bca5`), iako
+je isti batch merio census koji je nju demantovao: 13 ruta × 1 + `/` × 3 = **16**, bez `error.tsx`.
+Dokaz je postojao i nije bio pročitan kao dokaz.
+**Pravilo:** spisak fajlova koji nešto „koriste" izvodi se iz **poziva** (`grep -l '<PageShell'`),
+nikad iz pomena imena. Ista greška je razlog zašto `G1` meri renderovan HTML. Vidi L18.
+
