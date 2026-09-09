@@ -6,8 +6,8 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, stablo čisto.
-  ⚠️ **Ali grana `g1-wipe-placement-gate` NIJE spojena ni pušena** (vidi `Git`).
+- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
+  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
 - **Sledeći:** `M2` — površine 3, 4 i 5 (sekcije, brojke, `PageShell` ritam).
   ⚠️ Pre `M2` pročitati `LESSONS` **L15–L18** — sva četiri su iz `M1` i sva četiri opisuju
   zamke koje nijedna kapija ne vidi.
@@ -23,14 +23,11 @@
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`.
-- ⚠️ **`g1-wipe-placement-gate` STOJI NESPOJENA I NEPUŠENA** — dva commita (`3d9b55a` +
-  close commit). `/close` ne pushuje; **release je zasebna Pavlova odluka** (`/close §6`).
-  Dok se ne spoji, `M2` gradi na `master`-u koji **nema** `G1` kapiju.
-  ⚠️ **Iz istog razloga `ACCEPTANCE 4` (merenje protiv deploy-a) nije pokrenuto**, ne prijavljeno
-  kao PASS. Prvi korak posle merge-a: push, pa `VERIFY_BASE=… npm run test:rendered`.
-- Grane `d1-pay-utility`, `d1-values-utility`, `d1-cinematic-guard-founder`, `d4-sticky-process`
-  su spojene fast-forward-om i ostavljene kao bookmark-ovi.
+- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
+  (`git branch --no-merged master` prazno).
+- `G1` spojen fast-forward-om `ddba710..7e73585` i pušen 2026-09-09. **Deploy živ i izmeren.**
+- Grane `d1-pay-utility`, `d1-values-utility`, `d1-cinematic-guard-founder`, `d4-sticky-process`,
+  `g1-wipe-placement-gate` su spojene fast-forward-om i ostavljene kao bookmark-ovi.
 
 ## Žive prepreke
 

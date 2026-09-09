@@ -6,6 +6,20 @@
 
 ---
 
+## non-batch (release) — `G1` spojen i pušen · 2026-09-09
+
+Pavlova release odluka. `master` `ddba710..7e73585` **fast-forward**, push na
+`github.com/pavlemitrovic01/growth-cinematic`, Vercel deploy automatski.
+
+**Izmereno protiv deploy-a:** `test:rendered` 13/13 · `verify:nojs` PASS 14 ruta ·
+`verify:claims` PASS 13 ruta. `meri se: https://growth-cinematic.vercel.app` ispisano svaki put.
+Time je zatvoren `ACCEPTANCE 4` iz `batches/G1.md` — jedini kriterijum koji je na `/close`-u
+stajao kao `NIJE POKRENUTO`.
+
+Ne dira runtime kod (`RULES §10`). Detalji merenja → `G1` unos ispod.
+
+---
+
 ## G1 (LEAN) — `data-wipe` placement kapija + census pokreta · 2026-09-09
 
 **Code:** `3d9b55a` · **Grana:** `g1-wipe-placement-gate` · **Manifest:** `batches/G1.md`
@@ -50,8 +64,15 @@ pogrešan oblik — dopisan je stvarni.
 zahteva) · `test` 132/132 (van LEAN zahteva). `meri se: http://localhost:3000` ispisano pri svakom
 merenju. PID provere pre svakog merenja — server svež, ne zaostao (`L1`).
 
-⚠️ **`ACCEPTANCE 4` (merenje protiv deploy-a) — `NIJE POKRENUTO`**, ne PASS. Razlog: `/close §6`
-ne pushuje, release je zasebna Pavlova odluka.
+✅ **`ACCEPTANCE 4` PASS — izmereno protiv deploy-a posle push-a** (Pavlova release odluka,
+2026-09-09). Spojeno fast-forward-om `ddba710..7e73585`, pušeno, pa mereno:
+`test:rendered` **13/13** · `verify:nojs` PASS 14 ruta · `verify:claims` PASS 13 ruta.
+`meri se: https://growth-cinematic.vercel.app` ispisano pri svakom merenju.
+Deploy `fra1::jq7tf-1788963748748-000a5b1a7f4b`, `noindex` drži.
+
+⚠️ **Zašto se sadržaj deploy-a nije mogao promeniti:** `G1` nije dirnuo **nijedan** runtime fajl —
+samo test i dokumentaciju. Merenje zato ne dokazuje „nov deploy", nego da tri tvrdnje kapije drže
+nad **stvarno serviranim** HTML-om, a ne samo nad lokalnim build-om.
 
 **SCOPE_DRIFT:** none — tačno EXPECTED-FILES + odobrena ekspanzija (`workflow/RULES.md`).
 `LESSONS.md` je bio naveden kao **uslovan** i **ostao je netaknut**: falsifikacija nije otkrila
@@ -61,8 +82,9 @@ ništa što parser već ne rešava, pa nova lekcija nije izmišljena da popuni m
 `POSTS` i nije u `PAGE_PATHS`, pa A i B ne sweep-uju članke (danas tamo nema motion atributa).
 `LESSONS` L17 pravilo 1 traži replikaciju CSS kaskade i ne staje u LEAN.
 
-**NEXT STEP:** merge + push (Pavlova odluka), pa `VERIFY_BASE=… npm run test:rendered` protiv
-deploy-a. Zatim `M2` — koji će census oboriti namerno i ispraviti ga u istom batchu.
+**NEXT STEP:** `M2` — sekcije, brojke i `PageShell` ritam. Sada gradi na `master`-u koji **ima**
+`G1` kapiju, što je i bio razlog da `G1` ide prvi. Census (6/4/3/3) će pasti namerno i ispravlja
+se u istom batchu.
 
 ---
 
