@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`d1-values-utility`** (54), nespojena; `master` na 53 |
+| Grana | **`master`** (55 commita); `d1-pay-utility` i `d1-values-utility` spojene fast-forward-om i pušene 2026-09-09 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -122,7 +122,8 @@ Kolona je zato `bigint`.
 
 ## Sesija 2026-09-09 (nastavak) — D1, druga sekcija: `values` → utility
 
-Jedan commit na grani **`d1-values-utility`** (`08debb5`), **nespojen**.
+Dva commita na grani **`d1-values-utility`** (`08debb5` kod, `4297a82` dokumenti), spojena u
+`master` fast-forward-om i **pušena istog dana**. `origin/master` na `4297a82`.
 
 ### ⚠️ Otvoreno pitanje iz prethodnog bloka je zatvoreno — i odgovor je bio suprotan
 
@@ -171,6 +172,11 @@ podnaslov, pitanje nije). Iz naslova ispada `<br />` i outline `<em>`, po `D2`.
 (`/` 6725 znakova) · `verify:claims PASS 13 ruta` · `test:rendered 9/9`.
 Polaritet potvrđen u panelu; `reduce` po konstrukciji — nijedna nova tranzicija.
 Prelomi 1280 i 390 pogledani, `EQUIPMENT` staje na 390.
+
+**Ponovo izmereno protiv deploy-a posle push-a** (`meri se: https://growth-cinematic.vercel.app`
+u oba izlaza): `verify:nojs PASS 14 ruta` (`/` 6725 znakova, isto kao lokalno) ·
+`verify:claims PASS 13 ruta` · `test:rendered 9/9`. `noindex` drži na sva četiri sloja,
+`sitemap` prazan (0 URL-ova). Deploy živ ~30 s posle push-a.
 
 ## Sesija 2026-09-09 — D1, prva sekcija: `pay` → utility
 
@@ -393,13 +399,10 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-⚠️ **Prvo: `d1-values-utility` stoji nespojena.** `d1-pay-utility` je spojena, pušena i
-izmerena protiv deploy-a; `values` još nije. Spoji, pusti, pa **izmeri protiv deploy-a**:
+✅ **Ništa ne stoji nespojeno.** `d1-pay-utility` i `d1-values-utility` su obe spojene,
+pušene i izmerene protiv deploy-a 2026-09-09. Polovina `D1` je gotova.
 
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
-
-**Onda: `guard` + `founder` → cinematic, treći posao iz `D1`.** Ovo je **najveći od četiri** i
+**`guard` + `founder` → cinematic, treći posao iz `D1`.** Ovo je **najveći od četiri** i
 jedini koji **dira copy**, pa ide kroz disciplinu Faze 4: prenosi se ili odobrava, ne piše
 usput, i prolazi `verify-claims`.
 
