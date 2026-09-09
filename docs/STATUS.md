@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) — naslovna od 2026-09-09 ima **devet** sekcija, ne deset |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`d4-sticky-process`** (59), nespojena — ⚠️ **čeka Pavlov pogled**; `master` na 58 |
+| Grana | **`master`** (59 commita); sve `d1-*` + `d4-*` grane spojene i pušene 2026-09-09 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -122,7 +122,8 @@ Kolona je zato `bigint`.
 
 ## Sesija 2026-09-09 (nastavak 3) — D4, sticky `process`. **D1 je time ceo implementiran.**
 
-Jedan commit na grani **`d4-sticky-process`** (`3dbcc26`), **nespojen — i namerno.**
+Dva commita na grani **`d4-sticky-process`** (`3dbcc26` kod, `8e84841` dokumenti), spojena u
+`master` i pušena **tek pošto je Pavle potvrdio skrol u pravom browseru**.
 
 `process` je jedina sekcija koja u `D1` ostaje editorial, pa se ne menja oblik nego **ponašanje**:
 naslov stoji dok četiri koraka `01–04` prolaze pored njega.
@@ -151,18 +152,25 @@ bi trajno **nedohvatljivo**. Ne dešava se na laptopu, ali se dešava na **200% 
 (`/` **6343 znakova, nepromenjeno** — sticky je čista prezentacija) · `verify:claims PASS 13
 ruta` · `test:rendered 9/9`.
 
-### ⚠️ ZATO OVA GRANA NIJE SPOJENA: skrol nije potvrđen
+### ⚠️ Prva stavka koju agent nije mogao da potvrdi — i kako je zatvorena
 
 Browser panel je **usred provere izgubio layout u celini** — `docH=900`, svi elementi nulte
 visine, iako DOM ima svih 9 sekcija. Nije se oporavio ni posle zatvaranja taba, ni posle
-`resize`-a, ni posle fronting-a.
+`resize`-a, ni posle fronting-a. **To je otkaz alata, ne koda.**
 
-Dokazano **jeste** da se pravilo primenjuje: `getComputedStyle` na živom elementu vraća
-`position:sticky; top:40px`, a build servira tačno tri očekivana pravila sa oba media upita.
-**Nije** dokazano da se pri skrolu ponaša kako treba.
+Agent je dokazao da se pravilo **primenjuje** (`getComputedStyle` vraća `position:sticky;
+top:40px`, build servira tri očekivana pravila sa oba media upita), ali **ne** da se pri skrolu
+ponaša kako treba. Grana je zato ostala nespojena i **vraćena Pavlu**.
+
+✅ **Pavle je potvrdio u pravom browseru: radi kako treba.** Tek onda merge i push.
 
 `MOTION.md` to ionako traži — *„Sve što zavisi od skrola proverava se u pravom browseru."*
-**`D4` je prva stavka na koju se to pravilo stvarno odnosi.**
+`D4` je prva stavka na koju se to pravilo stvarno odnosilo, i **postupak je odradio svoje:
+agent nije prijavio gotovo dok nije bilo gledano.**
+
+**Izmereno protiv deploy-a posle push-a:** `verify:nojs PASS 14 ruta` (`/` 6343) ·
+`verify:claims PASS 13 ruta` · `test:rendered 9/9`. U živom CSS-u na deploy-u stoje sva tri
+pravila, uključujući `@media (max-height:640px)`. Deploy je bio živ ~170 s posle push-a.
 
 ## Sesija 2026-09-09 (nastavak 2) — D1, `guard`+`founder` cinematic, `stories` obrisana
 
@@ -514,18 +522,10 @@ ruta claims` · `test:rendered 9/9`.
 ✅ **Ništa ne stoji nespojeno.** Sve tri `d1-*` grane su spojene, pušene i izmerene protiv
 deploy-a 2026-09-09. Od `D1` ostaje **samo `D4`**.
 
-⚠️ **PRVO, I TRAŽI PAVLA A NE AGENTA: pogledaj sticky `process` u pravom browseru.**
+✅ **`D1` je ceo zatvoren 2026-09-09** — sve četiri strukturne izmene su u `master`-u, pušene i
+izmerene protiv deploy-a. Ništa ne stoji nespojeno.
 
-Grana `d4-sticky-process` stoji nespojena zato što je **jedina stvar koju agent nije mogao da
-potvrdi** — panel je izgubio layout usred provere. Otvori naslovnu, skroluj kroz sekciju
-*„The details make the difference."* i vidi da li naslov stoji dok koraci prolaze pored njega,
-i da li se odlepi na kraju sekcije umesto da se zaglavi.
-
-    npm run build && npm start        # pa http://localhost:3000
-
-Ako radi: spoji, pusti, izmeri protiv deploy-a. Ako ne: `.process-lede` u `app/globals.css`.
-
-**Onda: `M1` — rečnik pokreta.** `D1` je time ceo završen i kolosek prelazi sa **oblika** na
+**`M1` — rečnik pokreta.** `D1` je time ceo završen i kolosek prelazi sa **oblika** na
 **pokret**. `M1` dodaje dva primitiva (`OTKRIVANJE` — maska s leva umesto fade-up-a, i `CRTA` —
 linija koja se iscrtava) uz postojećih šest, **bez ijedne primene**. Tek `M2` i dalje ih koriste.
 
