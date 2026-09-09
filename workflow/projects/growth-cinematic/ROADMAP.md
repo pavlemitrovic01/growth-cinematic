@@ -13,8 +13,7 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M2` | `PageShell` ritam — devet podstranica nema nijedan reveal | STANDARD | `M1`, `G1`, `G2` | **SLEDEĆI** |
-| `M2b` | Naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja | STANDARD | `M2` | OPEN |
+| `M2b` | Naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja | STANDARD | `M2` | **SLEDEĆI** |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
@@ -26,10 +25,10 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 (**allowlist**, ne denylist) i nijedan `data-line` unutar `data-wipe` — oboje na **14 ruta**
 (`PAGE_PATHS` + tri članka + 404) — plus **tačan broj** motion atributa na `/` (6/4/3/3).
 
-⚠️ **`M2` je prepravljen posle nezavisnog pregleda plana.** Prva verzija je pala na dva blokera:
-`[data-stagger]>*:nth-child(2)` (0,2,0) gazi `[data-wipe]` (0,1,0), pa bi `--wipe-lead` tiho
-nestao; i `CRTA` na `.sub-hero` pada tačno na Nav-ovu ivicu. Zato `.sub-hero` dobija **samo**
-`<h1 data-wipe>`. Naslovna je izdvojena u `M2b`.
+⚠️ **Dva ograničenja koja je `M2` ostavio za sobom, važe i za `M2b`.**
+`[data-stagger]>*:nth-child(n)` (0,2,0) gazi `[data-wipe]` (0,1,0) — wipe **nikad** kao direktno
+dete stagger kontejnera, inače `--wipe-lead` tiho nestaje. I `CRTA` na `.sub-hero` pada tačno na
+Nav-ovu ivicu. Detalji u `batches/M2.md`.
 
 ⚠️ **`M2b` će oboriti census čim doda pokret na `/` — to je namerno.** Broj se ispravlja **u
 istom batchu koji menja markup**, nikad kao zaseban „fix testa". Ako neki batch traži tag van
@@ -72,6 +71,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `M2` | **`PageShell` ritam** — `<h1 data-wipe>` na svih 14 ruta + stagger na dve mreže u `/how-it-works`; tri atributa, nula CSS-a | 2026-09-09 |
 | `G2` | **Kapija pokriva sve što `PageShell` renderuje** — obuhvat 10 → 14 ruta, izveden iz `PAGE_PATHS` + `allPostSlugs()` | 2026-09-09 |
 | `G1` | **Kapija za `data-wipe` placement** + census pokreta na `/` — dokazano pocrvenela pre priznanja | 2026-09-09 |
 | `M1` | **Rečnik pokreta** — `OTKRIVANJE` + `CRTA` kao primitivi, uz dokaznu primenu na `values` | 2026-09-09 |

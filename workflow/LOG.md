@@ -6,6 +6,65 @@
 
 ---
 
+## M2 (STANDARD) — `PageShell` ritam: rečnik pokreta stiže na podstranice · 2026-09-09
+
+**Code:** `1a3bca5` · **Grana:** `m2-pageshell-ritam` · **Manifest:** `batches/M2.md`
+
+**Changed files (2 + workflow):** `components/PageShell.tsx`, `app/how-it-works/page.tsx`
+*(+ `batches/M2.md`, `ROADMAP.md`, `STATE.md`, ovaj `LOG.md` na close)*
+
+Tri atributa, dva fajla, **nula CSS-a**: `<h1 data-wipe>` u `PageShell`-u, `data-stagger` na
+`.sub-2up` i `.sub-3up` u `/how-it-works`.
+
+### Gate dokaz
+
+| Gate | Exit | Metrika |
+|---|---|---|
+| `quick` | 0 | — |
+| `typecheck` | 0 | — |
+| `test` | 0 | 132/132 u 9 fajlova |
+| `full` | 0 | 14 ruta + 3 API + 3 SSG članka |
+| `verify` | 0 | `meri se: http://localhost:3000` · nojs 14 · claims 13 |
+| `rendered` | 0 | `mere 14 ruta` · 13/13, `G1/C` census nepromenjen |
+| `manual` | **PASS** | Pavle, pravi browser — otkrivanje s leva, stepenica na obe mreže, `.card--cta` se i dalje lepi |
+
+⚠️ **ACCEPTANCE 2 stoji kao `NIJE POKRENUTO`** — merenje protiv deploy-a traži push, a push je
+zasebna release odluka. Isto kao kod `G1` i `G2`; zatvara ga release commit.
+
+⚠️ **Pre merenja provereno koji PID sluša na 3000, i to komandnom linijom, ne imenom procesa**
+(`next start`, ne `next dev`). Dev server ugašen, port izmeren prazan, pa tek onda build.
+
+### Nalaz: obuhvat rute nije obuhvat tvrdnje
+
+`G2` je dokazao da `G1/A` i `G1/B` **posećuju** 14 ruta. `M2` je izmerio šta su tamo **nalazile**:
+
+| | pre `M2` | posle `M2` |
+|---|---|---|
+| `data-wipe` elemenata ukupno | 3 (svi na `/`) | **16** |
+| ruta na kojima `G1/A` prolazi **prazna** | **13** | **0** |
+
+Kapija je na 13 od 14 ruta bila zelena zato što **nije imala šta da pregleda**, ne zato što je
+nešto potvrdila. To nije bio defekt `G2` — obuhvat je bio tačan — nego posledica toga što
+`data-wipe` do danas nije postojao van naslovne. Vredi zapamtiti kao pitanje, ne kao optužbu:
+*„koliko elemenata je ova kapija stvarno pregledala?"* je drugo pitanje od *„koliko ruta pokriva?"*.
+
+⚠️ **Ovo nije upisano u `LESSONS`** — `LESSONS.md` nije bio u EXPECTED-FILES ovog batcha i scope
+se ne širi tiho (`RULES §5`). Predloženo Pavlu kao zaseban non-batch doc commit.
+
+### L18 u praksi, na sopstvenoj proveri
+
+Prvi `grep` je na `/how-it-works` prijavio **4** `data-stagger` umesto 2 — brojao je i RSC flight
+payload (`"data-stagger":true`), koji nije markup. Kapija (`rendered-html.test.mjs`) seče
+`<script>` **pre** tokenizacije i zato vidi tačno 2. Kod je bio ispravan; provera nije. Isti
+obrazac koji je u `M1` tri puta poslao u pogrešnom smeru.
+
+**SCOPE_DRIFT:** none — 4 od 6 EXPECTED-FILES dirnuto, nijedan fajl van spiska.
+
+**NEXT:** release odluka (spajanje + push + merenje protiv deploy-a, zatvara ACCEPTANCE 2), pa
+`M2b` — naslovna na nov rečnik.
+
+---
+
 ## G2 (LEAN) — kapija pokriva sve što `PageShell` renderuje · 2026-09-09
 
 **Code:** `d685f78` · **Grana:** `g2-gate-coverage` · **Manifest:** `batches/G2.md`

@@ -6,27 +6,33 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
-  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
-- **Sledeći:** `M2` — **tanak oblik**, potvrđen nezavisnim pregledom: `<h1 data-wipe>` u
-  `PageShell`-u + `data-stagger` na dve mreže u `/how-it-works`. Nula novog CSS-a.
-  ⚠️ **Pregled je oborio prvu verziju `M2` plana — dva blokera.** `[data-stagger]>*:nth-child(2)`
-  (0,2,0) gazi `[data-wipe]` (0,1,0), pa bi `--wipe-lead` tiho nestao; i `CRTA` na `.sub-hero`
-  pada tačno na Nav-ovu ivicu. Zato `.sub-hero` **ne** dobija ni `data-line` ni `data-stagger`.
-  ⚠️ Pre `M2` pročitati `LESSONS` **L15–L18**.
-- **Poslednji završen:** **`G2`** (2026-09-09, `d685f78`) — `G1/A` i `G1/B` sada mere **14 ruta**
-  umesto 10: `PAGE_PATHS` + `allPostSlugs()` + `/missing-page`. Spisak se **izvodi**, pa četvrti
-  članak neće tražiti izmenu kapije. Obuhvat se ispisuje pri svakom pokretanju.
-  ⚠️ **Dokazano pocrvenela na obe nove površine, zasebno** — petlja puca na prvom prekršaju, pa
-  bi zajedničko merenje sakrilo 404.
-- **Pretposlednji:** **`G1`** (2026-09-09, `3d9b55a`) — ograničenje „`data-wipe` samo na listne
-  elemente" pretvoreno u mašinsku kapiju; postupak „kapija mora pocrveneti" upisan u `RULES §6`.
-- Starije (`M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
+- **Aktivan batch:** **NONE** — `M2` zatvoren, nema OPEN manifesta.
+  ⚠️ **ALI grana nije spojena** — vidi `Git` niže. „Nema aktivnog batcha" **nije** isto što i
+  „ništa ne stoji nespojeno" (`LESSONS` L13).
+- **Sledeći:** `M2b` — naslovna: šest sekcija na nov rečnik + brojke stižu pre sadržaja.
+  ⚠️ **Dva ograničenja koja `M2` predaje `M2b`-u:** wipe **nikad** kao direktno dete
+  `data-stagger` kontejnera (`nth-child` 0,2,0 gazi `[data-wipe]` 0,1,0 i `--wipe-lead` tiho
+  nestaje), i `CRTA` ne ide na `.sub-hero` — pada na Nav-ovu ivicu.
+  ⚠️ **`M2b` će namerno oboriti `G1/C` census** (`6/4/3/3`); broj se ispravlja u istom batchu
+  koji menja markup, nikad zasebno.
+- **Poslednji završen:** **`M2`** (2026-09-09, `1a3bca5`) — `PageShell` dobio `<h1 data-wipe>`,
+  `/how-it-works` `data-stagger` na `.sub-2up` i `.sub-3up`. Tri atributa, dva fajla, **nula
+  CSS-a**. `manual` PASS (Pavle, pravi browser).
+  ⚠️ **Izmereno: `G1/A` je do danas prolazila prazna na 13 od 14 ruta** — `data-wipe` je
+  postojao samo na `/`. Sada je 16 elemenata na 14 ruta, praznih ruta **nula**. Obuhvat rute
+  nije obuhvat tvrdnje.
+  ⚠️ **ACCEPTANCE 2 stoji otvoren** — merenje protiv **deploy-a** traži push.
+- **Pretposlednji:** **`G2`** (2026-09-09, `d685f78`) — `G1/A` i `G1/B` mere **14 ruta** umesto
+  10, spisak se **izvodi** iz `PAGE_PATHS` + `allPostSlugs()` + `/missing-page`.
+- Starije (`G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno` i `docs/STATUS-ARCHIVE.md`.
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
-  (`git branch --no-merged master` prazno).
+- ⚠️ **`m2-pageshell-ritam` stoji NESPOJENA i NEPUŠENA** — dva commita
+  (`1a3bca5` implementacija, close commit). `master` je i dalje na `bb8c407`.
+  **Release je zasebna Pavlova odluka**; dok ne padne, `M2` nije na deploy-u i
+  `ACCEPTANCE 2` iz `batches/M2.md` ostaje `NIJE POKRENUTO`.
+- Grana istine **`master`**, izjednačena sa `origin/master`.
 - `G1` (`ddba710..7e73585`) i `G2` (`1ff169b..930c33d`) spojeni fast-forward-om i pušeni
   2026-09-09. **Deploy živ i izmeren protiv oba.**
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
