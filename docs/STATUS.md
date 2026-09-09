@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) — naslovna od 2026-09-09 ima **devet** sekcija, ne deset |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`d1-cinematic-guard-founder`** (56), nespojena; `master` na 55 |
+| Grana | **`master`** (57 commita); sve tri `d1-*` grane spojene fast-forward-om i pušene 2026-09-09 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -122,7 +122,8 @@ Kolona je zato `bigint`.
 
 ## Sesija 2026-09-09 (nastavak 2) — D1, `guard`+`founder` cinematic, `stories` obrisana
 
-Jedan commit na grani **`d1-cinematic-guard-founder`** (`a1a43d3`), **nespojen**.
+Dva commita na grani **`d1-cinematic-guard-founder`** (`a1a43d3` kod, `9a0806f` dokumenti),
+spojena u `master` fast-forward-om i **pušena istog dana**. `origin/master` na `9a0806f`.
 
 Treće i četvrto od četiri iz `D1`, u jednom potezu — jer se `stories` po planu delila između
 njih. Odnosno, Pavlovom odlukom, **ne deli**.
@@ -172,6 +173,10 @@ koji je `D1` tvrdio, sada izmeren a ne pretpostavljen.
 `typecheck 0` · `lint 0` · `test 132/132` · `build 0` · `verify:nojs PASS 14 ruta`
 (`/` **6343** znakova, bilo 6725 — razlika je obrisana sekcija) · `verify:claims PASS 13 ruta` ·
 `test:rendered 9/9`. Prelomi 1180 i 390 pogledani.
+
+**Ponovo izmereno protiv deploy-a posle push-a**: `verify:nojs PASS 14 ruta` (`/` 6343, isto
+kao lokalno) · `verify:claims PASS 13 ruta` · `test:rendered 9/9`. `noindex` drži, `sitemap`
+prazan. Potvrđeno da obrisanog teksta **nema nijedne pojave** na živoj stranici.
 
 ### Zapaženo usput, nije dirano
 
@@ -462,13 +467,10 @@ ruta claims` · `test:rendered 9/9`.
 
 ## ⚠️ Prvo što sledeća sesija treba da uradi
 
-⚠️ **Prvo: `d1-cinematic-guard-founder` stoji nespojena.** Spoji, pusti, pa **izmeri protiv
-deploy-a**:
+✅ **Ništa ne stoji nespojeno.** Sve tri `d1-*` grane su spojene, pušene i izmerene protiv
+deploy-a 2026-09-09. Od `D1` ostaje **samo `D4`**.
 
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run verify
-    VERIFY_BASE=https://growth-cinematic.vercel.app npm run test:rendered
-
-**Onda: sticky `process` (`D4`) — poslednja stavka `D1`, i time je taksonomija zatvorena.**
+**Sticky `process` (`D4`) — poslednja stavka `D1`, i time je taksonomija zatvorena.**
 
 `process` je jedina sekcija koja u `D1` ostaje **editorial** i dobija sticky ponašanje: naslov
 stoji dok četiri koraka `01–04` prolaze pored njega. Numeracija već postoji, pa se ne izmišlja.
