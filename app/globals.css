@@ -690,13 +690,41 @@ main:focus{outline:none}
 .home-guard-list li>span{min-width:92px;font-weight:700;color:#5b6659}
 .home-guard-list li>span.is-do{color:var(--clay-mid)}
 
-.home-stories{background:var(--bone-dim)}
-.home-stories p{font-size:16px;line-height:1.7;margin:0 0 16px;color:var(--moss)}
 
 @media(max-width:720px){
   /* Na jednoj koloni labela ide iznad teksta, pa `min-width` vise nema svrhu. */
   .home-guard-list li>span{min-width:0}
 }
+
+/* ── `guard` + `founder` — CINEMATIC (D1, 2026-09-09) ─────────────────────────
+   Trece i cetvrto od cetiri iz `D1`. Do 2026-09-09 su bile dve krem sekcije u
+   editorial ritmu; sada su forest/bone, jedna do druge, namerno.
+
+   ⚠️ NIJEDNA NOVA VREDNOST I NIJEDAN NOV MEHANIZAM. Par forest/bone vec postoji
+   na `.home-callback` i `.home-close`; ovde se samo primenjuje na jos dve sekcije.
+   To je cela razlika prema `pay` i `values`, gde je oblik trebalo izmisliti.
+
+   ⚠️ DVE TAMNE JEDNA DO DRUGE NISU MONOTONIJA, jer se razlikuju po FORMI:
+   `guard` nosi tipografija i lista parova, `founder` nosi covek — citat u Georgia
+   serifu i potpis. Ista podloga, dva razlicita objekta. `D1` to zove „prekid cina".
+
+   ⚠️ PET PRAVILA ISPOD NISU KOZMETIKA NEGO CITLJIVOST. Sve nasledjeno je racunalo
+   na krem podlogu: telesni tekst u `--moss` (#455044), ivice u `rgba(22,32,25,.22)`,
+   labele u `#5b6659` i `--clay-mid` (#86502b). Nista od toga se ne vidi na forestu.
+   Bez ovih preboja sekcija bi bila tamna i prazna, a nijedna kapija to ne bi
+   uhvatila — `verify-nojs` gleda inline stilove, ne kontrast. */
+.home-guard,.home-founder{background:var(--forest);color:var(--bone);border-top-color:var(--line)}
+.home-guard h2 em,.home-founder h2 em{-webkit-text-stroke-color:var(--bone)}
+.home-guard .home-kicker,.home-founder .home-kicker{color:var(--clay-light)}
+/* Telesni tekst: `#e3ded1` je vec „telo na forestu" u ovom fajlu (`.journey-lede`),
+   ne nova vrednost. Preboj ide ovde jer je `.home-steps p` deljen sa `process`-om,
+   koji ostaje krem — deljeni selektor se ne dira, dodaje se uzi. */
+.home-guard p,.home-founder p{color:#e3ded1}
+.home-guard .home-steps li,.home-guard .home-steps li:first-child{border-color:var(--line)}
+/* WE DON'T se prigusuje, WE DO nosi clay — ista podela kao na kremu, drugim sredstvom.
+   `opacity` umesto nove rgba vrednosti: fajl to vec radi (`.qa-lede`, `.consent-body`). */
+.home-guard-list li>span{color:var(--bone);opacity:.5}
+.home-guard-list li>span.is-do{color:var(--clay-light);opacity:1}
 
 /* ─── CONSENT BANER ───────────────────────────────────────────────────────────
    Forest panel sa bone tekstom — isti par kao `.home-callback` i `.home-close`,

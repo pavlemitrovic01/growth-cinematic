@@ -274,45 +274,28 @@ export default function CinematicHome() {
         </section>
 
         {/*
-          Posten placeholder umesto izmisljenih testimonijala. `docs/CLAIMS.md` ga u
-          audit tabeli imenuje kao UZORAN primer (C16) — zato prelazi doslovno.
-          Sekcija nestaje tek kad stignu prave price, sa imenima i dozvolom.
+          ⚠️ `stories` JE OBRISANA 2026-09-09 — `D1`, uz Pavlov override same odluke.
+
+          `D1` je propisao brisanje sekcije ALI selidbu njene najjace recenice („No stock
+          photos. No invented reviews.") u `guard`, kao `what we don't do` tvrdnju. Pavlova
+          odluka je da ni to ne ide nigde: **„nemamo potrebe da se igde pravdamo sto se toga
+          tice."**
+
+          ⚠️ Razlog stoji, i jaci je od plana: obecanje da nema izmisljenih recenzija
+          PRETPOSTAVLJA optuzbu. Sajt koji to eksplicitno negira sam uvodi sumnju koju niko
+          nije izneo. Brisanje je jace od selidbe.
+
+          Sta je nestalo: naslov „Be one of the first." (koji se citao kao „nemamo klijente,
+          vi ste test"), pasus o prvim vozacima — duplikat tvrdnje koju `founder` vec nosi —
+          i obecanje o recenzijama. `founder` NE prima nista; ostaje nepromenjen.
+
+          ⚠️ U ovom batch-u nije napisana nijedna nova rec. Samo je brisano, pa je registarski
+          rizik nula: `verify-claims` moze samo da bude sigurniji nego pre.
+
+          Numeracija: `faq` je time presao sa `06` na `05`.
         */}
-        <section data-reveal className="home-stories home-section" aria-labelledby="stories-heading">
-          <span className="home-kicker">05 / DRIVER STORIES</span>
-          <div className="home-editorial">
-            <h2 id="stories-heading">Be one of<br /><em>the first.</em></h2>
-            <div>
-              {/*
-                ⚠️ CLAIMS C41 (status OPEN) — popravljeno 2026-09-06. Do tada je ovde stajalo
-                „the drivers we place right now", a C41 zabranjuje SVAKU konstrukciju u prezentu
-                koja tvrdi aktivno plasiranje: GROWTH je nova firma bez zabelezenih plasmana.
-
-                ⚠️ ZASTO JE PROSLO KROZ SEDAM CLAIMS BATCH-EVA. Ovaj pasus je u `CLAIMS.md`
-                KEEP tabeli zaveden pod C16 (testimonijali) jos u CL1 — a C41 je nastao tek u
-                L1, 2026-08-24. Red je bio zatvoren za jedan tag pre nego sto je drugi postojao,
-                i nikad nije ponovo procitan protiv njega. Isti obrazac koji LESSONS L29 imenuje.
-
-                Recenica zadrzava istu ulogu (zasto je biti prvi dobro), ali vise ne tvrdi da se
-                plasiranje desava — tvrdi samo ono sto jeste istina: ko dodje prvi, dobija punu
-                paznju. Ista povreda i dalje stoji u MAIN-u (`app/page.jsx:223`); taj repo se
-                odavde ne dira.
-              */}
-              <p>
-                GROWTH is new. That means the first drivers who come to us get our full attention —
-                and their stories land here, with their names and their permission, as they roll in.
-              </p>
-              <p>
-                No stock photos. No invented reviews. When this section fills up, every word in it
-                will be real — because in this industry that’s the whole point.
-              </p>
-              <Link className="home-text-link" href="/apply">{APPLY_CTA} ↗</Link>
-            </div>
-          </div>
-        </section>
-
         <section data-reveal className="home-faq home-section" aria-labelledby="faq-heading">
-          <div className="home-section-top"><span className="home-kicker">06 / STRAIGHT ANSWERS</span><Link className="home-text-link" href="/faq">All questions ↗</Link></div>
+          <div className="home-section-top"><span className="home-kicker">05 / STRAIGHT ANSWERS</span><Link className="home-text-link" href="/faq">All questions ↗</Link></div>
           <h2 id="faq-heading">Before you<br /><em>take the next step.</em></h2>
           <Accordion items={homeFaqItems()} />
         </section>
