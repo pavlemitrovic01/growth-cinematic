@@ -3,9 +3,10 @@
 Pisano 2026-09-08. Odluka o pravcu je Pavlova: **pokret kao karakter, bez paralaksa, bez
 generičkih efekata**.
 
-⚠️ **Više nije čist plan.** `D1` je implementiran 2026-09-09 osim sticky `process`-a:
-`pay` → utility (`f541b72`), `values` → utility (`08debb5`), `guard`+`founder` → cinematic uz
-brisanje `stories` (`a1a43d3`). Ostatak dokumenta je i dalje plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
+⚠️ **Više nije čist plan.** **`D1` je cele implementiran 2026-09-09:** `pay` → utility
+(`f541b72`), `values` → utility (`08debb5`), `guard`+`founder` → cinematic uz brisanje
+`stories` (`a1a43d3`), sticky `process` (`3dbcc26`, još nespojen). Ostatak dokumenta —
+`D2`, `D5` i ceo `M`-kolosek — i dalje je plan. Kad se stavka uradi, red u tabeli dobija ✅ i commit —
 da se iz ovog dokumenta uvek vidi šta stoji na disku a šta samo na papiru.
 
 ---
@@ -72,7 +73,7 @@ osobi. Reči koje neko nije rekao ne idu pod njegovo ime. Bolji citat mora doći
 | **D3** | Utility blokovi — ✅ `$0` urađen sa `pay` (`f541b72`); ostaju `20+`, rok odgovora, 48 država | struktura | D1 |
 | **M1** | Rečnik: `OTKRIVANJE` + `CRTA` kao primitivi | pokret | — |
 | **M2** | `PageShell` ritam — pet stranica bez ijednog reveala | pokret | M1 |
-| **D4** | Sticky proces sekcija | struktura + pokret | D1, M1 |
+| **D4** | Sticky proces sekcija | struktura + pokret | ✅ **URAĐENO 2026-09-09**, `3dbcc26` — **nije čekao `M1`**, vidi niže |
 | **D5** | „What we don't do" kao manifest | struktura | D1 |
 | **M3** | Naslovi — maska po reči | pokret | M1 |
 | **D6** | Driver stories — preokvirivanje | **copy** | ⚠️ registar |
@@ -94,7 +95,7 @@ u ovom dokumentu pogrešno prošlo kao broj sekcija.
 | 1 | hero · *Your next route.* | **cinematic** | nepromenjeno |
 | 2 | callback · *YOUR NEXT STEP* | **forma** | nepromenjeno — vidi niže |
 | 3 | pay · *How we get paid.* | **utility** | ✅ **URAĐENO 2026-09-09**, `f541b72` — proza → podatak, nosi `$0` |
-| 4 | process · *The details make the difference.* | **editorial** | + sticky (`D4`) |
+| 4 | process · *The details make the difference.* | **editorial** | ✅ **URAĐENO 2026-09-09**, `3dbcc26` — sticky lede; ⚠️ skrol još nije gledan u pravom browseru |
 | 5 | values · *A bigger number isn't the whole offer.* | **utility** | ✅ **URAĐENO 2026-09-09**, `08debb5` — ime ose je display element |
 | 6 | guard · *What we don't do.* | **cinematic** | ✅ **URAĐENO 2026-09-09**, `a1a43d3` — ⚠️ **NE prima ništa**, vidi override niže |
 | 7 | founder · *Built around the honest part.* | **cinematic** | ✅ **URAĐENO 2026-09-09**, `a1a43d3` — ⚠️ **NE prima ništa**, vidi override niže |
@@ -231,6 +232,53 @@ urađenog 2026-09-08.
 
 ⚠️ **D6 ide kroz istu disciplinu kao Faza 4:** copy se prenosi ili odobrava, ne piše usput, i
 prolazi `verify-claims`.
+
+---
+
+## ✅ D4 — sticky `process`, URAĐENO 2026-09-09 (`3dbcc26`)
+
+`process` je jedina sekcija koja u `D1` **ostaje editorial**, pa se nije menjao oblik nego
+**ponašanje**: naslov stoji dok četiri koraka `01–04` prolaze pored njega.
+
+### ⚠️ Nije čekao `M1`, i to je bila tačna odluka
+
+Spojeni redosled gore vodi `D4` kao zavisan od `M1`. **Nije bio.** `position:sticky` već živi
+u ovom projektu na dva mesta — `.card--cta` (`top:24px`) i `.is-enhanced .journey-stage`
+(`top:0`) — pa se ništa ne uvozi i ništa ne dodaje u rečnik pokreta. `M1` ostaje nezavisan i
+neurađen.
+
+Radi zato što je `.home-editorial` **grid**: kod grid stavke je containing block **grid area**,
+koja se proteže celom visinom reda — pa `align-items:start` ne obara sticky nego mu daje
+prostor da klizi. Bez grida bi trebao dodatni omotač.
+
+### ⚠️ Pod `reduce` sticky NAMERNO ostaje — i to je odgovor na pitanje iz `STATUS.md`
+
+Kill switch gasi `animation` i `transition`, **ne `position`**, pa ovo preživljava. To je
+**tačan ishod, ne rupa u kapiji.** `reduce` postoji zbog vestibularnih tegoba, a sticky element
+se **ne pomera**: stoji dok se stranica kreće. To je *manje* pokreta nego alternativa, ne više.
+Paralaks — pomeranje **različitom brzinom** — morao bi da se gasi; zato paralaks i nije u planu.
+
+### ⚠️ Gasi se na niskom prozoru, i nijedna kapija to ne meri
+
+Ako je lede viši od vidnog polja, sticky bi mu prikovao vrh a dno — **uključujući link „See the
+whole process ↗"** — ostalo bi trajno van ekrana i **nedohvatljivo**. Ne dešava se na uobičajenom
+laptopu, ali se dešava na **200% zoom-u** i na niskom prozoru. `@media(max-height:640px)` vraća
+normalan tok. Ispod 900 px širine takođe `static`: u jednoj koloni lede stoji **iznad** koraka,
+pa bi sticky pojeo vrh ekrana bez ijedne dobijene stvari.
+
+### ⚠️ Šta NIJE potvrđeno
+
+**Samo ponašanje pri skrolu.** Browser panel je usred provere izgubio layout u celini
+(`docH=900`, svi elementi nulte visine, iako DOM ima svih 9 sekcija) i nije se oporavio ni posle
+zatvaranja taba ni posle resize-a.
+
+Dokazano **jeste** da se pravilo primenjuje: `getComputedStyle` na živom elementu vraća
+`position:sticky; top:40px`, a build servira tačno tri očekivana pravila sa oba media upita.
+**Nije** dokazano da se pri skrolu ponaša kako treba.
+
+Ovaj dokument to ionako traži — *„Sve što zavisi od skrola proverava se u pravom browseru."*
+**`D4` je prva stavka na koju se to pravilo stvarno odnosi**, i zato grana ne ide na merge dok
+Pavle ne pogleda.
 
 ---
 

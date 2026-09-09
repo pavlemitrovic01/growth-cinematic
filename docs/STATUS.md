@@ -36,7 +36,7 @@ Sajt je funkcionalno kompletan, **deploy-ovan i izmeren protiv deploy-a**, pod `
 | Ruta | 14 (+3 API) — naslovna od 2026-09-09 ima **devet** sekcija, ne deset |
 | Sadržaj | podstranice dopunjene 2026-09-05; `/for-carriers` +46%, `/contact` +35% |
 | Testovi | 132 u 9 fajlova (vitest) + 9 HTTP testova nad renderovanim HTML-om |
-| Grana | **`master`** (57 commita); sve tri `d1-*` grane spojene fast-forward-om i pušene 2026-09-09 |
+| Grana | **`d4-sticky-process`** (59), nespojena — ⚠️ **čeka Pavlov pogled**; `master` na 58 |
 | Hosting | Vercel projekat `growth-cinematic`, nalog **„pavle's projects" (Hobby)** |
 | Baza | Neon Free, regija `iad1`, Neon Auth ugašen; migracija puštena, obe tabele postoje |
 
@@ -119,6 +119,50 @@ Kolona je zato `bigint`.
   difoltni `STORAGE`, kod ga nikad ne bi našao i tiho bi zauvek radio na in-memory sloju.
   Uz njega je Neon ubacio još 15 `DATABASE_*` promenljivih koje kod ne koristi — **ne dirati
   ih**, integracija ih sama održava.
+
+## Sesija 2026-09-09 (nastavak 3) — D4, sticky `process`. **D1 je time ceo implementiran.**
+
+Jedan commit na grani **`d4-sticky-process`** (`3dbcc26`), **nespojen — i namerno.**
+
+`process` je jedina sekcija koja u `D1` ostaje editorial, pa se ne menja oblik nego **ponašanje**:
+naslov stoji dok četiri koraka `01–04` prolaze pored njega.
+
+### `D4` nije čekao `M1`, i to je bila tačna odluka
+
+Plan ga vodi kao zavisnog od `M1` (novi primitivi pokreta). **Nije bio.** `position:sticky` već
+živi na `.card--cta` i na hero sceni, pa se ništa ne uvozi i ništa ne dodaje u rečnik pokreta.
+**`M1` ostaje nezavisan i neurađen.**
+
+### ⚠️ Odgovor na pitanje koje je prethodni blok postavio: pod `reduce` sticky OSTAJE
+
+Kill switch gasi `animation` i `transition`, **ne `position`**. To je **tačan ishod, ne rupa u
+kapiji**: `reduce` postoji zbog vestibularnih tegoba, a sticky element se **ne pomera** — stoji
+dok se stranica kreće. To je *manje* pokreta, ne više. Paralaks bi morao da se gasi; zato
+paralaks i nije u planu.
+
+### ⚠️ Zamka koju nijedna kapija ne meri — nizak prozor
+
+Ako je lede viši od vidnog polja, sticky bi mu prikovao vrh a dno — **uključujući link** — ostalo
+bi trajno **nedohvatljivo**. Ne dešava se na laptopu, ali se dešava na **200% zoom-u**.
+`@media(max-height:640px)` vraća normalan tok. Ispod 900 px takođe `static`.
+
+**Kapije, protiv `npm run build && npm start` na `:3000`** (PID 13920):
+`typecheck 0` · `lint 0` · `test 132/132` · `build 0` · `verify:nojs PASS 14 ruta`
+(`/` **6343 znakova, nepromenjeno** — sticky je čista prezentacija) · `verify:claims PASS 13
+ruta` · `test:rendered 9/9`.
+
+### ⚠️ ZATO OVA GRANA NIJE SPOJENA: skrol nije potvrđen
+
+Browser panel je **usred provere izgubio layout u celini** — `docH=900`, svi elementi nulte
+visine, iako DOM ima svih 9 sekcija. Nije se oporavio ni posle zatvaranja taba, ni posle
+`resize`-a, ni posle fronting-a.
+
+Dokazano **jeste** da se pravilo primenjuje: `getComputedStyle` na živom elementu vraća
+`position:sticky; top:40px`, a build servira tačno tri očekivana pravila sa oba media upita.
+**Nije** dokazano da se pri skrolu ponaša kako treba.
+
+`MOTION.md` to ionako traži — *„Sve što zavisi od skrola proverava se u pravom browseru."*
+**`D4` je prva stavka na koju se to pravilo stvarno odnosi.**
 
 ## Sesija 2026-09-09 (nastavak 2) — D1, `guard`+`founder` cinematic, `stories` obrisana
 
@@ -470,21 +514,25 @@ ruta claims` · `test:rendered 9/9`.
 ✅ **Ništa ne stoji nespojeno.** Sve tri `d1-*` grane su spojene, pušene i izmerene protiv
 deploy-a 2026-09-09. Od `D1` ostaje **samo `D4`**.
 
-**Sticky `process` (`D4`) — poslednja stavka `D1`, i time je taksonomija zatvorena.**
+⚠️ **PRVO, I TRAŽI PAVLA A NE AGENTA: pogledaj sticky `process` u pravom browseru.**
 
-`process` je jedina sekcija koja u `D1` ostaje **editorial** i dobija sticky ponašanje: naslov
-stoji dok četiri koraka `01–04` prolaze pored njega. Numeracija već postoji, pa se ne izmišlja.
+Grana `d4-sticky-process` stoji nespojena zato što je **jedina stvar koju agent nije mogao da
+potvrdi** — panel je izgubio layout usred provere. Otvori naslovnu, skroluj kroz sekciju
+*„The details make the difference."* i vidi da li naslov stoji dok koraci prolaze pored njega,
+i da li se odlepi na kraju sekcije umesto da se zaglavi.
 
-⚠️ **`D4` je jedina stavka `D1` koja je istovremeno struktura I pokret**, pa u planu zavisi i od
-`M1` (primitivi `OTKRIVANJE` + `CRTA`). Odluči na početku: da li sticky ide **bez** `M1` — čist
-CSS `position:sticky`, nula novih primitiva — ili se prvo radi `M1`. **`M1` je nezavisan i može
-bilo kada**, ali sticky sam po sebi ne traži rečnik pokreta.
+    npm run build && npm start        # pa http://localhost:3000
 
-⚠️ **Sticky je jedina stvar u planu koja menja PONAŠANJE skrola**, a `MOTION.md` ima tvrdo
-pravilo: pod `prefers-reduced-motion: reduce` sve staje. **Sticky nije animacija i kill switch
-ga neće ugasiti** — proveri šta se dešava pod `reduce` **pre** commita, ne posle.
+Ako radi: spoji, pusti, izmeri protiv deploy-a. Ako ne: `.process-lede` u `app/globals.css`.
 
-Posle `D4` je `D1` zatvoren i ostaju čisti motion batch-evi (`M1`–`M6`) i `D2`/`D5`.
+**Onda: `M1` — rečnik pokreta.** `D1` je time ceo završen i kolosek prelazi sa **oblika** na
+**pokret**. `M1` dodaje dva primitiva (`OTKRIVANJE` — maska s leva umesto fade-up-a, i `CRTA` —
+linija koja se iscrtava) uz postojećih šest, **bez ijedne primene**. Tek `M2` i dalje ih koriste.
+
+⚠️ **Tri sekcije su u međuvremenu promenile oblik**, pa `MOTION.md` površine 3 i 4 treba pročitati
+ponovo pre `M1`: opisuju „osam `data-reveal` fade-up-ova na naslovnoj" i vezuju pokret za brojke.
+Naslovna sada ima **devet** sekcija, `pay` i `values` nose podatke drugačije nego kad je plan
+pisan. **Plan nije pogrešan, ali je stariji od koda.**
 
 ### Zašto se redosled promenio 2026-09-08
 
