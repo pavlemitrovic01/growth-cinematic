@@ -13,18 +13,20 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `G1` | Kapija: `data-wipe` nikad na `<section>`/`<main>`/`<body>`; broj motion atributa na `/` | LEAN | `M1` | **SLEDEĆI** |
-| `M2` | Sekcije, brojke i `PageShell` ritam — pet podstranica nema nijedan reveal | STANDARD | `M1` | OPEN |
+| `M2` | Sekcije, brojke i `PageShell` ritam — pet podstranica nema nijedan reveal | STANDARD | `M1`, `G1` | **SLEDEĆI** |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
 | `M6` | Pritisak (`MobileBar` nema `:active`) i kartice (hover koji nije `translateY`) | LEAN | `M1` | OPEN |
 | `D2` | Outline tipografija svedena na 2–3 mesta | LEAN | — | OPEN |
 
-⚠️ **`G1` postoji zato što ograničenje danas živi samo kao komentar.** `data-wipe` pravi
-containing block za `position:fixed` i `position:absolute` potomke; pravilo „samo na listne
-elemente" nijedna kapija ne sprovodi. `M2` je prvi batch koji bi ga mogao prekršiti.
-**Pavlova odluka 2026-09-09: zaseban LEAN batch, ne proširenje `M1`-a.**
+✅ **`G1` je zatvorio ono što je `M2` moglo da prekrši.** Od 2026-09-09 `npm run test:rendered`
+sprovodi tri tvrdnje na svih 10 statičkih ruta: `data-wipe` samo na listnim tekstualnim tagovima
+(**allowlist**, ne denylist), nijedan `data-line` unutar `data-wipe`, i **tačan broj** motion
+atributa na `/` (6/4/3/3).
+⚠️ **`M2` će oboriti census čim doda pokret — to je namerno.** Broj se ispravlja **u istom batchu
+koji menja markup**, nikad kao zaseban „fix testa". Ako `M2` traži tag van allowliste, pad kapije
+je **decision point**, ne prepreka.
 
 ⚠️ **Plan pokreta (`docs/MOTION.md`) je stariji od koda.** Površine 3 i 4 opisuju „osam
 `data-reveal` fade-up-ova" i vezuju pokret za brojke. Naslovna sada ima **devet** sekcija,
@@ -63,6 +65,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `G1` | **Kapija za `data-wipe` placement** + census pokreta na `/` — dokazano pocrvenela pre priznanja | 2026-09-09 |
 | `M1` | **Rečnik pokreta** — `OTKRIVANJE` + `CRTA` kao primitivi, uz dokaznu primenu na `values` | 2026-09-09 |
 | `D1` | **Taksonomija sekcija** — `pay`+`values` → utility, `guard`+`founder` → cinematic, `stories` obrisana, sticky `process` | 2026-09-09 |
 | `D4` | Sticky `process` (poslednji deo `D1`) | 2026-09-09, `manual` PASS |

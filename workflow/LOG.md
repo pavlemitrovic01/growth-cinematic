@@ -6,6 +6,66 @@
 
 ---
 
+## G1 (LEAN) — `data-wipe` placement kapija + census pokreta · 2026-09-09
+
+**Code:** `3d9b55a` · **Grana:** `g1-wipe-placement-gate` · **Manifest:** `batches/G1.md`
+
+**Changed files (2 + workflow):** `tests/rendered-html.test.mjs` · `workflow/RULES.md`
+*(+ `batches/G1.md`, `ROADMAP.md`, `STATE.md`, ovaj `LOG.md` na close)*
+
+Ograničenje „`data-wipe` samo na listne tekstualne elemente" je do sada postojalo na **tri mesta
+i sva tri su bila komentar** (`app/globals.css:908`, `docs/MOTION.md:332`, `LESSONS` L17). Sada su
+to **tri mašinske tvrdnje**: **A** allowlist listnih tagova (svih 10 ruta), **B** nijedan
+`data-line` unutar `data-wipe` (svih 10 ruta), **C** census `6/4/3/3` na `/`.
+
+**Tri odobrena pojačanja preko ROADMAP reda** (Pavle, 2026-09-09): allowlist umesto denyliste —
+`<div data-wipe>` oko podstabla je isti defekt, a denylist bi ga pustio; sweep preko svih 10 ruta
+iz `lib/routes.js` — kapija koja gleda samo `/` ne bi videla `M2` prekršaj, a to joj je jedina
+svrha; i `LESSONS` L17 pravilo 2.
+
+⚠️ **KAPIJA JE DOKAZANO POCRVENELA pre nego što je priznata.** Tri namerna prekršaja, jedan build,
+tri crvene tvrdnje (10 pass / 3 fail):
+
+```
+✖ A  <section data-reveal="true" data-wipe="true" class="home-guard home-section" …>
+     „nosi data-wipe, a nije listni tekstualni element"
+✖ B  <span data-line> unutar <h3 data-wipe>
+     „Clip guta pseudo-element, pa linija ne moze da vodi"
+✖ C  data-reveal  5 !== 6
+```
+
+Posle `git checkout --` i rebuild-a: **13/13 zeleno**, `CinematicHome.tsx` netaknut.
+**Ovaj postupak je istim batchem upisan u `RULES §6`** kao trajno pravilo — odobrena scope
+ekspanzija, zapisana u manifestu sa datumom i razlogom.
+
+⚠️ **Zašto renderovan HTML, a ne grep po izvoru:** `grep -o data-reveal` nad `CinematicHome.tsx`
+vraća **7**, a živih atributa ima **6** — sedmi je pomen u komentaru. Isto `data-stagger` (6→4) i
+`data-line` (4→3). Provera po izvoru bi lagala na prvom pokretanju.
+
+⚠️ **Nalaz iz merenja:** React renderuje `data-wipe` kao `data-wipe="true"`, ne `=""`. Parser to
+hvata po konstrukciji (vrednosti se seku pre poređenja skupova), ali fixture je pretpostavljao
+pogrešan oblik — dopisan je stvarni.
+
+**VERIFICATION:** `quick` 0 · `full` 0 · `test:rendered` **13/13** · `typecheck` 0 (van LEAN
+zahteva) · `test` 132/132 (van LEAN zahteva). `meri se: http://localhost:3000` ispisano pri svakom
+merenju. PID provere pre svakog merenja — server svež, ne zaostao (`L1`).
+
+⚠️ **`ACCEPTANCE 4` (merenje protiv deploy-a) — `NIJE POKRENUTO`**, ne PASS. Razlog: `/close §6`
+ne pushuje, release je zasebna Pavlova odluka.
+
+**SCOPE_DRIFT:** none — tačno EXPECTED-FILES + odobrena ekspanzija (`workflow/RULES.md`).
+`LESSONS.md` je bio naveden kao **uslovan** i **ostao je netaknut**: falsifikacija nije otkrila
+ništa što parser već ne rešava, pa nova lekcija nije izmišljena da popuni mesto.
+
+**VAN OBUHVATA, prijavljeno ne prošireno autonomno:** `/truckers-lounge/<slug>` se izvodi iz
+`POSTS` i nije u `PAGE_PATHS`, pa A i B ne sweep-uju članke (danas tamo nema motion atributa).
+`LESSONS` L17 pravilo 1 traži replikaciju CSS kaskade i ne staje u LEAN.
+
+**NEXT STEP:** merge + push (Pavlova odluka), pa `VERIFY_BASE=… npm run test:rendered` protiv
+deploy-a. Zatim `M2` — koji će census oboriti namerno i ispraviti ga u istom batchu.
+
+---
+
 ## M1 (STANDARD) — rečnik pokreta: `OTKRIVANJE` + `CRTA` · 2026-09-09
 
 **Code:** `396d28c` · **Fix:** `30f471d` · **Docs:** `e425557` · **Grana:** `m1-motion-vocabulary`

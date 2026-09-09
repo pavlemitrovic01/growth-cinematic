@@ -6,25 +6,29 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — nema OPEN manifesta, grana je `master`, stablo čisto,
-  `origin/master` izjednačen. **Ništa ne stoji nespojeno.**
-- **Sledeći:** **`G1` (LEAN)** — pretvoriti ograničenje „`data-wipe` samo na listne elemente" iz
-  komentara u **mašinsku kapiju** (`tests/rendered-html.test.mjs`). Pavlova odluka 2026-09-09:
-  zaseban batch, ne proširenje `M1`-a. ⚠️ `M2` je prvi koji bi ograničenje mogao prekršiti, pa
-  `G1` ide **pre** njega.
-- **Pa onda:** `M2` — površine 3, 4 i 5 (sekcije, brojke, `PageShell` ritam).
+- **Aktivan batch:** **NONE** — nema OPEN manifesta, stablo čisto.
+  ⚠️ **Ali grana `g1-wipe-placement-gate` NIJE spojena ni pušena** (vidi `Git`).
+- **Sledeći:** `M2` — površine 3, 4 i 5 (sekcije, brojke, `PageShell` ritam).
   ⚠️ Pre `M2` pročitati `LESSONS` **L15–L18** — sva četiri su iz `M1` i sva četiri opisuju
   zamke koje nijedna kapija ne vidi.
-- **Poslednji završen:** **`M1`** (2026-09-09, `396d28c` + `30f471d`, `manual` PASS) — rečnik
-  pokreta. **Prvi batch koji je prošao ceo `/plan → /execute → /close` ciklus.**
-  ⚠️ Nezavisan dizajn pregled našao je defekt koji je prošao **sve** mašinske kapije: bazno
-  `clip-path` van kapije je pravilo containing block **trajno**, i bez JS-a i pod `reduce`.
-  Popravljeno pre merge-a.
+  ⚠️ **`M2` će oboriti `G1` census (6/4/3/3) čim doda pokret — to je namerno.** Broj se ispravlja
+  u **istom** batchu koji menja markup, nikad kao zaseban „fix testa".
+- **Poslednji završen:** **`G1`** (2026-09-09, `3d9b55a`) — ograničenje „`data-wipe` samo na
+  listne elemente" je sada **mašinska kapija** na svih 10 ruta, plus census pokreta na `/`.
+  ⚠️ **Kapija je dokazano pocrvenela** na tri namerna prekršaja pre nego što je priznata; taj
+  postupak je istim batchem upisan u **`RULES §6`** kao trajno pravilo.
+- **Pretposlednji:** **`M1`** (2026-09-09, `396d28c` + `30f471d`, `manual` PASS) — rečnik pokreta.
+  ⚠️ Nezavisan dizajn pregled našao je defekt koji je prošao **sve** mašinske kapije. Baš taj
+  presedan je razlog zašto `G1` traži crveni dokaz.
 
 ## Git
 
-- Grana istine **`master`**, izjednačena sa `origin/master`. **Ništa ne stoji nespojeno**
-  (`git branch --no-merged master` prazno).
+- Grana istine **`master`**, izjednačena sa `origin/master`.
+- ⚠️ **`g1-wipe-placement-gate` STOJI NESPOJENA I NEPUŠENA** — dva commita (`3d9b55a` +
+  close commit). `/close` ne pushuje; **release je zasebna Pavlova odluka** (`/close §6`).
+  Dok se ne spoji, `M2` gradi na `master`-u koji **nema** `G1` kapiju.
+  ⚠️ **Iz istog razloga `ACCEPTANCE 4` (merenje protiv deploy-a) nije pokrenuto**, ne prijavljeno
+  kao PASS. Prvi korak posle merge-a: push, pa `VERIFY_BASE=… npm run test:rendered`.
 - Grane `d1-pay-utility`, `d1-values-utility`, `d1-cinematic-guard-founder`, `d4-sticky-process`
   su spojene fast-forward-om i ostavljene kao bookmark-ovi.
 

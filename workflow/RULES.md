@@ -51,6 +51,12 @@ ili 3D scenu — bez obzira na tier. Razlog i dokaz: `LESSONS` L7.
 - Gate namerno preskočen prijavljuje se kao **`NIJE POKRENUTO` sa razlogom**, nikad kao PASS.
 - ⚠️ **`verify` i `rendered` se mere protiv deploy-a posle push-a**, ne samo lokalno, i **meta se
   ispisuje**. Merenje bez ispisane mete se ne prihvata (razlog: `2accf84`).
+- ⚠️ **NOVA KAPIJA SE NE PRIZNAJE DOK DOKAZANO NE POCRVENI.** Zeleno može značiti i „provera
+  nikad ništa ne matchuje" — a to je kapija koja ne postoji, samo izgleda kao da postoji. Pre
+  `/close`-a se **namerno ubaci prekršaj** koji ona treba da uhvati, izmeri crveni izlaz, pa
+  vrati; crveni izlaz ide u `LOG.md`. Vraćanje se dokazuje čistim `git status`-om.
+  Uvedeno u `G1` (2026-09-09). Razlog: `M1` je isporučio defekt koji je prošao **sve** kapije
+  (`30f471d`), a `LESSONS` L18 beleži tri lažna nalaza iz iste sesije.
 - Na `/close`: ažuriraj `STATE.md` i dodaj `LOG.md` unos (CHANGED FILES / VERIFICATION / NEXT STEP).
 
 ## §7 — Stop if unclear
