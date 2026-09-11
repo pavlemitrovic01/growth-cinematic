@@ -14,12 +14,12 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
 ## Aktivan kolosek — završetak po auditu (od 2026-09-11)
 
-Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Pre prvog batcha:
-**release `M2b`** (non-batch, Pavlova odluka) i slanje pravnih tekstova advokatu.
+Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Release `M2b` urađen 2026-09-11 (census `0/4/9/9` na deploy-u). Pre prvog batcha još: slanje
+pravnih tekstova advokatu.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M7` | Hero prelaz — kriva „drži pa predaj" umesto `1 − d·1.65` (`L-03`) | STANDARD + `manual` | release `M2b` | **SLEDEĆI** |
+| `M7` | Hero prelaz — kriva „drži pa predaj" umesto `1 − d·1.65` (`L-03`) | STANDARD + `manual` | — | **SLEDEĆI** |
 | `U1` | FAQ struktura: naslov po pitanju, `id` sidra, deep-link sa `/apply`; nivoi naslova (`L-06`, `L-17`) | STANDARD | — | OPEN |
 | `K1` | `globals.css` bez preklapanja pravila, bez vizuelne promene (`L-10`) | STANDARD + `manual` | — | OPEN |
 | `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `K1`, `T-FONT` | blokirano odlukom |

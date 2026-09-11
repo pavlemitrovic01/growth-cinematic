@@ -6,6 +6,44 @@
 
 ---
 
+## non-batch(release) — `M2b` spojen i pušen; ACCEPTANCE 4 zatvoren izmereno · 2026-09-11
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/M2b.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `docs/AUDIT-2026-09.md` · ovaj `LOG.md`
+
+`master` `697b787..8d788bf` fast-forward, push, Vercel deploy automatski. Nosi `M2b` (`d125e5f`,
+`ddd12cc`) i zapis audita (`8d788bf`). Pavlova odluka 2026-09-11 („Commit + release").
+
+⚠️ **Nov build potvrđen PRE merenja**, diskriminatorom koji stari nema: census naslovne na
+deploy-u `0/4/9/9` (stari `6/4/3/3`), prvi pokušaj posle push-a. Deploy
+`fra1::mtlfd-1789135104849-7beef7dccd6b`, `noindex` drži.
+
+IZMERENO PROTIV DEPLOY-a, sa ispisanom metom (`RULES §6`):
+  verify:nojs     PASS 14 ruta
+  verify:claims   PASS 13 ruta
+  test:rendered   13/13, `G1/A i G1/B mere 14 ruta`, `G1/C` census zelen
+  meri se: https://growth-cinematic.vercel.app
+
+**`L-20` iz audita je povučen kao greška merenja.** Audit je na deploy-u gađao
+`/_next/static/chunks/10x60x6vt5hvz.css` — ime iz **lokalnog** builda, koje deploy ne koristi.
+Deploy servira heširane assete pod `/_next/static/immutable/chunks/`, sa `immutable`:
+```
+  /_next/static/immutable/chunks/062vycfdv0dq9.css | HTTP 200 | Cache-Control: public,max-age=31536000,immutable
+  /_next/static/immutable/chunks/0c0hxoamwjsbw.js | HTTP 200 | Cache-Control: public,max-age=31536000,immutable
+  /_next/static/immutable/chunks/1amzvk42j9ro8.js | HTTP 200 | Cache-Control: public,max-age=31536000,immutable
+```
+⚠️ **I prvo ponovljeno merenje u ovoj sesiji je bilo nevažeće** — regex nije našao putanju asseta,
+pa je `curl` gađao naslovnu (`max-age=0` je zaglavlje stranice). Ponovljeno sa zaštitom od
+prazne putanje; gore je važeće merenje. Ista klasa greške kao `LESSONS` L18: pogrešna meta daje
+uverljiv, a netačan rezultat.
+
+Time je zatvoren ACCEPTANCE 4 iz `batches/M2b.md` — jedini kriterijum koji je na `/close`-u stajao
+kao NIJE POKRENUTO.
+
+**NEXT STEP:** `M7` (hero prelaz) kroz `/plan`.
+
+---
+
 ## non-batch — audit 2026-09 zapisan kao radni plan · 2026-09-11
 
 **Changed files:** `docs/AUDIT-2026-09.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·

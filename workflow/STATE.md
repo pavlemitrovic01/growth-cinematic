@@ -6,10 +6,8 @@
 ## Pozicija
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
-- **Aktivan batch:** **NONE** — `M2b` zatvoren, nema OPEN manifesta.
-  ⚠️ **ALI grana nije spojena** — vidi `Git` niže (`LESSONS` L13).
-- **Sledeći:** **release `M2b`** (non-batch, Pavlova odluka), pa prvi batch iz audita — **`M7`**
-  (hero prelaz). Kolosek je od 2026-09-11 **završetak po auditu**: `docs/AUDIT-2026-09.md` +
+- **Aktivan batch:** **NONE** — nema OPEN manifesta.
+- **Sledeći:** prvi batch iz audita — **`M7`** (hero prelaz), kroz `/plan`. Kolosek je od 2026-09-11 **završetak po auditu**: `docs/AUDIT-2026-09.md` +
   `ROADMAP` → Aktivan kolosek. `M2c` čeka `T1` i usklađen `docs/MOTION.md`.
 - **Poslednji završen:** **`M2b`** (2026-09-09, `d125e5f`) — šest sekcija naslovne sa
   `data-reveal` na `CRTA` + `OTKRIVANJE`. Census `6/4/3/3` → **`0/4/9/9`**, falsifikovan **po
@@ -18,7 +16,7 @@
   `globals.css` i u `Motion.tsx:76`. Brisanje je zasebna odluka, nije doneta.
   ⚠️ **Linija je na svetlim sekcijama dvostruko jača nego stara ivica** (`.4` vs `.2`) — Pavle
   prihvatio kako jeste. `LESSONS` **L22**.
-  ⚠️ **ACCEPTANCE 4 stoji otvoren** — merenje protiv deploy-a traži push.
+  ✅ **ACCEPTANCE 4 zatvoren 2026-09-11** release commitom — izmereno protiv deploy-a.
 - **Pretposlednji:** **`M2`** (2026-09-09, `1a3bca5`) — `PageShell` dobio `<h1 data-wipe>`;
   `G1/A` prestala da prolazi prazna na 13 od 14 ruta. Release pregled našao netačnu tvrdnju u
   komentaru (`error.tsx` NE koristi `PageShell`) → `L20`, `L21`.
@@ -26,9 +24,8 @@
 
 ## Git
 
-- ⚠️ **`m2b-naslovna-recnik` stoji NESPOJENA i NEPUŠENA** — dva commita (`d125e5f`
-  implementacija, close commit). `master` je na `697b787`. **Release je zasebna Pavlova odluka**;
-  dok ne padne, `ACCEPTANCE 4` iz `batches/M2b.md` ostaje `NIJE POKRENUTO`.
+- `M2b` (`697b787..ddd12cc`) i zapis audita (`8d788bf`) spojeni fast-forward-om i pušeni
+  2026-09-11. **Deploy živ i izmeren protiv njega** (census `0/4/9/9`).
 - Grana istine **`master`**, izjednačena sa `origin/master`.
 - `M2` (`bb8c407..a362c20`) spojen fast-forward-om i pušen 2026-09-09, uz release pregled koji je
   našao i ispravio netačnu tvrdnju u komentaru. **Deploy živ i izmeren protiv njega.**
@@ -36,7 +33,7 @@
   2026-09-09. **Deploy živ i izmeren protiv oba.**
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
-  `g2-gate-coverage`, `m2-pageshell-ritam`.
+  `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`.
 
 ## Žive prepreke
 

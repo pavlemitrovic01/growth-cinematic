@@ -81,8 +81,9 @@ da čeka zaseban non-batch commit. Sva tri close-a pre `M2` su ga dirala.
   `data-stagger` ostaje 4 i nikad ne pocrveni — tačno.
 - **ACCEPTANCE 3** ✅ `0/4/9/9` zelen; `G1/A` i `G1/B` zeleni na 14 ruta. Raspored po tagu
   izmeren u renderu: `data-line` = `section` 6 + `li` 3; `data-wipe` = `h2` 6 + `h3` 3.
-- **ACCEPTANCE 4** ⚠️ **NIJE POKRENUTO** — merenje protiv deploy-a traži push, a to je zasebna
-  Pavlova release odluka. Zatvara se release commitom, kao kod `M2`.
+- **ACCEPTANCE 4** ✅ **ZATVOREN 2026-09-11 release commitom.** `master` `697b787..8d788bf`
+  (fast-forward, push). Izmereno protiv deploy-a, meta ispisana: `verify` PASS (nojs 14, claims 13),
+  `rendered` 13/13, census `0/4/9/9` na deploy-u.
 - **ACCEPTANCE 5** ✅ `manual` PASS. Uz njega izmereno computed stilom, ne pogledom:
   linija je `rgb(241,231,213)` na tamnim sekcijama i `rgb(22,32,25)` na svetlim; `home-values`
   zadržala `border-top 1px rgba(22,32,25,.2)`; šest sekcija na `border-top 0px`.
