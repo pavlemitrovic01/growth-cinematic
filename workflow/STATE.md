@@ -8,11 +8,9 @@
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — `M2b` zatvoren, nema OPEN manifesta.
   ⚠️ **ALI grana nije spojena** — vidi `Git` niže (`LESSONS` L13).
-- **Sledeći:** `M2c` — „brojke stižu pre sadržaja" (`MOTION.md` površina 4): kickeri
-  `01 / HOW IT WORKS` stižu pre naslova. ⚠️ **Traži novo CSS pravilo** — `--wipe-lead` se
-  **nasleđuje** od `[data-line]`, pa kicker i `<h2>` u istoj sekciji sada dobijaju **isto**
-  kašnjenje; razdvajanje traži novu promenljivu, i to u zoni specifičnosti koja je oborila prvu
-  verziju `M2` plana. Izdvojen iz `M2b` Pavlovom odlukom 2026-09-09.
+- **Sledeći:** **release `M2b`** (non-batch, Pavlova odluka), pa prvi batch iz audita — **`M7`**
+  (hero prelaz). Kolosek je od 2026-09-11 **završetak po auditu**: `docs/AUDIT-2026-09.md` +
+  `ROADMAP` → Aktivan kolosek. `M2c` čeka `T1` i usklađen `docs/MOTION.md`.
 - **Poslednji završen:** **`M2b`** (2026-09-09, `d125e5f`) — šest sekcija naslovne sa
   `data-reveal` na `CRTA` + `OTKRIVANJE`. Census `6/4/3/3` → **`0/4/9/9`**, falsifikovan **po
   atributu** (tri crvena pokretanja, L19). `manual` PASS.
@@ -44,11 +42,12 @@
 
 - ⚠️ **Sajt skuplja prijave a nikoga ne obaveštava.** Lead se upiše u Neon, vozač dobije 503
   „pozovite nas", i lanac se prekida. **`R1` (Resend) je poslednja nedokazana karika** i najveći
-  efekat po uloženom vremenu — ali ide **posle** pokreta, Pavlovom odlukom.
+  efekat po uloženom vremenu — ali ide **poslednji**, pred lansiranje — Pavlova odluka, potvrđena 2026-09-11.
 - ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
   prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
-- **Četiri OPEN odluke blokiraju svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52`.
-  Tri od četiri traže **advokata**, ne Pavla i ne agenta.
+- **Devet OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + pet
+  iz audita (`T-FONT`, `SAP-TEKST`, `CB-API`, `R1-DOMEN`, `AUD-OBIM`).
+  Tri traže **advokata**, ne Pavla i ne agenta.
 - ⚠️ **`C52` je živ u MAIN-u** — na sajtu koji je indeksiran i prima prave prijave. Ovaj projekat
   MAIN ne dira; popravka traži svoj batch u `GROWTH` repou.
 

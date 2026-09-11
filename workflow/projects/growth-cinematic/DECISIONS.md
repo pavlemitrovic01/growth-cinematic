@@ -47,6 +47,37 @@
 - `guard` je 2026-09-09 postao cinematic (`a1a43d3`), što je bilo pola te stavke. Odlučiti pre
   nego što se `D5` planira kao zaseban batch.
 
+
+### `T-FONT` — pismo sajta
+- **Status:** OPEN. **Vlasnik:** Pavle. **Blokira:** `T1`.
+- Audit 2026-09 (`L-02`): ceo sajt je Arial. Predlog: jedna familija, dve optičke veličine, preko
+  `next/font`, ~40 KB. Plaćeno: Söhne ili Neue Haas Grotesk Display (procena iz audita:
+  ~€300–600 za dve težine). OFL: **Inter Display**. Odluka: koje pismo, i ko kupuje licencu ako
+  je plaćeno.
+
+### `SAP-TEKST` — čuva li se objašnjenje o prekršajima/SAP-u
+- **Status:** OPEN. **Vlasnik:** Pavle; privacy deo ide uz `LEG-2`.
+- Audit `CC-2`: polja su obavezna (`ApplyForm.tsx:403,410`), `lib/leads.js` ih rediguje pre upisa,
+  a pun tekst živi samo u mejlu. Komentar u `lib/leads.js` je odluku odložio „dok se ne napiše
+  privacy stranica" — napisana je. Opcije: prestati da se traži (manja izmena) ili čuvati uz
+  privacy osnov.
+
+### `CB-API` — `/api/callback` bez pozivaoca
+- **Status:** OPEN. **Vlasnik:** Pavle.
+- Audit `IA-20`: nijedna komponenta ga ne zove; komentari pominju „chatbot" koji ovde ne postoji.
+  Javna POST ruta koja upisuje lead. Dokumentovati spoljni ugovor ili ukloniti (lock zona → STRICT).
+
+### `R1-DOMEN` — Resend na lansiranju: sandbox ili verifikovan domen
+- **Status:** OPEN. **Vlasnik:** Pavle. **Pre:** `R1`.
+- Sandbox (`lib/email.js:10`) šalje samo na adresu Resend naloga. Drugi pošiljalac, drugi inbox
+  ili autoresponder vozaču (`F1b`, `lib/email.js:7-8`) traže DNS zapise na `growthcdl.com` —
+  domenu živog sajta. Odlučiti unapred; DNS nije posao za dan lansiranja.
+
+### `AUD-OBIM` — nalazi audita nastali čitanjem MAIN-a
+- **Status:** OPEN (trivijalna). **Vlasnik:** Pavle. **Blokira:** `G3`.
+- `L-23` (pokrivenost claims kapije) i drift `D-03`/`D-04` oslanjaju se na čitanje `CLAIMS.md` i
+  `SITEMAP.md` iz MAIN-a (audit `00` §10). Zadržati ili odbaciti.
+
 ---
 
 ## ZATVORENO
@@ -73,6 +104,8 @@ je tamo **samo fallback**.
 ### Redosled: dizajn i pokret ispred Resenda · 2026-09-08
 Sajt je funkcionalno kompletan ali vizuelno „skelet". Dva nezavisna pregleda pala su na isti
 nalaz. **Resend ide posle.**
+- **Potvrđeno 2026-09-11, posle audita:** Resend ide **poslednji**, jer je najlakši. Audit ga vodi
+  kao uslov za lansiranje, ne kao defekt.
 
 ### Chrome labele ostaju kratke · 2026-09-08
 Nav („APPLY NOW"), MobileBar („Apply ↗"), Footer („Apply") **se ne uključuju** u `APPLY_CTA`

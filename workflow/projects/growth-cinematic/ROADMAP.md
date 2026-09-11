@@ -9,16 +9,48 @@ Sajt je **funkcionalno kompletan, deploy-ovan i izmeren protiv deploy-a**, pod `
 Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `D1` je zatvoren
 2026-09-09 — sve četiri strukturne izmene su u `master`-u.
 
-## Aktivan kolosek — pokret
+**Od 2026-09-11 kolosek je završetak po auditu** — `docs/AUDIT-2026-09.md`. Ocene: kvalitet
+urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
+
+## Aktivan kolosek — završetak po auditu (od 2026-09-11)
+
+Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Pre prvog batcha:
+**release `M2b`** (non-batch, Pavlova odluka) i slanje pravnih tekstova advokatu.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M2c` | Brojke stižu pre sadržaja — kickeri `01 / …` pre naslova (`MOTION.md` površina 4) | STANDARD | `M2b` | **SLEDEĆI** |
+| `M7` | Hero prelaz — kriva „drži pa predaj" umesto `1 − d·1.65` (`L-03`) | STANDARD + `manual` | release `M2b` | **SLEDEĆI** |
+| `U1` | FAQ struktura: naslov po pitanju, `id` sidra, deep-link sa `/apply`; nivoi naslova (`L-06`, `L-17`) | STANDARD | — | OPEN |
+| `K1` | `globals.css` bez preklapanja pravila, bez vizuelne promene (`L-10`) | STANDARD + `manual` | — | OPEN |
+| `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `K1`, `T-FONT` | blokirano odlukom |
+| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | `K1` | OPEN |
+| `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
+| `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
+| `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
+| `B1` | Social slika ≤150 KB + keš slika; `public/_headers` napolje (`L-05`, `L-19`) | LEAN | — | OPEN |
+| `H1` | Higijena: `data-reveal`, starter SVG-ovi, komentari sa „90%" i `SITEMAP.md`, `NoFallbackError` (`L-18`, `L-21`) | LEAN | — | OPEN |
+| `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
+
+⚠️ **`M7` je prvi jer je jedini P1 koji je mali, nezavisan i merljiv unit testom** — ne čeka
+nijednu odluku. `T1` je najveća vizuelna poluga, ali čeka `T-FONT`.
+
+⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`
+(„1 tema = 1 batch"), i da svaka vizuelna razlika u `T1` bude pripisiva samo pismu.
+
+⚠️ **Kolosek pokreta (`M2c`–`M6`) čeka `T1`** — svako trajanje je podešeno na metriku teksta
+koja se menja — i **usklađen `docs/MOTION.md`** (non-batch), jer je `M2c` specificiran iz
+dokumenta koji opisuje sekcije kojih više nema.
+
+## Kolosek pokreta — posle `T1`
+
+| ID | Posao | Tier | Zavisi od | Status |
+|---|---|---|---|---|
+| `M2c` | Brojke stižu pre sadržaja — kickeri `01 / …` pre naslova (`MOTION.md` površina 4) | STANDARD | `M2b`, `T1`, `MOTION.md` | čeka `T1` |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
 | `M6` | Pritisak (`MobileBar` nema `:active`) i kartice (hover koji nije `translateY`) | LEAN | `M1` | OPEN |
-| `D2` | Outline tipografija svedena na 2–3 mesta | LEAN | — | OPEN |
+| `D2` | Outline tipografija svedena na 2–3 mesta | LEAN | `T1` | rešava se u `T1` |
 
 ✅ **`G1` + `G2` su zatvorili ono što je `M2` moglo da prekrši.** Od 2026-09-09
 `npm run test:rendered` sprovodi tri tvrdnje: `data-wipe` samo na listnim tekstualnim tagovima
@@ -46,11 +78,11 @@ kapije je **decision point**, ne prepreka.
 ⚠️ **`D5` („What we don't do" kao manifest) — proveriti da li je već zatvoren.** `guard` je
 2026-09-09 postao cinematic (`a1a43d3`), što je bilo pola te stavke. Odluka pre planiranja.
 
-## Posle pokreta — poslovno, po redosledu efekta
+## Pred lansiranje — poslovno (`R1` poslednji, Pavlova odluka)
 
 | ID | Posao | Tier | Status |
 |---|---|---|---|
-| `R1` | **Resend** — sajt skuplja prijave a **nikoga ne obaveštava** | STRICT | OPEN |
+| `R1` | **Resend** — namerno **poslednji** (Pavle, potvrđeno 2026-09-11); pre njega `R1-DOMEN` | STRICT | OPEN — poslednji |
 | `A1` | Analitika + paljenje consent kapije (idu **zajedno**, ne odvojeno) | STRICT | OPEN |
 | `V1` | Selidba Vercel projekta sa ličnog Hobby naloga na tim | STRICT | OPEN |
 | `P1` | Lighthouse na hostingu + 3D hero na pravom telefonu | LEAN | OPEN |
@@ -61,6 +93,9 @@ Izmereno 2026-09-06: **verifikovan domen NE treba** (`lib/email.js:106` pada na 
 pošiljaoca). Traži samo `RESEND_API_KEY` + `LEAD_NOTIFICATION_EMAIL`. Petnaest minuta, i lanac
 forma → Neon → Resend → inbox je zatvoren. **Poslednja nedokazana karika u celom sistemu.**
 
+Pavle 2026-09-11: **ide poslednji, jer je najlakši** — odluka, ne propust. Audit ga vodi kao uslov
+za lansiranje.
+
 ## Blokirano — ne planira se dok odluka ne padne (`RULES §8`)
 
 | ID | Posao | Vlasnik | Status |
@@ -69,6 +104,11 @@ forma → Neon → Resend → inbox je zatvoren. **Poslednja nedokazana karika u
 | `LEG-1` | `/terms`: governing law, arbitraža, IP, uslovi prekida | **advokat** | OPEN |
 | `LEG-2` | Pravni pregled privacy i TCPA teksta | **advokat** | OPEN |
 | `C52` | Državljanstvo / radna dokumenta / engleski kao uslov | **advokat** | OPEN, i **živ u MAIN-u** |
+| `T-FONT` | Pismo: plaćeno (Söhne / Neue Haas) ili OFL (Inter Display) | **Pavle** | OPEN — blokira `T1` |
+| `SAP-TEKST` | Čuva li se obavezno objašnjenje o prekršajima/SAP-u (`CC-2`) | **Pavle** (+ advokat za privacy) | OPEN |
+| `CB-API` | `/api/callback` bez pozivaoca: dokumentovati ili ukloniti | **Pavle** | OPEN |
+| `R1-DOMEN` | Resend na lansiranju: sandbox ili verifikovan domen (DNS na `growthcdl.com`) | **Pavle** | OPEN — pre `R1` |
+| `AUD-OBIM` | Zadržati ili odbaciti `L-23`, `D-03`, `D-04` (nastali čitanjem MAIN dokumenata) | **Pavle** | OPEN — blokira `G3` |
 
 Detalji i obrazloženja → `DECISIONS.md`.
 

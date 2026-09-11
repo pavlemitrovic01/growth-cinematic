@@ -6,6 +6,28 @@
 
 ---
 
+## non-batch — audit 2026-09 zapisan kao radni plan · 2026-09-11
+
+**Changed files:** `docs/AUDIT-2026-09.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Nezavisni audit (2026-09-10, revizija 3 od 2026-09-11; pun izveštaj van repoa, u
+`C:/dev/growth-audits/claude-2026-09-10-0300/`) preveden u radni plan po `RULES §1`: nalazi i
+redosled u `docs/AUDIT-2026-09.md`, batch-evi kao redovi u `ROADMAP`-u (`M7`, `U1`–`U5`, `K1`,
+`T1`, `B1`, `H1`, `G3`), otvorena pitanja kao pet novih OPEN odluka u `DECISIONS`-u.
+
+⚠️ **Audit je bio read-only; ovo je prvi unos koji iz njega piše u repo.** Runtime kod nije dirnut
+(`RULES §10`).
+
+⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`.
+
+⚠️ **Resend ostaje poslednji** — Pavlova odluka, ponovo potvrđena 2026-09-11. Audit ga vodi kao
+uslov za lansiranje, ne kao defekt.
+
+**NEXT STEP:** release `M2b` (Pavlova odluka), pa `M7` kroz `/plan`.
+
+---
+
 ## M2b (STANDARD) — naslovna na nov rečnik: `CRTA` uvodi, naslov stiže otkrivanjem · 2026-09-09
 
 **Code:** `d125e5f` · **Grana:** `m2b-naslovna-recnik` · **Manifest:** `batches/M2b.md`
