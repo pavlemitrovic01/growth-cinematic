@@ -6,6 +6,75 @@
 
 ---
 
+## M7 (STANDARD) — hero prelaz: kriva „drži pa predaj" · 2026-09-12
+
+**Changed files:** `lib/hero-beat.ts` (nov) · `components/HeroExperience.tsx` ·
+`__tests__/lib/hero-beat.test.js` (nov) · `workflow/projects/growth-cinematic/batches/M7.md` (nov) ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Implementacija `0644d8a`, close commit ispod njega. Nalaz audita `L-03`: `HeroExperience.tsx:119`
+je nosio `1 − abs(d) · 1.65`, pa je poglavlje bilo potpuno vidljivo **samo u jednoj tački**, na
+sredini između dva poglavlja oba su bila na `0,175`, a na **39% skrola** nijedno nije bilo ni do
+pola vidljivo. Kriva je izdvojena u `lib/hero-beat.ts` (čista funkcija `beatOpacity`) i zamenjena:
+puna vidljivost do `abs(d) ≤ 0,4`, linearno predavanje do `0,6`, nula dalje.
+
+VERIFICATION (sve na konačnom stablu, port proveren pre merenja):
+```
+  npm run lint           exit 0
+  npm run typecheck      exit 0
+  npm test               exit 0   137/137 u 10 fajlova (bilo 132 u 9)
+  npm run build          exit 0
+  npm run verify         exit 0   nojs 14 ruta · claims 13 ruta
+  npm run test:rendered  exit 0   13/13 · G1/C census 0/4/9/9 nepromenjen
+  meri se: http://localhost:3000
+```
+
+Izmereno nad krivom (10000 uzoraka, `--reporter=verbose`, jer podrazumevani reporter ne ispisuje
+`console.log`):
+```
+  min zbir dva najbliža    0,35 -> 1,0000   (prag >= 0,9)
+  puno poglavlje           0%   -> 80,00%   (prag >= 75%)
+  dvostruka ekspozicija           12,00%    (prag <= 20%)
+  sused kad je centriran          0         (prag <= 0,05)
+```
+
+**FALSIFIKACIJA — tri crvena pokretanja pre priznanja kapije** (`RULES §6`). Četiri uslova su u
+četiri `it` bloka, pa se vidi tačno koji pada (`LESSONS` L19); pre svakog merenja ispisana je
+ubačena izmena, da `sed` ne promaši tiho (`LESSONS` L18):
+```
+  A  stara kriva 1 - 1.65*abs(d)    uslov 1 crven (0,35) · uslov 2 crven (0%)   · uslov 5 crven
+  B  HOLD 0.2 / HANDOFF 0.8         uslov 2 crven (40%)  · uslov 3 crven (36%)
+  C  HOLD 0.4 / HANDOFF 1.2         uslov 3 crven (100%) · uslov 4 crven (0,25) · uslov 5 crven
+```
+Pokretanje A reprodukuje baš nalaz `L-03`. ⚠️ **Vraćanje je dokazano sha256 poklapanjem**
+(`699c5be0…f230a18`), **ne čistim `git status`-om** — modul je tada bio untracked, pa git nije
+mogao da bude dokaz.
+
+⚠️ **ACCEPTANCE 5 nije mogao da se izmeri onako kako je plan rekao.** Next 16.3.4 **ne ispisuje**
+First Load JS, pa je merenje prebačeno na artefakt: skripte koje `/` stvarno učitava, iz
+prerenderovanog `.next/server/app/index.html`. A/B preko iste radne kopije (samo
+`HeroExperience.tsx` vraćen na `master` verziju): **602.233 B → 602.266 B, +33 B**; chunk sa
+three.js (480 KB) nije među njima. Zamena je **jača** od originalnog praga → `LESSONS` **L23**.
+
+**`manual`:** Pavle, 2026-09-12, dev server u njegovom browseru (ne Claude panel, `LESSONS` L7) —
+„okej moze close". Klizanje teksta **±14 px** dok je poglavlje na punoj vidljivosti (ukupan hod
+28 px; staro ±10,6 px na ≥0,5 vidljivosti) stavljeno pred njega **pre** pregleda po pravilu
+`LESSONS` L22 i prihvaćeno kako jeste.
+
+**SCOPE_DRIFT: none** — 9 putanja, sve iz EXPECTED-FILES (3 u implementaciji, 6 u close-u).
+Nezavisni review nije tražen: mala reverzibilna izmena bez claims, legal, security i lock-zone
+površine (`OPERATING`).
+⚠️ **Prva verzija ove scope provere bila je pokvarena** — `sed` opseg je stao na otvarajućoj
+ogradi code bloka, pa je spisak EXPECTED-FILES izašao prazan i provera je „našla" svih devet
+fajlova van scope-a. Popravljena i ponovljena: **9 = 9**, tačno poklapanje. `LESSONS` L18 ponovo,
+bez novog unosa.
+
+**NEXT STEP:** release je Pavlova odluka — merenje `verify`/`rendered` protiv deploy-a zatvara
+ACCEPTANCE 6. Zatim `U1` (FAQ struktura) kroz `/plan`.
+
+---
+
 ## non-batch(release) — `M2b` spojen i pušen; ACCEPTANCE 4 zatvoren izmereno · 2026-09-11
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/M2b.md` · `workflow/STATE.md` ·

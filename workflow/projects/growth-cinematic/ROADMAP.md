@@ -14,13 +14,12 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
 ## Aktivan kolosek — završetak po auditu (od 2026-09-11)
 
-Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Release `M2b` urađen 2026-09-11 (census `0/4/9/9` na deploy-u). Pre prvog batcha još: slanje
-pravnih tekstova advokatu.
+Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Release `M2b` urađen 2026-09-11 (census `0/4/9/9` na deploy-u). Pravni tekstovi advokatu idu paralelno sa
+batch-evima (audit `:51`), nezavisno od ovog koloseka.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M7` | Hero prelaz — kriva „drži pa predaj" umesto `1 − d·1.65` (`L-03`) | STANDARD + `manual` | — | **SLEDEĆI** |
-| `U1` | FAQ struktura: naslov po pitanju, `id` sidra, deep-link sa `/apply`; nivoi naslova (`L-06`, `L-17`) | STANDARD | — | OPEN |
+| `U1` | FAQ struktura: naslov po pitanju, `id` sidra, deep-link sa `/apply`; nivoi naslova (`L-06`, `L-17`) | STANDARD | — | **SLEDEĆI** |
 | `K1` | `globals.css` bez preklapanja pravila, bez vizuelne promene (`L-10`) | STANDARD + `manual` | — | OPEN |
 | `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `K1`, `T-FONT` | blokirano odlukom |
 | `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | `K1` | OPEN |
@@ -31,8 +30,8 @@ pravnih tekstova advokatu.
 | `H1` | Higijena: `data-reveal`, starter SVG-ovi, komentari sa „90%" i `SITEMAP.md`, `NoFallbackError` (`L-18`, `L-21`) | LEAN | — | OPEN |
 | `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
 
-⚠️ **`M7` je prvi jer je jedini P1 koji je mali, nezavisan i merljiv unit testom** — ne čeka
-nijednu odluku. `T1` je najveća vizuelna poluga, ali čeka `T-FONT`.
+⚠️ **`U1` je sledeći** — nezavisan je i ne čeka nijednu odluku. `T1` je najveća vizuelna
+poluga, ali čeka `T-FONT`.
 
 ⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`
 („1 tema = 1 batch"), i da svaka vizuelna razlika u `T1` bude pripisiva samo pismu.
@@ -116,6 +115,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `M7` | **Hero prelaz** — kriva „drži pa predaj" umesto `1 − d·1.65`; zbir dva najbliža 0,35 → 1,00, puno poglavlje ~0% → 80% | 2026-09-12 |
 | `M2b` | **Naslovna na nov rečnik** — šest sekcija sa `data-reveal` na `CRTA`+`OTKRIVANJE`; census `6/4/3/3` → `0/4/9/9`, falsifikovan po atributu | 2026-09-09 |
 | `M2` | **`PageShell` ritam** — `<h1 data-wipe>` na svih 14 ruta + stagger na dve mreže u `/how-it-works`; tri atributa, nula CSS-a | 2026-09-09 |
 | `G2` | **Kapija pokriva sve što `PageShell` renderuje** — obuhvat 10 → 14 ruta, izveden iz `PAGE_PATHS` + `allPostSlugs()` | 2026-09-09 |

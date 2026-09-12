@@ -26,8 +26,13 @@
 | `rendered` | `npm run test:rendered` | STANDARD, STRICT — **traži pokrenut server** |
 | `manual` | Pavlov pregled u **pravom** browseru | STRICT · **i sve što zavisi od skrola** |
 
-- **`test`:** vitest, **132 u 9 fajlova** (izmereno 2026-09-09). `test:rendered` je zasebnih **9**
+- **`test`:** vitest, **137 u 10 fajlova** (izmereno 2026-09-12). `test:rendered` je zasebnih **13**
   HTTP testova nad renderovanim HTML-om.
+- ⚠️ **Vitest hvata SAMO `__tests__/**/*.test.js`** (`vitest.config.mts`). Fajl imenovan
+  `.test.ts` bio bi **tiho preskočen** — kapije zelene, a test nikad pokrenut. Posle dodavanja
+  testa **izmeri da je broj porastao**, ne veruj zelenom (`LESSONS` L20).
+- ⚠️ **Podrazumevani vitest reporter ne ispisuje `console.log`.** Za izmerene vrednosti iz testa
+  ide `npx vitest run <fajl> --reporter=verbose`.
 - **`verify` = `verify:nojs` (14 ruta) + `verify:claims` (13 ruta).** Claims kapija od 2026-09-07
   **poredi hedž uz tvrdnju**, ne broji njegovo prisustvo (`scripts/claims-rules.mjs`).
 - ⚠️ **Poslednje dve ne pokreću server same.** `npm run build && npm start`, pa meri. Meta se

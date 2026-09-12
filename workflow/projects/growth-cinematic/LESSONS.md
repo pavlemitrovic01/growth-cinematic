@@ -172,3 +172,17 @@ stilom, ne pogledom: `rgb(241,231,213)` na `rgb(8,17,13)`.
 pred Pavla pre `manual`-a**. „Isti gest" ne znači „ista težina", a razliku koju nijedna kapija ne
 meri mora neko da vidi namerno. Vidi L8, L4.
 
+
+## L23 — Kriterijum prihvatanja koji imenuje izlaz alata pada kad alat prestane to da ispisuje.
+`M7` acceptance je tražio „First Load JS za `/` nepromenjen (±1 KB)" **iz `npm run build`**. Next
+16.3.4 tu kolonu **više ne ispisuje** — tabela ruta nosi samo tip rute. Kriterijum je bio
+nemerljiv onako kako je napisan, a izgledao je sasvim konkretno u trenutku pisanja plana.
+Zamenjen je merenjem nad artefaktom, koje ne zavisi od formata izlaza: skripte koje `/` stvarno
+učitava čitaju se iz prerenderovanog `.next/server/app/index.html`, pa se sabiraju veličine tih
+chunkova. A/B preko iste radne kopije (samo `HeroExperience.tsx` vraćen na `master` verziju):
+`602.233 B` → `602.266 B`, **+33 B**, uz dokaz da chunk sa three.js (480 KB) nije među njima.
+⚠️ **Zamena je jača od originala.** Prag „±1 KB" bi prošao i da je three.js ušao u neki drugi
+chunk koji `/` učitava; provera po imenu chunka to vidi direktno.
+**Pravilo:** kad acceptance imenuje **izlaz alata** (kolonu, liniju, format), proveri već na
+`/plan`-u da alat to i dalje ispisuje. Ako ne ispisuje, ne spuštaj prag — nađi merenje nad
+**artefaktom** (build izlaz, renderovan HTML), jer artefakt ne menja format sa verzijom alata.
