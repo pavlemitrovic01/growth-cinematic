@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
+import { beatOpacity } from '@/lib/hero-beat';
 
 export default function HeroExperience({ children }: { children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
@@ -116,7 +117,7 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
           const active = Math.round(position);
           beats.forEach((beat, index) => {
             const distance = position - index;
-            const opacity = Math.max(0, 1 - Math.abs(distance) * 1.65);
+            const opacity = beatOpacity(distance);
             // Animate compositor properties directly, without inherited CSS variables.
             beat.style.opacity = String(opacity);
             beat.style.transform = `translate3d(0, calc(-50% + ${distance * -35}px), 0)`;
