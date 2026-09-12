@@ -7,40 +7,45 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći:** **`U1`** (FAQ struktura i nivoi naslova) kroz `/plan`. Kolosek je od 2026-09-11
-  **završetak po auditu**: `docs/AUDIT-2026-09.md` + `ROADMAP` → Aktivan kolosek. `M2c` čeka `T1`
-  i usklađen `docs/MOTION.md`.
-- **Poslednji završen:** **`M7`** (2026-09-12, `0644d8a`) — hero kriva **„drži pa predaj"**: puna
-  vidljivost do `abs(d) ≤ 0,4`, linearno predavanje do `0,6`, nula dalje. Zbir dva najbliža
-  poglavlja `0,35` → **`1,00`**; puno poglavlje `~0%` → **80%** skrola; dvostruka ekspozicija
-  `12%`. Kriva je izdvojena u `lib/hero-beat.ts` i pokrivena testom sa četiri uslova u **četiri
-  odvojena `it` bloka**; falsifikovana **tri puta**, svaki uslov bar jednom crven. `manual` PASS.
-  ⚠️ **Poglavlje sada klizi 28 px (±14 px) dok je na punoj vidljivosti**, jer je pomeraj ostao
-  vezan za `d`. Pavle prihvatio kako jeste, pre `manual`-a (`LESSONS` L22).
-  ✅ **ACCEPTANCE 6 zatvoren 2026-09-12** release commitom — izmereno protiv deploy-a; nov build
-  potvrđen otiskom minifikovane krive PRE merenja (census ovde ne može — serverski HTML je isti).
-- **Pretposlednji:** **`M2b`** (2026-09-09, `d125e5f`) — šest sekcija naslovne na `CRTA` +
-  `OTKRIVANJE`; census `0/4/9/9`, falsifikovan po atributu (`LESSONS` L19). ACCEPTANCE 4 zatvoren
-  2026-09-11 izmereno protiv deploy-a.
-  ⚠️ **`data-reveal` nema nijednog korisnika na celom sajtu.** Primitiv ostaje u `globals.css` i u
-  `Motion.tsx:76`; brisanje je zasebna odluka, nije doneta — vodi se u `H1`.
-  ⚠️ **Linija je na svetlim sekcijama dvostruko jača nego stara ivica** (`.4` vs `.2`) — prihvaćeno
-  kako jeste, `LESSONS` L22.
-- Starije (`M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`, manifesti u
-  `batches/` i `docs/STATUS-ARCHIVE.md`. Nalazi iz `M2` žive kao `LESSONS` L20 i L21.
+- **Sledeći:** **`K1`** (`globals.css` bez preklapanja pravila, bez vizuelne promene) kroz
+  `/plan`. Kolosek je od 2026-09-11 **završetak po auditu**: `docs/AUDIT-2026-09.md` + `ROADMAP`
+  → Aktivan kolosek. `K1` ide pre `T1` da bi svaka vizuelna razlika u `T1` došla od pisma.
+  `M2c` čeka `T1` i usklađen `docs/MOTION.md`.
+- **Poslednji završen:** **`U1`** (2026-09-12, `2df7aa3`) — osam pitanja na `/faq` postalo je
+  naslovi sa sidrima: `h1` + 3 `h2` → **`h1` + 11 `h2`**, sidara **0 → 8**. Naslovna nosi ista
+  pitanja kao `h3`. `FAQPage` schema **bajt za bajt ista** (`4d28222a…`), census `0/4/9/9`
+  nepromenjen, `test:rendered` **13 → 17**. Kapija `U1/A`–`U1/D`, svaka dokazano crvena zasebno.
+  `manual` PASS.
+  ⚠️ **Bez JavaScripta deep-link sleće na ZATVORENO pitanje** — vidljivo je i otvara se jednim
+  klikom. Svesna degradacija, zapisana u `FaqDeepLink.tsx`.
+  ⚠️ **Dva odstupanja od ugovora, oba zapisana:** tri tvrdnje → četiri (`L19`), i prva verzija
+  provere bila je pokvarena, ne kod (`L24`).
+  ⚠️ **`verify`/`rendered` protiv deploy-a još nisu mereni** — traže release.
+- **Pretposlednji:** **`M7`** (2026-09-12, `0644d8a`) — hero kriva „drži pa predaj": zbir dva
+  najbliža poglavlja `0,35` → `1,00`, puno poglavlje `~0%` → **80%** skrola. Spojen i pušen
+  2026-09-12; ACCEPTANCE 6 zatvoren izmereno protiv deploy-a.
+  ⚠️ **Poglavlje klizi 28 px (±14 px) dok je na punoj vidljivosti** — Pavle prihvatio kako jeste
+  (`LESSONS` L22).
+- Starije (`M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`, manifesti
+  u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene iz `M2b`: **`data-reveal` nema nijednog
+  korisnika na celom sajtu** (briše se u `H1`, odluka nije doneta) i **linija je na svetlim
+  sekcijama dvostruko jača nego stara ivica** (`LESSONS` L22).
 
 ## Git
 
-- `M7` (`d733178..b60a140`, implementacija `0644d8a`) spojen fast-forward-om i pušen 2026-09-12.
-  **Deploy živ i izmeren protiv njega**; nov build potvrđen otiskom minifikovane krive pre merenja.
+- ⚠️ **`U1` je na grani `u1-faq-struktura` i NIJE spojen ni pušen** — implementacija `2df7aa3` +
+  close commit. Release je Pavlova odluka; **deploy još servira stanje pre `U1`**.
 - Grana istine **`master`**, izjednačena sa `origin/master`.
-- `M2b` (`697b787..ddd12cc`) i zapis audita (`8d788bf`) spojeni fast-forward-om i pušeni
-  2026-09-11. **Deploy izmeren protiv njih** (census `0/4/9/9`).
-- `M2` (`bb8c407..a362c20`) spojen i pušen 2026-09-09; `G1` (`ddba710..7e73585`) i `G2`
-  (`1ff169b..930c33d`) 2026-09-09. **Deploy izmeren protiv svih.**
+- `M7` (`d733178..b60a140`) spojen fast-forward-om i pušen 2026-09-12. **Deploy izmeren protiv
+  njega**; nov build potvrđen otiskom minifikovane krive pre merenja (census tamo ne može —
+  serverski HTML je isti).
+- `M2b` (`697b787..ddd12cc`) i zapis audita (`8d788bf`) pušeni 2026-09-11 (census `0/4/9/9`);
+  `M2` (`bb8c407..a362c20`), `G1` (`ddba710..7e73585`) i `G2` (`1ff169b..930c33d`) 2026-09-09.
+  **Deploy izmeren protiv svih.**
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
-  `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`, `m7-hero-prelaz`.
+  `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
+  `m7-hero-prelaz`.
 
 ## Žive prepreke
 
@@ -54,6 +59,8 @@
   Tri traže **advokata**, ne Pavla i ne agenta.
 - ⚠️ **`C52` je živ u MAIN-u** — na sajtu koji je indeksiran i prima prave prijave. Ovaj projekat
   MAIN ne dira; popravka traži svoj batch u `GROWTH` repou.
+- **`RULES §6` traži dokaz vraćanja „čistim `git status`-om"**, što ne radi dok implementacija
+  nije commitovana (`LESSONS` L25). Dopuna pravila je zaseban non-batch.
 
 ## Napomena o startu sesije
 

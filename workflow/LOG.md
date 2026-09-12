@@ -6,6 +6,75 @@
 
 ---
 
+## U1 (STANDARD) — FAQ struktura: pitanja postaju naslovi sa sidrima · 2026-09-12
+
+**Changed files:** `components/Accordion.tsx` · `components/FaqDeepLink.tsx` (nov) ·
+`app/faq/page.tsx` · `components/CinematicHome.tsx` · `app/apply/page.tsx` · `app/globals.css` ·
+`tests/rendered-html.test.mjs` · `workflow/projects/growth-cinematic/batches/U1.md` (nov) ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `.../ROADMAP.md` · `.../LESSONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Implementacija `2df7aa3`, close commit ispod njega. Nalazi audita `L-06` i `IA-04`: osam pitanja
+na `/faq` bilo je `<summary>` **bez ijednog naslova** — stranica je imala `h1` i tri `h2`, sva tri
+iz futera — a stabilni `id`-jevi iz `lib/faq.js` nisu stizali u DOM.
+
+IZMERENO, PRE → POSLE:
+```
+  /faq naslovi        h1 + 3 h2   ->  h1 + 11 h2  (8 pitanja + 3 futer)
+  /faq sidra          0           ->  8           (pay, start, violations, trucks,
+                                                   grads, states, different, home-time)
+  naslovna            bez naslova ->  4 nova h3 ispod postojeceg <h2 id="faq-heading">
+  FAQPage JSON-LD     4d28222a…   ->  4d28222a…   (bajt za bajt isto)
+  test:rendered       13/13       ->  17/17
+```
+
+VERIFICATION (konačno stablo, port provereno slobodan):
+```
+  npm run lint           exit 0
+  npm run typecheck      exit 0
+  npm test               exit 0   137/137 u 10 fajlova (nepromenjeno)
+  npm run build          exit 0
+  npm run verify         exit 0   nojs 14 ruta · claims 13 ruta
+  npm run test:rendered  exit 0   17/17 · G1/C census 0/4/9/9 nepromenjen
+  meri se: http://localhost:3000
+```
+
+**FALSIFIKACIJA — četiri crvena pokretanja, svako sa svojim buildom i TAČNO JEDNIM palim blokom:**
+```
+  A  /faq renderuje pitanja kao h3        U1/A crven
+  B  prvo pitanje ostaje bez sidra        U1/B crven
+  C  naslovna dobija h2 umesto h3         U1/C crven
+  D  schema pita `item.q + " (test)"`     U1/D crven
+```
+⚠️ **Vraćanje dokazano sha256 poklapanjem, ne čistim `git status`-om** — implementacija tada nije
+bila commitovana, pa je stablo prljavo po dizajnu. Drugi put zaredom (`M7`) → `LESSONS` **L25**,
+uz predlog da se `RULES §6` dopuni zasebnim non-batch commitom.
+
+⚠️ **DVA ODSTUPANJA OD ODOBRENOG UGOVORA, prijavljena pre commita.**
+**(1) Tri tvrdnje → četiri.** `U1/B` je prvo imao dva `assert`-a u istom bloku (sidra + schema);
+drugi se tako ne može dokazati crvenim jer prvi prekida blok (`LESSONS` L19) — a to je baš
+tvrdnja zbog koje test postoji. Razdvojeno na `U1/B` i `U1/D`.
+**(2) Provera je bila pokvarena, ne kod.** `U1/B` je prijavio da sidara nema iako ih je osam bilo
+u serviranom HTML-u: regex sklopljen u template literalu izgubio je nivo escape-ovanja, pa je
+`\b` postao znak backspace a `\s` slovo `s`. Zamenjen parserom bez regexa → `LESSONS` **L24**.
+
+**Usput popravljena kapija koja je lagala imenom.** Test `FAQ schema matches visible questions` je
+do sada proveravao samo da reč `FAQPage` postoji u HTML-u; vidljiva pitanja nije pogledao nikad
+(`LESSONS` L20). `U1/D` to ime čini istinitim — schema i vidljiva pitanja se stvarno porede.
+
+**`manual`:** Pavle, 2026-09-12, dev server u njegovom browseru (ne Claude panel, `LESSONS` L7) —
+„ok close". Tipografija izmerena `getComputedStyle`-om pre predaje: `summary` i `h2` u njemu nose
+**18px/700 na 1280** i **17px/700 na 375**, margin `0` — identično pre i posle.
+
+**SCOPE_DRIFT: none** — 13 putanja, sve iz EXPECTED-FILES (7 u implementaciji, 6 u close-u).
+Nezavisni review nije tražen: mala reverzibilna izmena bez claims, legal, security i lock-zone
+površine (`OPERATING`).
+
+**NEXT STEP:** release je Pavlova odluka — merenje protiv deploy-a zatvara `verify`/`rendered`
+na živom sajtu. Zatim `K1` (`globals.css` bez preklapanja pravila) kroz `/plan`.
+
+---
+
 ## non-batch(release) — `M7` spojen i pušen; ACCEPTANCE 6 zatvoren izmereno · 2026-09-12
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/M7.md` · `workflow/STATE.md` ·

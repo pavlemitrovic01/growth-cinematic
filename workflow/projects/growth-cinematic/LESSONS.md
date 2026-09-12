@@ -186,3 +186,29 @@ chunk koji `/` učitava; provera po imenu chunka to vidi direktno.
 **Pravilo:** kad acceptance imenuje **izlaz alata** (kolonu, liniju, format), proveri već na
 `/plan`-u da alat to i dalje ispisuje. Ako ne ispisuje, ne spuštaj prag — nađi merenje nad
 **artefaktom** (build izlaz, renderovan HTML), jer artefakt ne menja format sa verzijom alata.
+
+## L24 — Regex sklopljen u stringu gubi nivo escape-ovanja, i provera tiho prestaje da matchuje.
+`U1/B` je prijavio da na `/faq` **nema nijednog sidra**, iako ih je osam stajalo u serviranom
+HTML-u. Kriva nije bila implementacija nego provera: helper je gradio regex kao
+`new RegExp(` + backtick + `\b${attr}\s*=\s*"([^"]*)"` + backtick + `)`, a u fajl je stigao sa
+**jednim** backslash-om — pa je u template literalu `\b` postao **znak backspace** (U+0008), a
+`\s` slovo `s`. Regex je ostao sintaksno ispravan i nikad ništa nije matchovao.
+⚠️ **Regex literali u istom fajlu su prošli netaknuti** (`/<script[\s\S]*?<\/script>/`). Problem
+postoji isključivo tamo gde escape prolazi kroz string pre nego što postane regex.
+⚠️ **Da je tvrdnja bila „nema prekršaja" umesto `deepEqual` sa očekivanim spiskom, ovo bi prošlo
+kao ZELENO** — kapija bi postojala samo na papiru, isto kao u `L20`. Spasila ju je činjenica da
+poredi sa izvorom, a ne da broji.
+**Pravilo:** provera koja čita atribute radi na **tokenizeru ili podstringu**, ne na regexu
+sklopljenom u stringu. I dalje važi `L18` — kad provera prijavi defekt, prvo proveri proveru; ovo
+je drugi put u dva batcha da je ona bila kriva, a ne kod.
+
+## L25 — „Čist `git status`" ne dokazuje vraćanje dok implementacija nije commitovana.
+`RULES §6` traži da se posle falsifikacije vraćanje dokaže čistim `git status`-om. To radi samo
+kad je implementacija **već u commitu** — kao u `G1`, gde je `git checkout --` vratio fajl na
+commitovano stanje. U `M7` i `U1` implementacija u tom trenutku nije bila commitovana
+(`/execute` namerno ne commituje), pa je stablo prljavo **po dizajnu**; u `M7` je nov modul bio i
+untracked, pa git nije imao šta da poredi.
+**Pravilo:** dok je implementacija necommitovana, dokaz vraćanja je **sha256 poklapanje** sa
+rezervnom kopijom napravljenom pre ubacivanja prekršaja — i tako se i prijavljuje, umesto da se
+tvrdi čist `git status` koji tada ne znači ništa. Formulaciju `RULES §6` treba dopuniti; to je
+zaseban non-batch, jer `RULES.md` nije bio u scope-u ni `M7` ni `U1`.
