@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/StructuredData';
 import Accordion from '@/components/Accordion';
+import FaqDeepLink from '@/components/FaqDeepLink';
 import PageShell from '@/components/PageShell';
 import { FAQ_ITEMS } from '@/lib/faq';
 import { pageMeta } from '@/lib/seo';
@@ -34,7 +35,8 @@ export default function FAQ() {
       }
     >
       <JsonLd data={{ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: FAQ_ITEMS.map(item => ({ '@type': 'Question', name: item.q, acceptedAnswer: { '@type': 'Answer', text: item.a } })) }} />
-      <Accordion items={FAQ_ITEMS} />
+      <Accordion items={FAQ_ITEMS} level={2} anchors />
+      <FaqDeepLink />
       <div className="page-next"><p>Have a question about your situation?</p><Link className="btn btn-primary" href="/contact">Talk to us ↗</Link></div>
     </PageShell>
   );

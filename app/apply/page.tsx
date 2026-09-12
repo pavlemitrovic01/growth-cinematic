@@ -65,7 +65,7 @@ export default function ApplyPage() {
         </h2>
         <p>{VIOLATIONS_ANSWER}</p>
         <p className="contact-email">
-          More of the questions drivers ask us: <Link href="/faq">read the FAQ</Link>, or see{' '}
+          More of the questions drivers ask us: <Link href="/faq#violations">read the FAQ</Link>, or see{' '}
           <Link href="/how-it-works">how the process works</Link>.
         </p>
       </section>

@@ -4,6 +4,7 @@ import test from 'node:test';
 // koji `scripts/verify-nojs.mjs:24` vec uvozi. Prekucan spisak bi BROJAO umesto da POREDI.
 import { PAGE_PATHS } from '../lib/routes.js';
 import { allPostSlugs } from '../lib/posts.js';
+import { FAQ_ITEMS, homeFaqItems } from '../lib/faq.js';
 
 /**
  * ⚠️ PREPISAN TRANSPORT, ISTE TVRDNJE. Do prelaska na Vercel je ovaj fajl uvozio
@@ -355,4 +356,103 @@ test('G1/C — census motion atributa na naslovnoj', async () => {
       + ' koji menja markup — nikad zasebno.',
     );
   }
+});
+
+/* ── U1 — struktura FAQ-a ─────────────────────────────────────────────────────────────────
+ *
+ * ⚠️ TRI ODVOJENA `test()` BLOKA, NAMERNO. `node:test` ih izoluje, pa svaka tvrdnja nosi svoje
+ * crveno. Tri `assert`-a u jednom bloku prekinula bi izvrsavanje na prvom, pa bi falsifikacija
+ * dokazala samo njega (`LESSONS` L19).
+ *
+ * ⚠️ Pitanja i sidra se UVOZE iz `lib/faq.js`, ne prekucavaju — isti razlog zbog kog
+ * `GATED_ROUTES` izvodi rute umesto da ih nabraja. Prekucan spisak bi BROJAO umesto da POREDI.
+ */
+
+/** Prvi OTVOREN tag unutar svakog `<summary>`-ja. Od `U1` tu stoji naslov pitanja. */
+const summaryFirstChildTags = (html) => {
+  const toks = tokenize(html);
+  const out = [];
+  toks.forEach((t, i) => {
+    if (t.close || t.tag !== 'summary') return;
+    const next = toks.slice(i + 1).find((x) => !x.close);
+    out.push(next ? next.tag : null);
+  });
+  return out;
+};
+
+/** VREDNOST atributa, bez regexa.
+ *  ⚠️ Trazi se ` ime="` SA RAZMAKOM ISPRED, da `xclass=` ne prodje kao `class=` — ista zamka
+ *  koju `attrNames` resava za imena.
+ *  ⚠️ PRVA VERZIJA JE BILA POKVARENA: regex sklopljen u template literalu izgubio je nivo
+ *  escape-ovanja, pa je `\b` postao znak backspace a `\s` slovo `s`. Provera nije mogla da
+ *  matchuje nista i prijavila je da sidara nema — iako su bila u HTML-u (`LESSONS` L18). */
+const attrValue = (blob, attr) => {
+  const needle = ' ' + attr.toLowerCase() + '="';
+  const at = (' ' + blob.toLowerCase()).indexOf(needle);
+  if (at === -1) return null;
+  const start = at + needle.length - 1;
+  const end = blob.indexOf('"', start);
+  return end === -1 ? null : blob.slice(start, end);
+};
+
+/** React escape-uje tekstualnu decu; schema ide kroz `dangerouslySetInnerHTML` i ne escape-uje. */
+const decodeText = (s) => s
+  .replace(/&#x27;|&#39;/g, "'")
+  .replace(/&quot;/g, '"')
+  .replace(/&lt;/g, '<')
+  .replace(/&gt;/g, '>')
+  .replace(/&amp;/g, '&');
+
+const faqSchemaQuestions = (html) => {
+  const blocks = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map((m) => m[1]);
+  const faq = blocks.map((b) => JSON.parse(b)).find((d) => d['@type'] === 'FAQPage');
+  return faq ? faq.mainEntity.map((q) => q.name) : [];
+};
+
+test('U1/A — svako pitanje na /faq je naslov nivoa 2', async () => {
+  const html = await (await get('/faq')).text();
+  const heads = summaryFirstChildTags(html);
+  assert.equal(heads.length, FAQ_ITEMS.length, `/faq: ocekivano ${FAQ_ITEMS.length} pitanja iz \`lib/faq.js\``);
+  const wrong = heads.filter((tag) => tag !== 'h2');
+  assert.equal(
+    wrong.length, 0,
+    `/faq: ${wrong.length} pitanja nije \`h2\` (naslo: ${[...new Set(wrong)].join(', ') || 'bez naslova'}).`
+    + ' Do `U1` ih nije bilo nijedan, pa je stranica imala samo `h1` i tri `h2` iz futera.',
+  );
+});
+
+test('U1/B — svako pitanje na /faq nosi svoje sidro', async () => {
+  const html = await (await get('/faq')).text();
+  const ids = tokenize(html)
+    .filter((t) => !t.close && t.tag === 'details' && (attrValue(t.blob, 'class') || '').includes('faq-item'))
+    .map((t) => attrValue(t.blob, 'id'));
+  assert.deepEqual(ids, FAQ_ITEMS.map((item) => item.id), '/faq: sidra pitanja se ne poklapaju sa `lib/faq.js`');
+});
+
+/* ⚠️ ZASEBAN BLOK, NE DRUGI `assert` U `U1/B` (`LESSONS` L19). Da stoji uz sidra, prvi `assert`
+ *  bi prekidao blok i ova tvrdnja se NIKAD ne bi mogla dokazati crvenom — a upravo je ona
+ *  razlog zbog kog test postoji.
+ *
+ * ⚠️ Postojeci test `FAQ schema matches visible questions` je do `U1` proveravao SAMO da rec
+ *  `FAQPage` postoji u HTML-u; vidljiva pitanja nije pogledao nikad, pa je ime tvrdilo vise nego
+ *  sto je merilo (`LESSONS` L20). Ovde se stvarno porede — mehanizam kojim se u MAIN-u lazna
+ *  tvrdnja uvukla samo na jedno od dva mesta je bas razlazenje dve kopije istih pitanja. */
+test('U1/D — schema pita tacno ona pitanja koja se vide na /faq', async () => {
+  const html = await (await get('/faq')).text();
+  const visible = [...html.matchAll(/<summary[^>]*>\s*<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)]
+    .map((m) => decodeText(m[1]).trim());
+  assert.equal(visible.length, FAQ_ITEMS.length, '/faq: parser nije nasao sva pitanja u markup-u');
+  assert.deepEqual(visible, faqSchemaQuestions(html), '/faq: schema i vidljiva pitanja se razilaze');
+});
+
+test('U1/C — pitanja na naslovnoj su `h3`, ne `h2`', async () => {
+  const html = await (await get('/')).text();
+  const heads = summaryFirstChildTags(html);
+  assert.equal(heads.length, homeFaqItems().length, 'naslovna: broj pitanja se ne poklapa sa `homeFaqItems()`');
+  const wrong = heads.filter((tag) => tag !== 'h3');
+  assert.equal(
+    wrong.length, 0,
+    `naslovna: ${wrong.length} pitanja nije \`h3\` (naslo: ${[...new Set(wrong)].join(', ') || 'bez naslova'}).`
+    + ' Sekcija vec nosi `<h2 id="faq-heading">`, pa bi `h2` preskocio nivo.',
+  );
 });

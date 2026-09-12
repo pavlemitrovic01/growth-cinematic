@@ -308,7 +308,7 @@ export default function CinematicHome() {
         <section data-line className="home-faq home-section" aria-labelledby="faq-heading">
           <div className="home-section-top"><span className="home-kicker">05 / STRAIGHT ANSWERS</span><Link className="home-text-link" href="/faq">All questions ↗</Link></div>
           <h2 data-wipe id="faq-heading">Before you<br /><em>take the next step.</em></h2>
-          <Accordion items={homeFaqItems()} />
+          <Accordion items={homeFaqItems()} level={3} />
         </section>
 
         <section data-line className="home-close home-section" aria-labelledby="close-heading">
