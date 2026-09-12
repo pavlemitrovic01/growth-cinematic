@@ -20,7 +20,8 @@
   ⚠️ **`manual` stoji kao NIJE POKRENUTO**, ne kao PASS. Snimak computed style-a (9.521 element ×
   57 svojstava × 64 stanja) bio je **bajt-identičan** baznom, pa je ručni prolaz preskočen
   Pavlovom odlukom.
-  ⚠️ **`verify`/`rendered` protiv deploy-a još nisu mereni** — traže release.
+  ✅ **Spojen i pušen 2026-09-12; izmereno protiv deploy-a** (17/17), uz nov build potvrđen time
+  što su obrisane mrtve klase nestale iz serviranog CSS-a.
 - **Pretposlednji:** **`U1`** (2026-09-12, `2df7aa3`) — osam pitanja na `/faq` postalo naslovi sa
   sidrima (`h1`+3 `h2` → `h1`+11 `h2`, sidara 0 → 8); schema bajt za bajt ista. Spojen i pušen,
   deploy izmeren.
@@ -31,8 +32,8 @@
 
 ## Git
 
-- ⚠️ **`K1` je na grani `k1-css-bez-preklapanja` i NIJE spojen ni pušen** — implementacija
-  `eb2d6d5` + close commit. Release je Pavlova odluka.
+- `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
+  **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
 - Grana istine **`master`**, izjednačena sa `origin/master` (nosi `U1`).
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
@@ -40,7 +41,7 @@
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
-  `m7-hero-prelaz`, `u1-faq-struktura`.
+  `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`.
 
 ## Žive prepreke
 

@@ -6,6 +6,38 @@
 
 ---
 
+## non-batch(release) — `K1` spojen i pušen; izmereno protiv deploy-a · 2026-09-12
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/K1.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+`master` `2aebd07..d5d3ce5` fast-forward, push, Vercel deploy automatski. Nosi `K1` (`eb2d6d5`,
+`d5d3ce5`). Pavlova odluka 2026-09-12 („Spoji i push pa da diskutujemo").
+
+⚠️ **Treći batch zaredom sa drugačijim diskriminatorom, i to je poenta.** `M2b` je mogao census,
+`U1` sidra, a `K1` menja **samo CSS** — pa se nov build dokazuje time što su tri obrisane mrtve
+klase nestale iz serviranog CSS-a:
+```
+  contact-h2      stari deploy 1  ->  nov 0
+  contact-sub                     ->      0
+  home-noscript                   ->      0
+  faq-q (kontrola)                ->      1   (fajl nije prazan, samo je nov)
+```
+
+IZMERENO PROTIV DEPLOY-a, sa ispisanom metom (`RULES §6`):
+```
+  verify:nojs     PASS 14 ruta
+  verify:claims   PASS 13 ruta
+  test:rendered   17/17 · G1/C census 0/4/9/9 zelen
+  meri se: https://growth-cinematic.vercel.app
+```
+Deploy `fra1::95bwg-1789225113541-27392b58b782`, `noindex` drži.
+
+**NEXT STEP:** `U2` (naslovna: redosled poverenja) kroz `/plan` — više ne čeka `K1`. `T1` čeka
+`T-FONT`.
+
+---
+
 ## K1 (STANDARD) — `globals.css`: merenje oborilo plan, isporučen smanjen obim · 2026-09-12
 
 **Changed files:** `app/globals.css` · `__tests__/globals-css.test.js` (nov) ·
