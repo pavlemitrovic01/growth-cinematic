@@ -17,8 +17,8 @@
   odvojena `it` bloka**; falsifikovana **tri puta**, svaki uslov bar jednom crven. `manual` PASS.
   ⚠️ **Poglavlje sada klizi 28 px (±14 px) dok je na punoj vidljivosti**, jer je pomeraj ostao
   vezan za `d`. Pavle prihvatio kako jeste, pre `manual`-a (`LESSONS` L22).
-  ⚠️ **ACCEPTANCE 6 stoji kao NIJE POKRENUTO** — `verify`/`rendered` protiv deploy-a traže
-  release. Zatvara se release commitom, kao kod `M2b`.
+  ✅ **ACCEPTANCE 6 zatvoren 2026-09-12** release commitom — izmereno protiv deploy-a; nov build
+  potvrđen otiskom minifikovane krive PRE merenja (census ovde ne može — serverski HTML je isti).
 - **Pretposlednji:** **`M2b`** (2026-09-09, `d125e5f`) — šest sekcija naslovne na `CRTA` +
   `OTKRIVANJE`; census `0/4/9/9`, falsifikovan po atributu (`LESSONS` L19). ACCEPTANCE 4 zatvoren
   2026-09-11 izmereno protiv deploy-a.
@@ -31,16 +31,16 @@
 
 ## Git
 
-- ⚠️ **`M7` je na grani `m7-hero-prelaz` i NIJE spojen ni pušen** — implementacija `0644d8a` +
-  close commit. Release je Pavlova odluka; **deploy još servira stanje pre `M7`**.
-- Grana istine **`master`** = `d733178`, izjednačena sa `origin/master`.
+- `M7` (`d733178..b60a140`, implementacija `0644d8a`) spojen fast-forward-om i pušen 2026-09-12.
+  **Deploy živ i izmeren protiv njega**; nov build potvrđen otiskom minifikovane krive pre merenja.
+- Grana istine **`master`**, izjednačena sa `origin/master`.
 - `M2b` (`697b787..ddd12cc`) i zapis audita (`8d788bf`) spojeni fast-forward-om i pušeni
   2026-09-11. **Deploy izmeren protiv njih** (census `0/4/9/9`).
 - `M2` (`bb8c407..a362c20`) spojen i pušen 2026-09-09; `G1` (`ddba710..7e73585`) i `G2`
   (`1ff169b..930c33d`) 2026-09-09. **Deploy izmeren protiv svih.**
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
-  `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`.
+  `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`, `m7-hero-prelaz`.
 
 ## Žive prepreke
 

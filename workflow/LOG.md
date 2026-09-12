@@ -6,6 +6,40 @@
 
 ---
 
+## non-batch(release) — `M7` spojen i pušen; ACCEPTANCE 6 zatvoren izmereno · 2026-09-12
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/M7.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+`master` `d733178..b60a140` fast-forward, push, Vercel deploy automatski. Nosi `M7` (`0644d8a`,
+`b60a140`). Pavlova odluka 2026-09-12 („spoji i push").
+
+⚠️ **Diskriminator nije mogao da bude census, kao kod `M2b`.** `M7` menja samo klijentski JS, a
+serverski HTML je isti — svako merenje nad HTML-om prošlo bi i na **starom** deploy-u. Nov build je
+zato potvrđen **otiskom minifikovane krive** u chunku koji `/` učitava:
+```
+  NOV    (n=Math.abs(i))<=.4?1:n>=.6?0:(.6-n)/.19999999999999996    nadjen 1x
+  STARI  1.65 (multiplikator stare krive)                           0x
+```
+`0.6 − 0.4` je pri minifikaciji sklopljeno u `.19999999999999996` — otisak koji se ne može
+slučajno pojaviti. Deploy `fra1::gckbk-1789173629359-26381a640da3`, `X-Robots-Tag: noindex,
+nofollow` drži.
+
+IZMERENO PROTIV DEPLOY-a, sa ispisanom metom (`RULES §6`):
+```
+  verify:nojs     PASS 14 ruta
+  verify:claims   PASS 13 ruta
+  test:rendered   13/13, `G1/A i G1/B mere 14 ruta`, `G1/C` census 0/4/9/9 zelen
+  meri se: https://growth-cinematic.vercel.app
+```
+
+Time je zatvoren ACCEPTANCE 6 iz `batches/M7.md` — jedini kriterijum koji je na `/close`-u stajao
+kao NIJE POKRENUTO.
+
+**NEXT STEP:** `U1` (FAQ struktura i nivoi naslova) kroz `/plan`.
+
+---
+
 ## M7 (STANDARD) — hero prelaz: kriva „drži pa predaj" · 2026-09-12
 
 **Changed files:** `lib/hero-beat.ts` (nov) · `components/HeroExperience.tsx` ·
