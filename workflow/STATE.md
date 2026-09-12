@@ -20,7 +20,8 @@
   klikom. Svesna degradacija, zapisana u `FaqDeepLink.tsx`.
   ⚠️ **Dva odstupanja od ugovora, oba zapisana:** tri tvrdnje → četiri (`L19`), i prva verzija
   provere bila je pokvarena, ne kod (`L24`).
-  ⚠️ **`verify`/`rendered` protiv deploy-a još nisu mereni** — traže release.
+  ✅ **Spojen i pušen 2026-09-12; `verify` i `rendered` izmereni protiv deploy-a** (17/17), uz
+  nov build potvrđen sidrima PRE merenja.
 - **Pretposlednji:** **`M7`** (2026-09-12, `0644d8a`) — hero kriva „drži pa predaj": zbir dva
   najbliža poglavlja `0,35` → `1,00`, puno poglavlje `~0%` → **80%** skrola. Spojen i pušen
   2026-09-12; ACCEPTANCE 6 zatvoren izmereno protiv deploy-a.
@@ -33,8 +34,8 @@
 
 ## Git
 
-- ⚠️ **`U1` je na grani `u1-faq-struktura` i NIJE spojen ni pušen** — implementacija `2df7aa3` +
-  close commit. Release je Pavlova odluka; **deploy još servira stanje pre `U1`**.
+- `U1` (`819dd63..6fd1ad2`, implementacija `2df7aa3`) spojen fast-forward-om i pušen 2026-09-12.
+  **Deploy živ i izmeren protiv njega**; nov build potvrđen sidrima (`0 -> 8`) pre merenja.
 - Grana istine **`master`**, izjednačena sa `origin/master`.
 - `M7` (`d733178..b60a140`) spojen fast-forward-om i pušen 2026-09-12. **Deploy izmeren protiv
   njega**; nov build potvrđen otiskom minifikovane krive pre merenja (census tamo ne može —

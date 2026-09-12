@@ -6,6 +6,39 @@
 
 ---
 
+## non-batch(release) — `U1` spojen i pušen; izmereno protiv deploy-a · 2026-09-12
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/U1.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+`master` `819dd63..6fd1ad2` fast-forward, push, Vercel deploy automatski. Nosi `U1` (`2df7aa3`,
+`6fd1ad2`). Pavlova odluka 2026-09-12 („nema pravih gresaka, spoji i push").
+
+⚠️ **Prva provera posle push-a pokazala je STARI build** — nula sidara i tri `h2` na `/faq`.
+Merenje je sačekalo nov, potvrđen diskriminatorom koji stari deploy nema:
+```
+  sidra pitanja na /faq    0  ->  8    (pay, violations, home-time, …)
+  h2 na /faq               3  ->  11
+```
+
+IZMERENO PROTIV DEPLOY-a, sa ispisanom metom (`RULES §6`):
+```
+  verify:nojs     PASS 14 ruta
+  verify:claims   PASS 13 ruta
+  test:rendered   17/17 · U1/A–U1/D zeleni · G1/C census 0/4/9/9 zelen
+  meri se: https://growth-cinematic.vercel.app
+```
+Deploy `fra1::5w2rf-1789220217273-c6bde6c05370`, `X-Robots-Tag: noindex, nofollow` drži.
+
+⚠️ **Konzolne greške koje je Pavle video pre ovoga nisu bile defekt.** Posle `/close`-a sam ugasio
+dev server dok je njegov tab ostao otvoren, pa je svaki Next prefetch (`…?_rsc=…`) pao na
+`ERR_CONNECTION_REFUSED`. Server vraćen, isti zahtev vratio 200. Ne dira kod.
+
+**NEXT STEP:** `K1` (`globals.css` bez preklapanja pravila, bez namerne vizuelne promene) kroz
+`/plan`.
+
+---
+
 ## U1 (STANDARD) — FAQ struktura: pitanja postaju naslovi sa sidrima · 2026-09-12
 
 **Changed files:** `components/Accordion.tsx` · `components/FaqDeepLink.tsx` (nov) ·
