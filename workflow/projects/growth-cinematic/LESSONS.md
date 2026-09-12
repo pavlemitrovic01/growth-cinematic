@@ -212,3 +212,29 @@ untracked, pa git nije imao šta da poredi.
 rezervnom kopijom napravljenom pre ubacivanja prekršaja — i tako se i prijavljuje, umesto da se
 tvrdi čist `git status` koji tada ne znači ništa. Formulaciju `RULES §6` treba dopuniti; to je
 zaseban non-batch, jer `RULES.md` nije bio u scope-u ni `M7` ni `U1`.
+
+## L26 — Preklapanja u `globals.css` nisu nered nego nosiva kaskada.
+`K1` je krenuo da fajl svede na „jedna deklaracija po selektoru" i **merenjem je oboren**: od
+**109** preklapanja samo **jedno** se dalo spojiti bez promene izgleda. Tri pokušaja, tri
+regresije koje je uhvatio snimak computed style-a:
+- svih 68 „samostalnih" klastera spojeno na poslednju poziciju → **6280 elemenata**;
+  `nav-links` je prešao iz `display:none` u `flex` — **mobilni meni se otvorio**, jer je između
+  dve pojave stajao media blok koji ga skriva;
+- uz uslov „nema istog selektora između" → `.btn` je prešao ispred `.btn-ghost` i providnim
+  `border`-om mu pojeo boju ivice (**144** elementa);
+- uz izuzet `.btn` → `.post-body p{margin:0}` prešao ispred `.post-cta p{margin:0 0 16px}` i
+  pojeo 16px po pasusu (**108** elemenata).
+
+**Pravilo koje iz toga sledi:** spajanje dve deklaracije istog selektora je sigurno **samo ako
+nijedno pravilo između prve i poslednje pojave ne dira isto svojstvo**. Ako ga dira, ishod se
+može okrenuti iako je selektor isti — jer spajanje pomera deklaracije kroz tuđa pravila. Sa tim
+uslovom ovde ostaje **1 od 109**, i to je odgovor na nalaz audita `L-10`.
+
+⚠️ **Nijedna postojeća kapija ovo ne bi videla.** Renderovan HTML se ne menja, census pokreta se
+ne menja, svih šest kapija ostaje zeleno — a mobilni meni je bio otvoren. Uhvatio ga je jedino
+snimak `getComputedStyle`-a nad **9.521 elementom × 57 svojstava × 64 stanja stranice**, koji je
+pre upotrebe dokazan kao deterministican (dva ista pokretanja) i osetljiv (promena od 1px).
+
+**Ko sledeći put krene na ovaj fajl:** ne mehanički. Svaki preostali klaster traži analizu po
+elementima — koji selektori stvarno stoje na istom elementu — i u dobrom delu slučajeva vizuelnu
+odluku, što je posao `T1`-a, ne čišćenja.

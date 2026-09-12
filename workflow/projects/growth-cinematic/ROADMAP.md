@@ -19,9 +19,8 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `K1` | `globals.css` bez preklapanja pravila, bez vizuelne promene (`L-10`) | STANDARD + `manual` | — | **SLEDEĆI** |
-| `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `K1`, `T-FONT` | blokirano odlukom |
-| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | `K1` | OPEN |
+| `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `T-FONT` | blokirano odlukom |
+| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | **SLEDEĆI** |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
 | `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
@@ -29,8 +28,9 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | `H1` | Higijena: `data-reveal`, starter SVG-ovi, komentari sa „90%" i `SITEMAP.md`, `NoFallbackError` (`L-18`, `L-21`) | LEAN | — | OPEN |
 | `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
 
-⚠️ **`K1` je sledeći** — nezavisan je i ne čeka nijednu odluku, a ide pre `T1` da bi svaka
-vizuelna razlika u `T1` došla od pisma, a ne od greške u sređivanju. `T1` čeka `T-FONT`.
+⚠️ **`K1` je zatvoren merenjem, ne čišćenjem** (`LESSONS` L26): od 109 preklapanja samo jedno se
+dalo spojiti bez promene izgleda — redosled u `globals.css` nosi izgled. `T1` i dalje čeka
+`T-FONT`; `U2` više ne čeka `K1`.
 
 ⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`
 („1 tema = 1 batch"), i da svaka vizuelna razlika u `T1` bude pripisiva samo pismu.
@@ -114,6 +114,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `K1` | **`globals.css`** — izmereno da preklapanja nose kaskadu: 109 → samo 1 spojivo bez vizuelne promene; obrisane 3 mrtve klase, uveden census kapija | 2026-09-12 |
 | `U1` | **FAQ struktura** — osam pitanja postalo naslovi sa sidrima; `/faq` sa `h1`+3 `h2` na `h1`+11 `h2`, sidara 0 → 8 | 2026-09-12 |
 | `M7` | **Hero prelaz** — kriva „drži pa predaj" umesto `1 − d·1.65`; zbir dva najbliža 0,35 → 1,00, puno poglavlje ~0% → 80% | 2026-09-12 |
 | `M2b` | **Naslovna na nov rečnik** — šest sekcija sa `data-reveal` na `CRTA`+`OTKRIVANJE`; census `6/4/3/3` → `0/4/9/9`, falsifikovan po atributu | 2026-09-09 |

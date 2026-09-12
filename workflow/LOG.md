@@ -6,6 +6,76 @@
 
 ---
 
+## K1 (STANDARD) — `globals.css`: merenje oborilo plan, isporučen smanjen obim · 2026-09-12
+
+**Changed files:** `app/globals.css` · `__tests__/globals-css.test.js` (nov) ·
+`workflow/projects/growth-cinematic/batches/K1.md` (nov) · `.../CONTEXT.md` · `.../ROADMAP.md` ·
+`.../LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Implementacija `eb2d6d5`, close commit ispod. Batch je krenuo po nalazu audita `L-10` da fajl
+svede na „jedna deklaracija po selektoru" i **merenjem je oboren pre implementacije**. Pavlu je
+prijavljen STOP; Pavle je izabrao „zatvori `K1` malo".
+
+**INSTRUMENT NAPRAVLJEN I DOKAZAN PRE UPOTREBE** (u scratchpad-u, van repoa — traži lokalni
+Chrome i gitignore-ovan `work/`):
+```
+  obuhvat      64 stanja stranice (14 ruta x 4 sirine + 8 sa pokretom)
+               9.521 element x 57 svojstava
+  determinizam dva pokretanja istog CSS-a -> isti sha256 (7fbb55a0)
+  osetljivost  promena od 1px -> 167 izmenjenih elemenata, i visina stranice 3797.75 -> 3801.75
+  vracanje     povratak fajla -> povratak na isti bazni hash
+```
+
+**ŠTA JE MERENJE POKAZALO** — tri pokušaja spajanja, tri regresije koje nijedna kapija ne vidi:
+```
+  1) 68 klastera na poslednju poziciju   6280 elemenata  nav-links display:none -> flex
+                                                         (mobilni meni se otvorio)
+  2) + "nema istog selektora izmedju"     144 elementa   .btn ispred .btn-ghost, providan
+                                                         border pojeo boju ivice
+  3) + izuzet .btn                        108 elemenata  .post-body p{margin:0} ispred
+                                                         .post-cta p{margin:0 0 16px}
+  4) dokazivo siguran uslov                 1 od 109 klastera spojivo
+```
+Uslov 4: spajanje je sigurno samo ako **nijedno pravilo između prve i poslednje pojave ne dira
+isto svojstvo**. Provereno i sa labavijim poređenjem (tačna imena umesto porodica) — i dalje 1.
+⚠️ **Redosled u `globals.css` je sadržaj, ne nered.** Pouka: `LESSONS` **L26**.
+
+**ISPORUČENO:** spojen `[data-line]::before`; obrisane tri mrtve klase (`contact-h2`,
+`contact-sub`, `home-noscript`), s tim da je `.contact-sub` iz deljenog pravila **skraćen, ne
+obrisan sa ostalima** (`LESSONS` L4); nova kapija `__tests__/globals-css.test.js`.
+
+VERIFICATION (konačno stablo, port provereno slobodan):
+```
+  npm run lint / typecheck / build   exit 0
+  npm test                           exit 0   139/139 u 11 fajlova (bilo 137/10)
+  npm run verify                     exit 0   nojs 14 · claims 13
+  npm run test:rendered              exit 0   17/17 · census 0/4/9/9 nepromenjen
+  meri se: http://localhost:3000
+  snimak computed style-a            IDENTICAN baznom (7fbb55a0) — 0 pomerenih elemenata
+```
+
+**FALSIFIKACIJA NOVE KAPIJE — dva crvena pokretanja, po jedan prekršaj:**
+```
+  K1/A  cetvrta pojava vec duplikovanog .foot-tag   142 !== 141
+  K1/B  .k1-mrtva-proba bez ijednog korisnika       ['k1-mrtva-proba'] !== []
+```
+⚠️ **Prva verzija `K1/A` NIJE MOGLA DA POCRVENI** — brojala je selektore sa preklapanjem, pa
+dodatna pojava već duplikovanog selektora ništa ne menja. Falsifikacija je to otkrila; mera je
+promenjena na **broj suvišnih deklaracija**. Bez tog koraka kapija bi bila zelena zauvek.
+⚠️ I `K1/B` je prvo bio pokvaren: prijavio je `subpage--article`/`subpage--form` kao mrtve, iako
+ih `PageShell.tsx:11` sklapa u runtime-u. Popravljena **provera**, ne CSS (`LESSONS` L18).
+
+⚠️ **`manual` stoji kao NIJE POKRENUTO, ne kao PASS.** Kriterijum je bio „Pavle ne vidi razliku na
+4 širine"; snimak je dokazao bajt-identičan computed style na 9.521 elementu, što je jači dokaz,
+pa je Pavle zatvorio bez ručnog prolaza.
+
+**SCOPE_DRIFT: none** — 8 putanja, sve iz EXPECTED-FILES (2 u implementaciji, 6 u close-u).
+
+**NEXT STEP:** release je Pavlova odluka. Zatim `U2` (naslovna: redosled poverenja) — više ne
+čeka `K1`. `T1` i dalje čeka `T-FONT`.
+
+---
+
 ## non-batch(release) — `U1` spojen i pušen; izmereno protiv deploy-a · 2026-09-12
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/U1.md` · `workflow/STATE.md` ·
