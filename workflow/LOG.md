@@ -6,6 +6,34 @@
 
 ---
 
+## non-batch(docs) — `K1` i `U1` manifesti: zaostao `Status: OPEN` uklonjen · 2026-09-13
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/K1.md` ·
+`workflow/projects/growth-cinematic/batches/U1.md` · ovaj `LOG.md`
+
+Nalaz `/kickoff`-a 2026-09-13, Pavlova odluka („ispravi k1 i u1"). Oba manifesta su ispod
+`Status: CLOSED (<sha>)` nosila i drugi red `Status: OPEN`, a šablon (`batches/README.md`) ima
+jedno polje. Uz aktivan batch NONE to je drift po `/audit` pravilu — ne sme postojati OPEN manifest.
+**Bloker nije bio:** SHA u CLOSED redu, `ROADMAP` → `Zatvoreno` i spojene grane držali su stanje
+jednoznačnim, a `/plan` i `/execute` po svom `SKILL.md` ne proveravaju status postojećih manifesta.
+Obrisan je samo zaostali red; scope i ostatak oba manifesta netaknuti.
+
+**Kako je nastao:** oba manifesta su prvi put commitovana tek u close commitu, i već tada sa oba
+reda (`6fd1ad2`, `d5d3ce5`) — CLOSED je dopisan iznad umesto da zameni OPEN. `M7` i `R1`, zatvoreni
+pre i posle njih, imaju jedno polje.
+
+IZMERENO (ista provera pre i posle):
+```
+  "^- **Status:**" po fajlu u batches/   K1 2 -> 1 · U1 2 -> 1 · ostali (7 manifesta + README) 1 -> 1
+  "^- **Status:** OPEN"                  K1:7, U1:7, README:30  ->  samo README:30 (sablon, ne manifest)
+  git diff --stat (manifesti)            2 fajla, 2 brisanja, 0 dodavanja
+  quick                                  exit 0
+```
+
+**NEXT STEP:** nepromenjen — izbor sledećeg batch-a (`STATE`).
+
+---
+
 ## non-batch(release) — `R1` spojen i pušen; predaja novoj sesiji · 2026-09-13
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/R1.md` · `workflow/STATE.md` ·
