@@ -27,24 +27,25 @@
 
 ## Git
 
-- ⚠️ **`R1` je na grani `r1-resend-sandbox` i NIJE spojen ni pušen** — samo bookkeeping, nijedan
-  fajl koda. **Efekat je već živ na produkciji**: env je u Vercel-u i redeploy je urađen.
+- `R1` (`a55e0be..9d22b05`) spojen fast-forward-om i pušen 2026-09-13 — samo zapisnik; efekat (env +
+  redeploy) živ od pre spajanja. Deploy posle push-a zdrav (`verify` 14+13, `rendered` 17/17); nov
+  build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**, izjednačena sa `origin/master` (nosi `M7`, `U1` i `K1`).
+- Grana istine **`master`**, izjednačena sa `origin/master` (nosi `M7`, `U1`, `K1` i `R1`).
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
 - Bookmark grane, sve spojene: `d1-pay-utility`, `d1-values-utility`,
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
-  `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`.
+  `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`.
 
 ## Žive prepreke
 
-- ⚠️ **Prijave sa starog i novog sajta se u inbox-u ne razlikuju** — isti pošiljalac
-  `onboarding@resend.dev`, isti inbox, identičan naslov. Oko prelaska se neće znati odakle je
-  prijava stigla. Popravka je naslov u `app/api/**` (lock zona) — nalaz iz `R1`.
+- **Stari sajt (MAIN) uskoro ide offline** — Pavle 2026-09-13. Zato je nalaz iz `R1` (prijave sa
+  dva sajta se u inbox-u ne razlikuju) **nebitan i ne radi se**. Do samog prelaska MAIN je i dalje
+  živ, indeksiran i ne dira se.
 - ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
   prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
 - **Osam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + četiri

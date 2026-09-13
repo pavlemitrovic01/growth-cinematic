@@ -6,6 +6,27 @@
 
 ---
 
+## non-batch(release) — `R1` spojen i pušen; predaja novoj sesiji · 2026-09-13
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/R1.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `a55e0be..9d22b05` fast-forward, push. Pavlova odluka 2026-09-13 („Spoji i pushuj").
+
+⚠️ **Bez diskriminatora novog builda** — push nosi samo dokumente, pa je serviran sadržaj isti.
+Izmereno zdravlje deploy-a posle push-a: `verify:nojs` PASS 14 · `verify:claims` PASS 13 ·
+`test:rendered` 17/17 · `meri se: https://growth-cinematic.vercel.app` · `noindex` drži.
+
+**Dve Pavlove odluke iz iste poruke, upisane za novu sesiju:**
+- **Stari sajt (MAIN) uskoro ide offline.** Do prelaska je i dalje živ i ne dira se.
+- **Nalaz iz `R1` (prijave sa dva sajta se u inbox-u ne razlikuju) je nebitan** — ne radi se.
+  ⚠️ To se NE proteže na `C52`: pravna izloženost na živom sajtu ostaje otvorena dok MAIN radi.
+
+**NEXT STEP:** nova sesija počinje sa `/kickoff`. Redosled posle `R1` nije odlučen — preporuka u
+`STATE`-u: `V1` + pravni tekstovi advokatu; za dizajn prvo `T-FONT`.
+
+---
+
 ## R1 (STRICT) — Resend: lanac forma → baza → inbox dokazan merenjem · 2026-09-13
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/R1.md` (nov) ·

@@ -90,9 +90,8 @@ na deploy-u, mejl potvrđen u inbox-u). Sa „poslednji" prebačen na „prvi" P
 2026-09-12: jedina nedokazana karika je rizik, ne rad. **Ostatak lanca lansiranja: `V1` i pravni
 tekstovi advokatu.**
 
-⚠️ **Otvoreno posle `R1`:** prijave sa starog i novog sajta se u inbox-u ne razlikuju — isti
-pošiljalac, isti inbox, identičan naslov. Popravka je naslov u `app/api/**` (lock zona, STRICT) —
-kandidat za mali batch, Pavlova odluka.
+Nalaz iz `R1` — prijave sa starog i novog sajta se u inbox-u ne razlikuju (isti pošiljalac, isti
+naslov) — **Pavle 2026-09-13: nebitno, stari sajt uskoro ide offline.** Ne radi se.
 
 ## Blokirano — ne planira se dok odluka ne padne (`RULES §8`)
 
