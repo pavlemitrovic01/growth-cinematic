@@ -6,6 +6,45 @@
 
 ---
 
+## non-batch(release) — `B1` spojen i pušen; ACCEPTANCE 5 zatvoren merenjem na deploy-u · 2026-09-14
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/B1.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `059551e..fb26091` fast-forward, push. Pavlova odluka 2026-09-14 („spoji i pushuj"). Pre
+spajanja proveren `origin/master` (`ls-remote` = `059551e`, nepomeren) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja:** na deploy-u pre push-a `/og.png` 200 · `/og.jpg` 404 · `/_headers` 200;
+posle push-a `/og.png` **404** · `/og.jpg` **200** · `/_headers` **404** — nov build živ ~26 s posle
+push-a (`X-Vercel-Id` `fra1::4m8db-1789342803601-7f9836eda705`).
+
+IZMERENO protiv deploy-a:
+```
+  / meta                        og:image i twitter:image https://growth-cinematic.vercel.app/og.jpg,
+                                1200x630, alt isti · clanak 0x og:image
+  /og.jpg                       200 image/jpeg 129047 B · Cache-Control: public, max-age=3600
+  /images/hero-01-night*.jpg    Cache-Control: public, max-age=3600 (oba; pre B1 max-age=0)
+  /og.png · /_headers           404 · 404
+  security zaglavlja            6 istih na /og.jpg i / · X-Robots-Tag: noindex, nofollow
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 17/17
+  meri se: https://growth-cinematic.vercel.app
+```
+
+✅ **Rizik iz plana otpao:** Vercel poštuje `Cache-Control` iz `headers()` i za statične fajlove iz
+`public/` — bez `vercel.json`. `B1` ACCEPTANCE 5 zatvoren.
+
+⚠️ Sitno, alat: Git Bash je labelu `-w '/og.jpg …'` u `curl` čekanju preveo u Windows putanju. Merenje
+nije pogođeno — diskriminator je meren zasebnim zahtevima, ispisanim iznad.
+
+⚠️ Ovaj release commit nosi samo dokumente, pa se deploy posle njegovog push-a po sadržaju ne može
+razlikovati; merenje iznad je nad deploy-om `fb26091`.
+
+**NEXT STEP:** nije odlučeno — preporuka u `STATE`-u (`V1` + pravni tekstovi advokatu; `T-FONT`; `U3`
+čeka potvrdu o broju). Otvoreno pitanje za Pavla: okvirni datum prelaska.
+
+---
+
 ## B1 (STRICT) — social slika 1,53 MB → 129 KB, keš slika u `next.config.ts`, `_headers` napolje · 2026-09-13
 
 **Implementacija:** `7a3f083` · **Grana:** `b1-social-slika-kes` — **nije spojena**, release je Pavlova odluka
