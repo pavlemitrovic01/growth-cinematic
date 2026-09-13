@@ -7,26 +7,33 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći — nije odlučeno.** Redosled je 2026-09-12 promenjen razgovorom o auditima: `R1` je
-  prebačen na prvo mesto (Pavlova odluka) i zatvoren. **Preporuka, ne odluka:** ostatak lanca
-  lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu; za dizajn prvo odluka
-  **`T-FONT`**. Iz audita (`docs/AUDIT-2026-09.md`) preporučeno samo ono što vozač vidi: `U2`,
-  `U3`, `B1`.
-- **Poslednji završen:** **`R1`** (2026-09-13, bez koda) — **Resend upaljen i lanac dokazan kraj na
+- **Sledeći — nije odlučeno.** Otvoreno iz `B1`: **release** (Pavlova odluka) — tek on zatvara
+  ACCEPTANCE 5, keš zaglavlja na Vercelu. **Preporuka, ne odluka:** ostatak lanca lansiranja — `V1`
+  (selidba sa Hobby naloga) i pravni tekstovi advokatu; za dizajn prvo odluka **`T-FONT`**. Od onoga
+  što vozač vidi: `U3` (čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`), a `U2`
+  posle `T1`.
+  ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
+  brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
+- **Poslednji završen:** **`B1`** (2026-09-13, `7a3f083`) — **social slika 1,53 MB → 129 KB**
+  (baseline JPEG 1200×630), keš od sat vremena za `/images/*` i `/og.jpg` u `next.config.ts`,
+  Cloudflare `_headers` obrisan. Tier LEAN → STRICT, jer je `lib/seo.js` LOCK. `manual` PASS, nova
+  provera tri puta dokazano crvena. ⚠️ **Nije spojen** — keš na Vercelu nije dokazan dok release ne
+  izmeri deploy.
+- **Pretposlednji:** **`R1`** (2026-09-13, bez koda) — **Resend upaljen i lanac dokazan kraj na
   kraj.** Nov ključ u Vercel env-u, sandbox pošiljalac kao na starom sajtu, redeploy; test prijava
   na deploy-u `POST /api/apply` **`503 → 200`**, mejl stigao u inbox sa celim TCPA zapisom
   (`manual` PASS). `R1-DOMEN` zatvoren: domen tek na lansiranju, posle DKIM-a.
   ⚠️ **`LEAD_FROM_EMAIL` je namerno prazan** — bez DKIM-a bi tiho ugasio isporuku.
   ⚠️ **Test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- **Pretposlednji:** **`K1`** (2026-09-12, `eb2d6d5`) — merenje oborilo plan: od 109 preklapanja u
-  `globals.css` spojivo **jedno**; redosled je sadržaj, ne nered (`LESSONS` L26). Spojen i pušen.
-- Starije (`U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `B1` (implementacija `7a3f083` + close commit) stoji na grani **`b1-social-slika-kes`** — **nije
+  spojen ni pušen**; release je Pavlova odluka, a ACCEPTANCE 5 se meri na deploy-u posle push-a.
 - `R1` (`a55e0be..9d22b05`) spojen fast-forward-om i pušen 2026-09-13 — samo zapisnik; efekat (env +
   redeploy) živ od pre spajanja. Deploy posle push-a zdrav (`verify` 14+13, `rendered` 17/17); nov
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.

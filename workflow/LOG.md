@@ -6,6 +6,67 @@
 
 ---
 
+## B1 (STRICT) — social slika 1,53 MB → 129 KB, keš slika u `next.config.ts`, `_headers` napolje · 2026-09-13
+
+**Implementacija:** `7a3f083` · **Grana:** `b1-social-slika-kes` — **nije spojena**, release je Pavlova odluka
+
+**Changed files:** `public/og.jpg` (nov) · `public/og.png` (obrisan) · `public/_headers` (obrisan) ·
+`lib/seo.js` (LOCK, 1 red) · `next.config.ts` · `__tests__/seo.test.js` ·
+`workflow/projects/growth-cinematic/batches/B1.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+⚠️ **Tier ispravljen pri planiranju, LEAN → STRICT:** kriterijum iz audita („dimenzije u
+`lib/seo.js:8` usklađene") dira LOCK zonu, a audit i `ROADMAP` su `B1` vodili kao LEAN.
+
+**Izmereno pre rada, na deploy-u:** `og.png` 1.528.568 B uz `Cache-Control: public, max-age=0,
+must-revalidate`, isto na hero slikama; **`/_headers` → 200** — Cloudflare fajl koji na Vercelu ništa
+ne radi, a javno se servira. Njegova namera (`max-age=3600` za `/images/*` i social sliku) prešla je u
+`next.config.ts`; pravilo `/assets/*` nije preneto, jer folder ne postoji.
+
+⚠️ **Zamka alata uhvaćena u probi, pre implementacije:** `sharp` sa `mozjpeg: true` **tiho gazi
+`progressive: false`** — isti bajtovi, SOF `0xc2`. Isporučen je baseline bez preseta (q90, 4:4:4,
+trellis + deringing + tabela 3): 129.047 B, SOF `0xc0`, sha256 `e0629934…f3f54`, determinističan.
+
+IZMERENO (`/close`, na kodu identičnom `7a3f083`):
+```
+  quick / typecheck / full      exit 0 · full 20/20 staticnih stranica
+  test                          140/140 u 11 fajlova (bilo 139)
+  verify                        nojs PASS 14 · claims PASS 13
+  rendered                      17/17
+  / meta                        og:image i twitter:image /og.jpg, 1200x630, alt isti · clanak 0x og:image
+  /og.jpg                       200 image/jpeg 129047 B · Cache-Control: public, max-age=3600
+  /images/hero-01-night*.jpg    Cache-Control: public, max-age=3600 (oba)
+  /og.png · /_headers           404 · 404
+  security zaglavlja            6 istih na /og.jpg i / · X-Robots-Tag: noindex, nofollow
+  meri se: http://localhost:3000 (next start PID 19856, pokrenut posle BUILD_ID)
+```
+
+`RULES §6` — nova provera dokazano crvena, **jedan prekršaj po pokretanju**, svaki vraćen (sha256 `OK`):
+```
+  F1  width 1201       AssertionError: dimenzije public/og.jpg se ne slazu sa SOCIAL_IMAGE:
+                       expected { width: 1200, height: 630 } to deeply equal { width: 1201, height: 630 }
+  F2  og.jpg uklonjen  AssertionError: public/og.jpg ne postoji: expected false to be true
+  F3  q100 624304 B    AssertionError: public/og.jpg ima 624304 B, a limit je 150000:
+                       expected 624304 to be less than or equal to 150000
+  svako pokretanje: 1 failed | 3 passed · posle vracanja 4/4
+```
+
+✅ **`manual` PASS (Pavle)** — stara `og.png` sa deploy-a i nova `og.jpg` sa localhost-a, u pravom browseru.
+
+**SCOPE_DRIFT: none** — 11 putanja, tačno EXPECTED-FILES. Van gita: `.claude/launch.json` dobio
+konfiguraciju `growth-cinematic-start` za `npm start` (isključen preko `.git/info/exclude`).
+Nezavisni review nije tražen: mala reverzibilna izmena bez claims, legal i security promene; LOCK zona
+dirnuta jednim redom.
+
+⏳ **ACCEPTANCE 5 ostaje otvoren do release-a:** keš zaglavlja na Vercelu se dokazuju samo na
+deploy-u. Ako tamo ne piše `max-age=3600` → STOP, bez `vercel.json` zaobilaska.
+
+**NEXT STEP:** release `B1` (Pavlova odluka) — na deploy-u prvo diskriminator (`/og.png` 404,
+`/og.jpg` 200), pa ACCEPTANCE 3 i 4, `verify` i `rendered` sa `VERIFY_BASE`, meta ispisana. Posle
+toga preporuka iz `STATE`-a.
+
+---
+
 ## non-batch(docs) — `K1` i `U1` manifesti: zaostao `Status: OPEN` uklonjen · 2026-09-13
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/K1.md` ·
