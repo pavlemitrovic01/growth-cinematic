@@ -8,12 +8,41 @@ it('uses distinct absolute canonicals and matching social metadata without a mis
   expect(m.alternates.canonical).toBe('https://preview.example/about');
   expect(m.openGraph.url).toBe(m.alternates.canonical);
   expect(m.twitter.title).toBe('About');
-  expect(m.openGraph.images[0].url).toBe('https://preview.example/og.png');
+  expect(m.openGraph.images[0].url).toBe('https://preview.example/og.jpg');
   expect(m.twitter.card).toBe('summary_large_image');
   const article = pageMeta({ path: '/truckers-lounge/test', title: 'Article', description: 'Article details', article: true });
   expect(article.openGraph.images).toEqual([]);
   expect(article.twitter.images).toEqual([]);
   expect(article.twitter.card).toBe('summary');
+  vi.unstubAllEnvs();
+});
+
+// Sirina i visina iz JPEG SOF markera (0xC0-0xCF bez DHT 0xC4, JPG 0xC8 i DAC 0xCC); null ako nije JPEG.
+function jpegSize(b) {
+  if (b[0] !== 0xff || b[1] !== 0xd8) return null;
+  for (let i = 2; i + 9 < b.length; i += 2 + b.readUInt16BE(i + 2)) {
+    if (b[i] !== 0xff) return null;
+    const t = b[i + 1];
+    if (t >= 0xc0 && t <= 0xcf && t !== 0xc4 && t !== 0xc8 && t !== 0xcc) return { width: b.readUInt16BE(i + 7), height: b.readUInt16BE(i + 5) };
+  }
+  return null;
+}
+it('social image file exists, stays within 150 KB and matches its declared dimensions', async () => {
+  /**
+   * ⚠️ Test iznad obecava "without a missing image", a proverava samo URL. Ovaj proverava FAJL:
+   * `og:image:width/height` citaju samo crawleri, pa bi nesklad sa stvarnom slikom prosao
+   * nevidljivo, a slika od 1,5 MB tiho. Dimenzije se citaju iz fajla, ne prekucavaju (B1).
+   */
+  vi.stubEnv('NEXT_PUBLIC_SITE_URL', 'https://preview.example');
+  vi.stubEnv('NEXT_PUBLIC_SITE_LIVE', 'false');
+  vi.resetModules();
+  const { SOCIAL_IMAGE } = await import('../lib/seo');
+  const { existsSync, readFileSync } = await import('node:fs');
+  const file = 'public' + new URL(SOCIAL_IMAGE.url).pathname;
+  expect(existsSync(file), `${file} ne postoji`).toBe(true);
+  const bytes = readFileSync(file);
+  expect(bytes.length, `${file} ima ${bytes.length} B, a limit je 150000`).toBeLessThanOrEqual(150000);
+  expect(jpegSize(bytes), `dimenzije ${file} se ne slazu sa SOCIAL_IMAGE`).toEqual({ width: SOCIAL_IMAGE.width, height: SOCIAL_IMAGE.height });
   vi.unstubAllEnvs();
 });
 it('keeps preview sitemap empty and exposes pages plus articles only at launch', async () => {
