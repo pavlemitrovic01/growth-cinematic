@@ -7,31 +7,28 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći:** **`U2`** (naslovna: redosled poverenja, jedna numeracija, kickeri, skip link) —
-  više ne čeka `K1`. `T1` i dalje čeka odluku **`T-FONT`**; `B1` i `H1` su LEAN i nezavisni.
-  Kolosek je od 2026-09-11 **završetak po auditu** (`docs/AUDIT-2026-09.md` + `ROADMAP`).
-- **Poslednji završen:** **`K1`** (2026-09-12, `eb2d6d5`) — **isporučen u smanjenom obimu, posle
-  merenja koje je oborilo plan.** Od **109** preklapanja u `globals.css` samo **jedno** se dalo
-  spojiti bez promene izgleda; tri pokušaja spajanja dala su tri regresije (mobilni meni otvoren,
-  `.btn-ghost` bez ivice, `.post-cta p` bez 16px). Isporučeno: spojen `[data-line]::before`,
-  obrisane tri mrtve klase, nova kapija `__tests__/globals-css.test.js`.
-  ⚠️ **Redosled u `globals.css` je sadržaj, ne nered** — `LESSONS` **L26**. Ko krene ponovo, ne
-  mehanički: traži analizu po elementima i vizuelnu odluku, što je posao `T1`-a.
-  ⚠️ **`manual` stoji kao NIJE POKRENUTO**, ne kao PASS. Snimak computed style-a (9.521 element ×
-  57 svojstava × 64 stanja) bio je **bajt-identičan** baznom, pa je ručni prolaz preskočen
-  Pavlovom odlukom.
-  ✅ **Spojen i pušen 2026-09-12; izmereno protiv deploy-a** (17/17), uz nov build potvrđen time
-  što su obrisane mrtve klase nestale iz serviranog CSS-a.
-- **Pretposlednji:** **`U1`** (2026-09-12, `2df7aa3`) — osam pitanja na `/faq` postalo naslovi sa
-  sidrima (`h1`+3 `h2` → `h1`+11 `h2`, sidara 0 → 8); schema bajt za bajt ista. Spojen i pušen,
-  deploy izmeren.
-- Starije (`M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- **Sledeći — nije odlučeno.** Redosled je 2026-09-12 promenjen razgovorom o auditima: `R1` je
+  prebačen na prvo mesto (Pavlova odluka) i zatvoren. **Preporuka, ne odluka:** ostatak lanca
+  lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu; za dizajn prvo odluka
+  **`T-FONT`**. Iz audita (`docs/AUDIT-2026-09.md`) preporučeno samo ono što vozač vidi: `U2`,
+  `U3`, `B1`.
+- **Poslednji završen:** **`R1`** (2026-09-13, bez koda) — **Resend upaljen i lanac dokazan kraj na
+  kraj.** Nov ključ u Vercel env-u, sandbox pošiljalac kao na starom sajtu, redeploy; test prijava
+  na deploy-u `POST /api/apply` **`503 → 200`**, mejl stigao u inbox sa celim TCPA zapisom
+  (`manual` PASS). `R1-DOMEN` zatvoren: domen tek na lansiranju, posle DKIM-a.
+  ⚠️ **`LEAD_FROM_EMAIL` je namerno prazan** — bez DKIM-a bi tiho ugasio isporuku.
+  ⚠️ **Test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
+- **Pretposlednji:** **`K1`** (2026-09-12, `eb2d6d5`) — merenje oborilo plan: od 109 preklapanja u
+  `globals.css` spojivo **jedno**; redosled je sadržaj, ne nered (`LESSONS` L26). Spojen i pušen.
+- Starije (`U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- ⚠️ **`R1` je na grani `r1-resend-sandbox` i NIJE spojen ni pušen** — samo bookkeeping, nijedan
+  fajl koda. **Efekat je već živ na produkciji**: env je u Vercel-u i redeploy je urađen.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
 - Grana istine **`master`**, izjednačena sa `origin/master` (nosi `M7`, `U1` i `K1`).
@@ -45,13 +42,13 @@
 
 ## Žive prepreke
 
-- ⚠️ **Sajt skuplja prijave a nikoga ne obaveštava.** Lead se upiše u Neon, vozač dobije 503
-  „pozovite nas", i lanac se prekida. **`R1` (Resend) je poslednja nedokazana karika** i najveći
-  efekat po uloženom vremenu — ali ide **poslednji**, pred lansiranje — Pavlova odluka, potvrđena 2026-09-11.
+- ⚠️ **Prijave sa starog i novog sajta se u inbox-u ne razlikuju** — isti pošiljalac
+  `onboarding@resend.dev`, isti inbox, identičan naslov. Oko prelaska se neće znati odakle je
+  prijava stigla. Popravka je naslov u `app/api/**` (lock zona) — nalaz iz `R1`.
 - ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
   prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
-- **Devet OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + pet
-  iz audita (`T-FONT`, `SAP-TEKST`, `CB-API`, `R1-DOMEN`, `AUD-OBIM`).
+- **Osam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + četiri
+  iz audita (`T-FONT`, `SAP-TEKST`, `CB-API`, `AUD-OBIM`).
   Tri traže **advokata**, ne Pavla i ne agenta.
 - ⚠️ **`C52` je živ u MAIN-u** — na sajtu koji je indeksiran i prima prave prijave. Ovaj projekat
   MAIN ne dira; popravka traži svoj batch u `GROWTH` repou.

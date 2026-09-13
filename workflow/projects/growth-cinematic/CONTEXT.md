@@ -74,9 +74,11 @@
 - **`NEXT_PUBLIC_CONSENT_REQUIRED`** — baner, kontrola u footeru i puna privacy sekcija pale se
   **zajedno, u istom trenutku kad i analitika**. Dok je ugašeno, sajt ne učitava nijedan tracker
   i privacy tekst to tačno kaže.
-- **Resend** (`RESEND_API_KEY`, `LEAD_NOTIFICATION_EMAIL`) — nije postavljen. **Sajt trenutno
-  skuplja prijave a nikoga ne obaveštava.** Verifikovan domen NE treba (`lib/email.js:106`
-  pada na sandbox pošiljaoca).
+- **Resend — UPALJEN 2026-09-13 (`R1`).** `RESEND_API_KEY` + `LEAD_NOTIFICATION_EMAIL` stoje u Vercel
+  env-u; pošiljalac je sandbox `onboarding@resend.dev`, isporuka **samo** na adresu Resend naloga.
+  ⚠️ **`LEAD_FROM_EMAIL` je namerno prazan** dok DKIM za `growthcdl.com` ne stoji (`R1-DOMEN`).
+  ⚠️ Env promena važi tek za **nov** deploy. ⚠️ Vercel MCP konektor ne vidi ovaj projekat
+  (`list_teams` → `[]`), pa se env dokazuje ponašanjem deploy-a, ne čitanjem konfiguracije.
 
 ## Pravila sadržaja (FCC/FTC, ne stil)
 - Registar je `docs/CLAIMS.md` **u originalu** (`C:/dev/growth`) — čita se, ne piše.

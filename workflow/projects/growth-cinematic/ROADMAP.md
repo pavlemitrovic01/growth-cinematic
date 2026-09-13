@@ -76,23 +76,23 @@ kapije je **decision point**, ne prepreka.
 ⚠️ **`D5` („What we don't do" kao manifest) — proveriti da li je već zatvoren.** `guard` je
 2026-09-09 postao cinematic (`a1a43d3`), što je bilo pola te stavke. Odluka pre planiranja.
 
-## Pred lansiranje — poslovno (`R1` poslednji, Pavlova odluka)
+## Pred lansiranje — poslovno
 
 | ID | Posao | Tier | Status |
 |---|---|---|---|
-| `R1` | **Resend** — namerno **poslednji** (Pavle, potvrđeno 2026-09-11); pre njega `R1-DOMEN` | STRICT | OPEN — poslednji |
 | `A1` | Analitika + paljenje consent kapije (idu **zajedno**, ne odvojeno) | STRICT | OPEN |
 | `V1` | Selidba Vercel projekta sa ličnog Hobby naloga na tim | STRICT | OPEN |
 | `P1` | Lighthouse na hostingu + 3D hero na pravom telefonu | LEAN | OPEN |
 | `X1` | Odluka o prelasku — **tek kad postoje brojke** | — | čeka `A1` |
 
-⚠️ **`R1` je najveći efekat po uloženom vremenu i manje je blokiran nego što se dugo tvrdilo.**
-Izmereno 2026-09-06: **verifikovan domen NE treba** (`lib/email.js:106` pada na sandbox
-pošiljaoca). Traži samo `RESEND_API_KEY` + `LEAD_NOTIFICATION_EMAIL`. Petnaest minuta, i lanac
-forma → Neon → Resend → inbox je zatvoren. **Poslednja nedokazana karika u celom sistemu.**
+✅ **`R1` zatvoren 2026-09-13** — lanac forma → Neon → Resend → inbox dokazan merenjem (`503 → 200`
+na deploy-u, mejl potvrđen u inbox-u). Sa „poslednji" prebačen na „prvi" Pavlovom odlukom
+2026-09-12: jedina nedokazana karika je rizik, ne rad. **Ostatak lanca lansiranja: `V1` i pravni
+tekstovi advokatu.**
 
-Pavle 2026-09-11: **ide poslednji, jer je najlakši** — odluka, ne propust. Audit ga vodi kao uslov
-za lansiranje.
+⚠️ **Otvoreno posle `R1`:** prijave sa starog i novog sajta se u inbox-u ne razlikuju — isti
+pošiljalac, isti inbox, identičan naslov. Popravka je naslov u `app/api/**` (lock zona, STRICT) —
+kandidat za mali batch, Pavlova odluka.
 
 ## Blokirano — ne planira se dok odluka ne padne (`RULES §8`)
 
@@ -105,7 +105,6 @@ za lansiranje.
 | `T-FONT` | Pismo: plaćeno (Söhne / Neue Haas) ili OFL (Inter Display) | **Pavle** | OPEN — blokira `T1` |
 | `SAP-TEKST` | Čuva li se obavezno objašnjenje o prekršajima/SAP-u (`CC-2`) | **Pavle** (+ advokat za privacy) | OPEN |
 | `CB-API` | `/api/callback` bez pozivaoca: dokumentovati ili ukloniti | **Pavle** | OPEN |
-| `R1-DOMEN` | Resend na lansiranju: sandbox ili verifikovan domen (DNS na `growthcdl.com`) | **Pavle** | OPEN — pre `R1` |
 | `AUD-OBIM` | Zadržati ili odbaciti `L-23`, `D-03`, `D-04` (nastali čitanjem MAIN dokumenata) | **Pavle** | OPEN — blokira `G3` |
 
 Detalji i obrazloženja → `DECISIONS.md`.
@@ -114,6 +113,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `R1` | **Resend upaljen** — sandbox pošiljalac; `POST /api/apply` `503 → 200` na deploy-u, mejl potvrđen u inbox-u; `R1-DOMEN` zatvoren | 2026-09-13 |
 | `K1` | **`globals.css`** — izmereno da preklapanja nose kaskadu: 109 → samo 1 spojivo bez vizuelne promene; obrisane 3 mrtve klase, uveden census kapija | 2026-09-12 |
 | `U1` | **FAQ struktura** — osam pitanja postalo naslovi sa sidrima; `/faq` sa `h1`+3 `h2` na `h1`+11 `h2`, sidara 0 → 8 | 2026-09-12 |
 | `M7` | **Hero prelaz** — kriva „drži pa predaj" umesto `1 − d·1.65`; zbir dva najbliža 0,35 → 1,00, puno poglavlje ~0% → 80% | 2026-09-12 |

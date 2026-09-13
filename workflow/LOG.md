@@ -6,6 +6,51 @@
 
 ---
 
+## R1 (STRICT) — Resend: lanac forma → baza → inbox dokazan merenjem · 2026-09-13
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/R1.md` (nov) ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/CONTEXT.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+**Nijedan fajl koda.** `lib/email.js` je već slao čim postoje `RESEND_API_KEY` i
+`LEAD_NOTIFICATION_EMAIL`; Pavle ih je postavio u Vercel (nov ključ, stari sajt netaknut) i uradio
+redeploy. Redosled rada preokrenut Pavlovom odlukom 2026-09-12 posle razgovora o auditima: `R1` više
+nije „poslednji jer je najlakši" — bio je **jedina nedokazana karika**, a nepoznato je rizik, ne rad.
+
+IZMERENO:
+```
+  POST /api/apply (deploy)   503 pre R1  ->  200     (mrezni zahtev, ne poruka na ekranu)
+  mejl u inbox-u              stigao — Pavle, snimak ekrana, sa TCPA zapisom pristanka
+  verify:nojs / claims        PASS 14 / 13 — protiv deploy-a koji nosi kljuc
+  test:rendered               17/17 — protiv deploy-a
+  quick / typecheck / full    exit 0 · test 139/139 u 11 fajlova
+  meri se: https://growth-cinematic.vercel.app
+```
+Kapije nisu poslale nijedan mejl: jedini `POST` u testovima je cross-origin, proxy ga odbija pre isporuke.
+
+⚠️ **200 dokazuje prihvatanje, ne dolazak.** Ruta posle slanja upisuje red uvek, pa ni 200 ni red
+u bazi ne dokazuju da je mejl stigao — to je izmerio samo Pavlov inbox. Zato je `manual` bio kapija,
+ne formalnost.
+
+⚠️ **Vercel konektor ne vidi ovaj projekat** (`list_teams` → `[]`): vezan je za nalog koji ne drži
+`growth-cinematic`. Promenljive se zato dokazuju ponašanjem deploy-a, ne čitanjem konfiguracije.
+
+⚠️ **NALAZ: prijave sa starog i novog sajta se u inbox-u ne razlikuju** — isti pošiljalac, isti
+inbox, identičan naslov (`C:/dev/growth/app/api/apply/route.js:104` = naš `:116`). Popravka je
+naslov u `app/api/**` (lock zona), zaseban batch.
+
+**`R1-DOMEN` ZATVOREN:** sandbox sada; domen tek na lansiranju i tek posle DKIM-a (`_dmarc` je
+`p=quarantine`). **`LEAD_FROM_EMAIL` namerno nije postavljen.**
+
+Test red ostaje u produkcijskoj bazi (`TEST verifikacija R1`, `555-010-0199`, `test@example.com`).
+
+**SCOPE_DRIFT: none.** Nezavisni review nije tražen — nema diffa koda.
+
+**NEXT STEP:** preostali lanac lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi
+advokatu; za dizajn se prvo čeka odluka `T-FONT`. Plus zaseban mali batch za naslov mejla.
+
+---
+
 ## non-batch(release) — `K1` spojen i pušen; izmereno protiv deploy-a · 2026-09-12
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/K1.md` · `workflow/STATE.md` ·

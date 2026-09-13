@@ -67,12 +67,6 @@
 - Audit `IA-20`: nijedna komponenta ga ne zove; komentari pominju „chatbot" koji ovde ne postoji.
   Javna POST ruta koja upisuje lead. Dokumentovati spoljni ugovor ili ukloniti (lock zona → STRICT).
 
-### `R1-DOMEN` — Resend na lansiranju: sandbox ili verifikovan domen
-- **Status:** OPEN. **Vlasnik:** Pavle. **Pre:** `R1`.
-- Sandbox (`lib/email.js:10`) šalje samo na adresu Resend naloga. Drugi pošiljalac, drugi inbox
-  ili autoresponder vozaču (`F1b`, `lib/email.js:7-8`) traže DNS zapise na `growthcdl.com` —
-  domenu živog sajta. Odlučiti unapred; DNS nije posao za dan lansiranja.
-
 ### `AUD-OBIM` — nalazi audita nastali čitanjem MAIN-a
 - **Status:** OPEN (trivijalna). **Vlasnik:** Pavle. **Blokira:** `G3`.
 - `L-23` (pokrivenost claims kapije) i drift `D-03`/`D-04` oslanjaju se na čitanje `CLAIMS.md` i
@@ -81,6 +75,17 @@
 ---
 
 ## ZATVORENO
+
+### `R1-DOMEN` — Resend: sandbox sada, verifikovan domen na lansiranju · 2026-09-13
+Pavle je odobrio `R1` plan koji je nosio ovu odluku i postavio env tačno po njoj: **nov** Resend
+ključ za `growth-cinematic`, `LEAD_NOTIFICATION_EMAIL` na adresu naloga, **`LEAD_FROM_EMAIL` namerno
+prazan**. Isto kao stari sajt, koji tako radi (`C:/dev/growth/workflow/STATE.md:343-348`). Lanac
+izmeren u `R1`: `POST /api/apply` `503 → 200`, mejl potvrđen u inbox-u.
+- ⚠️ **Verifikovan domen tek na lansiranju, i tek posle DKIM-a.** `_dmarc` je `p=quarantine`, pa bi
+  prelazak `LEAD_FROM_EMAIL`-a na `@growthcdl.com` bez DKIM-a tiho ugasio isporuku, a HTTP 200 to ne
+  bi pokazao. DNS je u GoDaddy-ju; postojeći `spf.em.secureserver.net` zapis se ne briše.
+- Sandbox isporučuje **samo na adresu Resend naloga** — zato autoresponder vozaču (`F1b`) i dalje
+  čeka domen.
 
 ### `D1` — taksonomija sekcija · zaključana 2026-09-08, implementirana 2026-09-09
 Deset sekcija, tip za svaku. `pay` i `values` → **utility**; `guard` i `founder` → **cinematic**;
