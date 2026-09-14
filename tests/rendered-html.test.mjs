@@ -456,3 +456,52 @@ test('U1/C — pitanja na naslovnoj su `h3`, ne `h2`', async () => {
     + ' Sekcija vec nosi `<h2 id="faq-heading">`, pa bi `h2` preskocio nivo.',
   );
 });
+
+/* ══ T1 (2026-09-14) — Arial svuda, Arimo samo gde Arial-a nema ════════════════════════════
+ *
+ * ZASTO POSTOJI. Android u `fonts.xml` ima `<alias name="arial" to="sans-serif" />`, pa Arimo koji
+ * samo stoji iza Arial-a u listi fontova ume da se nikad ne ucita. Zato "Growth Sans" prvo trazi
+ * INSTALIRAN Arial (`local()`), a tek onda preuzima Arimo (`url()`). Sva tri kvara su tiha na
+ * desktopu: bez `local()` desktop preuzima i crta Arimo umesto Arial-a; bez fajla na koji `url()`
+ * pokazuje Android ostaje na svom pismu; sa `preload`-om svako preuzima font koji mu ne treba.
+ *
+ * ZASTO SERVIRAN CSS, A NE `globals.css`. Build prepisuje i minifikuje CSS (navodnici, `url()`),
+ * pa se meri ono sto browser stvarno dobija (`LESSONS` L21, L23). */
+const ARIMO_BYTES = { 'arimo-v36-latin.woff2': 20132, 'arimo-v36-latin-italic.woff2': 22352 };
+
+test('T1/A — Growth Sans: instaliran Arial prvi, Arimo samo kao zamena, bez preload-a', async () => {
+  const html = await (await get('/')).text();
+  const preloads = [...html.matchAll(/<link\b[^>]*>/g)].map((m) => m[0])
+    .filter((tag) => /rel="preload"/.test(tag) && /as="font"/.test(tag));
+  assert.equal(preloads.length, 0, `/: HTML unapred ucitava font (${preloads.join(' ')}) — i uredjaji sa Arial-om bi ga preuzimali`);
+
+  const hrefs = [...html.matchAll(/<link\b[^>]*rel="stylesheet"[^>]*href="([^"]+)"/g)].map((m) => m[1]);
+  assert.ok(hrefs.length > 0, '/: HTML nema nijedan stylesheet');
+  const css = (await Promise.all(hrefs.map(async (href) => (await get(href)).text()))).join('\n');
+
+  const faces = [...css.matchAll(/@font-face\s*\{([^}]*)\}/g)].map((m) => m[1])
+    .filter((block) => /font-family:\s*["']?Growth Sans["']?\s*(;|$)/.test(block));
+  assert.equal(faces.length, 4, `CSS: ocekivana 4 Growth Sans @font-face (400/700, normal/italic), nadjeno ${faces.length}`);
+
+  const urls = new Set();
+  for (const face of faces) {
+    const src = (face.match(/src:([^;]+)/) || [])[1] || '';
+    const label = `${(face.match(/font-weight:\s*([^;]+)/) || [])[1]} ${(face.match(/font-style:\s*([^;]+)/) || [])[1]}`;
+    const local = src.search(/local\(\s*["']?Arial/);
+    const url = src.search(/url\(/);
+    assert.ok(local !== -1 && url !== -1 && local < url, `CSS: Growth Sans ${label} nema instaliran Arial ispred Arimo-a (src:${src})`);
+    urls.add((src.match(/url\(\s*["']?([^"')]+)/) || [])[1]);
+  }
+
+  const body = [...css.matchAll(/(?:^|[};])\s*body\s*\{([^}]*)\}/g)].map((m) => m[1]).find((block) => /font-family/.test(block)) || '';
+  assert.match(body, /font-family:\s*["']?Growth Sans["']?\s*,\s*Arial\b/, 'CSS: `body` ne pocinje sa Growth Sans pa Arial');
+
+  for (const u of urls) {
+    const r = await get(u);
+    const bytes = Buffer.from(await r.arrayBuffer()).length;
+    assert.equal(r.status, 200, `${u}: HTTP ${r.status} — font na koji CSS pokazuje ne postoji`);
+    assert.match(r.headers.get('content-type') || '', /font\/woff2/, `${u}: content-type ${r.headers.get('content-type')}`);
+    assert.equal(bytes, ARIMO_BYTES[u.split('/').pop()], `${u}: ${bytes} B, ocekivano ${ARIMO_BYTES[u.split('/').pop()]}`);
+  }
+  assert.equal(urls.size, 2, `CSS: ocekivana 2 Arimo fajla (normal i italic), nadjeno ${urls.size}`);
+});

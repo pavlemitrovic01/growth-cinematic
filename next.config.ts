@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       // sat vremena, ne `immutable`: izmenjena slika na istoj putanji inace bi ostala zaglavljena.
       { source: '/images/:path*', headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }] },
       { source: '/og.jpg', headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }] },
+      // Arimo za uredjaje bez Arial-a (T1): isto pravilo kao slike — ime u `public/` nije hesirano.
+      { source: '/fonts/:path*', headers: [{ key: 'Cache-Control', value: 'public, max-age=3600' }] },
     ];
   },
 };

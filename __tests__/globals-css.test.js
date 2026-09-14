@@ -88,7 +88,11 @@ describe('globals.css', () => {
   });
 
   it('K1/B — nijedna klasa u CSS-u nije bez ijednog pomena u izvoru', () => {
-    const declared = new Set([...clean.matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1]));
+    /* ⚠️ `url(...)` SE BRISE PRE TRAZENJA KLASA (T1, 2026-09-14). Putanja fajla nije selektor, a
+     *  `url("/fonts/arimo-v36-latin.woff2")` je dala "klasu" `woff2` bez ijednog pomena u izvoru —
+     *  lazan nalaz iste vrste kao `subpage--*` ispod (`LESSONS` L18). */
+    const selectors = clean.replace(/url\([^)]*\)/g, 'url()');
+    const declared = new Set([...selectors.matchAll(/\.([a-zA-Z][\w-]*)/g)].map((m) => m[1]));
     const code = sourceText();
 
     /* ⚠️ IME KLASE NE MORA DA POSTOJI DOSLOVNO U IZVORU. `PageShell.tsx:11` ga sklapa u
