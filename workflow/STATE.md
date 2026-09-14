@@ -8,8 +8,9 @@
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
 - **Sledeći — nije odlučeno.** **Preporuka, ne odluka:** ostatak lanca lansiranja — `V1` (selidba sa
-  Hobby naloga) i pravni tekstovi advokatu; za dizajn prvo odluka **`T-FONT`**. Od onoga što vozač
-  vidi: `U3` (čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`), a `U2` posle `T1`.
+  Hobby naloga) i pravni tekstovi advokatu; za dizajn **`T1` — hijerarhija na Arial-u** (`T-FONT`
+  odlučen 2026-09-14: Arial ostaje). Od onoga što vozač vidi: `U3` (čeka Pavlovu potvrdu da regruteri
+  zovu sa broja iz `lib/contact.js`), a `U2` posle `T1`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
 - **Poslednji završen:** **`B1`** (2026-09-13, `7a3f083`) — **social slika 1,53 MB → 129 KB**
@@ -55,8 +56,8 @@
   živ, indeksiran i ne dira se.
 - ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
   prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
-- **Osam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + četiri
-  iz audita (`T-FONT`, `SAP-TEKST`, `CB-API`, `AUD-OBIM`).
+- **Sedam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + tri
+  iz audita (`SAP-TEKST`, `CB-API`, `AUD-OBIM`).
   Tri traže **advokata**, ne Pavla i ne agenta.
 - ⚠️ **`C52` je živ u MAIN-u** — na sajtu koji je indeksiran i prima prave prijave. Ovaj projekat
   MAIN ne dira; popravka traži svoj batch u `GROWTH` repou.

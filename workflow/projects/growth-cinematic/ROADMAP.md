@@ -19,7 +19,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `T1` | Pismo + tipografski tokeni; rešava i `D2` (`L-02`, `VD-03`) | STANDARD + `manual` | `T-FONT` | blokirano odlukom |
+| `T1` | Tipografska hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, obris (`D2`), tabularne cifre; zamensko pismo za Android odlučuje se u planu (`L-02`, `VD-03`) | STANDARD + `manual` | — | OPEN |
 | `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | **SLEDEĆI** |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
@@ -28,8 +28,8 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
 
 ⚠️ **`K1` je zatvoren merenjem, ne čišćenjem** (`LESSONS` L26): od 109 preklapanja samo jedno se
-dalo spojiti bez promene izgleda — redosled u `globals.css` nosi izgled. `T1` i dalje čeka
-`T-FONT`; `U2` više ne čeka `K1`.
+dalo spojiti bez promene izgleda — redosled u `globals.css` nosi izgled. `T-FONT` je odlučen
+2026-09-14 (**Arial ostaje**), pa `T1` više ne čeka; `U2` više ne čeka `K1`.
 
 ⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`
 („1 tema = 1 batch"), i da svaka vizuelna razlika u `T1` bude pripisiva samo pismu.
@@ -100,7 +100,6 @@ naslov) — **Pavle 2026-09-13: nebitno, stari sajt uskoro ide offline.** Ne rad
 | `LEG-1` | `/terms`: governing law, arbitraža, IP, uslovi prekida | **advokat** | OPEN |
 | `LEG-2` | Pravni pregled privacy i TCPA teksta | **advokat** | OPEN |
 | `C52` | Državljanstvo / radna dokumenta / engleski kao uslov | **advokat** | OPEN, i **živ u MAIN-u** |
-| `T-FONT` | Pismo: plaćeno (Söhne / Neue Haas) ili OFL (Inter Display) | **Pavle** | OPEN — blokira `T1` |
 | `SAP-TEKST` | Čuva li se obavezno objašnjenje o prekršajima/SAP-u (`CC-2`) | **Pavle** (+ advokat za privacy) | OPEN |
 | `CB-API` | `/api/callback` bez pozivaoca: dokumentovati ili ukloniti | **Pavle** | OPEN |
 | `AUD-OBIM` | Zadržati ili odbaciti `L-23`, `D-03`, `D-04` (nastali čitanjem MAIN dokumenata) | **Pavle** | OPEN — blokira `G3` |

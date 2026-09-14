@@ -6,6 +6,28 @@
 
 ---
 
+## non-batch(docs) — `T-FONT` odlučen: Arial ostaje · 2026-09-14
+
+**Changed files:** `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Pavlova odluka u dva koraka, 2026-09-14: prvo „nećemo nikakva plaćena pisma", pa posle stranice za
+poređenje — privatni artifact sa pravim hero-om, poglavljem `$0` i sekcijom „How it works" u Arial,
+Archivo, Barlow i Oswald + Inter, uz proveru da je svako pismo stvarno učitano — „od svih ovih arial
+mi se najviše sviđa".
+
+**Posledica:** `T1` više ne čeka odluku i menja sadržaj — nema novog pisma, licence ni preuzimanja.
+Ostaje ono što je Pavle stvarno opisao („tekst me ne vodi kroz sajt", hero „ne dolazi do izražaja"):
+hijerarhija. Izmereno u `globals.css` pre odluke: 55 različitih veličina slova, 84 `letter-spacing`,
+težine 800 i 850 koje Arial prikazuje kao 700, 12 pravila sa obrisom (`D2`), 0 tabularnih cifara.
+
+⚠️ Otvoreno za `/plan T1`: zamensko pismo za Android, koji nema Arial (poznato ponašanje sistema,
+nije izmereno na uređaju).
+
+**NEXT STEP:** `/plan T1` — hijerarhija na Arial-u.
+
+---
+
 ## non-batch(release) — `B1` spojen i pušen; ACCEPTANCE 5 zatvoren merenjem na deploy-u · 2026-09-14
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/B1.md` · `workflow/STATE.md` ·

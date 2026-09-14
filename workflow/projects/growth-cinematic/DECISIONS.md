@@ -47,14 +47,6 @@
 - `guard` je 2026-09-09 postao cinematic (`a1a43d3`), što je bilo pola te stavke. Odlučiti pre
   nego što se `D5` planira kao zaseban batch.
 
-
-### `T-FONT` — pismo sajta
-- **Status:** OPEN. **Vlasnik:** Pavle. **Blokira:** `T1`.
-- Audit 2026-09 (`L-02`): ceo sajt je Arial. Predlog: jedna familija, dve optičke veličine, preko
-  `next/font`, ~40 KB. Plaćeno: Söhne ili Neue Haas Grotesk Display (procena iz audita:
-  ~€300–600 za dve težine). OFL: **Inter Display**. Odluka: koje pismo, i ko kupuje licencu ako
-  je plaćeno.
-
 ### `SAP-TEKST` — čuva li se objašnjenje o prekršajima/SAP-u
 - **Status:** OPEN. **Vlasnik:** Pavle; privacy deo ide uz `LEG-2`.
 - Audit `CC-2`: polja su obavezna (`ApplyForm.tsx:403,410`), `lib/leads.js` ih rediguje pre upisa,
@@ -75,6 +67,18 @@
 ---
 
 ## ZATVORENO
+
+### `T-FONT` — pismo sajta: Arial ostaje · 2026-09-14
+Pavlova odluka u dva koraka: prvo *„nećemo nikakva plaćena pisma"*, pa posle stranice za poređenje
+sa pravim hero-om i sekcijom sajta u četiri pisma (Arial, Archivo, Barlow, Oswald + Inter):
+*„od svih ovih arial mi se najviše sviđa"*.
+- **Posledica za `T1`:** nema novog pisma, licence ni preuzimanja. Posao koji ostaje je
+  hijerarhija — Pavlov nalaz da ga tekst ne vodi kroz sajt i da hero nema jačinu ne dolazi od pisma.
+- ⚠️ **Arial nema težine iznad bold-a:** `font-weight` 800 i 850 u CSS-u prikazuju se kao 700.
+  Jačina zato mora doći iz veličine, kontrasta i rasporeda, ne iz dodatne težine.
+- ⚠️ **Android nema Arial** i prikazuje zamensko sistemsko pismo (obično Roboto) — poznato ponašanje
+  sistema, nije izmereno na uređaju. Da li se to rešava besplatnim pismom istih mera, odlučuje se u
+  `/plan T1`.
 
 ### `R1-DOMEN` — Resend: sandbox sada, verifikovan domen na lansiranju · 2026-09-13
 Pavle je odobrio `R1` plan koji je nosio ovu odluku i postavio env tačno po njoj: **nov** Resend
