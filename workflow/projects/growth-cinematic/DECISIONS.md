@@ -76,9 +76,13 @@ sa pravim hero-om i sekcijom sajta u četiri pisma (Arial, Archivo, Barlow, Oswa
   hijerarhija — Pavlov nalaz da ga tekst ne vodi kroz sajt i da hero nema jačinu ne dolazi od pisma.
 - ⚠️ **Arial nema težine iznad bold-a:** `font-weight` 800 i 850 u CSS-u prikazuju se kao 700.
   Jačina zato mora doći iz veličine, kontrasta i rasporeda, ne iz dodatne težine.
-- ⚠️ **Android nema Arial** i prikazuje zamensko sistemsko pismo (obično Roboto) — poznato ponašanje
-  sistema, nije izmereno na uređaju. Da li se to rešava besplatnim pismom istih mera, odlučuje se u
-  `/plan T1`.
+- ⚠️ **Android nema Arial** i prikazuje zamensko sistemsko pismo (obično Roboto). **Pavle 2026-09-14**
+  („trebamo se potruditi da što više skinemo desktop verziju", pa „Da"): uređaji bez Arial-a dobijaju
+  **Arimo** (OFL, iste širine slova kao Arial). Isporučeno u `T1` kao porodica „Growth Sans" sa
+  `local()` prvim, jer AOSP `fonts.xml` ima alias `arial → sans-serif` (`LESSONS` L27).
+- **Drugi red naslova — varijanta 2** (Pavle 2026-09-14, „moze 2", posle stranice sa četiri
+  varijante): debela slova i ivica od 2 px umesto 1 px. Isporučeno u `T1`; **gde** obris ostaje
+  (`D2`) odlučuje se u `T1b`.
 
 ### `R1-DOMEN` — Resend: sandbox sada, verifikovan domen na lansiranju · 2026-09-13
 Pavle je odobrio `R1` plan koji je nosio ovu odluku i postavio env tačno po njoj: **nov** Resend

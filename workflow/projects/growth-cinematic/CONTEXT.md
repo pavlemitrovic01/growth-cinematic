@@ -14,6 +14,9 @@
 - Git: `master` → `github.com/pavlemitrovic01/growth-cinematic` (privatan). Rad ide po granama.
 - **`proxy.ts`** (ne `middleware.ts`, Next 16 konvencija) nosi cross-origin zaštitu **i** pečati
   bezbednosna zaglavlja — odgovor nastao u njemu ne prolazi kroz `headers()` iz `next.config.ts`.
+- **Pismo: Arial** (`T-FONT`). Uređaji bez Arial-a (Android) dobijaju **Arimo** (OFL) iz `public/fonts/`
+  preko porodice „Growth Sans" sa `local()` prvim — ne preko liste fontova, jer Android ima alias
+  `arial → sans-serif` (`LESSONS` L27). `next/font` se ne koristi; `T1/A` meri servirani CSS.
 
 ## Health gates (skillovi čitaju OVO — nikad ne hardkoduju komande)
 | Gate | Komanda | Koji tier ga traži |
@@ -26,7 +29,7 @@
 | `rendered` | `npm run test:rendered` | STANDARD, STRICT — **traži pokrenut server** |
 | `manual` | Pavlov pregled u **pravom** browseru | STRICT · **i sve što zavisi od skrola** |
 
-- **`test`:** vitest, **140 u 11 fajlova** (izmereno 2026-09-13). `test:rendered` je zasebnih **17**
+- **`test`:** vitest, **140 u 11 fajlova** (izmereno 2026-09-13). `test:rendered` je zasebnih **18**
   HTTP testova nad renderovanim HTML-om.
 - ⚠️ **Vitest hvata SAMO `__tests__/**/*.test.js`** (`vitest.config.mts`). Fajl imenovan
   `.test.ts` bio bi **tiho preskočen** — kapije zelene, a test nikad pokrenut. Posle dodavanja

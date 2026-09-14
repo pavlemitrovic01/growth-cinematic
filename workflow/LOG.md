@@ -6,6 +6,72 @@
 
 ---
 
+## T1 (STANDARD) — Arial svuda: Arimo samo gde nema Arial-a, jači drugi red naslova · 2026-09-14
+
+**Implementacija:** `2a3fb5a` · **Grana:** `t1-arial-arimo-drugi-red` — **nije spojena**, release je Pavlova odluka
+
+**Changed files:** `public/fonts/arimo-v36-latin.woff2` · `public/fonts/arimo-v36-latin-italic.woff2` ·
+`public/fonts/OFL-Arimo.txt` (novi) · `app/globals.css` · `next.config.ts` · `tests/rendered-html.test.mjs` ·
+`__tests__/globals-css.test.js` (odobreno proširenje) · `workflow/projects/growth-cinematic/batches/T1.md`
+(nov) · `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/LESSONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Pavlove odluke 2026-09-14: `T-FONT` — Arial ostaje; drugi red naslova varijanta 2 („moze 2"); Arimo za
+uređaje bez Arial-a („Da"), da Android što više liči na desktop.
+
+⚠️ **Merenje je promenilo plan pre koda:** (1) AOSP `fonts.xml` ima `<alias name="arial" to="sans-serif" />`,
+pa Arimo ne ide iza Arial-a u listi fontova, nego u porodicu „Growth Sans" sa `local()` prvim
+(`LESSONS` L27); (2) Arial cifre su već iste širine (svih 10 po 55,62 px), pa „tabularne cifre" ispadaju;
+(3) hijerarhija (skala, nadnaslovi, gde obris ostaje) nije odlučena → nov batch `T1b`, prvo stranica sa
+predlogom.
+
+⚠️ **Lažan nalaz kapije, popravljen uz odobrenje:** `K1/B` je `.woff2` iz `url("/fonts/…woff2")` čitao kao
+CSS klasu i pao (139/140). STOP, pa Pavle „odobravam a": `__tests__/globals-css.test.js` briše `url(...)`
+pre traženja klasa. Klasa `LESSONS` L18.
+
+Fontovi (sha256): `arimo-v36-latin.woff2` 20.132 B `6a22ce0b…9bc1b9` · `arimo-v36-latin-italic.woff2`
+22.352 B `bc7513e4…fde6b8` · `OFL-Arimo.txt` 4.384 B `11cce536…960992`.
+
+IZMERENO (`/close`, meri se: http://localhost:3000, `next start` PID 47704 pokrenut posle `BUILD_ID`-a):
+```
+  quick / typecheck / full      exit 0 · gotov CSS 2ka6-_n9u3vzu.css, isti kao servirani
+  test                          140/140 u 11 fajlova
+  rendered                      18/18 (bilo 17) · T1/A zelen
+  verify                        nojs PASS 14 · claims PASS 13
+  servirani CSS                 4 Growth Sans lica sa local(Arial...) ispred url(/fonts/arimo...)
+                                body: Growth Sans,Arial,Helvetica,sans-serif
+  obris                         .journey h1/h2 em · .home-section h2 em · .sub-hero h1 em · .error-page h1 em
+                                stroke 2px + weight 800 (computed na hero-u: 2px / 800)
+  /fonts/*.woff2                200 font/woff2 20132 / 22352 B · Cache-Control: public, max-age=3600
+  desktop Chromium              0 .woff2 zahteva na / (Arial lokalno) · simulacija bez Arial-a: Arimo 200
+```
+
+`RULES §6` — nove i izmenjene provere dokazano crvene, jedan prekršaj po pokretanju, svaki vraćen (sha256 `OK`):
+```
+  K1/B  izmisljena klasa        expected [ 't1-lazna-mrtva-klasa' ] to deeply equal []   (K1/A ostao zelen)
+  F1    400 lice bez local()    CSS: Growth Sans 400 normal nema instaliran Arial ispred Arimo-a
+  F2    body bez Growth Sans    CSS: `body` ne pocinje sa Growth Sans pa Arial
+  F3    fajl uklonjen           /fonts/arimo-v36-latin.woff2: HTTP 500 — font na koji CSS pokazuje ne postoji
+  preload                       detekcija: fixture sa preload-om 1 · servirana / 0
+```
+F1 i F2 su mereni na zasebnim build-ovima (PID 34484 i 16836, svaki pokrenut posle svog `BUILD_ID`-a, uz
+diskriminator da servirani CSS nosi prekršaj); F3 na živom serveru — `next start` za fajl uklonjen posle
+starta vraća 500, ne 404.
+
+✅ **`manual` PASS (Pavle)** — „manual pass moze close". Da li je Android deo (b) rađen preko LAN-a nije
+navedeno; ako nije, radi se uz release, na produkciji.
+
+**SCOPE_DRIFT: none** — 14 putanja: 13 iz EXPECTED-FILES + `__tests__/globals-css.test.js` iz
+APPROVED-SCOPE-EXPANSION (Pavle, 2026-09-14). Nezavisni review nije tražen: mala reverzibilna izmena bez
+claims, legal, security i lock-zone površine. `NoFallbackError` u logu servera je postojeća stavka `H1`.
+
+**NEXT STEP:** release `T1` (Pavlova odluka) — na deploy-u prvo diskriminator (servirani CSS nosi
+„Growth Sans"), pa ACCEPTANCE 2–5, `verify` i `rendered`, i Android provera ako nije rađena. Posle toga
+`T1b`: stranica sa predlogom hijerarhije, pa plan.
+
+---
+
 ## non-batch(docs) — `T-FONT` odlučen: Arial ostaje · 2026-09-14
 
 **Changed files:** `workflow/projects/growth-cinematic/DECISIONS.md` ·

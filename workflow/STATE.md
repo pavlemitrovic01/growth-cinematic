@@ -7,30 +7,31 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći — nije odlučeno.** **Preporuka, ne odluka:** ostatak lanca lansiranja — `V1` (selidba sa
-  Hobby naloga) i pravni tekstovi advokatu; za dizajn **`T1` — hijerarhija na Arial-u** (`T-FONT`
-  odlučen 2026-09-14: Arial ostaje). Od onoga što vozač vidi: `U3` (čeka Pavlovu potvrdu da regruteri
-  zovu sa broja iz `lib/contact.js`), a `U2` posle `T1`.
+- **Sledeći — nije odlučeno.** Otvoreno iz `T1`: **release** (Pavlova odluka) — na deploy-u se meri
+  servirani CSS i, ako nije rađena preko LAN-a, Android provera. **Preporuka, ne odluka:** za dizajn
+  **`T1b` — hijerarhija** (prvo stranica sa predlogom skale, pa plan); ostatak lanca lansiranja —
+  `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. Od onoga što vozač vidi: `U3` (čeka
+  Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`), a `U2` posle `T1b`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`B1`** (2026-09-13, `7a3f083`) — **social slika 1,53 MB → 129 KB**
-  (baseline JPEG 1200×630), keš od sat vremena za `/images/*` i `/og.jpg` u `next.config.ts`,
-  Cloudflare `_headers` obrisan. Tier LEAN → STRICT, jer je `lib/seo.js` LOCK. `manual` PASS, nova
-  provera tri puta dokazano crvena. Spojen i pušen 2026-09-14; keš `max-age=3600` izmeren i na
-  deploy-u — Vercel poštuje `headers()` i za `public/`.
-- **Pretposlednji:** **`R1`** (2026-09-13, bez koda) — **Resend upaljen i lanac dokazan kraj na
-  kraj.** Nov ključ u Vercel env-u, sandbox pošiljalac kao na starom sajtu, redeploy; test prijava
-  na deploy-u `POST /api/apply` **`503 → 200`**, mejl stigao u inbox sa celim TCPA zapisom
-  (`manual` PASS). `R1-DOMEN` zatvoren: domen tek na lansiranju, posle DKIM-a.
-  ⚠️ **`LEAD_FROM_EMAIL` je namerno prazan** — bez DKIM-a bi tiho ugasio isporuku.
-  ⚠️ **Test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- **Poslednji završen:** **`T1`** (2026-09-14, `2a3fb5a`) — **Arial svuda:** uređaji bez Arial-a
+  (Android) dobijaju Arimo (OFL) preko porodice „Growth Sans" sa `local()` prvim (`LESSONS` L27);
+  **drugi red naslova** ivica 2 px i težina 800 na 17 naslova. `rendered` 17 → 18 (`T1/A`), četiri
+  provere dokazano crvene; `K1/B` popravljen uz odobreno proširenje. `manual` PASS. ⚠️ **Nije spojen.**
+- **Pretposlednji:** **`B1`** (2026-09-13, `7a3f083`) — social slika 1,53 MB → 129 KB, keš od sat
+  vremena za slike, Cloudflare `_headers` obrisan; spojen i pušen 2026-09-14, keš izmeren na deploy-u.
+- ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
+  isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
+- Starije (`R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `T1` (implementacija `2a3fb5a` + close commit) stoji na grani **`t1-arial-arimo-drugi-red`** — **nije
+  spojen ni pušen**. Grana nosi i non-batch `e9fca6b` (zapis odluke `T-FONT`), koji ni sa `master`-a još
+  nije pušen. Release je Pavlova odluka.
 - `B1` (`059551e..fb26091`, implementacija `7a3f083`) spojen fast-forward-om i pušen 2026-09-14;
   **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (`/og.png` 404,
   `/og.jpg` 200, `/_headers` 404).
@@ -39,7 +40,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**, izjednačena sa `origin/master` (nosi `M7`, `U1`, `K1`, `R1` i `B1`).
+- Grana istine **`master`** (`e9fca6b`): **1 commit ispred `origin/master`** — samo zapis `T-FONT`;
+  origin nosi `M7`, `U1`, `K1`, `R1` i `B1`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.

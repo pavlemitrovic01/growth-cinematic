@@ -19,7 +19,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `T1` | Tipografska hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, obris (`D2`), tabularne cifre; zamensko pismo za Android odlučuje se u planu (`L-02`, `VD-03`) | STANDARD + `manual` | — | OPEN |
+| `T1b` | Hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, gde obris ostaje (`D2`); **prvo stranica sa predlogom**, pa plan (`L-02`, `VD-03`) | STANDARD + `manual` | predlog skale | OPEN |
 | `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | **SLEDEĆI** |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
@@ -34,20 +34,20 @@ dalo spojiti bez promene izgleda — redosled u `globals.css` nosi izgled. `T-FO
 ⚠️ **`K1` i `T1` su razdvojeni**, iako ih je audit predložio kao jedan batch — `RULES §2`
 („1 tema = 1 batch"), i da svaka vizuelna razlika u `T1` bude pripisiva samo pismu.
 
-⚠️ **Kolosek pokreta (`M2c`–`M6`) čeka `T1`** — svako trajanje je podešeno na metriku teksta
+⚠️ **Kolosek pokreta (`M2c`–`M6`) čeka `T1b`** — svako trajanje je podešeno na metriku teksta
 koja se menja — i **usklađen `docs/MOTION.md`** (non-batch), jer je `M2c` specificiran iz
 dokumenta koji opisuje sekcije kojih više nema.
 
-## Kolosek pokreta — posle `T1`
+## Kolosek pokreta — posle `T1b`
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `M2c` | Brojke stižu pre sadržaja — kickeri `01 / …` pre naslova (`MOTION.md` površina 4) | STANDARD | `M2b`, `T1`, `MOTION.md` | čeka `T1` |
+| `M2c` | Brojke stižu pre sadržaja — kickeri `01 / …` pre naslova (`MOTION.md` površina 4) | STANDARD | `M2b`, `T1b`, `MOTION.md` | čeka `T1b` |
 | `M3` | Naslovi — maska po **reči** (ne po slovu) | STANDARD | `M1` | OPEN |
 | `M4` | Hero sekvenca — čist CSS na `load`, bez `js-motion` kapije | STANDARD | `M1`, `M3` | OPEN |
 | `M5` | View Transitions — usmeren prelaz rute + shared naslov kartice | STANDARD | — (nezavisan) | OPEN |
 | `M6` | Pritisak (`MobileBar` nema `:active`) i kartice (hover koji nije `translateY`) | LEAN | `M1` | OPEN |
-| `D2` | Outline tipografija svedena na 2–3 mesta | LEAN | `T1` | rešava se u `T1` |
+| `D2` | Outline tipografija svedena na 2–3 mesta — obris je od `T1` 2 px; ostaje pitanje gde | LEAN | `T1b` | rešava se u `T1b` |
 
 ✅ **`G1` + `G2` su zatvorili ono što je `M2` moglo da prekrši.** Od 2026-09-09
 `npm run test:rendered` sprovodi tri tvrdnje: `data-wipe` samo na listnim tekstualnim tagovima
@@ -110,6 +110,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b` | 2026-09-14 |
 | `B1` | **Social slika i keš** — `og.png` 1,53 MB → `og.jpg` 129 KB (baseline 1200×630); keš 1 h za `/images/*` i `/og.jpg` u `next.config.ts`; `_headers` obrisan; tier LEAN → STRICT (LOCK `seo.js`); keš izmeren i na deploy-u (2026-09-14) | 2026-09-13 |
 | `R1` | **Resend upaljen** — sandbox pošiljalac; `POST /api/apply` `503 → 200` na deploy-u, mejl potvrđen u inbox-u; `R1-DOMEN` zatvoren | 2026-09-13 |
 | `K1` | **`globals.css`** — izmereno da preklapanja nose kaskadu: 109 → samo 1 spojivo bez vizuelne promene; obrisane 3 mrtve klase, uveden census kapija | 2026-09-12 |

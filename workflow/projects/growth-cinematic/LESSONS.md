@@ -238,3 +238,16 @@ pre upotrebe dokazan kao deterministican (dva ista pokretanja) i osetljiv (prome
 **Ko sledeći put krene na ovaj fajl:** ne mehanički. Svaki preostali klaster traži analizu po
 elementima — koji selektori stvarno stoje na istom elementu — i u dobrom delu slučajeva vizuelnu
 odluku, što je posao `T1`-a, ne čišćenja.
+
+## L27 — Na Android-u „Arial" nije ime koje nedostaje, nego alias za sistemsko pismo.
+AOSP `fonts.xml` ima `<alias name="arial" to="sans-serif" />` (isto `helvetica`, `tahoma`,
+`verdana`). Zato `font-family: Arial, <zamena>, sans-serif` na Android-u ume da stane već na prvom
+imenu: sistem ga razreši u svoje pismo i besplatna zamena istih mera se nikad ne učita — a na
+desktopu, gde se sve proverava, izgleda ispravno.
+**Pravilo:** kad pismo treba da stigne SAMO na uređaje koji ga nemaju, ne slaže se iza njega u listi,
+nego ide sopstvena `@font-face` porodica sa `src: local(<pravo ime>), url(<zamena>)`. `local()` traži
+instaliran font po imenu fonta: gde ga ima, ništa se ne preuzima; gde ga nema, stiže zamena. Po lice
+za svaku kombinaciju (normal i bold, uspravno i kurziv) — inače desktop dobije veštački bold ili
+kurziv. (Ponašanje `local()` na samom Android uređaju nije izmereno; mereno je u Chromium-u.)
+**Merljivo bez Android uređaja** (`T1`): na stranici nijedan `.woff2` zahtev, a
+`new FontFace(x, 'local("Nepostojece"), url(<zamena>)')` mora da učita fajl sa 200.
