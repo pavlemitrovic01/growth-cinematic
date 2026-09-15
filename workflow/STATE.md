@@ -9,8 +9,9 @@
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
 - **Sledeći — nije odlučeno (nova sesija).** **Pravac posla je od 2026-09-15 redizajn**: Pavlova lista stoji
   u `ROADMAP` → „Redizajn", a telefon je za sada po strani. Predlog za prvi je **`RD1`** (naslov na
-  podstranicama se ne vidi, i na produkciji) — uzrok čeka Pavlov F5 test; posle njega stranica „smer
-  redizajna" pre `RD4`–`RD7`. Iz scene i dalje otvoreno: kamera prolazi kroz prikolicu (poglavlje 02),
+  podstranicama se ne vidi, i na produkciji) — naslov se ne vidi ni posle F5 (Pavlov odgovor 2026-09-16), pa
+  prelaz kroz `app/loading.tsx` otpada kao jedini uzrok, a mehanizam dokazuje sam batch; posle `RD1` stranica
+  „smer redizajna" pre `RD4`–`RD7`. Iz scene i dalje otvoreno: kamera prolazi kroz prikolicu (poglavlje 02),
   sjaj početnog kadra se u poglavljima 01–03 skoro ne vidi, sunce je iza kamere u zori. Za dizajn i dalje čeka
   **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
   lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da
@@ -65,7 +66,11 @@
   `<h1 data-wipe>` ostaje isečen (`clip-path`), bez klase `is-in`, a zaštita od 3 s je već isključena.
   Verovatno svih 13 površina sa `PageShell`, i na produkciji. **Uzrok nije potvrđen** — sumnje: sopstveni
   `clip-path` skriva naslov od posmatrača vidljivosti, ili prelaz kroz `app/loading.tsx` pokrene posmatrača
-  pre nove stranice. Test koji ih razdvaja (F5 na `/how-it-works` naspram klika u meniju) čeka Pavla.
+  pre nove stranice. Test koji ih razdvaja (F5 na `/how-it-works` naspram klika u meniju) rađen je 2026-09-15
+  na dev serveru, u Pavlovom browseru: naslov se ne vidi („ne vidi se", pa „ne vidi se još uvek", uz isti
+  snimak — nadnaslov i uvodni tekst vidljivi, na mestu naslova samo tanka uspravna crta). **Pavlov odgovor
+  2026-09-16: naslov se ne vidi ni posle F5.** Time prelaz kroz `app/loading.tsx` otpada kao jedini uzrok, a
+  prva ostaje sumnja da sopstveni `clip-path` krije naslov od posmatrača. Mehanizam nije dokazan merenjem.
   Headless Chrome ovde nije merni instrument: kontrolni test pokazao je da tamo posmatrač ne radi ni za
   običan blok. Popravka je zaseban batch.
 - **Stari sajt (MAIN) uskoro ide offline** — Pavle 2026-09-13. Zato je nalaz iz `R1` (prijave sa

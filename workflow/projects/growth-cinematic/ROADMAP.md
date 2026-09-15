@@ -21,7 +21,7 @@ u heroju („Prvo to") — urađen `S1`. Predlog pre `RD4`–`RD7`: jedna strani
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD1` | Naslov na podstranicama se ne vidi — `<h1 data-wipe>` ostaje isečen, verovatno 13 površina i produkcija (**greška**) | STANDARD + `manual` | F5 test (uzrok) | OPEN — predlog: prvo |
+| `RD1` | Naslov na podstranicama se ne vidi — `<h1 data-wipe>` ostaje isečen, verovatno 13 površina i produkcija (**greška**) | STANDARD + `manual` | — (F5 potvrđen 2026-09-16; mehanizam dokazuje batch) | OPEN — predlog: prvo |
 | `RD2` | Scena: kamera ne prolazi kroz prikolicu (52,85–59,95 % skrola) i zastaje dok se tekst poglavlja čita | STANDARD + `manual` | — | OPEN |
 | `RD3` | Scena: filmski osećaj kroz celu vožnju — sjaj i odsjaji i posle početnog kadra, praznina i „magla" posle prolaza, sunce iza kamere | STANDARD + `manual` | `RD2` | OPEN |
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |

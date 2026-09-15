@@ -6,6 +6,26 @@
 
 ---
 
+## non-batch(docs) — `RD1`: naslov se ne vidi ni posle F5 · 2026-09-16
+
+**Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+Na predlog testa (F5 na `/how-it-works`, pa klik na „How it works" u meniju naslovne) test je 2026-09-15
+rađen na dev serveru (`next dev`, `master` `cb7e163`), u Pavlovom browseru. Stigla su dva javljanja da se
+naslov ne vidi („ne vidi se", pa „ne vidi se još uvek"), uz isti snimak: nadnaslov „HOW IT WORKS" i uvodni
+tekst vidljivi, na mestu naslova samo tanka uspravna crta; koje javljanje ide uz koji korak tada nije bilo
+rečeno.
+
+**Pavlov odgovor 2026-09-16: naslov se ne vidi ni posle F5.** Time sumnja (b) — da posmatrača vidljivosti
+pokrene prelaz kroz `app/loading.tsx` pre nego što nova stranica stigne — otpada kao jedini uzrok, a prva
+ostaje sumnja (a): sopstveni `clip-path` naslova krije ga od posmatrača. Mehanizam nije dokazan merenjem,
+jer headless Chrome ovde nije merni instrument (kontrolni test tamo ne otkrije ni običan blok bez isecanja).
+Nijedan kod nije diran.
+
+**NEXT STEP:** `/plan RD1` — popravka sa proverom u pravom browseru koja pre popravke dokazano pada.
+
+---
+
 ## non-batch(release) — `S1` spojen i pušen; izmeren na deploy-u · 2026-09-15
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/S1.md` · `workflow/STATE.md` ·
