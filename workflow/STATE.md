@@ -7,17 +7,20 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći — nije odlučeno.** Otvoreno iz `T1`: **release** (Pavlova odluka) — na deploy-u se meri
-  servirani CSS i, ako nije rađena preko LAN-a, Android provera. **Preporuka, ne odluka:** za dizajn
-  **`T1b` — hijerarhija** (prvo stranica sa predlogom skale, pa plan); ostatak lanca lansiranja —
-  `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. Od onoga što vozač vidi: `U3` (čeka
-  Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`), a `U2` posle `T1b`.
+- **Sledeći — nije odlučeno.** Za dizajn: **`T1b` — hijerarhija** čeka Pavlov izbor sa stranice za
+  poređenje („GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn — skala A/B/C,
+  nadnaslov Danas/Putokaz, obris Svuda/3 mesta/Samo hero), pa `/plan T1b`. **Nova Pavlova izjava
+  (2026-09-15):** „android ok, moramo i njega obraditi posebno kao redesign" — obim nije definisan;
+  red u `ROADMAP`-u ide tek posle odgovora. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga)
+  i pravni tekstovi advokatu. Od onoga što vozač vidi: `U3` (čeka Pavlovu potvrdu da regruteri zovu sa
+  broja iz `lib/contact.js`), a `U2` posle `T1b`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
 - **Poslednji završen:** **`T1`** (2026-09-14, `2a3fb5a`) — **Arial svuda:** uređaji bez Arial-a
   (Android) dobijaju Arimo (OFL) preko porodice „Growth Sans" sa `local()` prvim (`LESSONS` L27);
   **drugi red naslova** ivica 2 px i težina 800 na 17 naslova. `rendered` 17 → 18 (`T1/A`), četiri
-  provere dokazano crvene; `K1/B` popravljen uz odobreno proširenje. `manual` PASS. ⚠️ **Nije spojen.**
+  provere dokazano crvene; `K1/B` popravljen uz odobreno proširenje. `manual` PASS. **Spojen i pušen
+  2026-09-15**, izmeren na deploy-u; Android PASS na produkciji (Pavle).
 - **Pretposlednji:** **`B1`** (2026-09-13, `7a3f083`) — social slika 1,53 MB → 129 KB, keš od sat
   vremena za slike, Cloudflare `_headers` obrisan; spojen i pušen 2026-09-14, keš izmeren na deploy-u.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
@@ -29,9 +32,9 @@
 
 ## Git
 
-- `T1` (implementacija `2a3fb5a` + close commit) stoji na grani **`t1-arial-arimo-drugi-red`** — **nije
-  spojen ni pušen**. Grana nosi i non-batch `e9fca6b` (zapis odluke `T-FONT`), koji ni sa `master`-a još
-  nije pušen. Release je Pavlova odluka.
+- `T1` (`1e1d636..5369004`, implementacija `2a3fb5a`) spojen fast-forward-om i pušen 2026-09-15 — nosi
+  i non-batch `e9fca6b` (zapis `T-FONT`); **deploy izmeren protiv njega**, uz nov build potvrđen
+  diskriminatorom PRE merenja (CSS bez → sa „Growth Sans", `/fonts/arimo-v36-latin.woff2` 404 → 200).
 - `B1` (`059551e..fb26091`, implementacija `7a3f083`) spojen fast-forward-om i pušen 2026-09-14;
   **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (`/og.png` 404,
   `/og.jpg` 200, `/_headers` 404).
@@ -40,8 +43,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`** (`e9fca6b`): **1 commit ispred `origin/master`** — samo zapis `T-FONT`;
-  origin nosi `M7`, `U1`, `K1`, `R1` i `B1`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `T1`; origin nosi `M7`, `U1`,
+  `K1`, `R1`, `B1` i `T1`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -49,7 +52,7 @@
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
-  `b1-social-slika-kes`.
+  `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`.
 
 ## Žive prepreke
 

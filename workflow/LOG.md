@@ -6,6 +6,50 @@
 
 ---
 
+## non-batch(release) — `T1` spojen i pušen; ACCEPTANCE 9 zatvoren merenjem na deploy-u, Android PASS · 2026-09-15
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/T1.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `1e1d636..5369004` fast-forward, push — nosi `e9fca6b` (`T-FONT`), `2a3fb5a` (`T1`) i `5369004`
+(close). Pavlova odluka 2026-09-15 („spoji i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` =
+`1e1d636`, nepomeren), čisto stablo i da je fast-forward moguć.
+
+**Diskriminator PRE merenja:** pre push-a CSS `06yv00wofra0r.css` sa 0× „Growth Sans", oba `.woff2` 404
+(`fra1::2vg2c-1789430546599-dd4adb2aa975`); prva provera posle push-a još stari build; druga, 10 s kasnije,
+CSS `3nhvgp9ajf3u5.css` sa 5× „Growth Sans" i `arimo` 200 (`fra1::txwgp-1789430605069-83002cda25d9`).
+
+IZMERENO protiv deploy-a:
+```
+  servirani CSS                 4 Growth Sans lica, svako local(Arial...) ispred url(/fonts/arimo...)
+                                body: Growth Sans,Arial,Helvetica,sans-serif · HTML bez font preload-a
+  obris                         4 pravila pod @supports sa text-stroke:2px i font-weight:800 ·
+                                forced-colors netaknut · 3 osnovna em pravila sa font-weight:500
+  /fonts/*.woff2                200 font/woff2 20132 / 22352 B · Cache-Control: public, max-age=3600
+  CSP na /                      prisutan
+  desktop Chromium (Windows)    0 .woff2 zahteva na / · FontFace bez lokalnog imena: arimo 200, 20132 B
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18 · T1/A zelen
+  meri se: https://growth-cinematic.vercel.app
+```
+
+✅ **Android (ACCEPTANCE 8b):** preko LAN-a nije rađen; na produkciji posle release-a — Pavle: „android ok".
+
+⚠️ U Browser panelu je na `/` bilo učitano samo lice 400; lice 700 u trenutku merenja nije ni bilo
+zatraženo (`unloaded`), iako naslovi koriste bold. Kriterijum („0 `.woff2` zahteva") time nije pogođen;
+uzrok nije utvrđen — panel ume da drži tab sakriven (`LESSONS` L7).
+
+⚠️ Ovaj release commit nosi samo dokumente, pa se deploy posle njegovog push-a po sadržaju ne može
+razlikovati; merenje iznad je nad deploy-om `5369004`.
+
+**Nova Pavlova izjava (2026-09-15):** „android ok, moramo i njega obraditi posebno kao redesign". Obim
+nije definisan — pitanje postavljeno; red u `ROADMAP`-u tek posle odgovora.
+
+**NEXT STEP:** Pavlov izbor sa stranice za poređenje `T1b` („GROWTH hijerarhija",
+https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn), pa `/plan T1b`; obim redizajna za telefon.
+
+---
+
 ## T1 (STANDARD) — Arial svuda: Arimo samo gde nema Arial-a, jači drugi red naslova · 2026-09-14
 
 **Implementacija:** `2a3fb5a` · **Grana:** `t1-arial-arimo-drugi-red` — **nije spojena**, release je Pavlova odluka

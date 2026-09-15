@@ -110,7 +110,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
-| `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b` | 2026-09-14 |
+| `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b`; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS | 2026-09-14 |
 | `B1` | **Social slika i keš** — `og.png` 1,53 MB → `og.jpg` 129 KB (baseline 1200×630); keš 1 h za `/images/*` i `/og.jpg` u `next.config.ts`; `_headers` obrisan; tier LEAN → STRICT (LOCK `seo.js`); keš izmeren i na deploy-u (2026-09-14) | 2026-09-13 |
 | `R1` | **Resend upaljen** — sandbox pošiljalac; `POST /api/apply` `503 → 200` na deploy-u, mejl potvrđen u inbox-u; `R1-DOMEN` zatvoren | 2026-09-13 |
 | `K1` | **`globals.css`** — izmereno da preklapanja nose kaskadu: 109 → samo 1 spojivo bez vizuelne promene; obrisane 3 mrtve klase, uveden census kapija | 2026-09-12 |
