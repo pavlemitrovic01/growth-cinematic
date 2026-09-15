@@ -68,6 +68,18 @@
 
 ## ZATVORENO
 
+### `S1-LOOK` — hero svetlo i kamion: varijanta `1` za kamion, `b` za sjaj · 2026-09-15
+Pavle je birao na živom dev serveru, između varijanti u pravoj sceni (privremeni prekidači u URL-u,
+uklonjeni pre commita):
+- **Kamion — varijanta `1`** (*„1 mi se najviše sviđa, 2 i 3 idu previše prema mouse grey"*): kabina
+  `#34472d`, tamni delovi `#1c231d`, hrom metalnost 0,55, staklo `#223a31`, gume `#121514`. Svetlije
+  nijanse kabine čitaju se kao siva.
+- **Sjaj — varijanta `b`** (*„B definitivno"*, posle *„između 2 i 1 … više vuče na zlatno nego na
+  svetlo"*): jačina između ranijih `1` i `2`; noćni rim `#ffcf9f` i farovi `#fff0d2` umesto zasićenog
+  amber/žutog. U zori rim i dalje prelazi u originalni amber `#ffb365`.
+- ⚠️ **Odbijen je zlatni ton, ne samo jačina.** Ko sledeći dira svetlo scene: topla svetlost ide ka
+  toplo-beloj, ne ka zlatnoj.
+
 ### `T-FONT` — pismo sajta: Arial ostaje · 2026-09-14
 Pavlova odluka u dva koraka: prvo *„nećemo nikakva plaćena pisma"*, pa posle stranice za poređenje
 sa pravim hero-om i sekcijom sajta u četiri pisma (Arial, Archivo, Barlow, Oswald + Inter):

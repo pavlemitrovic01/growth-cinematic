@@ -7,31 +7,33 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći — nije odlučeno.** Za dizajn: **`T1b` — hijerarhija** čeka Pavlov izbor sa stranice za
-  poređenje („GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn — skala A/B/C,
-  nadnaslov Danas/Putokaz, obris Svuda/3 mesta/Samo hero), pa `/plan T1b`. **Nova Pavlova izjava
-  (2026-09-15):** „android ok, moramo i njega obraditi posebno kao redesign" — obim nije definisan;
-  red u `ROADMAP`-u ide tek posle odgovora. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga)
-  i pravni tekstovi advokatu. Od onoga što vozač vidi: `U3` (čeka Pavlovu potvrdu da regruteri zovu sa
-  broja iz `lib/contact.js`), a `U2` posle `T1b`.
+- **Sledeći — nije odlučeno (nova sesija).** Otvoreno iz `S1`: **release** (Pavlova odluka) — spoji, push,
+  izmeri na deploy-u. **Pravac posla je od 2026-09-15 redizajn**: Pavlova lista stoji u `ROADMAP` → „Redizajn",
+  a telefon je za sada po strani. Iz scene i dalje otvoreno: kamera prolazi kroz prikolicu (poglavlje 02),
+  sjaj početnog kadra se u poglavljima 01–03 skoro ne vidi, sunce je iza kamere u zori. Za dizajn i dalje čeka
+  **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
+  lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da
+  regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`T1`** (2026-09-14, `2a3fb5a`) — **Arial svuda:** uređaji bez Arial-a
-  (Android) dobijaju Arimo (OFL) preko porodice „Growth Sans" sa `local()` prvim (`LESSONS` L27);
-  **drugi red naslova** ivica 2 px i težina 800 na 17 naslova. `rendered` 17 → 18 (`T1/A`), četiri
-  provere dokazano crvene; `K1/B` popravljen uz odobreno proširenje. `manual` PASS. **Spojen i pušen
-  2026-09-15**, izmeren na deploy-u; Android PASS na produkciji (Pavle).
-- **Pretposlednji:** **`B1`** (2026-09-13, `7a3f083`) — social slika 1,53 MB → 129 KB, keš od sat
-  vremena za slike, Cloudflare `_headers` obrisan; spojen i pušen 2026-09-14, keš izmeren na deploy-u.
+- **Poslednji završen:** **`S1`** (2026-09-15, `1b474de`) — **Hero svetlo i čitljivost scene:** tri postojeća
+  svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno u toplo-beloj, ne zlatnoj),
+  niža metalnost, kabina `#34472d` i vidljiv hrom i staklo, sjajniji put i farovi ispred kabine, blaža
+  `.journey-shade`. Draw pozivi nepromenjeni, telefon identičan do piksela. `manual` PASS (Pavle: kamion `1`,
+  sjaj `b`). ⚠️ **Nije spojen.**
+- **Pretposlednji:** **`T1`** (2026-09-14, `2a3fb5a`) — Arial svuda, Arimo (OFL) gde nema Arial-a, drugi red
+  naslova ivica 2 px; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `S1` (implementacija `1b474de` + close commit) stoji na grani **`s1-hero-svetlo`** — **nije spojen ni
+  pušen**. Release je Pavlova odluka.
 - `T1` (`1e1d636..5369004`, implementacija `2a3fb5a`) spojen fast-forward-om i pušen 2026-09-15 — nosi
   i non-batch `e9fca6b` (zapis `T-FONT`); **deploy izmeren protiv njega**, uz nov build potvrđen
   diskriminatorom PRE merenja (CSS bez → sa „Growth Sans", `/fonts/arimo-v36-latin.woff2` 404 → 200).
@@ -43,8 +45,7 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `T1`; origin nosi `M7`, `U1`,
-  `K1`, `R1`, `B1` i `T1`.
+- Grana istine **`master`** (`575c26f`): jednak `origin/master`; origin nosi `M7`, `U1`, `K1`, `R1`, `B1` i `T1`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -56,6 +57,13 @@
 
 ## Žive prepreke
 
+- ⚠️ **Naslov na podstranicama se ne vidi** — Pavlov snimak `/how-it-works` u normalnom prikazu, 2026-09-15:
+  `<h1 data-wipe>` ostaje isečen (`clip-path`), bez klase `is-in`, a zaštita od 3 s je već isključena.
+  Verovatno svih 13 površina sa `PageShell`, i na produkciji. **Uzrok nije potvrđen** — sumnje: sopstveni
+  `clip-path` skriva naslov od posmatrača vidljivosti, ili prelaz kroz `app/loading.tsx` pokrene posmatrača
+  pre nove stranice. Test koji ih razdvaja (F5 na `/how-it-works` naspram klika u meniju) čeka Pavla.
+  Headless Chrome ovde nije merni instrument: kontrolni test pokazao je da tamo posmatrač ne radi ni za
+  običan blok. Popravka je zaseban batch.
 - **Stari sajt (MAIN) uskoro ide offline** — Pavle 2026-09-13. Zato je nalaz iz `R1` (prijave sa
   dva sajta se u inbox-u ne razlikuju) **nebitan i ne radi se**. Do samog prelaska MAIN je i dalje
   živ, indeksiran i ne dira se.

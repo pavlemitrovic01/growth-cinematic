@@ -110,6 +110,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `S1` | **Hero svetlo i čitljivost scene** — postojeća tri svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno), niža metalnost, svetlija kabina i vidljiv hrom/staklo, sjajniji put i farovi ispred kabine, blaža `.journey-shade`; draw pozivi nepromenjeni (58/49/53/35), telefon identičan do piksela; Pavle birao kamion `1` i sjaj `b`; **nije spojen** | 2026-09-15 |
 | `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b`; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS | 2026-09-14 |
 | `B1` | **Social slika i keš** — `og.png` 1,53 MB → `og.jpg` 129 KB (baseline 1200×630); keš 1 h za `/images/*` i `/og.jpg` u `next.config.ts`; `_headers` obrisan; tier LEAN → STRICT (LOCK `seo.js`); keš izmeren i na deploy-u (2026-09-14) | 2026-09-13 |
 | `R1` | **Resend upaljen** — sandbox pošiljalac; `POST /api/apply` `503 → 200` na deploy-u, mejl potvrđen u inbox-u; `R1-DOMEN` zatvoren | 2026-09-13 |

@@ -6,6 +6,69 @@
 
 ---
 
+## S1 (STANDARD) — Hero svetlo i čitljivost scene · 2026-09-15
+
+**Implementacija:** `1b474de` · **Grana:** `s1-hero-svetlo` — **nije spojena**, release je Pavlova odluka
+
+**Changed files:** `lib/hero-scene.ts` · `app/globals.css` · `workflow/projects/growth-cinematic/batches/S1.md` (nov) ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+Pavlov brief 2026-09-15: prvi, strogo ograničen polish heroja — samo `lib/hero-scene.ts` i `.journey-shade`, bez
+commita. ⚠️ Zato manifest nije napravljen pre rada nego na zatvaranju (`S1.md`).
+
+Pavlove odluke na živom dev serveru (privremeni prekidači u URL-u, uklonjeni pre commita): kamion `1` („2 i 3
+idu previše prema mouse grey"), sjaj `b` („između 2 i 1 … više vuče na zlatno nego na svetlo" → „B
+definitivno"). Zapis: `DECISIONS` `S1-LOOK`.
+
+IZMERENO (headless Chrome, SwiftShader, 1440×900):
+```
+  draw pozivi                   pre 58/49/53/35 · posle svetla i senke 58/49/53/35 · konacno 58/49 (pocetak, 1/3)
+  skoro crni pikseli, pocetak   72,3 % -> 43,4 % (pre izbora kamiona i sjaja)
+  kolona teksta, pocetak        p95 pozadine 11 -> 12 · kontrast uvodnog teksta ~14,7 -> ~14,6
+  kolona teksta, poglavlje 02   p95 pozadine 31 -> 52 · kontrast ~12,3 -> ~9,3
+  kabina, pocetak               svetlina 7,7 -> 11,4 (varijanta 1)
+  put oko kamiona, pocetak      svetlina 18,3 -> 41,7 · zlatnost R-B 25,0 (odbijena zlatna 41,7)
+  prolaz senke                  22 draw poziva po frejmu u svakom segmentu skrola
+  telefon                       0,00 % razlicitih piksela · desktop fotografija 55,28 % (nova senka)
+  konzola                       0 gresaka · stranica poziva readPixels 0x
+```
+
+IZMERENO (`/close`, `next start` PID 5812 pokrenut 17:34:28, posle `BUILD_ID`-a 17:32:01):
+```
+  quick / typecheck / full      exit 0 · BUILD_ID SoMWwKRuOGAOXr7TY82DE
+  test                          140/140 u 11 fajlova
+  verify                        nojs PASS 14 · claims PASS 13
+  rendered                      18/18
+  meri se: http://localhost:3000
+  produkcijski bundle           .journey-shade nosi novu senku · scena ready, draw 58/49, 0 gresaka
+```
+
+⚠️ **Dev server je i posle dva restarta slao stari CSS** (Turbopack keš na disku). Prvi snimci „posle" imali su
+zato novu scenu sa starom senkom; otkriveno izvlačenjem pravila iz serviranog CSS-a, rešeno brisanjem
+`.next/dev/cache/turbopack` i `.next/dev/static`. Pouka `LESSONS` **L28**, upozorenje u `CONTEXT`.
+
+⚠️ `rendered` protiv **dev** servera daje 17/18: provera „bez `unsafe-eval`" pada po dizajnu, jer ga
+`lib/security.js:5` dodaje samo u dev režimu. Protiv `next start` 18/18.
+
+⚠️ Upozorenja „GPU stall due to ReadPixels" iz ranih merenja pravio je sam merni skript (dira WebGL kontekst);
+instrumentisano merenje: stranica ne poziva `readPixels`, 0 upozorenja.
+
+✅ **`manual` PASS (Pavle)** — pregled na dev serveru u svom browseru: „Sada je kamion okej", pa „B definitivno".
+FPS nije posebno prijavljen.
+
+**SCOPE_DRIFT: none** — 9 putanja iz EXPECTED-FILES: 2 u implementacionom commitu `1b474de`, 7 u close commitu.
+Prekidači `?kamion` i `?sjaj` dodati su i uklonjeni u toku batch-a i nisu ušli ni u jedan commit.
+
+**Van obima, i dalje otvoreno:** kamera prolazi kroz prikolicu (poglavlje 02); sjaj početnog kadra se u
+poglavljima 01–03 skoro ne vidi; sunce iza kamere u zori.
+
+**NEXT STEP:** nova sesija. Release `S1` (spoji, push, izmeri na deploy-u) je Pavlova odluka. Pavlova lista za
+redizajn ide u `ROADMAP` non-batch commitom odmah posle ovog zapisa.
+
+---
+
 ## non-batch(release) — `T1` spojen i pušen; ACCEPTANCE 9 zatvoren merenjem na deploy-u, Android PASS · 2026-09-15
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/T1.md` · `workflow/STATE.md` ·

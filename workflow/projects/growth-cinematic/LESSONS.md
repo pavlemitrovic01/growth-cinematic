@@ -251,3 +251,15 @@ za svaku kombinaciju (normal i bold, uspravno i kurziv) — inače desktop dobij
 kurziv. (Ponašanje `local()` na samom Android uređaju nije izmereno; mereno je u Chromium-u.)
 **Merljivo bez Android uređaja** (`T1`): na stranici nijedan `.woff2` zahtev, a
 `new FontFace(x, 'local("Nepostojece"), url(<zamena>)')` mora da učita fajl sa 200.
+
+## L28 — Dev server ume da pošalje stari CSS i posle restarta, jer Turbopack pamti kompilaciju na disku.
+Next 16 po podrazumevanom podešavanju ima `turbopackFileSystemCacheForDev: true` i čuva rad u
+`.next/dev/cache/turbopack`, a restart „ponovo koristi prethodnu kompilaciju". U `S1` je izmena
+`app/globals.css` stajala na disku, a server je i posle dva restarta slao stari `app_globals_*.css`
+(nastao u 02:31, pre izmene), dok je izmenu `lib/hero-scene.ts` pokupio. Snimci „posle" su zato
+pokazivali novu scenu sa starom senkom, a ni osvežavanje datuma izmene fajla nije pomoglo.
+**Pravilo:** posle izmene CSS-a, pre merenja ili pregleda, izvući pravilo iz CSS-a koji server
+STVARNO šalje i uporediti ga sa izvorom. Minifikovan CSS menja zapis (`rgba(4,12,8,.93)` →
+`#040c08ed`, reč `ellipse` ispada), pa se traži selektor i deo vrednosti koji preživi minifikaciju,
+ne doslovan string iz izvora. Ako je staro: ugasiti server, obrisati `.next/dev/cache/turbopack` i
+`.next/dev/static`, pokrenuti ponovo i ponovo proveriti.

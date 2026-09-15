@@ -43,6 +43,9 @@
   ne prosleđuje argv, pa bi merenje tiho otišlo na localhost i prijavilo PASS na pogrešnoj meti.
 - ⚠️ **Proveri koji PID sluša na portu pre merenja.** Zaostali server je **tri puta** dao lažan
   prolaz. Na Windows-u `kill` iz Git Bash-a ne gasi Node — ide `taskkill /PID <pid> /T /F`.
+- ⚠️ **Dev server ume da šalje stari CSS i posle restarta** (Turbopack keš na disku, `LESSONS` L28).
+  Pre merenja uporedi pravilo iz serviranog CSS-a sa izvorom; ako je staro, ugasi server i obriši
+  `.next/dev/cache/turbopack` i `.next/dev/static`.
 - ⚠️ **`manual` je obavezan i van STRICT-a** kad posao dira skrol, `IntersectionObserver` ili 3D
   scenu: Claude browser panel drži tab u `visibilityState:"hidden"` i **ume da izgubi layout u
   celini**. Vidi `LESSONS` L7.
