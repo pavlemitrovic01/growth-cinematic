@@ -24,9 +24,9 @@ IZMERENO protiv deploy-a:
 ```
   servirana .journey-shade      nova (125% 105%) · stara boja #040c08ed nestala
   headless Chrome 1440x900      scena ready · draw 58 (pocetak) / 49 (1/3) · 0 gresaka u konzoli
-  isti kadar kao next start     pocetak: 4 piksela razlike, svi u koloni teksta
-                                1/3: 1,33 % piksela (prag 8) · 17 251 od 17 283 u koloni teksta (x < 720),
-                                32 na strani scene
+  isti kadar kao next start     pocetak: 4 piksela razlike (levo gore, x 492-640, y 109-226)
+                                1/3: 1,33 % piksela (prag 8) · 17 251 od 17 283 u levoj polovini, gde stoji tekst (x < 720),
+                                32 u desnoj polovini
   verify                        nojs PASS 14 · claims PASS 13
   test:rendered                 18/18
   meri se: https://growth-cinematic.vercel.app
