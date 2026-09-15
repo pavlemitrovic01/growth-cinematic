@@ -6,6 +6,43 @@
 
 ---
 
+## non-batch(release) — `S1` spojen i pušen; izmeren na deploy-u · 2026-09-15
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/S1.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `575c26f..2e28574` fast-forward, push — nosi `1b474de` (`S1`), `e8e213d` (close) i `2e28574` (lista
+`RD1`–`RD9`). Pavlova odluka 2026-09-15 („spoji i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` =
+`575c26f`, nepomeren), čisto stablo i da je fast-forward moguć.
+
+**Diskriminator PRE merenja:** pre push-a CSS `3nhvgp9ajf3u5.css`, servirana `.journey-shade` stara (`#040c08ed`,
+bez `125% 105%`; `fra1::9lbs5-1789489722063-416fce6b81d1`); prve dve provere posle push-a još stari build;
+treća, 10 s kasnije, CSS `154jrck79jy_0.css` sa novom senkom (`125% 105%`, bez `#040c08ed`;
+`fra1::79mw6-1789489783567-a7355a5721b3`).
+
+IZMERENO protiv deploy-a:
+```
+  servirana .journey-shade      nova (125% 105%) · stara boja #040c08ed nestala
+  headless Chrome 1440x900      scena ready · draw 58 (pocetak) / 49 (1/3) · 0 gresaka u konzoli
+  isti kadar kao next start     pocetak: 4 piksela razlike, svi u koloni teksta
+                                1/3: 1,33 % piksela (prag 8) · 17 251 od 17 283 u koloni teksta (x < 720),
+                                32 na strani scene
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+```
+
+⚠️ `manual` je rađen na dev serveru (`S1` ACCEPTANCE 8); scenu na produkciji Pavle u svom browseru nije posebno
+gledao. Deploy daje isti početni kadar kao `next start` merenje sa `/close`.
+
+⚠️ Ovaj release commit nosi samo dokumente, pa se deploy posle njegovog push-a po sadržaju ne može
+razlikovati; merenje iznad je nad deploy-om `2e28574`.
+
+**NEXT STEP:** nova sesija — Pavle bira između `RD1` (čeka F5 test na `/how-it-works` naspram klika u meniju),
+stranice „smer redizajna" i `T1b`.
+
+---
+
 ## non-batch(docs) — Pavlova lista za redizajn u ROADMAP; cilj i telefon po strani u DECISIONS · 2026-09-15
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·

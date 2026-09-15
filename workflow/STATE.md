@@ -7,9 +7,10 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći — nije odlučeno (nova sesija).** Otvoreno iz `S1`: **release** (Pavlova odluka) — spoji, push,
-  izmeri na deploy-u. **Pravac posla je od 2026-09-15 redizajn**: Pavlova lista stoji u `ROADMAP` → „Redizajn",
-  a telefon je za sada po strani. Iz scene i dalje otvoreno: kamera prolazi kroz prikolicu (poglavlje 02),
+- **Sledeći — nije odlučeno (nova sesija).** **Pravac posla je od 2026-09-15 redizajn**: Pavlova lista stoji
+  u `ROADMAP` → „Redizajn", a telefon je za sada po strani. Predlog za prvi je **`RD1`** (naslov na
+  podstranicama se ne vidi, i na produkciji) — uzrok čeka Pavlov F5 test; posle njega stranica „smer
+  redizajna" pre `RD4`–`RD7`. Iz scene i dalje otvoreno: kamera prolazi kroz prikolicu (poglavlje 02),
   sjaj početnog kadra se u poglavljima 01–03 skoro ne vidi, sunce je iza kamere u zori. Za dizajn i dalje čeka
   **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
   lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da
@@ -20,7 +21,7 @@
   svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno u toplo-beloj, ne zlatnoj),
   niža metalnost, kabina `#34472d` i vidljiv hrom i staklo, sjajniji put i farovi ispred kabine, blaža
   `.journey-shade`. Draw pozivi nepromenjeni, telefon identičan do piksela. `manual` PASS (Pavle: kamion `1`,
-  sjaj `b`). ⚠️ **Nije spojen.**
+  sjaj `b`). Spojen i pušen 2026-09-15, izmeren na deploy-u.
 - **Pretposlednji:** **`T1`** (2026-09-14, `2a3fb5a`) — Arial svuda, Arimo (OFL) gde nema Arial-a, drugi red
   naslova ivica 2 px; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
@@ -32,8 +33,10 @@
 
 ## Git
 
-- `S1` (implementacija `1b474de` + close commit) stoji na grani **`s1-hero-svetlo`** — **nije spojen ni
-  pušen**. Release je Pavlova odluka.
+- `S1` (`575c26f..2e28574`, implementacija `1b474de`) spojen fast-forward-om i pušen 2026-09-15 — nosi i
+  non-batch `2e28574` (lista `RD1`–`RD9`); **deploy izmeren protiv njega**, uz nov build potvrđen
+  diskriminatorom PRE merenja (servirana `.journey-shade` bez → sa `125% 105%`, CSS `3nhvgp9ajf3u5.css` →
+  `154jrck79jy_0.css`).
 - `T1` (`1e1d636..5369004`, implementacija `2a3fb5a`) spojen fast-forward-om i pušen 2026-09-15 — nosi
   i non-batch `e9fca6b` (zapis `T-FONT`); **deploy izmeren protiv njega**, uz nov build potvrđen
   diskriminatorom PRE merenja (CSS bez → sa „Growth Sans", `/fonts/arimo-v36-latin.woff2` 404 → 200).
@@ -45,7 +48,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`** (`575c26f`): jednak `origin/master`; origin nosi `M7`, `U1`, `K1`, `R1`, `B1` i `T1`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `S1`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1` i `S1`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -53,7 +57,7 @@
   `d1-cinematic-guard-founder`, `d4-sticky-process`, `g1-wipe-placement-gate`,
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
-  `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`.
+  `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`.
 
 ## Žive prepreke
 
