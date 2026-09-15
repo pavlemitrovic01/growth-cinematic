@@ -6,6 +6,20 @@
 
 ---
 
+## non-batch(docs) — Pavlova lista za redizajn u ROADMAP; cilj i telefon po strani u DECISIONS · 2026-09-15
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+ovaj `LOG.md`
+
+Pavlov pregled sajta 2026-09-15 (dev server, snimci ekrana) razvrstan je u devet stavki `RD1`–`RD9`, bez
+planiranja obima. Scena u heroju, koju je Pavle tražio prvu, urađena je kao `S1`. `RD1` (naslov na
+podstranicama se ne vidi) je greška na živim stranicama i predložena je kao prva; uzrok čeka Pavlov F5 test.
+Nijedan kod nije diran.
+
+**NEXT STEP:** nova sesija — Pavle bira između release-a `S1`, `RD1` i stranice „smer redizajna".
+
+---
+
 ## S1 (STANDARD) — Hero svetlo i čitljivost scene · 2026-09-15
 
 **Implementacija:** `1b474de` · **Grana:** `s1-hero-svetlo` — **nije spojena**, release je Pavlova odluka

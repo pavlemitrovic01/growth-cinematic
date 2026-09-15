@@ -12,6 +12,25 @@ Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `
 **Od 2026-09-11 kolosek je završetak po auditu** — `docs/AUDIT-2026-09.md`. Ocene: kvalitet
 urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
+## Redizajn — Pavlova lista (2026-09-15)
+
+Cilj (Pavle): **što bolji cinematic osećaj, uz ozbiljno dobre i logički povezane informacije** (`DECISIONS`).
+Telefon je za sada po strani. Obim stavki **nije planiran**, redosled bira Pavle. Pavle je prvo tražio scenu
+u heroju („Prvo to") — urađen `S1`. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
+(navigacija, zaglavlje podstranice, smena sekcija, paleta, slike), da batch-evi ne odu svaki na svoju stranu.
+
+| ID | Posao | Tier | Zavisi od | Status |
+|---|---|---|---|---|
+| `RD1` | Naslov na podstranicama se ne vidi — `<h1 data-wipe>` ostaje isečen, verovatno 13 površina i produkcija (**greška**) | STANDARD + `manual` | F5 test (uzrok) | OPEN — predlog: prvo |
+| `RD2` | Scena: kamera ne prolazi kroz prikolicu (52,85–59,95 % skrola) i zastaje dok se tekst poglavlja čita | STANDARD + `manual` | — | OPEN |
+| `RD3` | Scena: filmski osećaj kroz celu vožnju — sjaj i odsjaji i posle početnog kadra, praznina i „magla" posle prolaza, sunce iza kamere | STANDARD + `manual` | `RD2` | OPEN |
+| `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |
+| `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | smer, `T1b` | OPEN |
+| `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`, koja maslinasta | OPEN |
+| `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `T1b`, kolosek pokreta | OPEN |
+| `RD8` | Slike: nijedne van rezervne slike heroja — izvor (svoje, licencirane, kadrovi iz scene) | — | odluka Pavla | OPEN |
+| `RD9` | Sadržaj za vozače: više stranica i konteksta, copy pregledati i pojačati, uključujući naslov heroja | STRICT (registar) | Pavlov sadržaj; gde živi registar posle gašenja MAIN-a | čeka sadržaj |
+
 ## Aktivan kolosek — završetak po auditu (od 2026-09-11)
 
 Izvor: `docs/AUDIT-2026-09.md` (nalazi, kriterijumi prihvatanja, redosled). Release `M2b` urađen 2026-09-11 (census `0/4/9/9` na deploy-u). Pravni tekstovi advokatu idu paralelno sa

@@ -68,6 +68,13 @@
 
 ## ZATVORENO
 
+### Redizajn — cilj, i telefon po strani · 2026-09-15
+- **Cilj** (Pavle): *„jasan cilj ovog redizajna je da napravimo što bolji cinematic osećaj, ali da uz to
+  pružamo ozbiljno dobre i logički povezane informacije"*. Stavke → `ROADMAP` „Redizajn" (`RD1`–`RD9`).
+- **Telefon po strani** (Pavle): *„za sada telefon po strani, radimo redesign"* — posle Android provere i
+  izjave da i telefon traži poseban redizajn. Obim redizajna za telefon nije definisan.
+- **Redosled:** Pavle je prvo tražio scenu u heroju (*„Prvo to"*) → `S1`.
+
 ### `S1-LOOK` — hero svetlo i kamion: varijanta `1` za kamion, `b` za sjaj · 2026-09-15
 Pavle je birao na živom dev serveru, između varijanti u pravoj sceni (privremeni prekidači u URL-u,
 uklonjeni pre commita):
