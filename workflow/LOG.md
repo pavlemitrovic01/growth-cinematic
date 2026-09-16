@@ -6,6 +6,74 @@
 
 ---
 
+## RD1 (STANDARD) — Naslovi sa `data-wipe` · 2026-09-16
+
+**Implementacija:** `4584c80` · **Grana:** `rd1-naslov-podstranice` — **nije spojena**, release je Pavlova odluka
+
+**Changed files:** `components/Motion.tsx` · `lib/motion-reveal.ts` (nov) · `__tests__/motion-reveal.test.js` (nov) ·
+`workflow/projects/growth-cinematic/batches/RD1.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Uzrok je izmeren pre popravke, u Pavlovom browseru, jer ni headless Chrome ni Browser panel ovde nisu merni
+instrument. Privremeni panel (`components/WipeDiagnostics.tsx`, `?dijagnostika=1`) pokazao je da posmatrač na
+`[data-wipe]` meti javlja presek 0×0 i nikad više: skriveno stanje seče metu na nultu površinu, a browser računa
+presek posle isecanja. Isti mehanizam važi za svaku `data-wipe` metu — na Pavlovom snimku naslovne nije se video
+nijedan od devet naslova sekcija. Popravka: `Motion.tsx` za `[data-wipe]` posmatra roditelja, koji nije isečen, a
+klasa ostaje na meti; roditelj koji je i sam meta deli jedno posmatranje (`lib/motion-reveal.ts`).
+
+IZMERENO (Pavlov browser, Edge, vidljiv tab; `next start` build `d3JPrWXeyJZKB3uJedU5E`, PID 16984;
+`/how-it-works?dijagnostika=1`, posle 59 s):
+```
+  js-motion / data-motion-ready   da / da (watchdog razoruzan)
+  meta                            H1, u DOM-u pri montiranju, u kadru, okvir 1175x180
+  is-in / clip-path               ne / inset(-26.4px 100% -26.4px -26.4px)
+  cvor zamenjen                   ne
+  IO kao Motion (0,05, -8%)       1 poziv, +7 ms: ukrsta=ne, odnos 0,00, presek 0x0
+  IO prag 0, bez margine          1 poziv, +7 ms: ukrsta=ne, odnos 0,00, presek 0x0
+  roditelji svih 10 meta          block / list-item / grid, clip-path none, overflow visible
+                                  (racunati stilovi, ne zavise od rasporeda panela)
+```
+
+KAPIJA (`__tests__/motion-reveal.test.js`, dokazano crvena pre priznanja):
+```
+  stara logika (posmatra se sama meta)    Tests 2 failed | 3 passed (5) · exit 1
+    x [data-wipe] se posmatra preko roditelja        expected {...} to be {...}
+    x roditelj koji je i sam meta deli posmatranje    expected 2 to be 1
+  posle popravke                          Tests 5 passed (5) · exit 0
+```
+
+IZMERENO (`/close`, `next start` PID 17504 pokrenut 14:36:06, posle `BUILD_ID`-a 14:36:00):
+```
+  quick / typecheck / full      exit 0 · BUILD_ID gtfCz_JDVeA0krnyvlnYY
+  test                          145/145 u 12 fajlova (bilo 140/11)
+  verify                        nojs PASS 14 · claims PASS 13
+  rendered                      18/18
+  meri se: http://localhost:3000
+  bundle                        popravka (hasAttribute("data-wipe")) u 1 chunk-u · dijagnostika u 0
+```
+
+✅ **`manual` PASS (Pavle)** — „Sada naslovi rade", na buildu `-TeUDcjeJYlMDj6etW744` (sa dijagnostikom; konačni
+build se razlikuje samo po njenom uklanjanju, dokazano diskriminatorom iznad). Pojedinačni koraci (animacija,
+klik iz menija, članak, 404) nisu posebno imenovani, a snimak panela posle popravke nije poslat.
+
+Dijagnostika je napravljena, korišćena za merenje i uklonjena pre close-a: `app/layout.tsx` vraćen na original
+(`git diff` 0 linija), pretraga koda za `WipeDiagnostics|dijagnostika` 0 pogodaka; ni u jednom commitu.
+
+⚠️ Browser panel ponovo nije merni instrument: isti panel u njemu dao je prozor 0×0 i okvir naslova 0×294
+(izgubljen raspored, `L7`). Pouka o mehanizmu i o watchdog-u koji ga je krio: `LESSONS` **L29**.
+
+**SCOPE_DRIFT: none** — 8 putanja u dva commita, sve iz EXPECTED-FILES: 3 u `4584c80`, 5 u close commitu.
+`app/layout.tsx` i `components/WipeDiagnostics.tsx` dirnuti i vraćeni; `app/globals.css` i
+`components/PageShell.tsx` nisu trebali.
+
+⚠️ `CONTEXT` i dalje kaže „140 u 11 fajlova" — sada 145 u 12. `CONTEXT` nije u EXPECTED-FILES ovog batcha, pa
+dopuna ide kao non-batch.
+
+**NEXT STEP:** release `RD1` (Pavlova odluka) — spajanje, push i provera naslova na deploy-u u pravom, vidljivom
+tabu; do tada se na produkciji ne vidi nijedan naslov sa `data-wipe`.
+
+---
+
 ## non-batch(docs) — `RD1`: naslov se ne vidi ni posle F5 · 2026-09-16
 
 **Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`

@@ -263,3 +263,16 @@ STVARNO šalje i uporediti ga sa izvorom. Minifikovan CSS menja zapis (`rgba(4,1
 `#040c08ed`, reč `ellipse` ispada), pa se traži selektor i deo vrednosti koji preživi minifikaciju,
 ne doslovan string iz izvora. Ako je staro: ugasiti server, obrisati `.next/dev/cache/turbopack` i
 `.next/dev/static`, pokrenuti ponovo i ponovo proveriti.
+
+## L29 — Posmatrač ne vidi element koji je sam isečen na nultu površinu, a watchdog je to krio od svakog alata.
+`[data-wipe]` je skriven sa `clip-path: inset(-.3em 100% -.3em -.3em)` na samoj meti, a `Motion.tsx` je
+posmatrao baš tu metu. Izmereno u `RD1` (Pavlov browser, Edge, vidljiv tab): naslov je u kadru po geometriji
+(okvir 1175×180), a posmatrač odmah javlja `isIntersecting=false` sa presekom 0×0 — i sa pragom 0 bez margine —
+i nikad više. Browser računa presek POSLE sopstvenog isecanja mete. `L17` kaže da posmatrač meri geometriju, a ne
+`opacity`; `clip-path` jeste geometrija. Ishod: nije se video nijedan naslov sa `data-wipe`, i na produkciji.
+Nijedna kapija ni pregled kroz alat to nisu uhvatili, jer u skrivenom tabu (panel, headless) `data-motion-ready`
+izostane, watchdog posle 3 s skine `js-motion` i sve se prikaže (`L7`). U vidljivom tabu watchdog je razoružan i
+ništa ne spašava. Kada je mehanizam prvi put počeo da skriva naslove nije izmereno.
+**Pravilo:** posmatrač nikad ne gleda element koji nosi isecanje koje ga skriva — gleda neisečenog pretka
+(`lib/motion-reveal.ts`). Primitiv koji otkriva sadržaj proverava se u pravom, vidljivom tabu; prolaz u skrivenom
+tabu dokazuje samo watchdog.

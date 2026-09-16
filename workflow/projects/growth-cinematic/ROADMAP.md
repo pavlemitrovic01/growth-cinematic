@@ -16,12 +16,11 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
 Cilj (Pavle): **što bolji cinematic osećaj, uz ozbiljno dobre i logički povezane informacije** (`DECISIONS`).
 Telefon je za sada po strani. Obim stavki **nije planiran**, redosled bira Pavle. Pavle je prvo tražio scenu
-u heroju („Prvo to") — urađen `S1`. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
+u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
 (navigacija, zaglavlje podstranice, smena sekcija, paleta, slike), da batch-evi ne odu svaki na svoju stranu.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD1` | Naslov na podstranicama se ne vidi — `<h1 data-wipe>` ostaje isečen, verovatno 13 površina i produkcija (**greška**) | STANDARD + `manual` | — (F5 potvrđen 2026-09-16; mehanizam dokazuje batch) | OPEN — predlog: prvo |
 | `RD2` | Scena: kamera ne prolazi kroz prikolicu (52,85–59,95 % skrola) i zastaje dok se tekst poglavlja čita | STANDARD + `manual` | — | OPEN |
 | `RD3` | Scena: filmski osećaj kroz celu vožnju — sjaj i odsjaji i posle početnog kadra, praznina i „magla" posle prolaza, sunce iza kamere | STANDARD + `manual` | `RD2` | OPEN |
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |
@@ -129,6 +128,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `RD1` | **Naslovi sa `data-wipe`** — izmereno u pravom browseru: posmatrač na meti isečenoj na nultu površinu javlja presek 0×0 i nikad više, pa se nisu videli naslovi na 12 ruta sa `PageShell` ni 9 na naslovnoj (i na produkciji); `Motion.tsx` posmatra roditelja (`lib/motion-reveal.ts`); kapija crvena pa zelena, test 140 → 145; `manual` PASS; **nije spojen** | 2026-09-16 |
 | `S1` | **Hero svetlo i čitljivost scene** — postojeća tri svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno), niža metalnost, svetlija kabina i vidljiv hrom/staklo, sjajniji put i farovi ispred kabine, blaža `.journey-shade`; draw pozivi nepromenjeni (58/49/53/35), telefon identičan do piksela; Pavle birao kamion `1` i sjaj `b`; spojen i pušen 2026-09-15, izmeren na deploy-u | 2026-09-15 |
 | `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b`; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS | 2026-09-14 |
 | `B1` | **Social slika i keš** — `og.png` 1,53 MB → `og.jpg` 129 KB (baseline 1200×630); keš 1 h za `/images/*` i `/og.jpg` u `next.config.ts`; `_headers` obrisan; tier LEAN → STRICT (LOCK `seo.js`); keš izmeren i na deploy-u (2026-09-14) | 2026-09-13 |
