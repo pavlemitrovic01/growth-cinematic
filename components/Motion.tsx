@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { groupByObserved } from '@/lib/motion-reveal';
 
 /**
  * Pogon za `reveal`, `stagger` i `sweep` iz Faze 2, plus `wipe` i `line` iz `M1`.
@@ -76,11 +77,16 @@ export default function Motion() {
     const targets = document.querySelectorAll<HTMLElement>('[data-reveal],[data-stagger],[data-wipe],[data-line]');
     if (!targets.length) return detach;
 
+    // ⚠️ `RD1`: posmatra se element iz `lib/motion-reveal.ts`, ne uvek sama meta — `[data-wipe]` je
+    // skriven isecanjem na nultu povrsinu, pa ga posmatrac na njemu samom nikad ne vidi. Vise meta
+    // moze deliti jedno posmatranje (roditelj koji je i sam meta).
+    const groups = groupByObserved(targets);
+
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
-          entry.target.classList.add('is-in');
+          groups.get(entry.target as HTMLElement)?.forEach((target) => target.classList.add('is-in'));
           // Otkriveno ostaje otkriveno — nema ponovnog skrivanja na skrol nazad.
           observer.unobserve(entry.target);
         }
@@ -93,7 +99,7 @@ export default function Motion() {
       { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
     );
 
-    targets.forEach((target) => observer.observe(target));
+    for (const observed of groups.keys()) observer.observe(observed);
     return () => {
       observer.disconnect();
       detach();
