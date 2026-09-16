@@ -144,3 +144,12 @@ spajanja: `git revert` implementacionog commita.
   6. ✅ Dijagnostika obrisana: `app/layout.tsx` bez razlike prema originalu, pretraga koda 0 pogodaka.
 - **Nije trebalo:** `app/globals.css`, `components/PageShell.tsx`.
 - **Detalji i izlazi:** `workflow/LOG.md`, unos `RD1`.
+
+## Release (2026-09-16)
+
+- Spojen fast-forward-om i pušen: `cb7e163..b4cab0a` (Pavle: „spoji i pushuj").
+- Nov build potvrđen PRE merenja: popravka u serviranom JS-u 0 → 1 chunk (`3n3s--5ow8prz.js`), kontrolni string
+  `data-motion-ready` u oba stanja; `fra1::hq2fk-1789563645057-f64e33a64ef2`.
+- `verify` 14 + 13 i `rendered` 18/18 protiv `https://growth-cinematic.vercel.app`, exit 0.
+- `manual` PASS na produkciji (Pavle): „manual pass, vidi se in a vercelu".
+- Detalji: `workflow/LOG.md`, unos `non-batch(release)` za `RD1`.

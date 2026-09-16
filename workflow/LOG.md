@@ -6,6 +6,47 @@
 
 ---
 
+## non-batch(release) — `RD1` spojen i pušen; izmeren na deploy-u · 2026-09-16
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/RD1.md` · `workflow/STATE.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/CONTEXT.md` · ovaj `LOG.md`
+
+`master` `cb7e163..b4cab0a` fast-forward, push — nosi `7a0cccb` (non-batch, F5 test), `4584c80` (`RD1`) i
+`b4cab0a` (close). Pavlova odluka 2026-09-16 („spoji i pushuj"). Pre spajanja proveren `origin/master`
+(`ls-remote` = `cb7e163`, nepomeren), čisto stablo i da je fast-forward moguć.
+
+**Diskriminator PRE merenja:** popravka `hasAttribute("data-wipe")` u JS chunk-ovima koje učitava `/how-it-works`,
+uz kontrolni string `data-motion-ready`, koji je u `Motion.tsx` i pre i posle popravke. ⚠️ Prva verzija
+instrumenta tražila je `/_next/static/chunks/` i pregledala 0 chunk-ova, jer Vercel servira pod
+`/_next/static/immutable/chunks/`. Ispravljena je pre push-a i dobila kontrolu: „0 sa popravkom" važi tek kad je
+kontrola pronađena (`L20`).
+```
+  pre push-a   14:59:55   chunk-ova 9 · kontrola 1 · popravka 0   fra1::gx2sn-1789563588284-df6c5746090e
+  posle        15:00:22   chunk-ova 9 · kontrola 1 · popravka 0   (stari build)
+               15:00:37   chunk-ova 9 · kontrola 1 · popravka 0   (stari build)
+               15:00:53   chunk-ova 9 · kontrola 1 · popravka 1   3n3s--5ow8prz.js · fra1::hq2fk-1789563645057-f64e33a64ef2
+```
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+```
+
+✅ **`manual` PASS na produkciji (Pavle)** — „manual pass, vidi se in a vercelu", u sopstvenom browseru.
+
+Usput: `CONTEXT` → `test` sa „140 u 11 fajlova" (2026-09-13) na „145 u 12 fajlova" (2026-09-16), kako je
+izmereno na `RD1` close-u.
+
+⚠️ Ovaj release commit nosi samo dokumente, pa se deploy posle njegovog push-a po sadržaju ne može
+razlikovati; merenje iznad je nad deploy-om `b4cab0a`.
+
+**NEXT STEP:** nova sesija — Pavle bira: stranica „smer redizajna" (pre `RD4`–`RD7`), `RD2` (kamera kroz
+prikolicu) ili `T1b`.
+
+---
+
 ## RD1 (STANDARD) — Naslovi sa `data-wipe` · 2026-09-16
 
 **Implementacija:** `4584c80` · **Grana:** `rd1-naslov-podstranice` — **nije spojena**, release je Pavlova odluka
