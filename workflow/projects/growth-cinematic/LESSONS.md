@@ -289,3 +289,9 @@ dva stuba.
 uzorkovanjem cele vožnje, i ponovo posle svake promene plana, pauze ili težine (`__tests__/lib/hero-scene.test.js`).
 Prekršaj za falsifikaciju takve kapije mora da traje dok prođe bar jedan objekat — tačka koja se nada da će pogoditi
 trenutak ne dokazuje ništa.
+
+## L31 — Mesec na mestu u svetu nije na nebu: klizi dok kamera vozi i crta se ispred udaljenih planina.
+U `RD10` je disk stajao na (28, y, −135): bliže od grebena, pa se na Pavlovom snimku video ispred planine, a po ekranu
+je klizio sa kamerom. Podizanje po y to nije rešilo. **Pravilo:** nebesko telo je pravac od kamere (položaj kamere +
+pravac × udaljenost), crta se prvo i ne upisuje dubinu, pa ga svako brdo zaklanja. Gde je na ekranu meri se u NDC iz
+istog kadra koji je Pavle označio, a zaklanjanje zrakom kroz tlo iza grebena (`__tests__/lib/hero-scene.test.js`).

@@ -7,33 +7,32 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći: `RD10` — izgled scene** (Pavle 2026-09-17: „Može, radimo tako"): brda, kamion i put bez „lego" izgleda,
-  bez preuzimanja modela, iste boje (`S1-LOOK`), sa varijantama uživo. **`RD2` čeka da se pusti zajedno sa njim.**
-  Posle toga iz scene ostaje `RD3` (sjaj posle početnog kadra, sunce iza kamere u zori). Za dizajn i dalje čeka
+- **Sledeći: release `RD2` + `RD10` zajedno** — Pavlova odluka (spajanje u `master`, push, merenje na deploy-u). Posle
+  toga otvoreno: predlog **`RD11`** (američke oznake na putu, truck stop sa strane; Pavle predložio, nije odlučeno) i
+  `RD3` (sjaj posle početnog kadra, magla; sunce u 02 sada izlazi ispred kamere). Za dizajn i dalje čeka
   **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn); predlog stranice
   „smer redizajna" pre `RD4`–`RD7` stoji. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi
   advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD2`** (2026-09-17, `ae5cf75`) — **Kamera u heroju:** kamera je prolazila kroz prikolicu
-  (52,84–59,90 % skrola) i 0,34 jedinice od stuba, oba dok se čita 02. Sada plan kadrova „Kran" (kamion desno od
-  teksta: ispod teksta 0–4,4 % umesto 65–82 %), jedna blaga pauza u 02 (9,5 % putanje umesto 26,7 %); razmak kamion
-  4,24, stub 2,44, brdo 5,98. Testovi crveni pa zeleni, 7 falsifikacija; test 145 → 156; `manual` PASS („pass").
-  **Nije spojen ni pušen** — ide zajedno sa `RD10`.
-- **Pretposlednji:** **`RD1`** (2026-09-16, `4584c80`) — naslovi sa `data-wipe` se ponovo vide (posmatra se
-  roditelj, ne isečena meta); spojen i pušen 2026-09-16, `manual` PASS i na produkciji.
+- **Poslednji završen:** **`RD10`** (2026-09-17, `07d0df4`) — **Izgled scene:** meka viša brda iz `terrainHeight`
+  umesto kupa, američki tegljač kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02
+  izlazi nagore kao pravci od kamere (Pavlove oznake na snimcima). Draw 58–59 → 28–29, trouglova ~7k → ~71k, chunk
+  +4,5 KiB gzip; test 156 → 168; `manual` PASS („Sada je dobro"). **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD2`** (2026-09-17, `ae5cf75`) — kamera „Kran": bez prolaza kroz prikolicu, jedna blaga pauza u
+  02, kamion desno od teksta; `manual` PASS. **Nije spojen ni pušen** — ide sa `RD10`.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
-- ⚠️ **`RD2` na grani `rd2-kamera-prikolica`, NIJE spojen ni pušen** (implementacija `ae5cf75` + close commit, od
-  `701556f`). Pavle 2026-09-17: release zajedno sa `RD10`. Predlog za `/plan RD10`: granu praviti sa
-  `rd2-kamera-prikolica`, ne sa `master`-a, da izgled scene nastane nad novom kamerom.
+- ⚠️ **`RD2` + `RD10` NISU spojeni ni pušeni.** Grana `rd10-izgled-scene` nosi oba: `701556f..` → `ae5cf75` (`RD2`) +
+  `303e9bd` (close `RD2`) → `07d0df4` (`RD10`) + close commit `RD10`. `rd2-kamera-prikolica` je njen predak. Release
+  (fast-forward `master` na `rd10-izgled-scene`, push, merenje na deploy-u) je Pavlova odluka.
 - `RD1` (`cb7e163..b4cab0a`, implementacija `4584c80`) spojen fast-forward-om i pušen 2026-09-16 — nosi i
   non-batch `7a0cccb` (F5 test); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE
   merenja (popravka u serviranom JS-u 0 → 1 chunk, kontrolni string u oba); `manual` PASS na produkciji.

@@ -6,6 +6,76 @@
 
 ---
 
+## RD10 (STANDARD) — Izgled scene: meka brda, američki tegljač, put, mesec i sunce na nebu · 2026-09-17
+
+**Implementacija:** `07d0df4` · **Grana:** `rd10-izgled-scene` (sa `rd2-kamera-prikolica` @ `303e9bd`) — **nije spojena ni
+pušena**: release zajedno sa `RD2` je Pavlova odluka
+
+**Changed files:** `lib/hero-scene.ts` · `lib/hero-terrain.ts` (nov) · `lib/hero-truck.ts` (nov) ·
+`__tests__/lib/hero-scene.test.js` · `__tests__/lib/hero-terrain.test.js` (nov) ·
+`workflow/projects/growth-cinematic/batches/RD10.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/CONTEXT.md` ·
+`workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Posle `RD2` kamera je scenu pokazala otvoreno i Pavle je ocenio da okolina izgleda kao „lego kockice". Plan: tlo iz ciste
+funkcije `terrainHeight`, kamion kao niz delova spojen po materijalu, put sa teksturom, bez preuzimanja i u istim bojama.
+Prvi pokušaj `/execute` posle samog odobrenja plana Pavle je prekinuo („nisam ti rekao da krenes da radis") — napravljena
+je samo prazna grana; rad je krenuo na „Kreni sada i odradi po planu rd10". Jedan krug poređenja (`?tlo`, `?kamion`,
+`?put`, `?zrno`, kontakt list iz headless Chrome-a): „Najviše mi se sviđa 3." — viša brda, nov kamion, nov put, bez zrna.
+Zatim tri Pavlove primedbe, sve upisane kao odobreno proširenje: sunce/mesec ne sme da izlazi iz planine; mesec gde ga je
+označio na snimku 01; sunce u 02 kreće dole i izlazi nagore (oznake na snimku 02). Mesec i sunce su sada pravci od kamere,
+crtaju se prvi bez upisa dubine (`L31`). Predlog `RD11` (američke oznake, truck stop) — nije odlučeno.
+
+⚠️ **Ispravka granice iz plana:** „kamera ≥ 1,5 iznad tla cele vožnje" palo je na 53,45–71,19 % (min 0,89) — to je nizak
+kadar za 02 iz odobrenog `RD2`, iznad asfalta. Podeljeno: van puta ≥ 1,5, iznad puta ≥ 0,5; kamera nije dirana.
+
+KAPIJE DOKAZANO CRVENE (svaka greška sama; vraćanje sha256 `lib/hero-scene.ts`, `lib/hero-terrain.ts`, `lib/hero-truck.ts`):
+```
+  tlo 0,4 u koridoru (|x| 10-12)        1, 2 crveni        Tests 2 failed | 3 passed · exit 1
+  skok tla +3 na |x| > 100             4 crven            Tests 1 failed | 4 passed · exit 1
+  visa rise 5 -> 60                    9, 10 crveni -- test 3 NIJE pao: brda rastu daleko od puta, kamera ih ne dira (L30)
+  visa riseEnd 55 -> 13 (tlo uz put)   3, 10 crveni       iznad tla van puta min -4,12 · Tests 2 failed | 8 passed
+  tacka putanje y 1,1 -> 0,3           8 crven (asfalt)   Tests 1 failed | 9 passed · exit 1
+  auspuh 3,1 -> 5                      7 crven (okvir)    Tests 1 failed | 9 passed · exit 1
+  staro sunce -5 + 18d                 9, 10 crveni       Tests 2 failed | 8 passed · exit 1
+  pomeraj kadra 01 = 0                 5 crven            Tests 1 failed | 9 passed · exit 1
+  mesec na (28, y, -135)               10, 11 crveni      mesec NDC (0,33..0,52, 0,37..0,54), oznaka (-0,01, 0,78)
+  samo mesec, bez sunca u 02           12 crven           sunce iza kamere u svih 6 kadrova 02
+  donji pravac sunca y 0,0912 / 0,11   10 crven           zaklonjeno 47,00-57,55 % / 51,85-54,10 %; 0,12 cisto
+  SUN_APPEARS = 0                      13 crven           Tests 1 failed | 12 passed · exit 1
+```
+
+IZMERENO (`/close`, `next start` PID 12892 pokrenut 14:47:59, posle `BUILD_ID`-a 14:47:51; kod po sha256 isti; `quick`,
+`typecheck`, `test` ponovljeni pred commit, exit 0):
+```
+  quick / typecheck / full      exit 0 · BUILD_ID QDFTWgdaoCgNGnV-1kAkE
+  test                          168/168 u 14 fajlova (bilo 156/13)
+  verify                        nojs PASS 14 · claims PASS 13
+  rendered                      18/18
+  meri se: http://localhost:3000
+  diskriminator                 chunk scene: sunce .3702 1 · mesec .1553 1 · centripetal 1
+  draw / trouglovi              58/59/59/57 -> 28/29/29/28 · ~6-7k -> 70568/71384/71384/70568 · 0 gresaka
+  chunk scene                   489 018 -> 502 248 bajtova · gzip 121 891 -> 126 538 (+4,5 KiB)
+  three.js u pocetnom JS-u      0 od 9 (589 KiB)
+  fotografija, produkcija/grana telefon 0 od 1 218 000 · smanjen pokret 0 od 1 296 000
+  kamera                        kamion min 4,31 · stub 2,44 · van puta 4,94 · asfalt 0,89 · ispod teksta max 4,3 % (1440x900)
+  mesec / sunce                 iznad tla min 5,89 · mesec 01 y 0,70-0,86 · sunce 02 y 0,22 -> 0,90
+```
+
+✅ **`manual` PASS (Pavle)** — „Sada je dobro", u svom browseru na dev serveru (servirani chunk proveren: donji pravac sunca
+0,12). Pre toga dva snimka sa oznakama (mesec u 01, sunce u 02), oba rešena i izmerena.
+
+⚠️ Merni alat: `app/globals.css` je tokom poređenja nosio privremeno pravilo za zrno; zrno nije izabrano i fajl je vraćen
+(`git checkout`), bez razlike u commitima.
+
+**SCOPE_DRIFT: none** — 12 putanja iz EXPECTED-FILES: 5 u `07d0df4`, 7 u close commitu; `app/globals.css` dirnut i vraćen.
+Proširenja (sunce i planina, mesec, izlazak sunca) upisana u manifest sa Pavlovim rečima, bez novih putanja.
+
+**NEXT STEP:** release `RD2` + `RD10` (Pavlova odluka: spajanje u `master`, push, merenje na deploy-u). Zatim odluka o
+`RD11` (američke oznake na putu, truck stop) ili povratak na lanac lansiranja (`V1`, pravni tekstovi).
+
+---
+
 ## RD2 (STANDARD) — Kamera: bez prolaza kroz prikolicu, jedna blaga pauza, kadar za tekst · 2026-09-17
 
 **Implementacija:** `ae5cf75` · **Grana:** `rd2-kamera-prikolica` — **nije spojena ni pušena**: release ide zajedno

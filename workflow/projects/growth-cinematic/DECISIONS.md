@@ -68,6 +68,21 @@
 
 ## ZATVORENO
 
+### `RD10-LOOK` — viša brda, američki tegljač, put; mesec u 01, sunce izlazi u 02 · 2026-09-17
+- **Izbor od varijanti uživo** (kontakt list: danas · blaga brda · viša brda · blaga + zrno): *„da budem iskren 3 i 4
+  mi se najviše sviđaju jer podsećaju na američke puteve"*, pa *„Najviše mi se sviđa 3."* → tlo **viša brda i daleki
+  greben**, **nov kamion**, **nov put**, **bez filmskog zrna**. Boje `S1-LOOK` iste; bez preuzetih modela.
+- **Sunce i mesec ne izlaze iz planine:** *„s tim što bi trebalo da napravimo da sunce/mesec ne izlaze iz planine"*.
+- **Mesec u 01 na označenom mestu** (snimak sa zaokruženim delom neba): *„mesec treba biti ovde gde sam ga označio"* —
+  gore, na sredini neba iznad puta.
+- **Sunce u 02 izlazi odozdo nagore** (snimak sa dve oznake i strelicom): *„Sada treba da sredimo sunce da se prvo
+  nalazi dole i da izlazi ka gore"*. Donji položaj je ~1,6° iznad tačne oznake, jer je na oznaci disk izlazio iz brda.
+- **Pregled:** *„Sada je dobro."*
+- ⚠️ Mesec i sunce su pravci od kamere, ne mesta u svetu (`LESSONS` L31). Ko ih pomera: položaj se meri u NDC iz kadra
+  koji je Pavle označio (`__tests__/lib/hero-scene.test.js`, testovi 11–13).
+- **Otvoreno, ne odluka:** Pavle predlaže američke oznake na putu i truck stop sa strane; preporuka je poseban batch
+  (`RD11`) posle release-a, jer je `RD10` dogovoren kao jedan krug poređenja.
+
 ### `RD2-LOOK` — kamera „Kran", jedna blaga pauza u 02, release tek sa izgledom scene · 2026-09-17
 - **„Zastaje" = kadar, ne kamion** (Pavle): *„Kamion ne mora da stane"* — kamion i svitanje prate skrol.
 - **Scena koja doslovno prikazuje posao — odbijena kao overengineering.** Pavle je tražio da se menjaju okolina,

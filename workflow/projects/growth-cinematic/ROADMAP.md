@@ -16,13 +16,13 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
 Cilj (Pavle): **što bolji cinematic osećaj, uz ozbiljno dobre i logički povezane informacije** (`DECISIONS`).
 Telefon je za sada po strani. Obim stavki **nije planiran**, redosled bira Pavle. Pavle je prvo tražio scenu
-u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16; kamera (`RD2`) zatvorena
-2026-09-17 i čeka release zajedno sa `RD10`. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
+u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16; kamera (`RD2`) i izgled
+scene (`RD10`) zatvoreni 2026-09-17 i čekaju zajednički release. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
 (navigacija, zaglavlje podstranice, smena sekcija, paleta, slike), da batch-evi ne odu svaki na svoju stranu.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD10` | Izgled scene: brda, kamion i put bez „lego" izgleda — bez preuzimanja modela, iste boje (`S1-LOOK`); release zajedno sa `RD2` | STANDARD + `manual` | `RD2` | **SLEDEĆI** |
+| `RD11` | Američki put: oznake na putu, zaštitna ograda, stubići; generički truck stop sa strane (bez brendova i teksta, bez preuzimanja) | STANDARD + `manual` | release `RD2` + `RD10` | predlog — čeka Pavlovu odluku |
 | `RD3` | Scena: filmski osećaj kroz celu vožnju — sjaj i odsjaji i posle početnog kadra, praznina i „magla" posle prolaza, sunce iza kamere | STANDARD + `manual` | `RD2` | OPEN |
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |
 | `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | smer, `T1b` | OPEN |
@@ -129,6 +129,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `RD10` | **Izgled scene** — piramide od kupa i kamion od kutija delovali su kao „lego kockice"; sada meka viša brda iz čiste funkcije `terrainHeight`, američki tegljač kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02 izlazi nagore kao pravci od kamere, po Pavlovim oznakama; draw 58–59 → 28–29, chunk +4,5 KiB gzip; test 156 → 168; `manual` PASS; **nije pušten** — ide sa `RD2` | 2026-09-17 |
 | `RD2` | **Kamera u heroju** — prolazila je kroz prikolicu (52,84–59,90 % skrola) i 0,34 jedinice od stuba, dok se čita 02; sada plan kadrova „Kran" sa kamionom desno od teksta (ispod teksta 0–4,4 % umesto 65–82 % na 1440×900), jedna blaga pauza u 02 (9,5 % putanje umesto 26,7 %), razmak kamion 4,24 / stub 2,44 / brdo 5,98; testovi crveni pa zeleni, test 145 → 156; `manual` PASS; **nije pušten** — ide sa `RD10` | 2026-09-17 |
 | `RD1` | **Naslovi sa `data-wipe`** — izmereno u pravom browseru: posmatrač na meti isečenoj na nultu površinu javlja presek 0×0 i nikad više, pa se nisu videli naslovi na 12 ruta sa `PageShell` ni 9 na naslovnoj (i na produkciji); `Motion.tsx` posmatra roditelja (`lib/motion-reveal.ts`); kapija crvena pa zelena, test 140 → 145; `manual` PASS; spojen i pušen 2026-09-16, izmeren na deploy-u, naslovi vidljivi i na produkciji | 2026-09-16 |
 | `S1` | **Hero svetlo i čitljivost scene** — postojeća tri svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno), niža metalnost, svetlija kabina i vidljiv hrom/staklo, sjajniji put i farovi ispred kabine, blaža `.journey-shade`; draw pozivi nepromenjeni (58/49/53/35), telefon identičan do piksela; Pavle birao kamion `1` i sjaj `b`; spojen i pušen 2026-09-15, izmeren na deploy-u | 2026-09-15 |
