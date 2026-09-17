@@ -1,4 +1,6 @@
 import * as THREE from 'three';
+import { asphaltTexture, buildTerrain, TERRAIN_STYLE, wornPaintTexture } from './hero-terrain';
+import { buildTruck, TRUCK_DESIGN } from './hero-truck';
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const smoothstep = (a: number, b: number, value: number) => {
@@ -44,6 +46,67 @@ export const CAMERA_PLAN: CameraPlan = {
 
 /** Polozaj kamiona po z: vozi 235 jedinica dok skrol ide od 4 % do 96 %. */
 export const truckZ = (progress: number) => 7 - smoothstep(.04, .96, progress) * 235;
+
+/** Poluprecnik diska meseca i sunca. */
+export const SUN_RADIUS = 3.1;
+
+/** Udaljenost diska meseca i sunca od kamere. */
+export const SUN_DISTANCE = 110;
+
+/**
+ * Pravac meseca od kamere: nebesko telo, uvek na istoj udaljenosti i u istom pravcu, pa se ne pomera dok kamera
+ * vozi -- samo dok se okrece. Pravac je izracunat iz kadrova 01 (napredak 0,30-0,42, ekrani 2000x1094 i 1440x900)
+ * tako da mesec kroz celo poglavlje stoji oko mesta koje je Pavle oznacio (2026-09-17: „mesec treba biti ovde"):
+ * gore, na sredini neba iznad puta.
+ */
+const MOON_DIRECTION: Vec3 = [0.1103, 0.1553, -0.9817];
+
+/**
+ * Pravac sunca od kamere na pocetku i na kraju izlaska. Izracunat iz kadra 02 (napredak 0,70, ekran 2000x1103) iz
+ * dve Pavlove oznake (2026-09-17: „sunce da se prvo nalazi dole i da izlazi ka gore"): nisko, tik iznad brda, pa
+ * gore desno od sredine neba. Kamera u 02 gleda unazad, pa je sunce iza kamiona.
+ *
+ * ⚠️ Donji pravac je ~1,6° iznad tacne oznake (y 0,0912 -> 0,12): na oznaci je donja ivica diska na pocetku 02 bila
+ * iza brda (51,85-54,10% skrola sa 0,11), a to je bas „izlazenje iz planine" koje Pavle nije hteo.
+ */
+const SUN_LOW: Vec3 = [0.3702, 0.12, 0.9245];
+const SUN_HIGH: Vec3 = [0.3301, 0.2451, 0.9116];
+
+/** Sunce se pojavljuje dok se kamera okrece ka 02 (tada nije u kadru); noci pre toga pripada mesec. */
+export const SUN_APPEARS = 0.47;
+
+export const sunVisible = (progress: number) => progress >= SUN_APPEARS;
+
+const skyPoint = ([x, y, z]: Vec3, from: { x: number; y: number; z: number }): [number, number, number] => {
+  const length = Math.hypot(x, y, z);
+  return [from.x + (x / length) * SUN_DISTANCE, from.y + (y / length) * SUN_DISTANCE, from.z + (z / length) * SUN_DISTANCE];
+};
+
+/**
+ * Polozaj meseca u svetu za dati napredak skrola i polozaj kamere. U zoru se pravac podize.
+ *
+ * ⚠️ `RD10`: do sada je disk stajao na jednom mestu u svetu (x 28, z -135) i penjao se iz tla, pa je sa visim
+ * brdima izlazio iz planine i crtao se ispred udaljenog grebena (Pavle: „da sunce/mesec ne izlaze iz planine").
+ * Disk se crta prvi i ne upisuje dubinu, pa ga brda uvek zaklanjaju, a `__tests__/lib/hero-scene.test.js` meri da
+ * nijedno brdo ne stoji na zraku ka njemu i da je u 01 na oznacenom mestu.
+ */
+export function moonPosition(progress: number, from: { x: number; y: number; z: number }): [number, number, number] {
+  const [x, rise, z] = MOON_DIRECTION;
+  return skyPoint([x, rise + smoothstep(.42, .98, progress) * .25, z], from);
+}
+
+/**
+ * Polozaj sunca: kroz poglavlje 02 (skrol 0,5333-0,74) penje se od donjeg do gornjeg pravca, pa kako se kamera
+ * digne ka 03 izlazi iz kadra na gore. Isti test meri zrak ka njemu i gde je na ekranu u 02.
+ */
+export function sunPosition(progress: number, from: { x: number; y: number; z: number }): [number, number, number] {
+  const t = smoothstep(.5333, .74, progress);
+  return skyPoint([
+    SUN_LOW[0] + (SUN_HIGH[0] - SUN_LOW[0]) * t,
+    SUN_LOW[1] + (SUN_HIGH[1] - SUN_LOW[1]) * t,
+    SUN_LOW[2] + (SUN_HIGH[2] - SUN_LOW[2]) * t,
+  ], from);
+}
 
 /**
  * Postavlja polozaj kamere i tacku u koju gleda, i vraca objektiv. Kamion prati `progress` (skrol), a
@@ -117,23 +180,18 @@ export function createHeroScene(host: HTMLElement) {
     scene.fog = fog;
     const camera = new THREE.PerspectiveCamera(46,1,.1,700);
     const world = new THREE.Group(); scene.add(world);
-      // Slightly glossy asphalt catches the warm rim and the headlights like a damp night road.
+      // Slightly glossy asphalt catches the warm rim and the headlights like a damp night road; the texture keeps
+      // the colour and only adds a surface (RD10).
+      const asphalt = asphaltTexture();
       const road = new THREE.Mesh(
         new THREE.PlaneGeometry(18, 700),
-        new THREE.MeshStandardMaterial({ color: "#232d28", roughness: 0.68, metalness: 0.02 }),
+        new THREE.MeshStandardMaterial({ color: "#232d28", roughness: 0.68, metalness: 0.02, map: asphalt, roughnessMap: asphalt }),
       );
       road.rotation.x = -Math.PI / 2;
       road.position.set(0, 0, -230);
       road.receiveShadow = true;
       world.add(road);
-      const shoulderMat = new THREE.MeshStandardMaterial({ color: "#1b2417", roughness: 1 });
-      for (const x of [-28, 28]) {
-        const ground = new THREE.Mesh(new THREE.PlaneGeometry(38, 700), shoulderMat);
-        ground.rotation.x = -Math.PI / 2;
-        ground.position.set(x, -0.025, -230);
-        world.add(ground);
-      }
-      const lineMat = new THREE.MeshBasicMaterial({ color: "#e2d8b6" });
+      const lineMat = new THREE.MeshBasicMaterial({ color: "#e2d8b6", alphaMap: wornPaintTexture(), transparent: true });
 
       const laneCount = 120;
       const markerGeometry = new THREE.PlaneGeometry(0.13, 4.3);
@@ -146,7 +204,9 @@ export function createHeroScene(host: HTMLElement) {
         markers.setMatrixAt(i, marker.matrix);
       }
       world.add(markers);
-      const edgeMat = new THREE.MeshBasicMaterial({ color: "#a9a992" });
+      const edgePaint = wornPaintTexture();
+      edgePaint.repeat.set(1, 160);
+      const edgeMat = new THREE.MeshBasicMaterial({ color: "#a9a992", alphaMap: edgePaint, transparent: true });
       for (const x of [-8.2, 8.2]) {
         const edge = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 700), edgeMat);
         edge.rotation.x = -Math.PI / 2;
@@ -168,110 +228,24 @@ export function createHeroScene(host: HTMLElement) {
         prop.position.y = 5.7; prop.updateMatrix(); lamps.setMatrixAt(i, prop.matrix);
       }
       world.add(poles, lamps);
-      const ridgeMat = new THREE.MeshStandardMaterial({ color: "#101b14", roughness: 1, flatShading: true });
+      // Rolling hills and a distant ridge instead of five-sided cones (RD10). The height is a pure function shared
+      // with the camera test, so the camera, the poles and the sun are measured against the same ground.
+      world.add(buildTerrain(TERRAIN_STYLE));
 
-      const hills = new THREE.InstancedMesh(new THREE.ConeGeometry(1,1,5), ridgeMat, 58);
-      for (let i=0;i<58;i++) {
-        const height=2.5+((i*37)%9)*.44;
-        prop.position.set((i%2?1:-1)*(17+(i%5)*5),height/2-.1,42-i*12);
-        prop.rotation.y=i*.91; prop.scale.set(2.4+i%4,height,2.4+i%4);
-        prop.updateMatrix(); hills.setMatrixAt(i,prop.matrix);
-      }
-      world.add(hills);
       const truck = new THREE.Group();
       truck.position.set(0, 0, 7);
       scene.add(truck);
-      // No environment map: metal has nothing to reflect and renders black. Low metalness lets
-      // the existing lights shape the cab, dark parts and trailer.
-      // Chrome and glass drop metalness for the same reason, so the grille, bumper, hubs and windshield
-      // read instead of vanishing. The cab olive is lifted to the mildest of the reviewed tones
-      // (2026-09-15); lighter ones read as mouse grey.
-      const olive = new THREE.MeshStandardMaterial({ color: "#34472d", metalness: 0.2, roughness: 0.24 });
-      const dark = new THREE.MeshStandardMaterial({ color: "#1c231d", metalness: 0.22, roughness: 0.27 });
-      const chrome = new THREE.MeshStandardMaterial({ color: "#b9b9ad", metalness: 0.55, roughness: 0.3 });
-      const glass = new THREE.MeshStandardMaterial({ color: "#223a31", roughness: 0.08, metalness: 0.1 });
-      const tire = new THREE.MeshStandardMaterial({ color: "#121514", roughness: 0.9 });
-      const trailer = new THREE.MeshStandardMaterial({ color: "#d8d3c5", metalness: 0.1, roughness: 0.34 });
-      const addBox = (w: number, h: number, d: number, material: THREE.Material, x: number, y: number, z: number) => {
-        const mesh = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), material);
-        mesh.position.set(x, y, z);
-        mesh.castShadow = !narrow;
-        mesh.receiveShadow = !narrow;
-        truck.add(mesh);
-        return mesh;
-      };
-      addBox(4.3, 3.7, 3.7, olive, 0, 2.65, -6.9);
-      addBox(4.15, 4.4, 3.3, olive, 0, 2.95, -3.6);
-      addBox(3.8, 1.35, 2.6, olive, 0, 1.55, -9.55);
-      addBox(3.2, 0.55, 0.16, chrome, 0, 1.1, -10.88);
-      addBox(3.2, 1.28, 0.08, dark, 0, 2.8, -8.78);
-      addBox(3.55, 1.18, 0.09, glass, 0, 3.47, -8.78);
-      addBox(4.25, 0.16, 15.2, chrome, 0, 1.22, 5.6);
-      addBox(4.55, 4.9, 15, trailer, 0, 4.0, 5.75);
-      addBox(4.64, 0.28, 15.12, dark, 0, 1.55, 5.75);
-      addBox(4.7, 0.18, 15.3, chrome, 0, 6.45, 5.75);
-
-      const logoCanvas = document.createElement("canvas");
-      logoCanvas.width = 1024;
-      logoCanvas.height = 256;
-      const ctx = logoCanvas.getContext("2d");
-      if (ctx) {
-        ctx.fillStyle = "#263420";
-        ctx.font = "800 132px Arial";
-        ctx.textAlign = "center";
-        ctx.fillText("G R O W T H", 512, 172);
-      }
-      const logoTexture = new THREE.CanvasTexture(logoCanvas);
-      logoTexture.colorSpace = THREE.SRGBColorSpace;
-      const logoPanel = new THREE.Mesh(new THREE.PlaneGeometry(8.9, 2.25), new THREE.MeshBasicMaterial({ map: logoTexture, transparent: true }));
-      logoPanel.rotation.y = -Math.PI / 2;
-      logoPanel.position.set(-2.29, 4.0, 5.3);
-      truck.add(logoPanel);
-      const secondLogo = logoPanel.clone();
-      secondLogo.rotation.y = Math.PI / 2;
-      secondLogo.position.x = 2.29;
-      truck.add(secondLogo);
-      // Simple grille and mirror details preserve the prototype's stylized truck.
-      for(let i=0;i<8;i++) addBox(.09, .65, .1, chrome, -1.05+i*.3, 1.85, -10.88);
-      for(const side of [-1,1]) {
-        addBox(.6,.07,.07,chrome,side*2.3,3.45,-7.3);
-        addBox(.16,.55,.25,dark,side*2.65,3.5,-7.3);
-      }
-
-      const wheels: THREE.Mesh[] = [];
-      const wheelGeo = new THREE.CylinderGeometry(0.82, 0.82, 0.5, 20);
-      for (const z of [-7.3, -2.6, 1.0, 7.6, 10.8]) {
-        for (const x of [-2.18, 2.18]) {
-          const wheel = new THREE.Mesh(wheelGeo, tire);
-          wheel.rotation.z = Math.PI / 2;
-          wheel.position.set(x, 1.02, z);
-          truck.add(wheel);
-          wheels.push(wheel);
-          const hub = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.34, 0.53, 16), chrome);
-          hub.rotation.z = Math.PI / 2;
-          hub.position.set(x, 1.02, z);
-          truck.add(hub);
-        }
-      }
-      const headMat = new THREE.MeshBasicMaterial({ color: "#fff4c8", toneMapped: false });
-      for (const x of [-1.45, 1.45]) {
-        const light = new THREE.Mesh(new THREE.CircleGeometry(0.26, 14), headMat);
-        light.position.set(x, 1.65, -10.9);
-        light.rotation.y = Math.PI;
-        truck.add(light);
-        if (!narrow) {
+      const built = buildTruck(TRUCK_DESIGN);
+      truck.add(built.group);
+      const axles = built.axles;
+      if (!narrow) {
+        for (const light of built.headlights) {
           // Neutral-warm and aimed closer, so the pool lands in front of the cab where the opening camera looks.
           const beam = new THREE.SpotLight("#fff0d2", 85, 55, 0.3, 0.65, 1.2);
-          beam.position.set(x, 1.7, -10.75);
-          beam.target.position.set(x, 0, -20);
+          beam.position.copy(light);
+          beam.target.position.set(light.x, 0, -20);
           truck.add(beam, beam.target);
         }
-      }
-      const tailMat = new THREE.MeshBasicMaterial({ color: "#d3432d", toneMapped: false });
-      for (const x of [-1.7, 1.7]) {
-        const tailLight = new THREE.Mesh(new THREE.CircleGeometry(0.2, 12), tailMat);
-        tailLight.position.set(x, 1.7, 13.3);
-        truck.add(tailLight);
       }
 
       // Night fill: a stronger hemisphere with a lifted ground color keeps dark surfaces off pure black.
@@ -302,9 +276,12 @@ export function createHeroScene(host: HTMLElement) {
       scene.add(sunrise);
       const rimNight = new THREE.Color('#ffcf9f');
       const rimDawn = new THREE.Color('#ffb365');
-      const sun = new THREE.Mesh(new THREE.SphereGeometry(3.1, 24, 18), new THREE.MeshBasicMaterial({ color: "#ffd392" }));
-      sun.position.set(28, -5, -135);
-      scene.add(sun);
+      // The disc sits far away in the sky: drawn first and without depth, so every hill in front of it covers it.
+      const moonDisc = new THREE.Mesh(new THREE.SphereGeometry(SUN_RADIUS, 24, 18), new THREE.MeshBasicMaterial({ color: "#ffd392", depthWrite: false }));
+      moonDisc.renderOrder = -1;
+      const sunDisc = new THREE.Mesh(moonDisc.geometry, new THREE.MeshBasicMaterial({ color: "#ffd392", depthWrite: false }));
+      sunDisc.renderOrder = -1;
+      scene.add(moonDisc, sunDisc);
 
       const starsGeo = new THREE.BufferGeometry();
       const starCount = narrow ? 170 : 360;
@@ -336,7 +313,7 @@ export function createHeroScene(host: HTMLElement) {
       truck.position.z=truckZ(p);
       moon.position.set(moonOffset.x,moonOffset.y,truck.position.z+moonOffset.z);
       moon.target.position.set(0,0,truck.position.z);
-      wheels.forEach(wheel=>{wheel.rotation.x=drive*-48});
+      axles.forEach(axle=>{axle.rotation.x=drive*-48});
       const lens=placeCamera(p,cameraAt,camera.position,lookAt);
       camera.fov=lens.fov;
       // Shift is a share of the screen width, so the truck lands right of the text at any aspect ratio.
@@ -352,9 +329,12 @@ export function createHeroScene(host: HTMLElement) {
       sunrise.intensity=1.2+daylight*2.2;
       sunrise.color.copy(rimNight).lerp(rimDawn,daylight);
       renderer.toneMappingExposure=.98+daylight*.14;
-      sun.position.y=-5+daylight*18;
+      moonDisc.position.set(...moonPosition(p,camera.position));
+      sunDisc.position.set(...sunPosition(p,camera.position));
+      sunDisc.visible=sunVisible(p);
       starMat.opacity=1-daylight*.95;
       renderer.render(scene,camera);
+      host.dataset.triangles=String(renderer.info.render.triangles);
     };
     resize();
     return { render, resize, dispose, drawCalls: () => renderer.info.render.calls };
