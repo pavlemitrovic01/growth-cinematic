@@ -276,3 +276,16 @@ ništa ne spašava. Kada je mehanizam prvi put počeo da skriva naslove nije izm
 **Pravilo:** posmatrač nikad ne gleda element koji nosi isecanje koje ga skriva — gleda neisečenog pretka
 (`lib/motion-reveal.ts`). Primitiv koji otkriva sadržaj proverava se u pravom, vidljivom tabu; prolaz u skrivenom
 tabu dokazuje samo watchdog.
+
+## L30 — Razmak kamere od nepokretnog objekta zavisi od tajminga, pa jedna tačka na liniji stubova ume da ostane zelena.
+U heroju kamion vozi po skrolu, a kamera ide po sopstvenom vremenu (`cameraProgress`) u koordinatama kamiona; stubovi
+i brda stoje u svetu. Trenutak u kome kamera prođe pored stuba zato se menja sa SVAKOM promenom putanje, pauze ili
+težine, i kad nijedna tačka nije blizu stuba. Izmereno u `RD2`: stara putanja je prolazila 0,34 jedinice od stuba na
+72,88 %; probne putanje koje tu stranu nisu dirale dale su 0,21–0,45 na novim mestima; ista putanja bez pauze i sa
+pauzom 0,83 i 1,25. Falsifikacija koja je JEDNU tačku putanje spustila na liniju stubova ostala je zelena, jer u tom
+trenutku pored kamere nije prolazio nijedan stub; crveno (0,06) je dala tek kamera držana na liniji dok kamion pređe
+dva stuba.
+**Pravilo:** razmak od nepokretnih objekata meri se nad istim mapiranjem vremena koje scena koristi, gustim
+uzorkovanjem cele vožnje, i ponovo posle svake promene plana, pauze ili težine (`__tests__/lib/hero-scene.test.js`).
+Prekršaj za falsifikaciju takve kapije mora da traje dok prođe bar jedan objekat — tačka koja se nada da će pogoditi
+trenutak ne dokazuje ništa.

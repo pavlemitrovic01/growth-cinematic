@@ -68,6 +68,26 @@
 
 ## ZATVORENO
 
+### `RD2-LOOK` — kamera „Kran", jedna blaga pauza u 02, release tek sa izgledom scene · 2026-09-17
+- **„Zastaje" = kadar, ne kamion** (Pavle): *„Kamion ne mora da stane"* — kamion i svitanje prate skrol.
+- **Scena koja doslovno prikazuje posao — odbijena kao overengineering.** Pavle je tražio da se menjaju okolina,
+  kamion i *„šta se zapravo dešava"*, uz *„ako mislis da je ovo overenginering opomeni me i ne dozvoli da nastavimo
+  dalje"*. Procena: scenu vidi samo desktop, copy nije konačan (`RD9`), a doslovan prikaz traži prave modele i nov
+  umetnički pravac; slika koja prikazuje ishod ide kroz registar isto kao rečenica. Pavle: *„ako je overengineering
+  nećemo ići u tom pravcu"*. Povratak na ideju tek kad copy bude konačan i analitika pokaže da desktop posetioci gledaju
+  hero.
+- **Jedna blaga pauza, gde je tekst najbitniji** (Pavle): *„napraviće se samo jedna blaga pauza onamo gde nam je tekst
+  u hero-u najbitniji"* → poglavlje 02 („$0 Cost to drivers. Always."), jačina 0,5. Umesto pauze nivo diže kamera:
+  kadar pravljen za tekst, pokret sa težinom, jak kadar za 02 — *„Slažem se, ali bih prvo da vidim 3 različite
+  varijacije"*.
+- **Kamera „Kran"**, izabrana između Kran / Dron / Ispred kamiona na dev serveru, uz snimke svih poglavlja:
+  *„idemo na 1"*.
+- **Release tek sa izgledom scene.** Posle kamera: *„okruženje mi previše izgleda kao lego kockice"* i *„ove kamere
+  jesu dobre ali džabe kada nema šta da se vidi"*. Na predlog da `RD2` ne ide na Vercel dok `RD10` ne sredi brda,
+  kamion i put, i da se puste zajedno: *„Može, radimo tako"*.
+- ⚠️ **Hero ostaje 3D scena** (odluka od 2026-09-08 važi). U istom razgovoru „main" je značio `master` ovog projekta
+  na Vercelu, ne MAIN repo i njegove fotografije — pravac „fotografije umesto scene" nije ni predložen od Pavla.
+
 ### Redizajn — cilj, i telefon po strani · 2026-09-15
 - **Cilj** (Pavle): *„jasan cilj ovog redizajna je da napravimo što bolji cinematic osećaj, ali da uz to
   pružamo ozbiljno dobre i logički povezane informacije"*. Stavke → `ROADMAP` „Redizajn" (`RD1`–`RD9`).

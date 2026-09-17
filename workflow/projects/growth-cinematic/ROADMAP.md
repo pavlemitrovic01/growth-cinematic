@@ -16,12 +16,13 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
 Cilj (Pavle): **što bolji cinematic osećaj, uz ozbiljno dobre i logički povezane informacije** (`DECISIONS`).
 Telefon je za sada po strani. Obim stavki **nije planiran**, redosled bira Pavle. Pavle je prvo tražio scenu
-u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
+u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16; kamera (`RD2`) zatvorena
+2026-09-17 i čeka release zajedno sa `RD10`. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
 (navigacija, zaglavlje podstranice, smena sekcija, paleta, slike), da batch-evi ne odu svaki na svoju stranu.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD2` | Scena: kamera ne prolazi kroz prikolicu (52,85–59,95 % skrola) i zastaje dok se tekst poglavlja čita | STANDARD + `manual` | — | OPEN |
+| `RD10` | Izgled scene: brda, kamion i put bez „lego" izgleda — bez preuzimanja modela, iste boje (`S1-LOOK`); release zajedno sa `RD2` | STANDARD + `manual` | `RD2` | **SLEDEĆI** |
 | `RD3` | Scena: filmski osećaj kroz celu vožnju — sjaj i odsjaji i posle početnog kadra, praznina i „magla" posle prolaza, sunce iza kamere | STANDARD + `manual` | `RD2` | OPEN |
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |
 | `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | smer, `T1b` | OPEN |
@@ -38,7 +39,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
 | `T1b` | Hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, gde obris ostaje (`D2`); **prvo stranica sa predlogom**, pa plan (`L-02`, `VD-03`) | STANDARD + `manual` | predlog skale | OPEN |
-| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | **SLEDEĆI** |
+| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | OPEN |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
 | `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
@@ -128,6 +129,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `RD2` | **Kamera u heroju** — prolazila je kroz prikolicu (52,84–59,90 % skrola) i 0,34 jedinice od stuba, dok se čita 02; sada plan kadrova „Kran" sa kamionom desno od teksta (ispod teksta 0–4,4 % umesto 65–82 % na 1440×900), jedna blaga pauza u 02 (9,5 % putanje umesto 26,7 %), razmak kamion 4,24 / stub 2,44 / brdo 5,98; testovi crveni pa zeleni, test 145 → 156; `manual` PASS; **nije pušten** — ide sa `RD10` | 2026-09-17 |
 | `RD1` | **Naslovi sa `data-wipe`** — izmereno u pravom browseru: posmatrač na meti isečenoj na nultu površinu javlja presek 0×0 i nikad više, pa se nisu videli naslovi na 12 ruta sa `PageShell` ni 9 na naslovnoj (i na produkciji); `Motion.tsx` posmatra roditelja (`lib/motion-reveal.ts`); kapija crvena pa zelena, test 140 → 145; `manual` PASS; spojen i pušen 2026-09-16, izmeren na deploy-u, naslovi vidljivi i na produkciji | 2026-09-16 |
 | `S1` | **Hero svetlo i čitljivost scene** — postojeća tri svetla (hladni fill spreda-levo čija senka prati kamion, topli rim iza-desno), niža metalnost, svetlija kabina i vidljiv hrom/staklo, sjajniji put i farovi ispred kabine, blaža `.journey-shade`; draw pozivi nepromenjeni (58/49/53/35), telefon identičan do piksela; Pavle birao kamion `1` i sjaj `b`; spojen i pušen 2026-09-15, izmeren na deploy-u | 2026-09-15 |
 | `T1` | **Arial svuda** — Arimo (OFL) samo gde nema Arial-a, porodica „Growth Sans" sa `local()` prvim; drugi red naslova ivica 2 px i težina 800 na 17 naslova; `rendered` 17 → 18; hijerarhija izdvojena u `T1b`; spojen i pušen 2026-09-15, izmeren na deploy-u, Android PASS | 2026-09-14 |

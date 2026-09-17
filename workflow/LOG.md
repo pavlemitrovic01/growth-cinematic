@@ -6,6 +6,81 @@
 
 ---
 
+## RD2 (STANDARD) — Kamera: bez prolaza kroz prikolicu, jedna blaga pauza, kadar za tekst · 2026-09-17
+
+**Implementacija:** `ae5cf75` · **Grana:** `rd2-kamera-prikolica` — **nije spojena ni pušena**: release ide zajedno
+sa `RD10` (Pavle: „Može, radimo tako")
+
+**Changed files:** `lib/hero-scene.ts` · `lib/hero-beat.ts` · `components/HeroExperience.tsx` ·
+`__tests__/lib/hero-scene.test.js` (nov) · `__tests__/lib/hero-beat.test.js` ·
+`workflow/projects/growth-cinematic/batches/RD2.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/CONTEXT.md` ·
+`workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Pavlov snimak iz dev servera pokazao je kadar iz unutrašnjosti prikolice u poglavlju 02. Putanja je preračunata u
+Node-u sa istim three.js-om: kamera unutar prikolice na 52,84–59,90 % skrola, a na 72,88 % 0,34 jedinice od stuba —
+oba u punom tekstu poglavlja 02. Tok odluka: `b` (preko krova) sa pauzama 0/1/2 → ideja da scena doslovno prikazuje
+posao odbijena kao overengineering → jedna blaga pauza u 02 i kamera koja drži kamion desno od teksta → tri
+varijante uživo (`?kamera=1|2|3`, uz snimke iz headless Chrome-a) → „Kran". Posle kamera Pavle je ocenio da okolina
+izgleda kao „lego kockice"; izgled ide u `RD10`, a `RD2` čeka da se puste zajedno. Sve u `DECISIONS` → `RD2-LOOK`.
+
+Putanja i meta pogleda su sada plan kadrova po poglavlju (`CAMERA_PLAN`: položaj, meta, objektiv, pomeraj slike kao
+udeo širine ekrana), a `cameraProgress` (`lib/hero-beat.ts`) daje blagu pauzu samo u 02 i težinu pokreta. Kamion i
+svitanje i dalje prate skrol.
+
+KAPIJA — stara putanja (izvlačenje bez promene ponašanja, pre izbora), dokazano crvena:
+```
+  1 kamion >= 2    expected [ '49.21-63.44%' ] to deeply equal []     (isto kao merenje u Node-u)
+  2 stub >= 1      expected [ '72.57-73.19%' ] to deeply equal []     (isto kao merenje u Node-u)
+  8 pauza          expected 0.26670000000000016 to be <= 0.05
+  Tests 3 failed | 10 passed (13) · exit 1
+```
+
+FALSIFIKACIJA konačnih testova (svaka greška sama, pa vraćena; sha256 `lib/hero-scene.ts` i `lib/hero-beat.ts` isti
+pre i posle — `git status` pre commita ne dokazuje vraćanje, `L25`):
+```
+  CAMERA_PAUSE = 0                    8 crven                  Tests 1 failed | 9 passed · exit 1
+  CAMERA_PAUSE_CHAPTER = 1            8, 9 crveni              Tests 2 failed | 8 passed · exit 1
+  pretapanje 0,01                     7, 10 crveni             Tests 2 failed | 8 passed · exit 1
+  pomeraj kadra 01 = 0                5 crven (kompozicija)    Tests 1 failed | 5 passed · exit 1
+  tacka putanje [0, 4, 0]             1 crven (kamion)         Tests 1 failed | 5 passed · exit 1
+  tacka putanje [-22, 1.5, 38]        3 crven (brdo)           Tests 1 failed | 5 passed · exit 1
+  tacka [-15, 6.5, -8] -> [-10.6,3,-8]  ZELENO                 Tests 6 passed · exit 0   (L30)
+  kamera drzana na x -10,6            2 crven (stub min 0,06)  Tests 1 failed | 5 passed · exit 1
+```
+
+IZMERENO (`/close`, `next start` PID 24980 pokrenut 04:55:08, posle `BUILD_ID`-a 04:54:55; implementacija menjana
+poslednji put 04:53:27; `quick`/`typecheck`/`test` ponovo pokrenuti pred commit, exit 0):
+```
+  quick / typecheck / full      exit 0 · BUILD_ID 9g9VcvZWesqg4uU5TtFwI
+  test                          156/156 u 13 fajlova (bilo 145/12)
+  verify                        nojs PASS 14 · claims PASS 13
+  rendered                      18/18
+  meri se: http://localhost:3000
+  diskriminator                 servirani chunk scene: novi plan [5,22,34] 1 · stara putanja [11,4.2,13] 0 · centripetal 1
+  razmak                        kamion min 4,24 · stub min 2,44 · brdo min 5,98
+  pauza (pun tekst)             12,4 / 24,8 / 9,5 / 12,4 % · vrsna brzina 3,38x
+  ispod teksta, uvod/01/02/03   1440x900 1,6/3,0/4,4/0,0 · 1920x1080 0/0/0/0 · 1280x1024 13,1/9,8/15,5/4,3 · 1024x650 4,8/5,8/8,7/0,0
+  three.js u pocetnom JS-u      produkcija 0 od 9 (589 KiB) · grana 0 od 9 (589 KiB)
+  draw pozivi                   58/59/59/57 (pre, S1: 58/49/53/35) · 0 gresaka (headless Chrome)
+  fotografija, produkcija/grana telefon 0 od 1 218 000 piksela · smanjen pokret 0 od 1 296 000
+```
+
+✅ **`manual` PASS (Pavle)** — „pass", na istom buildu u sopstvenom browseru. Pojedinačne stavke (prikolica, stub,
+pauza, prelazi, kamion desno od teksta) nisu posebno imenovane.
+
+⚠️ Merni alat: `Page.captureScreenshot` sa `clip` meri u koordinatama DOKUMENTA, ne prozora — posle skrola je
+prvi kontakt list imao crne kadrove 01–03 (snimljen vrh strane). Ispravljeno sa `clip.y = scrollY`; sajt nije diran.
+
+**SCOPE_DRIFT: none** — 12 putanja iz EXPECTED-FILES: 5 u `ae5cf75`, 7 u close commitu. Proširenje obima (kadrovi i
+jedna pauza umesto pune) odobreno i upisano u manifest pre implementacije, bez novih putanja. `ROADMAP`: red `U2` sa
+„SLEDEĆI" na OPEN, jer je pravac od 2026-09-15 redizajn, a sledeći je `RD10` (neslaganje prijavljeno na `/kickoff`).
+
+**NEXT STEP:** `/plan RD10` — izgled scene (brda, kamion, put bez „lego" izgleda; bez preuzimanja modela; iste boje),
+sa varijantama uživo; posle njega release `RD2` + `RD10` zajedno (Pavlova odluka).
+
+---
+
 ## non-batch(release) — `RD1` spojen i pušen; izmeren na deploy-u · 2026-09-16
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/RD1.md` · `workflow/STATE.md` ·
