@@ -163,6 +163,5 @@ varijacije"**.
   crveni; pretapanje 0,01 → 7 i 10 crveni; pomeraj kadra 01 = 0 → 5 crven; tačka putanje u kamionu → 1 crven; tačka
   u brdu → 3 crven; kamera držana na liniji stubova → 2 crven (min 0,06). Prva proba za stub (jedna tačka na liniji
   stubova) ostala je zelena — `LESSONS` L30.
-- **Release: ne.** Pavle 2026-09-17 („Može, radimo tako"): `RD2` ne ide na Vercel dok `RD10` ne sredi izgled
-  scene; puštaju se zajedno.
+- **Release** ✅ 2026-09-17 — `master` `701556f..0ec75df` fast-forward i push, zajedno `RD2` + `RD10` (Pavle: „može release"). Diskriminator PRE merenja: pre push-a produkcija 10 JS fajlova, kontrola three 1, kod `RD10` 0; posle push-a u 15:31:12 kod `RD10` 1 (`fra1::w5w92-1789651866716-c14b0bbfe3b6`). Na deploy-u: `verify` nojs 14 + claims 13, `rendered` 18/18, meta `https://growth-cinematic.vercel.app`; three u početnom JS-u 0 od 9; headless Chrome — scena `ready`, draw 28/29/29/28, 0 grešaka.
 - **Detalji i izlazi:** `workflow/LOG.md`, unos `RD2`.

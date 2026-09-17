@@ -7,8 +7,8 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći: release `RD2` + `RD10` zajedno** — Pavlova odluka (spajanje u `master`, push, merenje na deploy-u). Posle
-  toga otvoreno: predlog **`RD11`** (američke oznake na putu, truck stop sa strane; Pavle predložio, nije odlučeno) i
+- **Sledeći: kamion koji više liči na američki tegljač** (Pavle 2026-09-17: *„kamion treba više da liči na američki kamion
+  piterbelt ili cascadia ili nešto tako što nam je najlakše"*) — plan još nije napravljen. Otvoreno i: predlog **`RD11`** (američke oznake na putu, truck stop sa strane; Pavle predložio, nije odlučeno) i
   `RD3` (sjaj posle početnog kadra, magla; sunce u 02 sada izlazi ispred kamere). Za dizajn i dalje čeka
   **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn); predlog stranice
   „smer redizajna" pre `RD4`–`RD7` stoji. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi
@@ -18,9 +18,9 @@
 - **Poslednji završen:** **`RD10`** (2026-09-17, `07d0df4`) — **Izgled scene:** meka viša brda iz `terrainHeight`
   umesto kupa, američki tegljač kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02
   izlazi nagore kao pravci od kamere (Pavlove oznake na snimcima). Draw 58–59 → 28–29, trouglova ~7k → ~71k, chunk
-  +4,5 KiB gzip; test 156 → 168; `manual` PASS („Sada je dobro"). **Nije spojen ni pušen.**
+  +4,5 KiB gzip; test 156 → 168; `manual` PASS („Sada je dobro"). Spojen i pušen sa `RD2` 2026-09-17, izmeren na deploy-u.
 - **Pretposlednji:** **`RD2`** (2026-09-17, `ae5cf75`) — kamera „Kran": bez prolaza kroz prikolicu, jedna blaga pauza u
-  02, kamion desno od teksta; `manual` PASS. **Nije spojen ni pušen** — ide sa `RD10`.
+  02, kamion desno od teksta; `manual` PASS. Spojen i pušen sa `RD10` 2026-09-17, izmeren na deploy-u.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
 - Starije (`RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
@@ -30,9 +30,9 @@
 
 ## Git
 
-- ⚠️ **`RD2` + `RD10` NISU spojeni ni pušeni.** Grana `rd10-izgled-scene` nosi oba: `701556f..` → `ae5cf75` (`RD2`) +
-  `303e9bd` (close `RD2`) → `07d0df4` (`RD10`) + close commit `RD10`. `rd2-kamera-prikolica` je njen predak. Release
-  (fast-forward `master` na `rd10-izgled-scene`, push, merenje na deploy-u) je Pavlova odluka.
+- `RD2` + `RD10` (`701556f..0ec75df`, implementacije `ae5cf75` i `07d0df4`) spojeni fast-forward-om i pušeni zajedno
+  2026-09-17 (Pavle: „može release"); **deploy izmeren protiv njih**, uz nov build potvrđen diskriminatorom PRE merenja
+  (kod `RD10` u JS-u koji `/` može da učita 0 → 1, kontrola three 1 u oba); `manual` na produkciji nije posebno tražen.
 - `RD1` (`cb7e163..b4cab0a`, implementacija `4584c80`) spojen fast-forward-om i pušen 2026-09-16 — nosi i
   non-batch `7a0cccb` (F5 test); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE
   merenja (popravka u serviranom JS-u 0 → 1 chunk, kontrolni string u oba); `manual` PASS na produkciji.
@@ -51,8 +51,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD1`; origin nosi `M7`, `U1`, `K1`, `R1`,
-  `B1`, `T1`, `S1` i `RD1`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD2` + `RD10`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2` i `RD10`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -61,7 +61,7 @@
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
-  `rd1-naslov-podstranice`.
+  `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`.
 
 ## Žive prepreke
 

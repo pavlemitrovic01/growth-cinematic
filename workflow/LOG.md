@@ -6,6 +6,41 @@
 
 ---
 
+## non-batch(release) — `RD2` + `RD10` spojeni i pušeni; izmereni na deploy-u · 2026-09-17
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/RD2.md` · `workflow/projects/growth-cinematic/batches/RD10.md` ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `701556f..0ec75df` fast-forward, push — nosi `ae5cf75` (`RD2`), `303e9bd` (close), `07d0df4` (`RD10`), `0ec75df`
+(close). Pavlova odluka 2026-09-17 („može release"). Pre spajanja proveren `origin/master` (`ls-remote` = `701556f`,
+nepomeren), čisto stablo i da je fast-forward moguć.
+
+**Diskriminator PRE merenja:** JS koji naslovna može da učita (početni fajlovi i putanje chunk-ova navedene u njima), kontrola
+`centripetal` (three.js, postoji i pre i posle) i kod `RD10` (`#d9d9d9` iz teksture rebara, `.3702` iz pravca sunca). Instrument
+je pre push-a proveren i na lokalnom serveru (kontrola 1, `RD10` 1), pa je „0" na produkciji merenje, ne slepa tačka (`L20`).
+```
+  pre push-a   15:30:00   JS 10 · kontrola 1 · RD10 0 · sunce 0   fra1::hhb6j-1789651795087-81d5016dd041
+  posle        15:30:27   JS 10 · kontrola 1 · RD10 0 · sunce 0   (stari build)
+               15:30:49   JS 10 · kontrola 1 · RD10 0 · sunce 0   (stari build)
+               15:31:12   JS 10 · kontrola 1 · RD10 1 · sunce 1   fra1::w5w92-1789651866716-c14b0bbfe3b6
+```
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  three.js u pocetnom JS-u      0 od 9 (589 KiB)
+  headless Chrome               scena ready · draw 28/29/29/28 · trouglova 70568/71384/71384/70568 · 0 gresaka
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno za oba batch-a.
+
+**NEXT STEP:** Pavle 2026-09-17: *„kamion treba više da liči na američki kamion piterbelt ili cascadia ili nešto tako što nam je
+najlakše"* — `/plan` za kamion (nov batch). Predlog `RD11` (oznake, truck stop) i dalje nije odlučen.
+
+---
+
 ## RD10 (STANDARD) — Izgled scene: meka brda, američki tegljač, put, mesec i sunce na nebu · 2026-09-17
 
 **Implementacija:** `07d0df4` · **Grana:** `rd10-izgled-scene` (sa `rd2-kamera-prikolica` @ `303e9bd`) — **nije spojena ni
