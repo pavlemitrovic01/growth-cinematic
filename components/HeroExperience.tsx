@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import { beatOpacity } from '@/lib/hero-beat';
+import { beatOpacity, cameraProgress } from '@/lib/hero-beat';
 
 export default function HeroExperience({ children }: { children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
@@ -134,7 +134,7 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
           if (progressBar) progressBar.style.transform = `scaleX(${current})`;
           if (dawn) dawn.style.opacity = String(current);
           try {
-            scene.render(current);
+            scene.render(current, cameraProgress(current, beats.length));
             host!.dataset.drawCalls = String(scene.drawCalls());
             host!.dataset.frameCount = String(++frames);
           } catch {

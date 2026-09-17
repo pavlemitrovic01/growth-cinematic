@@ -4,6 +4,71 @@ const clamp = (value: number) => Math.min(1, Math.max(0, value));
 const smoothstep = (a: number, b: number, value: number) => {
   const x = clamp((value-a)/(b-a)); return x*x*(3-2*x);
 };
+
+type Vec3 = readonly [number, number, number];
+
+/**
+ * Kadar poglavlja: tacka u koju kamera gleda (koordinate kamiona), vertikalni ugao objektiva u
+ * stepenima i pomeraj slike udesno kao udeo sirine ekrana -- da kamion stoji desno od teksta.
+ */
+export type CameraShot = { target: Vec3; fov: number; shift: number };
+
+/**
+ * Plan kamere (`RD2`). `path` su polozaji kamere u koordinatama KAMIONA (x i y apsolutni, z se dodaje na
+ * polozaj kamiona), ravnomerno po napretku kamere: tacka `k` je tacna u `k / (path.length - 1)`. Sa
+ * sedam tacaka poglavlja su parne tacke, a neparne vode kameru izmedju njih. `shots` ima po jedan kadar
+ * za svako poglavlje.
+ *
+ * ⚠️ Plan je podatak van `createHeroScene` da bi `__tests__/lib/hero-scene.test.js` merio razmak kamere
+ * i kompoziciju na istom planu koji scena crta.
+ */
+export type CameraPlan = { path: readonly Vec3[]; shots: readonly CameraShot[] };
+
+/**
+ * Kamera „Kran" (Pavle, 2026-09-17, izbor od tri varijante): siroko spreda za uvod, straga uz prikolicu
+ * za 01, nisko i usko spreda za 02 (poglavlje sa blagom pauzom), pa preko kamiona i pogled niz put za 03.
+ *
+ * ⚠️ Svaki kadar drzi kamion desno od kolone teksta, a putanja zaobilazi kamion, stubove i brda. Test
+ * u `__tests__/lib/hero-scene.test.js` meri oba -- promena tacke ovde moze da vrati kameru u prikolicu
+ * ili pored stuba, jer se trenutak prolaska pored stuba menja sa svakom tackom.
+ */
+export const CAMERA_PLAN: CameraPlan = {
+  path: [[-14, 5, -40], [-15, 6.5, -8], [-18, 8, 38], [-8, 7.5, 0], [-6, 1.1, -34], [-3, 15, -6], [5, 22, 34]],
+  shots: [
+    { target: [0, 3.3, 0], fov: 40, shift: .3 },
+    { target: [0, 3.3, 0], fov: 44, shift: .25 },
+    { target: [0, 3.2, -6], fov: 26, shift: .3 },
+    { target: [0, 2, -25], fov: 50, shift: .35 },
+  ],
+};
+
+/** Polozaj kamiona po z: vozi 235 jedinica dok skrol ide od 4 % do 96 %. */
+export const truckZ = (progress: number) => 7 - smoothstep(.04, .96, progress) * 235;
+
+/**
+ * Postavlja polozaj kamere i tacku u koju gleda, i vraca objektiv. Kamion prati `progress` (skrol), a
+ * kamera prati `camera` (`cameraProgress` iz `lib/hero-beat.ts`).
+ */
+export function createCameraRig(plan: CameraPlan = CAMERA_PLAN) {
+  const toVector = ([x, y, z]: Vec3) => new THREE.Vector3(x, y, z);
+  const path = new THREE.CatmullRomCurve3(plan.path.map(toVector));
+  const aims = new THREE.CatmullRomCurve3(plan.shots.map(shot => toVector(shot.target)));
+  const point = new THREE.Vector3();
+  const segments = plan.shots.length - 1;
+  return (progress: number, camera: number, position: THREE.Vector3, target: THREE.Vector3) => {
+    const z = truckZ(progress);
+    const at = clamp(camera);
+    path.getPoint(at, point);
+    position.set(point.x, point.y, z + point.z);
+    aims.getPoint(at, point);
+    target.set(point.x, point.y, z + point.z);
+    const index = Math.min(segments - 1, Math.floor(at * segments));
+    const blend = smoothstep(0, 1, at * segments - index);
+    const from = plan.shots[index], to = plan.shots[index + 1];
+    return { fov: from.fov + (to.fov - from.fov) * blend, shift: from.shift + (to.shift - from.shift) * blend };
+  };
+}
+
 export function createHeroScene(host: HTMLElement) {
   const canvas = document.createElement('canvas');
   host.appendChild(canvas);
@@ -51,7 +116,6 @@ export function createHeroScene(host: HTMLElement) {
     const fog = new THREE.FogExp2(nightFog.clone(),.0095);
     scene.fog = fog;
     const camera = new THREE.PerspectiveCamera(46,1,.1,700);
-    camera.filmOffset = -5;
     const world = new THREE.Group(); scene.add(world);
       // Slightly glossy asphalt catches the warm rim and the headlights like a damp night road.
       const road = new THREE.Mesh(
@@ -255,36 +319,29 @@ export function createHeroScene(host: HTMLElement) {
       const starField = new THREE.Points(starsGeo, starMat);
       scene.add(starField);
 
-      const cameraPath = new THREE.CatmullRomCurve3([
-        new THREE.Vector3(narrow ? -9 : -13, 3.2, -19),
-        new THREE.Vector3(narrow ? -8 : -11, 2.9, -4),
-        new THREE.Vector3(narrow ? -8 : -12, 3.6, 6),
-        new THREE.Vector3(narrow ? 7.5 : 11, 4.2, 13),
-        new THREE.Vector3(narrow ? 3.5 : 5, 7.5, 8),
-        new THREE.Vector3(0, narrow ? 11 : 14, 0),
-      ]);
+      const placeCamera = createCameraRig();
 
     const dawnColor = new THREE.Color('#8e6044');
     const fogDawn = new THREE.Color('#6c513b');
     const lookAt = new THREE.Vector3();
-    const relative = new THREE.Vector3();
     const resize = () => {
       const width = host.clientWidth, height = host.clientHeight;
       renderer.setSize(width,height,false);
       camera.aspect = width/Math.max(1,height);
       camera.updateProjectionMatrix();
     };
-    const render = (p: number) => {
+    const render = (p: number, cameraAt = p) => {
       if(disposed) return;
       const drive=smoothstep(.04,.96,p);
-      truck.position.z=7-drive*235;
+      truck.position.z=truckZ(p);
       moon.position.set(moonOffset.x,moonOffset.y,truck.position.z+moonOffset.z);
       moon.target.position.set(0,0,truck.position.z);
       wheels.forEach(wheel=>{wheel.rotation.x=drive*-48});
-      cameraPath.getPointAt(clamp(p*.98),relative);
-      camera.position.set(relative.x,relative.y,truck.position.z+relative.z);
-      // Blend into the overhead view; switching the target at .82 caused a snap.
-      lookAt.set(0,3.1,truck.position.z-3-9*smoothstep(.74,.9,p));
+      const lens=placeCamera(p,cameraAt,camera.position,lookAt);
+      camera.fov=lens.fov;
+      // Shift is a share of the screen width, so the truck lands right of the text at any aspect ratio.
+      camera.filmOffset=-lens.shift*camera.getFilmWidth()*camera.aspect*2*Math.tan(THREE.MathUtils.degToRad(lens.fov)/2);
+      camera.updateProjectionMatrix();
       camera.lookAt(lookAt);
       const daylight=smoothstep(.42,.98,p);
       background.copy(night).lerp(dawnColor,daylight*.78);

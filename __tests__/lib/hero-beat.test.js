@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { beatOpacity } from '@/lib/hero-beat';
+import { beatOpacity, cameraProgress, BEAT_HOLD } from '@/lib/hero-beat';
 
 /**
  * Kriva vidljivosti hero poglavlja -- cetiri uslova iz audita 2026-09 (`L-03`).
@@ -87,5 +87,71 @@ describe('hero kriva "drzi pa predaj" (audit L-03)', () => {
     expect(metrics.samples).toBe(SAMPLES);
     expect(metrics.holdCount).toBeGreaterThan(0);
     expect(metrics.crossCount).toBeGreaterThan(0);
+  });
+});
+
+/**
+ * Kamera -- jedna blaga pauza, u poglavlju 02 (`RD2`).
+ *
+ * ⚠️ ZASTAJE KADAR, NE KAMION (Pavle, 2026-09-17: „Kamion ne mora da stane"), i to samo u poglavlju
+ * gde je tekst najbitniji (02, „$0 Cost to drivers"). Meri se koliki deo putanje kamera predje dok je
+ * tekst poglavlja pun (pozicija na najvise `BEAT_HOLD` od centra), po poglavlju. Do `RD2`: 26,7% u
+ * poglavljima 01 i 02, po 13,3% u uvodu i 03.
+ *
+ * ⚠️ Vrsna brzina se meri kao nagib u odnosu na ravnomerno kretanje (1 = kao do `RD2`). Pauza i tezina
+ * sabijaju pokret u pretapanje, pa granica cuva od skoka.
+ */
+const PAUSED_CHAPTER = 2;
+const PAUSED_TRAVEL_MAX = 0.1;
+const PEAK_SPEED_MAX = 8;
+
+function measureCamera() {
+  const travel = new Array(BEATS).fill(0);
+  let previous = cameraProgress(0, BEATS);
+  let backwards = 0;
+  let peak = 0;
+
+  for (let s = 1; s <= SAMPLES; s++) {
+    const progress = s / SAMPLES;
+    const camera = cameraProgress(progress, BEATS);
+    const step = camera - previous;
+    if (step < -1e-12) backwards++;
+    peak = Math.max(peak, step * SAMPLES);
+    const position = ((s - 0.5) / SAMPLES) * (BEATS - 1);
+    const nearest = Math.round(position);
+    if (Math.abs(position - nearest) <= BEAT_HOLD) travel[nearest] += step;
+    previous = camera;
+  }
+
+  return { start: cameraProgress(0, BEATS), end: cameraProgress(1, BEATS), backwards, peak, travel };
+}
+
+const camera = measureCamera();
+
+describe('kamera: jedna blaga pauza, u poglavlju 02 (RD2)', () => {
+  it('6 -- kamera pocinje na 0 i zavrsava na 1', () => {
+    expect(camera.start).toBe(0);
+    expect(camera.end).toBeCloseTo(1, 12);
+  });
+
+  it('7 -- kamera ide samo napred', () => {
+    expect(camera.backwards).toBe(0);
+  });
+
+  it('8 -- dok je tekst poglavlja 02 pun, kamera predje najvise 10% putanje', () => {
+    console.log(
+      `izmereno: kamera dok je tekst pun ${camera.travel.map((t) => (t * 100).toFixed(1) + '%').join(' / ')}` +
+        ` | vrsna brzina ${camera.peak.toFixed(2)}x`,
+    );
+    expect(camera.travel[PAUSED_CHAPTER]).toBeLessThanOrEqual(PAUSED_TRAVEL_MAX);
+  });
+
+  it('9 -- pauza je samo jedna: ostala poglavlja se krecu vise od 10% putanje', () => {
+    const others = camera.travel.filter((_, i) => i !== PAUSED_CHAPTER);
+    expect(others.every((travel) => travel > PAUSED_TRAVEL_MAX)).toBe(true);
+  });
+
+  it('10 -- vrsna brzina kamere najvise 8x ravnomerne (bez skoka)', () => {
+    expect(camera.peak).toBeLessThanOrEqual(PEAK_SPEED_MAX);
   });
 });
