@@ -295,3 +295,12 @@ U `RD10` je disk stajao na (28, y, −135): bliže od grebena, pa se na Pavlovom
 je klizio sa kamerom. Podizanje po y to nije rešilo. **Pravilo:** nebesko telo je pravac od kamere (položaj kamere +
 pravac × udaljenost), crta se prvo i ne upisuje dubinu, pa ga svako brdo zaklanja. Gde je na ekranu meri se u NDC iz
 istog kadra koji je Pavle označio, a zaklanjanje zrakom kroz tlo iza grebena (`__tests__/lib/hero-scene.test.js`).
+
+## L32 — Poređenje piksela produkcije i lokalnog servera „padne" na istom kodu kad fotografija stigne sporije.
+U `RD12` je telefon/smanjen pokret (produkcija naspram grane) povremeno dao razliku, uvek istog broja piksela u
+području fotografije (37 473 i 413 107; prosečno 1,0–1,1 nivo, max 9/32), a u ostalim krugovima 0. Isti build na dve
+adrese: 0 u 6 od 6; sa 150 ms kašnjenja mreže na jednoj strani: tačno iste brojke u 6 od 6. Fotografija koja stigne
+kasnije iscrta se drugim putem dekodiranja. `RD10` je izmerio 0 u jednom krugu — sreća, ne dokaz. **Pravilo:** „batch
+ne menja telefon" dokazuje se time da se izmenjeni kod tamo ne učitava (uz pozitivnu kontrolu) i da su izvori slika
+isti; poređenje piksela ide u više krugova, a kontrola na istoj adresi ne važi — druga poseta koristi već dekodiranu
+sliku.

@@ -7,29 +7,32 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeći: kamion koji više liči na američki tegljač** (Pavle 2026-09-17: *„kamion treba više da liči na američki kamion
-  piterbelt ili cascadia ili nešto tako što nam je najlakše"*) — plan još nije napravljen. Otvoreno i: predlog **`RD11`** (američke oznake na putu, truck stop sa strane; Pavle predložio, nije odlučeno) i
+- **Sledeće:** release `RD12` je Pavlova odluka (grana `rd12-americki-kamion` zatvorena, nije spojena ni pušena).
+  Otvoreni su predlog **`RD11`** (američke oznake na putu, truck stop sa strane; Pavle predložio, nije odlučeno) i
   `RD3` (sjaj posle početnog kadra, magla; sunce u 02 sada izlazi ispred kamere). Za dizajn i dalje čeka
   **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn); predlog stranice
   „smer redizajna" pre `RD4`–`RD7` stoji. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi
   advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD10`** (2026-09-17, `07d0df4`) — **Izgled scene:** meka viša brda iz `terrainHeight`
-  umesto kupa, američki tegljač kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02
-  izlazi nagore kao pravci od kamere (Pavlove oznake na snimcima). Draw 58–59 → 28–29, trouglova ~7k → ~71k, chunk
-  +4,5 KiB gzip; test 156 → 168; `manual` PASS („Sada je dobro"). Spojen i pušen sa `RD2` 2026-09-17, izmeren na deploy-u.
-- **Pretposlednji:** **`RD2`** (2026-09-17, `ae5cf75`) — kamera „Kran": bez prolaza kroz prikolicu, jedna blaga pauza u
-  02, kamion desno od teksta; `manual` PASS. Spojen i pušen sa `RD10` 2026-09-17, izmeren na deploy-u.
+- **Poslednji završen:** **`RD12`** (2026-09-19, `66a88db`) — **Američki tegljač:** klasična duga hauba (visoka uska
+  hromirana rešetka, lučni blatobrani, okrugli farovi, filteri vazduha, visoki auspusi, retrovizori na nosačima,
+  spavaći deo odvojen), bez marke; samo `lib/hero-truck.ts`. Draw isti, chunk +0,9 KiB gzip, test 168 bez izmene;
+  `manual` PASS („Novi kamion je vrh"). **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD10`** (2026-09-17, `07d0df4`) — **Izgled scene:** meka viša brda iz `terrainHeight`
+  umesto kupa, kamion kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02 izlazi
+  nagore kao pravci od kamere. `manual` PASS. Spojen i pušen sa `RD2` 2026-09-17, izmeren na deploy-u.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- **`rd12-americki-kamion`** (sa `master` @ `8c56df0`): implementacija `66a88db` + close commit — **nije spojena ni
+  pušena**; release je Pavlova odluka.
 - `RD2` + `RD10` (`701556f..0ec75df`, implementacije `ae5cf75` i `07d0df4`) spojeni fast-forward-om i pušeni zajedno
   2026-09-17 (Pavle: „može release"); **deploy izmeren protiv njih**, uz nov build potvrđen diskriminatorom PRE merenja
   (kod `RD10` u JS-u koji `/` može da učita 0 → 1, kontrola three 1 u oba); `manual` na produkciji nije posebno tražen.

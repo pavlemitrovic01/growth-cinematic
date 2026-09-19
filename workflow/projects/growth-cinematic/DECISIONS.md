@@ -68,6 +68,14 @@
 
 ## ZATVORENO
 
+### `RD12-LOOK` — klasični američki tegljač sa dugom haubom, bez marke · 2026-09-19
+- **Zahtev:** *„kamion treba više da liči na američki kamion piterbelt ili cascadia ili nešto tako što nam je najlakše"*
+  (2026-09-17). Preporuka i plan: klasična duga hauba u stilu Peterbilta — ravne plohe i valjci, što scena već dobro
+  pravi; Cascadia je aerodinamična i od istih oblika bi delovala grubo.
+- **Izbor od varijanti uživo** (kontakt list danas · nov, linkovi `?kamion=0|1`): *„Novi kamion je vrh"*.
+- **Bez amblema, imena marke i ukrasa na haubi**; boje `S1-LOOK`, prikolica i logo GROWTH isti. Oblik je podatak
+  (`TRUCK_DESIGN`, `lib/hero-truck.ts`) i ostaje u okviru kamiona iz `RD2` — po njemu je izmeren plan kamere.
+
 ### `RD10-LOOK` — viša brda, američki tegljač, put; mesec u 01, sunce izlazi u 02 · 2026-09-17
 - **Izbor od varijanti uživo** (kontakt list: danas · blaga brda · viša brda · blaga + zrno): *„da budem iskren 3 i 4
   mi se najviše sviđaju jer podsećaju na američke puteve"*, pa *„Najviše mi se sviđa 3."* → tlo **viša brda i daleki

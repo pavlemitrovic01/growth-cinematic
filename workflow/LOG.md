@@ -6,6 +6,60 @@
 
 ---
 
+## RD12 (STANDARD) — Američki tegljač: klasična duga hauba, bez marke · 2026-09-19
+
+**Implementacija:** `66a88db` · **Grana:** `rd12-americki-kamion` (sa `master` @ `8c56df0`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `lib/hero-truck.ts` · `workflow/projects/growth-cinematic/batches/RD12.md` (nov) ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+Pavle posle release-a `RD2` + `RD10`: *„kamion treba više da liči na američki kamion piterbelt ili cascadia ili nešto tako
+što nam je najlakše"*. Plan u chatu (klasična duga hauba u stilu Peterbilta, bez marke, samo podatak `TRUCK_DESIGN`), pa
+„moze execute" (2026-09-17). Nacrt proveren pomoćnim prikazom iz šest uglova (scratch esbuild + headless Chrome, van
+repoa), jedna korekcija proporcija, zatim kontakt list scene i linkovi `?kamion=0|1`. 2026-09-19, na dev serveru koji je
+Pavle tražio: „Novi kamion je vrh". Stari kamion i prekidač obrisani, pa kapije protiv `next start`. Test nije menjan:
+okvir, razmak kamere i kompozicija već čitaju `TRUCK_DESIGN` (`RD10`), pa novi oblik prolazi iste granice.
+
+IZMERENO:
+```
+  quick                 npm run lint            exit 0   (i ponovljen pred commit: exit 0)
+  typecheck             npm run typecheck       exit 0   (i pred commit: exit 0)
+  test                  npm test                exit 0   168/168, 14 fajlova (i pred commit: 168/168)
+  full                  npm run build           exit 0   BUILD_ID Vs0ew2VUeJPjmVTXwO1ok 01:57:50 (izvor 01:56:13)
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meta                  meri se: http://localhost:3000 · next start PID 43452, 01:58:08 (posle BUILD_ID-a)
+  okvir kamiona         -2.50, 0.20, -10.93 .. 2.50, 6.50, 13.37   (okvir RD2: ±2.73, 0.2-6.54, -10.96-13.4)
+  razmak                kamion min 4.48 · stub 2.44 · van puta 4.94 · iznad puta 0.89
+  ispod teksta 1440x900 2.4 / 2.7 / 5.8 / 0.0 %
+  headless Chrome       scena ready · draw 28/29/29/28 · trouglova 70568/71384 -> 69188/70004 · 0 gresaka
+  isti kamion           ?kamion=1 na dev-u (Pavlov pregled) 69188/70004 = konacni build 69188/70004
+  chunk scene           502 248 -> 503 028 B · gzip 126 538 -> 127 475 (+0,9 KiB)   polazno iz RD10 (izvor bez razlike)
+  pocetni JS /          9 fajlova · 589 KiB · three 0
+  hex boje              nove 0 · uklonjene 0 · logo GROWTH 1 · prekidac u diff-u 0
+```
+
+**Telefon i smanjen pokret — nalaz merenja, ne izmene.** Chunk scene se u oba režima ne učitava (0 zahteva; pozitivna
+kontrola desktop 1), a `hero-01-night.jpg` i `hero-01-night-mobile.jpg` su bajt-identične na produkciji i grani. Poređenje
+piksela produkcija naspram grane (hladan profil, 18 krugova) dalo je 0 u većini, a povremeno uvek istu razliku u području
+fotografije: telefon 37 473 od 697 500 (prosečno 1,01 nivo, max 9), smanjen pokret 413 107 od 1 296 000 (1,14, max 32).
+Kontrole: isti build `localhost` naspram `127.0.0.1` 0 u 6 od 6; isti build sa 150 ms kašnjenja mreže na jednoj strani
+**iste brojke u 6 od 6**. Uzrok je sporija isporuka fotografije sa produkcije, ne kod → `LESSONS` L32.
+
+**Scope drift:** none — `git diff --name-only 8c56df0...HEAD` + radno stablo = podskup EXPECTED-FILES
+(`__tests__/lib/hero-scene.test.js` nije bio potreban).
+
+**Lessons:** `L32` (poređenje piksela produkcije i lokalnog servera zavisi od brzine isporuke fotografije). ⚠️ `LESSONS`
+306/300 linija — cap je upozorenje; arhiviranje nije rađeno.
+
+**NEXT STEP:** release `RD12` (Pavlova odluka) — merge fast-forward, push, diskriminator na deploy-u (trouglovi ili string
+iz novog `TRUCK_DESIGN`). Zatim predlog `RD11` (oznake na putu, truck stop), `RD3`, `T1b`.
+
+---
+
 ## non-batch(release) — `RD2` + `RD10` spojeni i pušeni; izmereni na deploy-u · 2026-09-17
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/RD2.md` · `workflow/projects/growth-cinematic/batches/RD10.md` ·
