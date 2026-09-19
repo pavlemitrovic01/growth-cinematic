@@ -68,6 +68,23 @@
 
 ## ZATVORENO
 
+### `RD3-LOOK` — svetlo scene: nebo van magle, oreoli, bistra topla zora, bez svetlog vela · 2026-09-19
+- **Izvor stavke** (Pavle, 2026-09-15): *„Kad se pređe (na trećoj slici) nekako je previše prazno i tmurno, kao da je magla
+  i da se sunce jedva probija kroz maglu."* Magla je bila zamerka (`LESSONS` L35); „sunce iza kamere" rešio je `RD10`.
+- **Procena pre plana:** nije overengineering (u svakom kadru, bez asseta, jeftino); bloom (`EffectComposer`), zraci svetla
+  i novi objekti protiv „praznine" jesu — van obima.
+- **Izbor od šest varijanti uživo** (`?svetlo=0..5`, kontakt list + linkovi; Pavle tražio *„kao i pre da vidim vise
+  varijacija"*): *„Meni se svidjaju 2 3 i 4 ali mi je nekako 3 zlatna sredina"*, pa *„Biram 3."* → mesec, sunce i zvezde van
+  magle; meki oreoli oko farova, zadnjih svetala, lampi i truck stop-a; sjajniji asfalt (hrapavost 0,68 → 0,45); u zoru ređa
+  magla (0,0095 → 0,0045) boje `#b98468` umesto braon `#6c513b`; nebo od `#3b4757` gore do horizonta u boji magle, sa blagim
+  sjajem oko sunca; svetli veo `--bone` na dnu heroja uklonjen.
+- **Preporuka agenta bila je ista** (3): 2 ostavlja zoru kao ravan braon zid; 4 uvodi plavu kojoj na sajtu nema para i ide
+  protiv toplog svetla iz `S1-LOOK`.
+- **Disk ostaje `#ffd392`** — ponuđen toplo-beli disk iz varijante 5 ako deluje zlatno; Pavle izabrao 3 bez izmene.
+- **Pregled:** *„pass"* (produkcijski build, pravi browser).
+- ⚠️ Ko menja boju magle menja i horizont neba (isti `THREE.Color`). Ko menja `--forest` (Pavle želi, 2026-09-19): noćne boje
+  scene (nebo `#07110d`, magla `#0d1a16`, vrh neba `#040a08`, `.journey-shade`) su podešene na nju.
+
 ### `RD11-LOOK` — američki put, dva truck stop-a, niža tabla, duži skrol heroja · 2026-09-19
 - **Procena pre plana (Pavle traži opomenu):** put nije overengineering (u svakom kadru, jeftin); truck stop kao
   kompleks jeste — prihvaćen samo kao „svetla u daljini", bez teksta i marke, kao varijanta u jednom krugu.

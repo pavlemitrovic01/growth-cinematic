@@ -319,3 +319,10 @@ Boja magle `#0d1a16` je namerno svetlija od neba `#07110d` (`RD10`, odvaja plano
 linije tla crta se bojom magle na tamnijem nebu. Brdo je nije moglo sakriti jer kamera gleda niz koridor puta. **Pravilo:**
 „skriva ga magla" važi samo ispod linije tla u tom pravcu; ono što viri iznad horizonta proverava se na snimku, ne
 proračunom vidljivosti. Važi i za `RD3` (magla): posvetljena magla pravi siluete od svega visokog u daljini.
+
+## L35 — Red u ROADMAP-u od jedne rečenice izgubi smer: „magla" je bila Pavlova zamerka, a čitala se kao zahtev.
+`RD3` je glasio „praznina i „magla" posle prolaza, sunce iza kamere" — kao spisak stvari za dodati. Pavlove reči od
+2026-09-15 (nađene u transkriptu pre plana): *„previše prazno i tmurno, kao da je magla i da se sunce jedva probija kroz
+maglu"* — magla je problem, ne efekat. A „sunce iza kamere" je već rešio `RD10`. Bez originala bi plan dodao maglu.
+**Pravilo:** za stavku iz Pavlove liste plan prvo traži njegove reči (transkript sesije, `LOG` unos liste) i piše ih u
+manifest; ROADMAP red je sažetak, ne izvor. Posle većih izmena scene (`RD2`, `RD10`, `RD11`) zamerka se meri iznova.

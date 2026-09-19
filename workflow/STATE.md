@@ -7,29 +7,32 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** nije odlučeno. Otvoren je
-  `RD3` (sjaj posle početnog kadra, magla; sunce u 02 sada izlazi ispred kamere). Za dizajn i dalje čeka
-  **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn); predlog stranice
-  „smer redizajna" pre `RD4`–`RD7` stoji. Ostatak lanca lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi
-  advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
+- **Sledeće:** **release `RD3`** (Pavlova odluka: merge fast-forward, push, merenje na deploy-u). Zatim nije odlučeno:
+  stranica **„smer redizajna"** pre `RD4`–`RD7` — **Pavle 2026-09-19 želi da menja tamnozelenu (`--forest`)**, pa paleta
+  ide na tu stranicu (3–4 osnovne boje na pravom sadržaju, zelena kao kontrola), pitanje „smeta ton ili monotonija" je
+  postavljeno; **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
+  lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa
+  broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD11`** (2026-09-19, `5def0d5`) — **Američki put:** žuta leva ivica, bela desna, duge
-  pauze, ograda u deonicama, stubići sa reflektorima; dva truck stop-a bez teksta i marke (noćni u 01, jutarnji u 03,
-  niža tabla) u `lib/hero-road.ts`, tlo sa platoom; skrol heroja `380svh` → `460svh` (odobreno proširenje, „A").
-  Draw 28/34/34/34/33, chunk +1,9 KiB gzip, test 168 → 171; `manual` PASS („konacno je"). Spojen i pušen 2026-09-19,
-  izmeren na deploy-u.
-- **Pretposlednji:** **`RD12`** (2026-09-19, `66a88db`) — **Američki tegljač:** klasična duga hauba, bez marke; samo
-  `lib/hero-truck.ts`. `manual` PASS („Novi kamion je vrh"). Spojen i pušen 2026-09-19, izmeren na deploy-u.
+- **Poslednji završen:** **`RD3`** (2026-09-19, `5e2c036`) — **Svetlo scene:** mesec, sunce i zvezde van magle (disk je
+  bio 66 % boje magle), meki oreoli oko farova, zadnjih svetala, lampi i truck stop-a, sjajniji asfalt, u zoru ređa topla
+  magla i nebo u prelazu, bez svetlog vela na dnu heroja; nov `lib/hero-light.ts`. Varijanta 3 od šest („Biram 3").
+  Draw 30–37, chunk +1,7 KiB gzip, test 171 → 173; `manual` PASS („pass"). **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD11`** (2026-09-19, `5def0d5`) — **Američki put:** američke linije, ograda, stubići, dva truck
+  stop-a u `lib/hero-road.ts`; skrol heroja `460svh`. `manual` PASS („konacno je"). Spojen i pušen 2026-09-19, izmeren na
+  deploy-u.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `RD3` (implementacija `5e2c036` + close) na grani **`rd3-svetlo-scene`** (sa `master` @ `48fe6f4`) — **nije spojen ni
+  pušen**; release je Pavlova odluka. Merenja protiv lokalnog `next start`; deploy još nosi `RD11`.
 - `RD11` (`fabd74a..9ccc972`, implementacija `5def0d5`) spojen fast-forward-om i pušen 2026-09-19 (Pavle: „spoji u
   master i pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (kod `RD11` u
   JS-u koji `/` može da učita 0 → 1 i CSS `380svh` → `460svh`, kontrola three 1 u oba); `manual` na produkciji nije
@@ -58,7 +61,7 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD11`; origin nosi `M7`, `U1`, `K1`,
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD11` (`48fe6f4`); `RD3` nije u njemu; origin nosi `M7`, `U1`, `K1`,
   `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12` i `RD11`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.

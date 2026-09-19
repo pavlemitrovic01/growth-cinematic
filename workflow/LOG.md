@@ -6,6 +6,80 @@
 
 ---
 
+## RD3 (STANDARD) — Svetlo i vazduh scene: nebo van magle, oreoli, bistra topla zora, bez svetlog vela · 2026-09-19
+
+**Implementacija:** `5e2c036` · **Grana:** `rd3-svetlo-scene` (sa `master` @ `48fe6f4`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `lib/hero-light.ts` (nov) · `lib/hero-scene.ts` · `components/HeroExperience.tsx` ·
+`__tests__/lib/hero-scene.test.js` · `app/globals.css` (odobreno proširenje) · `workflow/projects/growth-cinematic/batches/RD3.md`
+(nov) · `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Pavle: „rd3". Pre plana nađene Pavlove reči iz 2026-09-15 (transkript): *„Kad se pređe (na trećoj slici) nekako je previše
+prazno i tmurno, kao da je magla i da se sunce jedva probija kroz maglu"* — „magla" iz ROADMAP reda je zamerka, ne zahtev
+(`L35`); „sunce iza kamere" rešio je `RD10`. Produkcija izmerena pre plana: disk sunca i meseca na 110 jedinica bio je
+**66,4 % boje magle** (`MeshBasicMaterial` i `PointsMaterial` imaju `fog` podrazumevano uključen), svetli veo `--bone` na
+dnu heroja se na kraju lomio u tvrdu ivicu o tamnu formu. Plan (procena: nije overengineering; bloom, zraci, novi objekti
+van obima), pa „moze execute kao i pre da vidim vise varijacija". Nov modul `lib/hero-light.ts`: oreoli kao tačke sa
+sopstvenim shaderom (veličina u jedinicama sveta, magla ih gasi, farovi gledaju napred), nebo u prelazu (kupola, horizont
+= boja magle, sjaj oko sunca i meseca). Prekidač `?svetlo=0..5` na dev serveru, kontakt listovi iz headless Chrome-a;
+prvi krug 3–4 imao je preširok beo sjaj oko sunca (opet „mlečno") — sužen i nebo zasićenije pre Pavlovog pogleda. Pavle:
+„Meni se svidjaju 2 3 i 4 ali mi je nekako 3 zlatna sredina", pa „Biram 3." → prekidač i ostale varijante obrisani.
+Uklanjanje vela je census kapija `K1/B` odmah uhvatila (*„expected ['journey-dawn'] to deeply equal []"*) → stao, pitao
+za `app/globals.css` (samo brisanje dva pravila), Pavle „okej idemo da zavrsimo ovo sto smo poceli" → `APPROVED-SCOPE-EXPANSION`.
+
+IZMERENO:
+```
+  polazno (produkcija = master 48fe6f4)  draw 28/28/34/34/27/34/34/24/33 (0..1 po 1/8) · chunk 1zgxq-2q-dm_7.js 508 343 B, gzip 129 407
+  quick                 npm run lint            exit 0   (i ponovljen pred commit: exit 0)
+  typecheck             npm run typecheck       exit 0   (i pred commit: exit 0)
+  test                  npm test                exit 0   173/173, 14 fajlova (171 + 2 nova; i pred commit: 173/173)
+  full                  npm run build           exit 0   BUILD_ID 19:07:06 (najnoviji izvor 19:06:01)
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meta                  meri se: http://localhost:3000 · next start PID 45508, 19:08:02 (posle BUILD_ID-a)
+  servirani kod         chunk scene 3s4gcg4bpyv0i.js · RD3 kod (facingEye + #b98468) 0 na produkciji -> 1 lokalno
+  headless Chrome       scena ready · draw 31/37/30/37/37/36/36 (uvod/01/0,5/02 izlazak/02/03/kraj) · trouglova 73916/76056/70754/76056/76056/75240/75240 · 0 gresaka
+  chunk scene           508 343 -> 512 952 B · gzip 129 407 -> 131 115 (+1,7 KiB; budzet 3)
+  telefon / smanjen     chunk scene 0 / 0 zahteva (kontrola desktop 1) · sceneState static · fotografija ista
+  magla na disku        0,664 -> 0 (i zvezde) · disk toneMapped false
+  razmak kamere         kamion 4.48 · stub 2.44 · van puta 4.94 · iznad puta 0.89 · pored puta 3.09 (isti kao RD11) · oreol 1.30 na 45,60% (nov)
+  oreola                166 pored puta (30 lampi + truck stop-ovi) · 26 na kamionu
+  nepromenjeno          git diff master: hero-truck / hero-road / hero-terrain 0 linija · CAMERA_PLAN, SUN_*, MOON_DIRECTION bez izmene
+  veo zore              .journey-dawn u HTML-u 0 · u CSS-u 0 · ?svetlo u izvoru 0
+```
+
+**Nove kapije crvene pa zelene (`RULES §6`)** — sha256 `lib/hero-light.ts` pre prekršaja `ac601bc3…606aeb`:
+```
+  F1  disk fog: true                        -> 16 crveno: disk 0.664                       (1 failed | 16 passed)
+  F2  zvezde fog: true                      -> 16 crveno: zvezde 1.000                     (1 failed | 16 passed)
+  F3  oreoli kamiona 5 -> 8 / 12 / 20       -> 17 ZELENO: svetla kamiona su daleko od kamere (min i dalje lampa, 1.30)
+      oreoli kamiona 5 -> 60 / 100          -> 17 crveno: -5.99 / -14.39 na 49,91%         (1 failed | 16 passed)
+  F4  oreol lampe 1,3 -> 9                  -> 17 crveno: -6.40 na 45,60%                  (1 failed | 16 passed)
+  vracanje: sha256 isti kao pre prekrsaja posle svakog · 17/17
+```
+F3 do 20 nije pocrveneo — kao `L30`, prekršaj mora da stigne tamo gde kamera stvarno prolazi; grana za kamion je živa (60).
+
+⚠️ Python skript za izmene je na Windows-u upisao CRLF u tri fajla (tekstualni režim); uhvaćeno upozorenjem git-a, vraćeno na
+LF pre commita (`tr -cd '\r' | wc -c` = 0).
+
+**`manual`:** PASS — Pavle, u svom browseru na `next start` (produkcijski build, izabrana varijanta): „pass".
+
+**Scope drift:** none — radno stablo + `5e2c036` = EXPECTED-FILES + `app/globals.css` (`APPROVED-SCOPE-EXPANSION`, Pavle „okej").
+`lib/hero-beat.ts` i `__tests__/lib/hero-beat.test.js` (uslovni) nisu dirani: veo je uklonjen, ne preoblikovan, pa kriva ne postoji.
+
+**Lessons:** `L35` (ROADMAP red u jednoj rečenici izgubi smer — „magla" je bila zamerka). Činjenica o `fog` podrazumevano
+uključenom stoji u zaglavlju `lib/hero-light.ts` i testu 16. ⚠️ `LESSONS` preko capa (upozorenje); arhiviranje nije rađeno.
+
+**Van obima, uočeno:** mesec u 01 i dalje deluje prigušeno — ne od magle nego od `.journey-shade` (levi gradijent čuva
+čitljivost teksta). Pavle želi da menja tamnozelenu (`--forest`) — ide kroz stranicu „smer redizajna", ne kroz `RD3`.
+
+**NEXT STEP:** release `RD3` (Pavlova odluka) — merge fast-forward, push, diskriminator na deploy-u (`facingEye` / `#b98468` u
+JS-u scene) pa `verify`/`rendered` protiv deploy-a. Zatim: stranica „smer redizajna" (paleta — Pavle želi da menja zelenu), `T1b`.
+
+---
+
 ## non-batch(release) — `RD11` spojen i pušen; izmeren na deploy-u · 2026-09-19
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/RD11.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·
