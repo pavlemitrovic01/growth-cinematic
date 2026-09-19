@@ -17,7 +17,7 @@ urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 Cilj (Pavle): **što bolji cinematic osećaj, uz ozbiljno dobre i logički povezane informacije** (`DECISIONS`).
 Telefon je za sada po strani. Obim stavki **nije planiran**, redosled bira Pavle. Pavle je prvo tražio scenu
 u heroju („Prvo to") — urađen `S1`; greška sa naslovima (`RD1`) zatvorena 2026-09-16; kamera (`RD2`) i izgled
-scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD12`) zatvoren, spojen i pušen 2026-09-19; američki put (`RD11`) zatvoren 2026-09-19, čeka release. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
+scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD12`) zatvoren, spojen i pušen 2026-09-19; američki put (`RD11`) zatvoren, spojen i pušen 2026-09-19. Predlog pre `RD4`–`RD7`: jedna stranica „smer redizajna" sa 2–3 pravca
 (navigacija, zaglavlje podstranice, smena sekcija, paleta, slike), da batch-evi ne odu svaki na svoju stranu.
 
 | ID | Posao | Tier | Zavisi od | Status |
@@ -128,7 +128,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
-| `RD11` | **Američki put** — linije se nisu čitale kao američke; sada žuta leva ivica, bela desna, duge pauze, ograda u deonicama, stubići sa reflektorima i dva truck stop-a bez teksta i marke (noćni u 01, jutarnji u 03, niža tabla) u novom `lib/hero-road.ts`, tlo sa platoom; skrol heroja `380svh` → `460svh` (odobreno proširenje); draw 28/34/34/34/33, chunk +1,9 KiB gzip; test 168 → 171, novi uslovi crveni pa zeleni; `manual` PASS („konacno je"); čeka release | 2026-09-19 |
+| `RD11` | **Američki put** — linije se nisu čitale kao američke; sada žuta leva ivica, bela desna, duge pauze, ograda u deonicama, stubići sa reflektorima i dva truck stop-a bez teksta i marke (noćni u 01, jutarnji u 03, niža tabla) u novom `lib/hero-road.ts`, tlo sa platoom; skrol heroja `380svh` → `460svh` (odobreno proširenje); draw 28/34/34/34/33, chunk +1,9 KiB gzip; test 168 → 171, novi uslovi crveni pa zeleni; `manual` PASS („konacno je"); spojen i pušen 2026-09-19, izmeren na deploy-u | 2026-09-19 |
 | `RD12` | **Američki tegljač** — kamion se nije čitao kao američki; sada klasična duga hauba (četvrtasta, visoka uska hromirana rešetka, lučni blatobrani, okrugli farovi, filteri vazduha, visoki auspusi, retrovizori na nosačima, spavaći deo odvojen), bez marke; samo `lib/hero-truck.ts`; draw isti 28/29/29/28, chunk +0,9 KiB gzip, test 168 bez izmene; `manual` PASS („Novi kamion je vrh"); spojen i pušen 2026-09-19, izmeren na deploy-u | 2026-09-19 |
 | `RD10` | **Izgled scene** — piramide od kupa i kamion od kutija delovali su kao „lego kockice"; sada meka viša brda iz čiste funkcije `terrainHeight`, američki tegljač kao niz delova spojen po materijalu, put sa teksturom; mesec u 01 i sunce koje u 02 izlazi nagore kao pravci od kamere, po Pavlovim oznakama; draw 58–59 → 28–29, chunk +4,5 KiB gzip; test 156 → 168; `manual` PASS; spojen i pušen sa `RD2` 2026-09-17, izmeren na deploy-u | 2026-09-17 |
 | `RD2` | **Kamera u heroju** — prolazila je kroz prikolicu (52,84–59,90 % skrola) i 0,34 jedinice od stuba, dok se čita 02; sada plan kadrova „Kran" sa kamionom desno od teksta (ispod teksta 0–4,4 % umesto 65–82 % na 1440×900), jedna blaga pauza u 02 (9,5 % putanje umesto 26,7 %), razmak kamion 4,24 / stub 2,44 / brdo 5,98; testovi crveni pa zeleni, test 145 → 156; `manual` PASS; spojen i pušen sa `RD10` 2026-09-17, izmeren na deploy-u | 2026-09-17 |

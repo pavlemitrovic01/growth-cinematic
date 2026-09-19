@@ -6,6 +6,46 @@
 
 ---
 
+## non-batch(release) — `RD11` spojen i pušen; izmeren na deploy-u · 2026-09-19
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/RD11.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `fabd74a..9ccc972` fast-forward, push — nosi `5def0d5` (`RD11`) i `9ccc972` (close). Pavlova odluka 2026-09-19
+(„spoji u master i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `fabd74a`, nepomeren), čisto stablo i da
+je fast-forward moguć.
+
+**Diskriminator PRE merenja:** JS koji naslovna može da učita (početni fajlovi i putanje chunk-ova navedene u njima), kontrola
+`centripetal` (three.js, postoji i pre i posle), kod `RD11` (`#c99b3c` žuta linija, `#6f766c` čelik ograde) i CSS (`460svh` /
+`380svh`). Instrument je pre push-a proveren na lokalnom `next start` (`RD11` 1/1, `460svh` 1), pa je „0" na produkciji
+merenje, ne slepa tačka (`L20`).
+```
+  lokalno      17:11:31   JS 10 · kontrola 1 · RD11 1 · ograda 1 · CSS 460svh 1 / 380svh 0
+  pre push-a   17:11:33   JS 10 · kontrola 1 · RD11 0 · ograda 0 · CSS 460svh 0 / 380svh 1   fra1::222s7-1789830692645-ad7f1d2d4323
+  push         17:11:46   fabd74a..9ccc972
+  posle        17:11:58   JS 10 · kontrola 1 · RD11 0 · ograda 0 · CSS 460svh 0 / 380svh 1   (stari build)
+               17:12:31   JS 10 · kontrola 1 · RD11 1 · ograda 1 · CSS 460svh 1 / 380svh 0   fra1::qvnll-1789830750716-34a69236e5cf
+```
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  three.js u pocetnom JS-u      0 od 9 (589 KiB) -- pozitivna kontrola: chunk scene 1zgxq-2q-dm_7.js (508 343 B, isti kao
+                                lokalno) nosi WebGLRenderer i #c99b3c
+  headless Chrome               scena ready · draw 28/34/34/33 · trouglova 72956/75096/75096/74280 · visina heroja 4.600 · 0 gresaka
+```
+
+⚠️ Prva provera početnog JS-a na deploy-u dala je „0 fajlova": obrazac je tražio `/_next/static/chunks/`, a Vercel servira
+`/_next/static/immutable/chunks/`. Ponovljeno sa putanjom iz HTML-a; nula iz prvog pokušaja nije bila merenje.
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istoj sceni lokalno.
+
+**NEXT STEP:** nije odlučeno — `RD3` (sjaj, magla; `L34`), `T1b`.
+
+---
+
 ## RD11 (STANDARD) — Američki put: oznake, ograda, stubići, dva truck stop-a; duži skrol heroja · 2026-09-19
 
 **Implementacija:** `5def0d5` · **Grana:** `rd11-americki-put` (sa `master` @ `fabd74a`) — **nije spojena ni pušena**:
