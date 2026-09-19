@@ -6,6 +6,40 @@
 
 ---
 
+## non-batch(release) — `RD12` spojen i pušen; izmeren na deploy-u · 2026-09-19
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/RD12.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `8c56df0..65cf78a` fast-forward, push — nosi `66a88db` (`RD12`) i `65cf78a` (close). Pavlova odluka 2026-09-19
+(„spoji u master i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `8c56df0`, nepomeren), čisto stablo i da
+je fast-forward moguć.
+
+**Diskriminator PRE merenja:** JS koji naslovna može da učita (početni fajlovi i putanje chunk-ova navedene u njima), kontrola
+`centripetal` (three.js, postoji i pre i posle) i kod `RD12` (`10.44` iz šipki rešetke, `10.36` iz rešetke i farova). Instrument
+je pre push-a proveren na lokalnom `next start` (kontrola 1, `RD12` 1/1), pa je „0" na produkciji merenje, ne slepa tačka (`L20`).
+```
+  lokalno      03:21:15   JS 10 · kontrola 1 · RD12 1 · farovi 1
+  pre push-a   03:21:16   JS 10 · kontrola 1 · RD12 0 · farovi 0   fra1::wq5cc-1789780874974-82574e37c7fe
+  posle        03:21:43   JS 10 · kontrola 1 · RD12 0 · farovi 0   (stari build)
+               03:22:06   JS 10 · kontrola 1 · RD12 1 · farovi 1   fra1::q8gt4-1789780925373-bc7aecfaec39
+```
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  three.js u pocetnom JS-u      0 od 9 (589 KiB)
+  headless Chrome               scena ready · draw 28/29/29/28 · trouglova 69188/70004/70004/69188 · 0 gresaka
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kamionu lokalno.
+
+**NEXT STEP:** nije odlučeno — predlog `RD11` (oznake na putu, truck stop), `RD3`, `T1b`.
+
+---
+
 ## RD12 (STANDARD) — Američki tegljač: klasična duga hauba, bez marke · 2026-09-19
 
 **Implementacija:** `66a88db` · **Grana:** `rd12-americki-kamion` (sa `master` @ `8c56df0`) — **nije spojena ni pušena**:
