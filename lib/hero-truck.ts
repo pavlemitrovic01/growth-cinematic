@@ -3,7 +3,7 @@ import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.j
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
 /**
- * Kamion hero scene kao podatak (`RD10`).
+ * Kamion hero scene kao podatak (`RD10`; oblik americkog tegljaca iz `RD12`).
  *
  * ⚠️ ZASTO POSTOJI. Do `RD10` je kamion bio 26 kutija i 20 zasebnih cilindara u `createHeroScene`, a test
  * razmaka kamere je te mere drzao prepisane. Sada je oblik niz delova (`TruckPart`), iz kog se prave i
@@ -38,40 +38,76 @@ const box = (size: Vec3, at: Vec3, material: TruckMaterial, radius?: number, til
   shape: 'box', size, at, material, radius, tilt,
 });
 const mirror = (fn: (side: -1 | 1) => TruckPart): TruckPart[] => [fn(-1), fn(1)];
+const sides = [-1, 1] as const;
+const cylinder = (radius: number, length: number, axis: 'x' | 'y' | 'z', at: Vec3, material: TruckMaterial): TruckPart => ({
+  shape: 'cylinder', radius, length, axis, at, material,
+});
 
 /**
- * Americki tegljac sa dugom haubom i suvom prikolicom (`RD10`): zaobljene ivice, hauba sa resetkom, kabina
- * sa spavacim delom i spojlerom, rezervoari, dva auspuha, blatobrani, tockovi sa felnom, zadnja vrata sa
- * svetlima. Ostaje u okviru kamiona iz `RD2` (x ±2,73, y 0,2-6,54, z -10,96-13,4), jer je po tom okviru
- * izmeren plan kamere.
+ * Luk od `count` ravnih kutija oko ose x u tacki (`z`, `y`): ugao 0 je vrh luka, negativan ide napred (-z).
+ * Kutije su zatvorene, pa se luk vidi i odozdo -- polovina otvorenog cilindra bi iz niskog kadra bila providna.
+ */
+function arch(x: number, width: number, z: number, y: number, radius: number, from: number, to: number, count: number, material: TruckMaterial): TruckPart[] {
+  const step = (to - from) / count;
+  const depth = 2 * radius * Math.sin(step / 2) + 0.04;
+  return Array.from({ length: count }, (_, i) => {
+    const angle = from + (i + 0.5) * step;
+    return box([width, 0.1, depth], [x, y + radius * Math.cos(angle), z + radius * Math.sin(angle)], material, undefined, angle);
+  });
+}
+
+/**
+ * Klasicni americki tegljac sa dugom haubom (`RD12`): cetvrtasta hauba ravnog vrha, visoka uska hromirana resetka,
+ * blatobrani kao luk nad prednjim tockom, okrugli farovi na hromiranim nosacima, ravno dvodelno staklo sa stitnikom
+ * i svetlima, hromirani filteri vazduha uz haubu, visoki auspusi, rezervoari, retrovizori na nosacima i spavaci deo
+ * odvojen od kabine. Bez amblema i imena marke. Prikolica je ista kao u `RD10`. Ostaje u okviru kamiona iz `RD2`
+ * (x ±2,73, y 0,2-6,54, z -10,96-13,4), jer je po tom okviru izmeren plan kamere.
  */
 export const TRUCK_DESIGN: TruckDesign = {
   parts: [
-    // Hauba, kabina, spavaci deo, spojler.
-    box([3.2, 1.45, 3.1], [0, 2.05, -9.25], 'olive', 0.32),
-    box([3.9, 2.95, 2.55], [0, 3.15, -6.45], 'olive', 0.35),
-    box([3.9, 3.5, 3.2], [0, 3.4, -3.55], 'olive', 0.35),
-    box([3.7, 0.95, 2.9], [0, 5.45, -3.7], 'olive', 0.4, 0.12),
-    ...mirror((side) => box([0.62, 0.32, 2.0], [side * 2.15, 2.02, -7.3], 'olive', 0.14)),
-    ...mirror((side) => box([0.25, 0.7, 2.3], [side * 1.95, 1.45, -6.3], 'olive', 0.1)),
-    // Resetka u hromiranom okviru, branik.
-    box([2.25, 1.15, 0.1], [0, 2.05, -10.84], 'dark'),
-    box([2.55, 0.12, 0.1], [0, 2.66, -10.88], 'chrome'),
-    box([2.55, 0.12, 0.1], [0, 1.44, -10.88], 'chrome'),
-    ...mirror((side) => box([0.12, 1.35, 0.1], [side * 1.22, 2.05, -10.88], 'chrome')),
-    ...Array.from({ length: 7 }, (_, i) => box([0.05, 1.05, 0.06], [-0.9 + i * 0.3, 2.05, -10.9], 'chrome')),
-    box([3.9, 0.42, 0.36], [0, 1.12, -10.72], 'chrome', 0.12),
-    // Staklo.
-    box([3.25, 1.05, 0.08], [0, 3.95, -7.74], 'glass', undefined, -0.2),
-    ...mirror((side) => box([0.06, 0.85, 1.25], [side * 1.96, 3.9, -6.55], 'glass')),
-    // Retrovizori.
-    ...mirror((side) => box([0.55, 0.05, 0.05], [side * 2.28, 3.9, -7.55], 'chrome')),
-    ...mirror((side) => box([0.14, 0.62, 0.26], [side * 2.6, 3.85, -7.55], 'dark')),
-    // Rezervoari i auspusi.
-    ...mirror((side) => ({ shape: 'cylinder', radius: 0.42, length: 1.7, axis: 'z', at: [side * 2.05, 1.35, -4.4], material: 'chrome' })),
-    ...mirror((side) => ({ shape: 'cylinder', radius: 0.1, length: 3.1, axis: 'y', at: [side * 2.05, 4.3, -5.3], material: 'chrome' })),
+    // Hauba: ravan vrh blago spusten ka napred, bocne resetke.
+    box([2.3, 1.75, 3.9], [0, 2.5, -8.4], 'olive', 0.12, -0.025),
+    ...sides.flatMap((side) => [2.55, 2.8, 3.05].map((y) => box([0.03, 0.07, 1.1], [side * 1.16, y, -9.1], 'dark'))),
+    // Resetka: tamna podloga, hromirani okvir, uspravne sipke.
+    box([1.6, 1.75, 0.12], [0, 2.35, -10.36], 'dark'),
+    box([1.95, 0.16, 0.2], [0, 3.34, -10.42], 'chrome', 0.05),
+    box([1.9, 0.12, 0.16], [0, 1.44, -10.42], 'chrome'),
+    ...mirror((side) => box([0.16, 1.98, 0.16], [side * 0.87, 2.37, -10.42], 'chrome')),
+    ...Array.from({ length: 9 }, (_, i) => box([0.05, 1.72, 0.06], [-0.64 + i * 0.16, 2.35, -10.44], 'chrome')),
+    // Branik.
+    box([4.0, 0.5, 0.42], [0, 1.15, -10.72], 'chrome', 0.1),
+    // Blatobrani: luk nad prednjim tockom i kecelja do branika.
+    ...sides.flatMap((side) => arch(side * 1.83, 1.34, -8.9, 1.0, 1.05, -1.45, 1.35, 8, 'olive')),
+    ...mirror((side) => box([1.34, 0.1, 0.62], [side * 1.83, 1.17, -10.2], 'olive')),
+    // Farovi: hromirane cahure na nosacima uz resetku, zuto svetlo na blatobranu.
+    ...mirror((side) => cylinder(0.26, 0.3, 'z', [side * 1.5, 1.95, -10.2], 'chrome')),
+    ...mirror((side) => box([0.4, 0.06, 0.06], [side * 1.1, 1.95, -10.2], 'chrome')),
+    ...mirror((side) => ({ shape: 'disc', radius: 0.21, at: [side * 1.5, 1.95, -10.36], facing: -1, material: 'head' })),
+    ...mirror((side) => box([0.14, 0.08, 0.1], [side * 2.3, 1.62, -9.7], 'amber')),
+    // Filteri vazduha uz zadnji kraj haube.
+    ...mirror((side) => cylinder(0.3, 1.3, 'y', [side * 1.5, 2.85, -6.85], 'chrome')),
+    // Kabina, ravno dvodelno staklo sa pregradom, stitnik od sunca sa svetlima.
+    box([3.7, 3.35, 2.0], [0, 3.225, -5.45], 'olive', 0.18),
+    ...mirror((side) => box([1.64, 1.05, 0.06], [side * 0.86, 4.12, -6.49], 'glass', undefined, 0.12)),
+    box([0.1, 1.1, 0.08], [0, 4.12, -6.5], 'dark', undefined, 0.12),
+    box([3.7, 0.08, 0.55], [0, 4.78, -6.68], 'olive', undefined, -0.35),
+    ...[-1, -0.5, 0, 0.5, 1].map((x) => box([0.16, 0.06, 0.06], [x, 4.74, -6.93], 'amber')),
+    ...mirror((side) => box([0.06, 0.95, 1.2], [side * 1.86, 4.05, -5.55], 'glass')),
+    ...mirror((side) => box([0.04, 0.9, 0.04], [side * 1.88, 3.0, -6.3], 'chrome')),
+    // Sirene na krovu, retrovizori na hromiranim nosacima.
+    ...mirror((side) => cylinder(0.07, 0.8, 'z', [side * 0.55, 4.99, -5.6], 'chrome')),
+    ...mirror((side) => box([0.1, 0.95, 0.32], [side * 2.45, 3.85, -6.55], 'dark')),
+    ...sides.flatMap((side) => [4.25, 3.45].map((y) => box([0.6, 0.04, 0.04], [side * 2.13, y, -6.55], 'chrome'))),
+    // Spavaci deo: odvojen spojem, visi od kabine, sa malim prozorom.
+    box([3.4, 3.2, 0.12], [0, 3.2, -4.4], 'dark'),
+    box([3.7, 4.1, 2.4], [0, 3.75, -3.15], 'olive', 0.3),
+    ...mirror((side) => box([0.06, 0.45, 0.7], [side * 1.86, 4.6, -3.4], 'glass')),
+    // Auspusi na spoju kabine i spavaceg dela, rezervoari, kutija akumulatora.
+    ...mirror((side) => cylinder(0.15, 4.4, 'y', [side * 2.0, 4.3, -4.4], 'chrome')),
+    ...mirror((side) => cylinder(0.42, 2.0, 'z', [side * 1.95, 1.3, -5.45], 'chrome')),
+    ...mirror((side) => box([0.5, 0.7, 0.9], [side * 1.75, 1.3, -3.85], 'dark')),
     // Sasija, sedlo, blatobrani.
-    ...mirror((side) => box([0.3, 0.32, 14.5], [side * 0.85, 1.05, 1.0], 'dark')),
+    ...mirror((side) => box([0.3, 0.32, 18.7], [side * 0.85, 1.05, -1.1], 'dark')),
     box([2.3, 0.18, 1.3], [0, 1.48, -0.9], 'dark'),
     ...mirror((side) => box([0.62, 0.72, 0.05], [side * 2.18, 0.92, 2.05], 'dark')),
     ...mirror((side) => box([0.62, 0.72, 0.05], [side * 2.18, 0.92, 12.1], 'dark')),
@@ -81,20 +117,18 @@ export const TRUCK_DESIGN: TruckDesign = {
     box([4.56, 0.1, 15.15], [0, 6.45, 5.75], 'chrome'),
     box([3.9, 0.22, 0.22], [0, 0.95, 13.05], 'dark'),
     ...[-1.7, -0.5, 0.5, 1.7].map((x) => box([0.05, 4.2, 0.05], [x, 4.05, 13.33], 'chrome')),
-    // Svetla.
-    ...mirror((side) => ({ shape: 'disc', radius: 0.22, at: [side * 1.35, 1.95, -10.87], facing: -1, material: 'head' })),
+    // Svetla prikolice.
     ...mirror((side) => ({ shape: 'disc', radius: 0.16, at: [side * 1.7, 1.65, 13.36], facing: 1, material: 'tail' })),
     ...mirror((side) => ({ shape: 'disc', radius: 0.07, at: [side * 2.05, 6.25, 13.36], facing: 1, material: 'tail' })),
     ...[-0.35, 0, 0.35].map((x): TruckPart => ({ shape: 'disc', radius: 0.06, at: [x, 6.25, 13.36], facing: 1, material: 'tail' })),
     ...[-0.5, 2.75, 6, 9.25, 12.5].flatMap((z) => mirror((side) => box([0.04, 0.1, 0.18], [side * 2.27, 1.95, z], 'amber'))),
-    ...[-0.7, -0.35, 0, 0.35, 0.7].map((x) => box([0.18, 0.07, 0.07], [x, 4.62, -7.72], 'amber')),
   ],
-  axles: [-7.3, -2.6, 1.0, 7.6, 10.8],
+  axles: [-8.9, -2.6, 1.0, 7.6, 10.8],
   wheelX: 2.18,
   wheelY: 1.02,
   wheelRadius: 0.82,
   wheelWidth: 0.5,
-  headlights: { x: [-1.35, 1.35], y: 1.95, z: -10.75 },
+  headlights: { x: [-1.5, 1.5], y: 1.95, z: -10.4 },
 };
 
 /** Okvir dela u koordinatama kamiona: [min, max]. Nagnute kutije se racunaju po zarotiranim uglovima. */
