@@ -331,7 +331,6 @@
 .journey-scroll{display:none;font-size:11px;letter-spacing:.2em;align-items:center;gap:14px}
 .journey-scroll i{display:block;width:80px;height:2px;background:var(--line)}
 .journey-scroll b{display:block;width:100%;height:100%;background:var(--bone);transform:scaleX(0);transform-origin:left}
-.journey-dawn{display:none;position:absolute;inset:0;z-index:-2;pointer-events:none;background:linear-gradient(0deg,var(--bone),transparent 25%);opacity:0;will-change:opacity}
 @media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
   /* Fotografska podloga se KRIJE tamo gde scena ionako dolazi, i to iz CSS-a — na prvi
      paint. Klasa iz JS-a bi stigla tek posle hidracije, dakle posle bljeska koji resava.
@@ -348,7 +347,6 @@
   .is-enhanced .journey-number{font-size:clamp(80px,10vw,150px)}
   .is-enhanced .journey-tools{position:absolute;bottom:12px;left:0;right:0;padding-bottom:12px}
   .is-enhanced .journey-scroll{display:flex}
-  .is-enhanced .journey-dawn{display:block}
 }
 .home-callback{scroll-margin-top:20px;background:var(--forest);color:var(--bone);padding:34px 0 44px}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}

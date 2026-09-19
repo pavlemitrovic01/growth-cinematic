@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import * as THREE from 'three';
-import { createCameraRig, moonPosition, SUN_RADIUS, sunPosition, sunVisible, truckZ } from '@/lib/hero-scene';
+import { createCameraRig, moonPosition, SUN_DISTANCE, SUN_RADIUS, sunPosition, sunVisible, truckZ } from '@/lib/hero-scene';
+import { discMaterial, fogShare, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial, truckHalos } from '@/lib/hero-light';
 import { cameraProgress } from '@/lib/hero-beat';
 import { TRUCK_DESIGN, truckBounds, truckBoxes } from '@/lib/hero-truck';
 import { ROAD_CORRIDOR, TERRAIN_STYLE, terrainHeight } from '@/lib/hero-terrain';
@@ -37,6 +38,11 @@ import { ROAD_DESIGN, roadsideBoxes } from '@/lib/hero-road';
  * ⚠️ SUNCE (NOCU MESEC), `RD10`: sa visim brdima disk je izlazio iz planine (Pavle: „da sunce/mesec ne izlaze
  * iz planine"). Meri se da je donja ivica diska bar 1 iznad tla na svom mestu i da izmedju kamere i donje
  * ivice diska nijedna tacka zraka nije ispod tla -- 2000 tacaka voznje, 64 tacke po zraku.
+ *
+ * ⚠️ SVETLO (`RD3`): disk je stajao 110 jedinica od kamere, a magla 0,0095 ga je tu bojila 66 % svojom bojom (Pavle:
+ * „kao da se sunce jedva probija kroz maglu"). Meri se udeo magle u boji diska i zvezda na materijalima koje scena
+ * crta (`discMaterial`, `starMaterial`), po najguscoj magli voznje. Oreoli oko svetala su tacke velicine u jedinicama
+ * sveta; kamera je od centra svakog bar poluprecnik + 1 -- oreol preko objektiva bio bi beo ekran.
  */
 const BEATS = 4;
 const SAMPLES = 100000;
@@ -65,6 +71,12 @@ const SUN_RISE_FRAMES = [0.5333, 0.58, 0.63, 0.67, 0.7, 0.74];
 const ROADSIDE = roadsideBoxes(ROAD_DESIGN);
 const ROADSIDE_CLEARANCE = 1;
 const TRUCK_STOP = ROADSIDE.filter((b) => b.truckStop);
+const HALO_CLEARANCE = 1;
+const ROADSIDE_HALOS = roadsideHalos();
+const TRUCK_HALOS = truckHalos(TRUCK_DESIGN);
+const SKY_FOG_MAX = 0.1;
+// Najgusca magla voznje: noc (u zoru se proredjuje ka `LIGHT_STYLE.dawnDensity`).
+const DENSEST_FOG = Math.max(NIGHT_FOG_DENSITY, LIGHT_STYLE.dawnDensity);
 
 /** Rastojanje tacke od kutije poravnate sa osama; negativno kad je tacka unutra. */
 function boxDistance([x, y, z], { min, max }) {
@@ -191,12 +203,14 @@ function measure() {
   const nearGround = new Array(SAMPLES).fill(false);
   const nearRoad = new Array(SAMPLES).fill(false);
   const nearRoadside = new Array(SAMPLES).fill(false);
+  const nearHalo = new Array(SAMPLES).fill(false);
   const min = {
     truck: { d: Infinity, p: 0 },
     pole: { d: Infinity, p: 0 },
     ground: { d: Infinity, p: 0 },
     road: { d: Infinity, p: 0 },
     roadside: { d: Infinity, p: 0 },
+    halo: { d: Infinity, p: 0 },
   };
 
   for (let s = 0; s < SAMPLES; s++) {
@@ -210,12 +224,18 @@ function measure() {
       ground: onRoad ? Infinity : above,
       road: onRoad ? above : Infinity,
       roadside: Math.min(...ROADSIDE.map((b) => boxDistance([position.x, position.y, position.z], b))),
+      // Razmak od ivice oreola: od centra minus poluprecnik. Oreoli kamiona su u koordinatama kamiona.
+      halo: Math.min(
+        ...ROADSIDE_HALOS.map(({ at, radius }) => Math.hypot(position.x - at[0], position.y - at[1], position.z - at[2]) - radius),
+        ...TRUCK_HALOS.map(({ at, radius }) => Math.hypot(position.x - at[0], position.y - at[1], position.z - truckZ(p) - at[2]) - radius),
+      ),
     };
     nearTruck[s] = d.truck < TRUCK_CLEARANCE;
     nearPole[s] = d.pole < POLE_CLEARANCE;
     nearGround[s] = d.ground < GROUND_CLEARANCE;
     nearRoad[s] = d.road < ROAD_CLEARANCE;
     nearRoadside[s] = d.roadside < ROADSIDE_CLEARANCE;
+    nearHalo[s] = d.halo < HALO_CLEARANCE;
     for (const key of Object.keys(min)) if (d[key] < min[key].d) min[key] = { d: d[key], p };
   }
 
@@ -285,6 +305,7 @@ function measure() {
     groundRanges: ranges(nearGround),
     roadRanges: ranges(nearRoad),
     roadsideRanges: ranges(nearRoadside),
+    haloRanges: ranges(nearHalo),
     sunBlockedRanges: ranges(sunBlocked),
     truckStopSunRanges: ranges(sunBehindTruckStop),
     sunAboveGround,
@@ -322,6 +343,24 @@ describe('kamera u heroju ne prolazi kroz kamion, pored stuba ni kroz tlo (RD2, 
     console.log(`izmereno: truck stop kutija ${TRUCK_STOP.length}, pored puta ukupno ${ROADSIDE.length}`);
     expect(TRUCK_STOP.length).toBeGreaterThan(0);
     expect(metrics.truckStopSunRanges).toEqual([]);
+  });
+
+  it('16 -- disk meseca i sunca i zvezde nisu u magli: udeo magle u boji najvise 10 % (RD3)', () => {
+    const effective = (material, distance) => (material.fog ? fogShare(distance, DENSEST_FOG) : 0);
+    const disc = effective(discMaterial(), SUN_DISTANCE);
+    const stars = effective(starMaterial(), 330);
+    console.log(
+      `izmereno: magla na ${SUN_DISTANCE} (gustina ${DENSEST_FOG}) bi dala ${fogShare(SUN_DISTANCE, DENSEST_FOG).toFixed(3)} | disk ${disc.toFixed(3)} | zvezde ${stars.toFixed(3)} | disk toneMapped ${discMaterial().toneMapped}`,
+    );
+    expect(disc).toBeLessThanOrEqual(SKY_FOG_MAX);
+    expect(stars).toBeLessThanOrEqual(SKY_FOG_MAX);
+  });
+
+  it('17 -- kamera nigde nije blize od 1 jedinice ivici oreola oko svetala (RD3)', () => {
+    console.log(`izmereno: oreola pored puta ${ROADSIDE_HALOS.length}, na kamionu ${TRUCK_HALOS.length}, min razmak ${metrics.min.halo.d.toFixed(2)} na ${(metrics.min.halo.p * 100).toFixed(2)}%`);
+    expect(ROADSIDE_HALOS.length).toBeGreaterThan(30);
+    expect(TRUCK_HALOS.length).toBeGreaterThan(0);
+    expect(metrics.haloRanges).toEqual([]);
   });
 
   it('9 -- mesec i sunce ne izlaze iz planine: donja ivica diska bar 1 iznad tla na svom mestu', () => {

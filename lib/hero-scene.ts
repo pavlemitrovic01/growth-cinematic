@@ -1,4 +1,7 @@
 import * as THREE from 'three';
+import {
+  buildHalos, buildSky, discMaterial, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial, STREET_LIGHTS, truckHalos,
+} from './hero-light';
 import { buildRoad, ROAD_DESIGN } from './hero-road';
 import { asphaltTexture, buildTerrain, TERRAIN_STYLE } from './hero-terrain';
 import { buildTruck, TRUCK_DESIGN } from './hero-truck';
@@ -171,22 +174,21 @@ export function createHeroScene(host: HTMLElement) {
     renderer.toneMappingExposure = .98;
     renderer.shadowMap.enabled = true;
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-    const night = new THREE.Color('#07110d');
     // Fog sits a shade lighter and cooler than the sky, so distance fades toward it and the
     // truck, road and midground separate from the background instead of sinking into one black.
+    // The sky dome (RD3) covers the whole frame; the clear colour stays behind it.
     const nightFog = new THREE.Color('#0d1a16');
-    const background = night.clone();
-    scene.background = background;
-    const fog = new THREE.FogExp2(nightFog.clone(),.0095);
+    scene.background = new THREE.Color('#07110d');
+    const fog = new THREE.FogExp2(nightFog.clone(),NIGHT_FOG_DENSITY);
     scene.fog = fog;
     const camera = new THREE.PerspectiveCamera(46,1,.1,700);
     const world = new THREE.Group(); scene.add(world);
-      // Slightly glossy asphalt catches the warm rim and the headlights like a damp night road; the texture keeps
-      // the colour and only adds a surface (RD10).
+      // Glossy asphalt catches the warm rim, the lamps and the headlights like a damp night road, also after the
+      // opening frame (RD3); the texture keeps the colour and only adds a surface (RD10).
       const asphalt = asphaltTexture();
       const road = new THREE.Mesh(
         new THREE.PlaneGeometry(18, 700),
-        new THREE.MeshStandardMaterial({ color: "#232d28", roughness: 0.68, metalness: 0.02, map: asphalt, roughnessMap: asphalt }),
+        new THREE.MeshStandardMaterial({ color: "#232d28", roughness: LIGHT_STYLE.asphaltRoughness, metalness: 0.02, map: asphalt, roughnessMap: asphalt }),
       );
       road.rotation.x = -Math.PI / 2;
       road.position.set(0, 0, -230);
@@ -203,13 +205,15 @@ export function createHeroScene(host: HTMLElement) {
       const poles = new THREE.InstancedMesh(new THREE.CylinderGeometry(.06,.08,5.7,7), poleMat, 30);
       const lamps = new THREE.InstancedMesh(new THREE.SphereGeometry(.16,8,6), lampMat, 30);
       const prop = new THREE.Object3D();
-      for (let i=0;i<30;i++) {
-        const side = i % 2 ? 1 : -1;
-        prop.position.set(side * 10.6, 2.85, 42 - i * 20); prop.updateMatrix();
+      STREET_LIGHTS.forEach(([x, y, z], i) => {
+        prop.position.set(x, y / 2, z); prop.updateMatrix();
         poles.setMatrixAt(i, prop.matrix);
-        prop.position.y = 5.7; prop.updateMatrix(); lamps.setMatrixAt(i, prop.matrix);
-      }
+        prop.position.y = y; prop.updateMatrix(); lamps.setMatrixAt(i, prop.matrix);
+      });
       world.add(poles, lamps);
+      // Soft halos around the lamps and the truck stops (RD3): one draw call, no new lights or shadows.
+      const roadsideGlow = buildHalos(roadsideHalos(), LIGHT_STYLE.haloStrength);
+      world.add(roadsideGlow.points);
       // Rolling hills and a distant ridge instead of five-sided cones (RD10). The height is a pure function shared
       // with the camera test, so the camera, the poles and the sun are measured against the same ground.
       world.add(buildTerrain(TERRAIN_STYLE));
@@ -220,6 +224,9 @@ export function createHeroScene(host: HTMLElement) {
       const built = buildTruck(TRUCK_DESIGN);
       truck.add(built.group);
       const axles = built.axles;
+      // Headlights glow toward the camera in front, tail lights from behind; one draw call that follows the truck.
+      const truckGlow = buildHalos(truckHalos(TRUCK_DESIGN), LIGHT_STYLE.haloStrength);
+      truck.add(truckGlow.points);
       if (!narrow) {
         for (const light of built.headlights) {
           // Neutral-warm and aimed closer, so the pool lands in front of the cab where the opening camera looks.
@@ -259,11 +266,15 @@ export function createHeroScene(host: HTMLElement) {
       const rimNight = new THREE.Color('#ffcf9f');
       const rimDawn = new THREE.Color('#ffb365');
       // The disc sits far away in the sky: drawn first and without depth, so every hill in front of it covers it.
-      const moonDisc = new THREE.Mesh(new THREE.SphereGeometry(SUN_RADIUS, 24, 18), new THREE.MeshBasicMaterial({ color: "#ffd392", depthWrite: false }));
+      // RD3: out of the fog the discs keep their own colour -- 110 units away the fog used to paint them 66 % grey.
+      const moonDisc = new THREE.Mesh(new THREE.SphereGeometry(SUN_RADIUS, 24, 18), discMaterial());
       moonDisc.renderOrder = -1;
-      const sunDisc = new THREE.Mesh(moonDisc.geometry, new THREE.MeshBasicMaterial({ color: "#ffd392", depthWrite: false }));
+      const sunDisc = new THREE.Mesh(moonDisc.geometry, discMaterial());
       sunDisc.renderOrder = -1;
       scene.add(moonDisc, sunDisc);
+      // Sky in a gradient, horizon in the fog colour, soft glow around the sun and the moon (RD3).
+      const sky = buildSky();
+      scene.add(sky.dome);
 
       const starsGeo = new THREE.BufferGeometry();
       const starCount = narrow ? 170 : 360;
@@ -274,20 +285,33 @@ export function createHeroScene(host: HTMLElement) {
         starData[i * 3 + 2] = 30 - Math.random() * 330;
       }
       starsGeo.setAttribute("position", new THREE.BufferAttribute(starData, 3));
-      const starMat = new THREE.PointsMaterial({ color: "#dbe0ce", size: 0.15, transparent: true });
+      const starMat = starMaterial();
       const starField = new THREE.Points(starsGeo, starMat);
       scene.add(starField);
 
       const placeCamera = createCameraRig();
 
-    const dawnColor = new THREE.Color('#8e6044');
-    const fogDawn = new THREE.Color('#6c513b');
+    const fogDawn = new THREE.Color(LIGHT_STYLE.dawnFog);
+    const skyColors = {
+      horizon: fog.color,
+      zenith: new THREE.Color(),
+      glow: new THREE.Color(LIGHT_STYLE.glow.color),
+      moonTint: new THREE.Color(LIGHT_STYLE.glow.moonColor),
+    };
+    const nightZenith = new THREE.Color(LIGHT_STYLE.zenith.night);
+    const dawnZenith = new THREE.Color(LIGHT_STYLE.zenith.dawn);
+    const sunDir = new THREE.Vector3();
+    const moonDir = new THREE.Vector3();
     const lookAt = new THREE.Vector3();
+    const buffer = new THREE.Vector2();
     const resize = () => {
       const width = host.clientWidth, height = host.clientHeight;
       renderer.setSize(width,height,false);
       camera.aspect = width/Math.max(1,height);
       camera.updateProjectionMatrix();
+      renderer.getDrawingBufferSize(buffer);
+      roadsideGlow.update(fog.density, buffer.y / 2);
+      truckGlow.update(fog.density, buffer.y / 2);
     };
     const render = (p: number, cameraAt = p) => {
       if(disposed) return;
@@ -303,8 +327,8 @@ export function createHeroScene(host: HTMLElement) {
       camera.updateProjectionMatrix();
       camera.lookAt(lookAt);
       const daylight=smoothstep(.42,.98,p);
-      background.copy(night).lerp(dawnColor,daylight*.78);
-      fog.color.copy(nightFog).lerp(fogDawn,daylight*.78);
+      fog.color.copy(nightFog).lerp(fogDawn,daylight);
+      fog.density=NIGHT_FOG_DENSITY+(LIGHT_STYLE.dawnDensity-NIGHT_FOG_DENSITY)*daylight;
       // Dawn end values match the previous curve; only the starting frame changed.
       ambient.intensity=1.28+daylight*.74;
       moon.intensity=1.9*(1-daylight*.8);
@@ -315,6 +339,14 @@ export function createHeroScene(host: HTMLElement) {
       sunDisc.position.set(...sunPosition(p,camera.position));
       sunDisc.visible=sunVisible(p);
       starMat.opacity=1-daylight*.95;
+      skyColors.zenith.copy(nightZenith).lerp(dawnZenith,daylight);
+      sunDir.copy(sunDisc.position).sub(camera.position).normalize();
+      moonDir.copy(moonDisc.position).sub(camera.position).normalize();
+      sky.update(camera.position, skyColors,
+        { dir: sunDir, glow: sunDisc.visible ? LIGHT_STYLE.glow.sun*smoothstep(.47,.6,p) : 0 },
+        { dir: moonDir, glow: LIGHT_STYLE.glow.moon*(1-daylight) });
+      roadsideGlow.update(fog.density, buffer.y / 2);
+      truckGlow.update(fog.density, buffer.y / 2);
       renderer.render(scene,camera);
       host.dataset.triangles=String(renderer.info.render.triangles);
     };

@@ -16,7 +16,6 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
     const connection = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
     const beats = Array.from(hero.querySelectorAll<HTMLElement>('[data-beat]'));
     const progressBar = hero.querySelector<HTMLElement>('.journey-scroll b');
-    const dawn = hero.querySelector<HTMLElement>('.journey-dawn');
     let disposed = false;
     let generation = 0;
     let loading = false;
@@ -49,7 +48,6 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
     function resetContent() {
       hero!.classList.remove('is-enhanced');
       progressBar?.style.removeProperty('transform');
-      dawn?.style.removeProperty('opacity');
       beats.forEach(beat => {
         beat.style.removeProperty('opacity');
         beat.style.removeProperty('transform');
@@ -132,7 +130,6 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
             if (focused) beat.style.opacity = '1';
           });
           if (progressBar) progressBar.style.transform = `scaleX(${current})`;
-          if (dawn) dawn.style.opacity = String(current);
           try {
             scene.render(current, cameraProgress(current, beats.length));
             host!.dataset.drawCalls = String(scene.drawCalls());
@@ -237,7 +234,6 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
           <span className="journey-scroll" aria-hidden="true">SCROLL TO DRIVE <i><b /></i></span>
           <a href="#get-started">Skip to your next step ↗</a>
         </div>
-        <div className="journey-dawn" aria-hidden="true" />
       </div>
     </section>
   );
