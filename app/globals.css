@@ -339,7 +339,7 @@
      izlazak iz uslova); noscript blok je vraca kad JS uopste ne postoji. */
   .journey-photo{opacity:0}
   .journey.is-scene-off .journey-photo{opacity:1}
-  .journey.is-enhanced{height:380svh}
+  .journey.is-enhanced{height:460svh}
   .is-enhanced .journey-stage{position:sticky;top:0;height:100svh}
   .is-enhanced .journey-story{position:absolute;inset:0;display:block;padding:0}
   .is-enhanced .journey-beat{position:absolute;left:6vw;top:50%;width:min(62vw,880px);padding:0;min-height:0;display:block;opacity:0;transform:translate3d(0,-50%,0);will-change:transform,opacity}

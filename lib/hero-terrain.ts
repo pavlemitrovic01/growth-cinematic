@@ -21,6 +21,38 @@ export type TerrainStyle = 'blaga' | 'visa';
  */
 export const TERRAIN_STYLE: TerrainStyle = 'visa';
 
+/**
+ * Ravan plato pored puta (`RD11`, truck stop): `side` je strana puta (+1 desno u smeru voznje), `near`-`far`
+ * udaljenost od sredine puta, `from`-`to` opseg po z (from > to). Van platoa tlo se vraca u brda preko `margin`.
+ */
+export type Pad = { side: -1 | 1; near: number; far: number; from: number; to: number; margin: number };
+
+/**
+ * Dva truck stop-a (Pavle, 2026-09-19, izbor od cetiri varijante: kombinacija 2 i 3, „konacno je"):
+ * - nocni, desno ispred kamiona: svetla kroz celo 01, nadstresnica i tabla pred kraj 01;
+ * - jutarnji, levo, izmedju teksta i puta u 03.
+ *
+ * ⚠️ Mesta su izmerena po kadru. Nocni blize putu ili blize kamionu upada u 02 ispod naslova „$0" (kamera tamo gleda
+ * unazad, pa je desna strana puta levo na ekranu); jutarnji je dovoljno daleko da ga u 01 skriva magla.
+ */
+const PAD_NIGHT: Pad = { side: 1, near: 35, far: 130, from: -150, to: -240, margin: 30 };
+const PAD_DAWN: Pad = { side: -1, near: 20, far: 115, from: -285, to: -375, margin: 30 };
+
+export const TRUCK_STOP_PADS: readonly Pad[] = [PAD_NIGHT, PAD_DAWN];
+
+/** Udeo platoa u tacki: 1 na platou, blago do 0 na `margin` od njega. */
+function padMask(x: number, z: number, pads: readonly Pad[]): number {
+  let mask = 0;
+  for (const pad of pads) {
+    if (Math.sign(x) !== pad.side) continue;
+    const d = Math.abs(x);
+    const across = Math.max(pad.near - d, 0, d - pad.far);
+    const along = Math.max(pad.to - z, 0, z - pad.from);
+    mask = Math.max(mask, 1 - ease(clamp01(Math.hypot(across, along) / pad.margin)));
+  }
+  return mask;
+}
+
 /** Do ove udaljenosti od sredine puta tlo je ravno: put (±9), bankina i stubovi (±10,6). */
 export const ROAD_CORRIDOR = 12;
 
@@ -56,7 +88,7 @@ export function terrainHeight(x: number, z: number, style: TerrainStyle): number
   const near = ease(clamp01((d - ROAD_CORRIDOR) / (s.riseEnd - ROAD_CORRIDOR)));
   const far = ease(clamp01((d - 60) / 140));
   const ridge = s.ridge * ease(clamp01((d - 150) / 70)) * (0.55 + 0.45 * (noise.noise(z / 95, side, 3.1) * 0.5 + 0.5));
-  return Math.max(0, near * (s.rise + s.hills * rolling) + far * s.far * rolling + ridge);
+  return Math.max(0, near * (s.rise + s.hills * rolling) + far * s.far * rolling + ridge) * (1 - padMask(x, z, TRUCK_STOP_PADS));
 }
 
 /**

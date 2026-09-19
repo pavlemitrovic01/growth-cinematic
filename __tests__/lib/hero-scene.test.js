@@ -4,6 +4,7 @@ import { createCameraRig, moonPosition, SUN_RADIUS, sunPosition, sunVisible, tru
 import { cameraProgress } from '@/lib/hero-beat';
 import { TRUCK_DESIGN, truckBounds, truckBoxes } from '@/lib/hero-truck';
 import { ROAD_CORRIDOR, TERRAIN_STYLE, terrainHeight } from '@/lib/hero-terrain';
+import { ROAD_DESIGN, roadsideBoxes } from '@/lib/hero-road';
 
 /**
  * Kamera u heroju -- razmak od kamiona, stubova i tla, i kompozicija prema tekstu (`RD2`, `RD10`).
@@ -27,6 +28,10 @@ import { ROAD_CORRIDOR, TERRAIN_STYLE, terrainHeight } from '@/lib/hero-terrain'
  *
  * Granice: kamion >= 2, stub >= 1, ispod teksta najvise 25% kamiona na 1440x900; iznad tla van puta >= 1,5, a
  * iznad puta >= 0,5 -- nizak kadar za 02 iz `RD2` namerno ide 0,89 iznad asfalta, a near ravan kamere je 0,1.
+ *
+ * ⚠️ PORED PUTA (`RD11`): ograda, stubici i truck stop se citaju iz `roadsideBoxes` (`lib/hero-road.ts`), istih
+ * kutija koje scena crta. Kamera je od svake bar 1 jedinicu, a nijedan deo truck stop-a ne stoji na zraku ka donjoj
+ * ivici meseca ni sunca -- visok stub sa tablom bi inace mogao da „pojede" mesec kao sto su brda pre `RD10`.
  * Skrol se uzorkuje sredinama 100 000 intervala. Svaki uslov ima svoj `it` blok (`LESSONS` L19).
  *
  * ⚠️ SUNCE (NOCU MESEC), `RD10`: sa visim brdima disk je izlazio iz planine (Pavle: „da sunce/mesec ne izlaze
@@ -57,6 +62,34 @@ const MOON_FRAMES = [0.3, 1 / 3, 0.38, 0.42];
 const SUN_LOW_MARK = { x: (1190 / 2000) * 2 - 1, y: 1 - (485 / 1103) * 2 };
 const SUN_HIGH_MARK = { x: (1275 / 2000) * 2 - 1, y: 1 - (105 / 1103) * 2 };
 const SUN_RISE_FRAMES = [0.5333, 0.58, 0.63, 0.67, 0.7, 0.74];
+const ROADSIDE = roadsideBoxes(ROAD_DESIGN);
+const ROADSIDE_CLEARANCE = 1;
+const TRUCK_STOP = ROADSIDE.filter((b) => b.truckStop);
+
+/** Rastojanje tacke od kutije poravnate sa osama; negativno kad je tacka unutra. */
+function boxDistance([x, y, z], { min, max }) {
+  const q = [x, y, z].map((v, i) => Math.max(min[i] - v, v - max[i]));
+  return Math.hypot(...q.map((v) => Math.max(v, 0))) + Math.min(Math.max(...q), 0);
+}
+
+/** Da li duz od `from` do `to` sece kutiju (metod ploca). */
+function segmentHitsBox(from, to, { min, max }) {
+  let t0 = 0;
+  let t1 = 1;
+  for (let i = 0; i < 3; i++) {
+    const d = to[i] - from[i];
+    if (Math.abs(d) < 1e-12) {
+      if (from[i] < min[i] || from[i] > max[i]) return false;
+      continue;
+    }
+    const a = (min[i] - from[i]) / d;
+    const b = (max[i] - from[i]) / d;
+    t0 = Math.max(t0, Math.min(a, b));
+    t1 = Math.min(t1, Math.max(a, b));
+    if (t0 > t1) return false;
+  }
+  return true;
+}
 
 /** Rastojanje tacke od kutije kamiona; negativno kad je tacka unutra. */
 function truckDistance([x, y, z]) {
@@ -157,11 +190,13 @@ function measure() {
   const nearPole = new Array(SAMPLES).fill(false);
   const nearGround = new Array(SAMPLES).fill(false);
   const nearRoad = new Array(SAMPLES).fill(false);
+  const nearRoadside = new Array(SAMPLES).fill(false);
   const min = {
     truck: { d: Infinity, p: 0 },
     pole: { d: Infinity, p: 0 },
     ground: { d: Infinity, p: 0 },
     road: { d: Infinity, p: 0 },
+    roadside: { d: Infinity, p: 0 },
   };
 
   for (let s = 0; s < SAMPLES; s++) {
@@ -174,15 +209,18 @@ function measure() {
       pole: poleDistance(position.x, position.y, position.z),
       ground: onRoad ? Infinity : above,
       road: onRoad ? above : Infinity,
+      roadside: Math.min(...ROADSIDE.map((b) => boxDistance([position.x, position.y, position.z], b))),
     };
     nearTruck[s] = d.truck < TRUCK_CLEARANCE;
     nearPole[s] = d.pole < POLE_CLEARANCE;
     nearGround[s] = d.ground < GROUND_CLEARANCE;
     nearRoad[s] = d.road < ROAD_CLEARANCE;
+    nearRoadside[s] = d.roadside < ROADSIDE_CLEARANCE;
     for (const key of Object.keys(min)) if (d[key] < min[key].d) min[key] = { d: d[key], p };
   }
 
   const sunBlocked = new Array(SUN_SAMPLES).fill(false);
+  const sunBehindTruckStop = new Array(SUN_SAMPLES).fill(false);
   let sunAboveGround = { d: Infinity, p: 0 };
   for (let s = 0; s < SUN_SAMPLES; s++) {
     const p = (s + 0.5) / SUN_SAMPLES;
@@ -192,6 +230,8 @@ function measure() {
       const bottom = sy - SUN_RADIUS;
       const above = bottom - terrainHeight(sx, sz, TERRAIN_STYLE);
       if (above < sunAboveGround.d) sunAboveGround = { d: above, p };
+      const eye = [position.x, position.y, position.z];
+      if (TRUCK_STOP.some((b) => segmentHitsBox(eye, [sx, bottom, sz], b))) sunBehindTruckStop[s] = true;
       // Mesec i sunce su nebeska tela: zrak ka donjoj ivici diska se prati do 700 jedinica, iza brda i grebena.
       const ray = new THREE.Vector3(sx - position.x, bottom - position.y, sz - position.z).normalize();
       for (let k = 1; k <= 64; k++) {
@@ -244,7 +284,9 @@ function measure() {
     poleRanges: ranges(nearPole),
     groundRanges: ranges(nearGround),
     roadRanges: ranges(nearRoad),
+    roadsideRanges: ranges(nearRoadside),
     sunBlockedRanges: ranges(sunBlocked),
+    truckStopSunRanges: ranges(sunBehindTruckStop),
     sunAboveGround,
     moonOnScreen,
     min,
@@ -270,6 +312,16 @@ describe('kamera u heroju ne prolazi kroz kamion, pored stuba ni kroz tlo (RD2, 
 
   it('8 -- iznad puta kamera je bar 0,5 jedinice iznad asfalta', () => {
     expect(metrics.roadRanges).toEqual([]);
+  });
+
+  it('14 -- kamera nigde nije blize od 1 jedinice ogradi, stubicima ni truck stop-u (RD11)', () => {
+    expect(metrics.roadsideRanges).toEqual([]);
+  });
+
+  it('15 -- nijedan deo truck stop-a ne zaklanja donju ivicu meseca ni sunca od kamere (RD11)', () => {
+    console.log(`izmereno: truck stop kutija ${TRUCK_STOP.length}, pored puta ukupno ${ROADSIDE.length}`);
+    expect(TRUCK_STOP.length).toBeGreaterThan(0);
+    expect(metrics.truckStopSunRanges).toEqual([]);
   });
 
   it('9 -- mesec i sunce ne izlaze iz planine: donja ivica diska bar 1 iznad tla na svom mestu', () => {
@@ -336,7 +388,8 @@ describe('kamera u heroju ne prolazi kroz kamion, pored stuba ni kroz tlo (RD2, 
     const f = (m) => `${m.d.toFixed(2)} na ${(m.p * 100).toFixed(2)}%`;
     console.log(
       `izmereno: uzoraka ${SAMPLES} | kamion min ${f(metrics.min.truck)} | stub min ${f(metrics.min.pole)}` +
-        ` | iznad tla van puta min ${f(metrics.min.ground)} | iznad puta min ${f(metrics.min.road)}`,
+        ` | iznad tla van puta min ${f(metrics.min.ground)} | iznad puta min ${f(metrics.min.road)}` +
+        ` | pored puta min ${f(metrics.min.roadside)}`,
     );
     SCREENS.forEach(([w, h], i) => {
       console.log(

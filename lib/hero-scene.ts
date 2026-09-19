@@ -1,5 +1,6 @@
 import * as THREE from 'three';
-import { asphaltTexture, buildTerrain, TERRAIN_STYLE, wornPaintTexture } from './hero-terrain';
+import { buildRoad, ROAD_DESIGN } from './hero-road';
+import { asphaltTexture, buildTerrain, TERRAIN_STYLE } from './hero-terrain';
 import { buildTruck, TRUCK_DESIGN } from './hero-truck';
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
@@ -191,28 +192,9 @@ export function createHeroScene(host: HTMLElement) {
       road.position.set(0, 0, -230);
       road.receiveShadow = true;
       world.add(road);
-      const lineMat = new THREE.MeshBasicMaterial({ color: "#e2d8b6", alphaMap: wornPaintTexture(), transparent: true });
-
-      const laneCount = 120;
-      const markerGeometry = new THREE.PlaneGeometry(0.13, 4.3);
-      const markers = new THREE.InstancedMesh(markerGeometry, lineMat, laneCount);
-      const marker = new THREE.Object3D();
-      marker.rotation.x = -Math.PI / 2;
-      for (let i = 0; i < laneCount; i++) {
-        marker.position.set(i % 2 ? 3 : -3, 0.012, 85 - Math.floor(i / 2) * 11);
-        marker.updateMatrix();
-        markers.setMatrixAt(i, marker.matrix);
-      }
-      world.add(markers);
-      const edgePaint = wornPaintTexture();
-      edgePaint.repeat.set(1, 160);
-      const edgeMat = new THREE.MeshBasicMaterial({ color: "#a9a992", alphaMap: edgePaint, transparent: true });
-      for (const x of [-8.2, 8.2]) {
-        const edge = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 700), edgeMat);
-        edge.rotation.x = -Math.PI / 2;
-        edge.position.set(x, 0.014, -230);
-        world.add(edge);
-      }
+      // American road (RD11): yellow left edge, white right edge, long gaps between dashes, guardrail,
+      // delineators and two truck stops; merged by material, no new lights or shadows.
+      world.add(buildRoad(ROAD_DESIGN));
 
       const poleMat = new THREE.MeshStandardMaterial({ color: "#33382d", roughness: 0.82 });
       // Light sources skip tone mapping, so exposure doesn't dim them.
