@@ -262,7 +262,8 @@ pokazivali novu scenu sa starom senkom, a ni osvežavanje datuma izmene fajla ni
 STVARNO šalje i uporediti ga sa izvorom. Minifikovan CSS menja zapis (`rgba(4,12,8,.93)` →
 `#040c08ed`, reč `ellipse` ispada), pa se traži selektor i deo vrednosti koji preživi minifikaciju,
 ne doslovan string iz izvora. Ako je staro: ugasiti server, obrisati `.next/dev/cache/turbopack` i
-`.next/dev/static`, pokrenuti ponovo i ponovo proveriti.
+`.next/dev/static`, pokrenuti ponovo i ponovo proveriti. Ponovilo se u `RD11` (`380svh` → `460svh`): JS scene se
+osvežavao posle svake izmene, a CSS je ostao star — ispravan JS ne dokazuje ispravan CSS.
 
 ## L29 — Posmatrač ne vidi element koji je sam isečen na nultu površinu, a watchdog je to krio od svakog alata.
 `[data-wipe]` je skriven sa `clip-path: inset(-.3em 100% -.3em -.3em)` na samoj meti, a `Motion.tsx` je
@@ -304,3 +305,17 @@ kasnije iscrta se drugim putem dekodiranja. `RD10` je izmerio 0 u jednom krugu �
 ne menja telefon" dokazuje se time da se izmenjeni kod tamo ne učitava (uz pozitivnu kontrolu) i da su izvori slika
 isti; poređenje piksela ide u više krugova, a kontrola na istoj adresi ne važi — druga poseta koristi već dekodiranu
 sliku.
+
+## L33 — Prosek po poglavlju sakrio je upad u sredini kadra; merenje je pokazalo broj, a broj nije pogledan.
+U `RD11` je merenje „gde se truck stop vidi" davalo prosek po poglavlju: za 02 „10 % na ekranu, 74 % iza slova". Izgledalo
+je malo, pa je varijanta išla na kontakt list — a u sredini 02 nadstrešnica je stajala preko naslova „$0" (uhvaćeno na
+snimku pre Pavlovog pogleda). Deset posto tačaka je bila velika bliska nadstrešnica u nekoliko kadrova, ne mrva kroz celo
+poglavlje. **Pravilo:** za pitanje „upada li X u kadar" meri se po kadru (najgori kadar, ne prosek), a svaki kadar u kome
+je broj veći od nule se renderuje i pogleda pre nego što ide Pavlu.
+
+## L34 — Magla je svetlija od noćnog neba, pa ono što je potpuno u magli nije nevidljivo nego silueta.
+Boja magle `#0d1a16` je namerno svetlija od neba `#07110d` (`RD10`, odvaja planove). U `RD11` je jutarnji truck stop u 01 bio
+~340 jedinica daleko — vidljivost kroz maglu ~0 — a njegova tabla visine 28 se ipak videla pored „20+": deo koji viri iznad
+linije tla crta se bojom magle na tamnijem nebu. Brdo je nije moglo sakriti jer kamera gleda niz koridor puta. **Pravilo:**
+„skriva ga magla" važi samo ispod linije tla u tom pravcu; ono što viri iznad horizonta proverava se na snimku, ne
+proračunom vidljivosti. Važi i za `RD3` (magla): posvetljena magla pravi siluete od svega visokog u daljini.

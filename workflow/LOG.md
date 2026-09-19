@@ -6,6 +6,68 @@
 
 ---
 
+## RD11 (STANDARD) — Američki put: oznake, ograda, stubići, dva truck stop-a; duži skrol heroja · 2026-09-19
+
+**Implementacija:** `5def0d5` · **Grana:** `rd11-americki-put` (sa `master` @ `fabd74a`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `lib/hero-road.ts` (nov) · `lib/hero-scene.ts` · `lib/hero-terrain.ts` · `__tests__/lib/hero-scene.test.js` ·
+`__tests__/lib/hero-terrain.test.js` · `app/globals.css` (odobreno proširenje) · `workflow/projects/growth-cinematic/batches/RD11.md`
+(nov) · `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Pavle: „idemo na rd11". Plan sa procenom (put nije overengineering, truck stop kao kompleks jeste — samo kao svetla u daljini,
+varijanta u jednom krugu), pa „moze execute". Nov modul `lib/hero-road.ts` (podaci + builder, kao `TRUCK_DESIGN`): linije po
+MUTCD-u, markeri, W-ograda u deonicama, stubići sa reflektorima, truck stop-ovi; spojeno po materijalu, pa sam put ostaje 3
+draw poziva kao linije pre. Prekidač `?put=0|1|2|3` (dev server), kontakt list iz headless Chrome-a. Prvi nacrti su mereni po
+kadru (udeo na ekranu, iza slova, vidljivost kroz maglu) i pre Pavlovog pogleda pomereni: noćni truck stop je u 02 upadao ispod
+„$0" (`L33`). Pavle: kombinacija 2 i 3 (`?put=4`, svetla jača), pa „tabla treba biti nize, i kameru treba usporiti malo" →
+tabla 28 → ~16,5; kamera van obima → stao, A/B ponuđeno, „A" → `380svh` → `460svh` (proširenje u manifestu). Dev server je
+posle izmene CSS-a slao stari `380svh` (`L28`) — keš obrisan, servirano potvrđeno. „konacno je, idemo dalje" → prekidač i
+ostale varijante obrisani, svetle mrlje spojene u jedan mesh.
+
+IZMERENO:
+```
+  polazno (master fabd74a, next start)   draw 28/29/29/28 · trouglova 69188/70004 · chunk 503 028 B, gzip 127 475
+  quick                 npm run lint            exit 0   (i ponovljen pred commit: exit 0)
+  typecheck             npm run typecheck       exit 0   (i pred commit: exit 0)
+  test                  npm test                exit 0   171/171, 14 fajlova (168 + 3 nova; i pred commit: 171/171)
+  full                  npm run build           exit 0   BUILD_ID ttSuO49sAUUI7MWKYQa8n 16:52:32 (izvor 16:50:19)
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meta                  meri se: http://localhost:3000 · next start PID 29176, 16:52:41 (posle BUILD_ID-a)
+  razmak kamere         kamion 4.48 · stub 2.44 · van puta 4.94 · iznad puta 0.89 · pored puta 3.09 (nov)
+  headless Chrome       scena ready · draw 28/34/34/34/33 (uvod/01/kraj 01/02/03) · trouglova 72956/75096/75096/75096/74280 · 0 gresaka
+  visina heroja         4.600 ekrana (bilo 3.8) -- skrol kroz scenu 2.8 -> 3.6 ekrana
+  chunk scene           503 028 -> 508 343 B · gzip 127 475 -> 129 407 (+1,9 KiB; budzet 10)
+  pocetni JS /          9 fajlova · 588 KiB · three 0
+  telefon / smanjen     chunk scene 0 / 0 zahteva (kontrola desktop 1) · sceneState static · public/ bez razlike
+  hex boje              postojece iste (#e2d8b6, #a9a992 preseljene) · nove samo za nove elemente: #c99b3c #6f766c #d9a441 #dcd6c0 #e9dcc0 #f7e3c0
+  prekidac              ?put / ROAD_VARIANT / RD11_PUT u izvoru: 0
+```
+
+**Nove kapije crvene pa zelene (`RULES §6`)** — sha256 `lib/hero-road.ts` i `lib/hero-terrain.ts` zapamćeni pre prekršaja:
+```
+  A  stubici x 14, visina 6 (na putanji kamere)   -> 14 crveno: "7.54-9.11%"                    (1 failed | 14 passed)
+  B  zid 200x80 preko puta na sredini truck stop-a -> 15 crveno: "46.70-100.00%" (i 14)          (2 failed | 13 passed)
+  C  plato iskljucen u terrainHeight              -> tlo 6 crveno: [0, 0] -> [8.70, 18.10]      (1 failed | 5 passed)
+  vracanje: sha256 isti kao pre prekrsaja · 21/21
+```
+
+**`manual`:** PASS — Pavle, u svom browseru na dev serveru (`?put=4`, niža tabla, `460svh`, servirani CSS i kod potvrđeni):
+„konacno je, idemo dalje". Konačni build daje isti put i iste truck stop-ove (01: 75096 trouglova kao na dev-u).
+
+**Scope drift:** none — `git diff --name-only fabd74a...HEAD` + radno stablo = EXPECTED-FILES + `app/globals.css`
+(`APPROVED-SCOPE-EXPANSION`, Pavle „A").
+
+**Lessons:** `L33` (prosek po poglavlju sakrio upad u sredini kadra), `L34` (magla svetlija od neba pravi siluete), dopuna `L28`
+(ponovilo se: JS svež, CSS star). ⚠️ `LESSONS` 321/300 linija — cap je upozorenje; arhiviranje nije rađeno.
+
+**NEXT STEP:** release `RD11` (Pavlova odluka) — merge fast-forward, push, diskriminator na deploy-u (npr. `c99b3c` u JS-u
+scene) pa `verify`/`rendered` protiv deploy-a. Zatim nije odlučeno: `RD3`, `T1b`.
+
+---
+
 ## non-batch(release) — `RD12` spojen i pušen; izmeren na deploy-u · 2026-09-19
 
 **Changed files:** `workflow/projects/growth-cinematic/batches/RD12.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·

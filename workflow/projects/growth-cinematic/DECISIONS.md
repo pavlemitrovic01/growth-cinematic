@@ -68,6 +68,23 @@
 
 ## ZATVORENO
 
+### `RD11-LOOK` — američki put, dva truck stop-a, niža tabla, duži skrol heroja · 2026-09-19
+- **Procena pre plana (Pavle traži opomenu):** put nije overengineering (u svakom kadru, jeftin); truck stop kao
+  kompleks jeste — prihvaćen samo kao „svetla u daljini", bez teksta i marke, kao varijanta u jednom krugu.
+- **Put:** leva ivica žuta, desna bela, isprekidane sa dugim pauzama (MUTCD 3 m / 9 m), ograda u deonicama, stubići sa
+  žutim reflektorima levo i belim desno (boja prati ivičnu liniju), markeri na putu.
+- **Truck stop — kombinacija** (od `?put=0|1|2|3`): *„put 2 i put 3 mi se svidjaju samo sto se na putu 2 veoma kratko
+  vidi truck stop, mozemo li napraviti neku kombinaciju"* → oba: noćni desno ispred kamiona (svetla kroz celo 01,
+  nadstrešnica i tabla pred kraj 01, u 02 van kadra) i jutarnji levo, između teksta i puta u 03.
+- **Tabla niža:** *„tabla treba biti nize"* — vrh sa 28 na ~16,5; visoka tabla jutarnjeg se u 01 videla kao silueta na
+  nebu pored „20+" (`LESSONS` L34).
+- **Skrol heroja duži (A):** *„kameru treba usporiti malo"*; od A (duži skrol) i B (sporije praćenje) Pavle: *„A"* —
+  `.journey.is-enhanced` `380svh` → `460svh`, ~22 % sporije po točkiću. Plan kamere, sunce, mesec i platoi su po
+  napretku skrola, pa se ne menjaju.
+- **Pregled:** *„konacno je, idemo dalje"*.
+- ⚠️ Ko pomera truck stop: noćni bliže putu ili bliže kamionu upada u 02 ispod naslova „$0" (kamera tamo gleda unazad);
+  mesto se meri po kadru, ne prosekom poglavlja (`LESSONS` L33).
+
 ### `RD12-LOOK` — klasični američki tegljač sa dugom haubom, bez marke · 2026-09-19
 - **Zahtev:** *„kamion treba više da liči na američki kamion piterbelt ili cascadia ili nešto tako što nam je najlakše"*
   (2026-09-17). Preporuka i plan: klasična duga hauba u stilu Peterbilta — ravne plohe i valjci, što scena već dobro

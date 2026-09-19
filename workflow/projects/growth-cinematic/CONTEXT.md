@@ -29,7 +29,7 @@
 | `rendered` | `npm run test:rendered` | STANDARD, STRICT — **traži pokrenut server** |
 | `manual` | Pavlov pregled u **pravom** browseru | STRICT · **i sve što zavisi od skrola** |
 
-- **`test`:** vitest, **168 u 14 fajlova** (izmereno 2026-09-19, `RD12`). `test:rendered` je zasebnih **18**
+- **`test`:** vitest, **171 u 14 fajlova** (izmereno 2026-09-19, `RD11`). `test:rendered` je zasebnih **18**
   HTTP testova nad renderovanim HTML-om.
 - ⚠️ **Vitest hvata SAMO `__tests__/**/*.test.js`** (`vitest.config.mts`). Fajl imenovan
   `.test.ts` bio bi **tiho preskočen** — kapije zelene, a test nikad pokrenut. Posle dodavanja
