@@ -333,3 +333,12 @@ U `RD13` je cilj bio „prosek svetline ≥ 55" za dva kadra. Završni ga je pre
 svetlo. Cilj je bio postavljen iz brojki drugih kadrova, pre nego što je sastav tog kadra pogledan. **Pravilo:** pre
 nego što brojka uđe u ACCEPTANCE, izmeri je na kadru koji je najdalji od cilja i pitaj šta u njemu fizički može da je
 podigne; ako odgovor ne postoji, ili promeni cilj, ili ga veži za deo kadra (npr. donji pojas) koji se stvarno menja.
+
+## L37 — Vercel build keš ume da vrati star CSS, pa deploy bude „nov" po JS-u a star po izgledu.
+`RD13` je pušen 2026-09-20; deployment `READY`, JS chunk scene bajt u bajt isti kao lokalni, ali je servirani CSS bio
+prethodni fajl **istog imena** — bez izmene preliva koju batch nosi. Redeploy bez build keša promenio je ime fajla
+(`370vta1vre4jp.css` → `3iu9mf55lgoo0.css`) i doneo pravu verziju, čime je isključen CDN: ime jeste izvedeno iz
+sadržaja, prethodni build je stvarno proizveo star CSS. Bez CSS markera to se ne bi videlo, jer je JS bio uredno nov.
+**Pravilo:** diskriminator pre merenja nosi marker za **svaku vrstu artefakta koju batch dira** (JS, CSS, slike), a ne
+samo za jednu; marker se traži u **serviranom, minifikovanom** obliku (`rgba(8,17,13,.85)` postaje `#08110dd9`).
+Kad se artefakti ne slažu, prvi potez je redeploy bez build keša, pa ponovo merenje — tek onda se sumnja na CDN.

@@ -6,6 +6,53 @@
 
 ---
 
+## non-batch(release) — `RD13` spojen i pušen; **Vercel build keš je progutao CSS**, rešeno redeploy-em bez keša · 2026-09-20
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/LESSONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `612259f..d1ca86d` fast-forward, push — nosi `644e2e1` (`RD13`) i `d1ca86d` (close). Pavlova odluka
+(„spoji i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `612259f`, nepomeren) i da je ff moguć.
+
+**Diskriminator PRE merenja** — prvi put **i JS i CSS**, i baš je CSS otkrio grešku: JS marker `#c49a7c` (boja neba u
+zoru), CSS marker `#08110d33 92%` (slabiji donji preliv, posle minifikacije), kontrola `centripetal`.
+```
+  lokalno      03:27:39   JS 10 · kontrola 1 · RD13 zora 1 · CSS nov 1 / star 0
+  pre push-a   03:27:40   JS 10 · kontrola 1 · RD13 zora 0 · CSS nov 0 / star 1
+  push         03:27:52   612259f..d1ca86d
+  posle        03:28:30   JS 10 · kontrola 1 · RD13 zora 1 · CSS nov 0 / star 1   <- JS nov, CSS star
+               03:29:45   isto, i posle cetiri merenja u pet minuta
+  redeploy bez build kesa (Pavle, Vercel UI)
+  posle        03:53:48   JS 10 · kontrola 1 · RD13 zora 1 · CSS nov 1 / star 0   fra1::gw4f7-1789869226862-c6ba648e34df
+```
+
+⚠️ **Nalaz: Vercel build keš je vratio star CSS artefakt.** Deployment `dpl_3Z76UwGqW1Fb6VUCPEtZMTCY6M5q` za `d1ca86d`
+bio je `READY`, JS chunk scene na produkciji bajt u bajt isti kao lokalni (513 328 B, sadrži `#c49a7c`), a servirani
+CSS je bio **prethodni fajl istog imena** (`370vta1vre4jp.css`, bez `RD13` markera, sa `RD11` `460svh` i bez
+`.journey-dawn` iz `RD3`). CDN je bio osumnjičen (asset je `immutable`, `X-Vercel-Cache: HIT`, `Age` 4803), ali je
+**redeploy bez keša promenio ime fajla** (`370vta1vre4jp.css` → `3iu9mf55lgoo0.css`) — dakle ime jeste izvedeno iz
+sadržaja, pa je prethodni build stvarno proizveo star CSS. Origin se spolja nije mogao pročitati (deployment URL je
+pod SSO-om), pa je razlučeno merenjem posle redeploy-a. Pouka `L37`.
+
+IZMERENO protiv deploy-a (posle redeploy-a):
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 37/37/27/36 · trouglova 76056/76056/68562/75240 · 0 gresaka
+  svetlina (vrh -> dno)         01  23.9 / 38.3 / 39.5 / 12.6     lokalno 23.9 / 38.3 / 39.5 / 12.6
+                                02 109.8 / 84.1 / 56.3 / 98.9     lokalno 109.8 / 84.1 / 56.4 / 98.9
+                                0,88 47.7 / 45.5 / 51.4 / 34.9    lokalno 47.7 / 45.6 / 51.4 / 34.9
+                                03  83.8 / 62.8 / 58.3 / 47.5     lokalno 83.8 / 62.9 / 58.3 / 47.5
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno, a produkcija sada daje iste brojke.
+
+**NEXT STEP:** **„filmski jezik"** — plan po nalazu iz ChatGPT prototipa (`09269bb`): skala i prored, smena strana po
+poglavljima, svetla sekcija sa Georgia serifom posle heroja, detalji zaglavlja. ⚠️ `LESSONS` 343/300 — sažimanje čeka.
+
+---
+
 ## RD13 (STANDARD) — Zora na tlu: završni kadar prestaje da pada u noć · 2026-09-20
 
 **Implementacija:** `644e2e1` · **Grana:** `rd13-zora-na-tlu` (sa `master` @ `612259f`) — **nije spojena ni pušena**:
