@@ -7,8 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **release `RD3`** (Pavlova odluka: merge fast-forward, push, merenje na deploy-u). Zatim nije odlučeno:
-  stranica **„smer redizajna"** pre `RD4`–`RD7` — **Pavle 2026-09-19 želi da menja tamnozelenu (`--forest`)**, pa paleta
+- **Sledeće:** nije odlučeno. Prvi predlog je stranica **„smer redizajna"** pre `RD4`–`RD7` — **Pavle 2026-09-19 želi da menja tamnozelenu (`--forest`)**, pa paleta
   ide na tu stranicu (3–4 osnovne boje na pravom sadržaju, zelena kao kontrola), pitanje „smeta ton ili monotonija" je
   postavljeno; **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
   lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa
@@ -18,7 +17,7 @@
 - **Poslednji završen:** **`RD3`** (2026-09-19, `5e2c036`) — **Svetlo scene:** mesec, sunce i zvezde van magle (disk je
   bio 66 % boje magle), meki oreoli oko farova, zadnjih svetala, lampi i truck stop-a, sjajniji asfalt, u zoru ređa topla
   magla i nebo u prelazu, bez svetlog vela na dnu heroja; nov `lib/hero-light.ts`. Varijanta 3 od šest („Biram 3").
-  Draw 30–37, chunk +1,7 KiB gzip, test 171 → 173; `manual` PASS („pass"). **Nije spojen ni pušen.**
+  Draw 30–37, chunk +1,7 KiB gzip, test 171 → 173; `manual` PASS („pass"). Spojen i pušen 2026-09-20, izmeren na deploy-u.
 - **Pretposlednji:** **`RD11`** (2026-09-19, `5def0d5`) — **Američki put:** američke linije, ograda, stubići, dva truck
   stop-a u `lib/hero-road.ts`; skrol heroja `460svh`. `manual` PASS („konacno je"). Spojen i pušen 2026-09-19, izmeren na
   deploy-u.
@@ -31,8 +30,10 @@
 
 ## Git
 
-- `RD3` (implementacija `5e2c036` + close) na grani **`rd3-svetlo-scene`** (sa `master` @ `48fe6f4`) — **nije spojen ni
-  pušen**; release je Pavlova odluka. Merenja protiv lokalnog `next start`; deploy još nosi `RD11`.
+- `RD3` (`48fe6f4..8339d7b`, implementacija `5e2c036`) spojen fast-forward-om i pušen 2026-09-20 (Pavle: „spoji i
+  pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (kod `RD3` u JS-u koji `/`
+  može da učita 0 → 1, `facingEye` i `#b98468`; servirani chunk scene 512 952 B, isti kao lokalno); `manual` na
+  produkciji nije posebno tražen.
 - `RD11` (`fabd74a..9ccc972`, implementacija `5def0d5`) spojen fast-forward-om i pušen 2026-09-19 (Pavle: „spoji u
   master i pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (kod `RD11` u
   JS-u koji `/` može da učita 0 → 1 i CSS `380svh` → `460svh`, kontrola three 1 u oba); `manual` na produkciji nije
@@ -61,8 +62,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD11` (`48fe6f4`); `RD3` nije u njemu; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12` i `RD11`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD3`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11` i `RD3`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -71,7 +72,8 @@
   `g2-gate-coverage`, `m2-pageshell-ritam`, `m2b-naslovna-recnik`, `audit-2026-09-plan`,
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
-  `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`.
+  `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
+  `rd3-svetlo-scene`.
 
 ## Žive prepreke
 

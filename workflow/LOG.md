@@ -6,6 +6,43 @@
 
 ---
 
+## non-batch(release) — `RD3` spojen i pušen; izmeren na deploy-u · 2026-09-20
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `48fe6f4..8339d7b` fast-forward, push — nosi `5e2c036` (`RD3`) i `8339d7b` (close). Pavlova odluka 2026-09-20
+(„spoji i pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `48fe6f4`, nepomeren), čisto stablo i da je
+fast-forward moguć.
+
+**Diskriminator PRE merenja:** JS koji naslovna može da učita (početni fajlovi i putanje chunk-ova navedene u njima),
+kontrola `centripetal` (three.js, postoji i pre i posle) i kod `RD3` (`facingEye` iz shadera oreola **i** `#b98468`, boja
+magle u zoru). Instrument je pre push-a proveren na lokalnom `next start` (`RD3` 1), pa je „0" na produkciji merenje, ne
+slepa tačka (`L20`).
+```
+  lokalno      02:11:45   JS 10 · chunk 3s4gcg4bpyv0i.js 512 952 B · gzip 131 115 · RD3 1
+  pre push-a   02:11:47   JS 10 · chunk 1zgxq-2q-dm_7.js 508 343 B · gzip 129 407 · RD3 0
+  push         02:12:00   48fe6f4..8339d7b
+  posle        02:12:11   JS 10 · chunk 1zgxq-2q-dm_7.js 508 343 B · RD3 0   (stari build)
+               02:12:39   JS 10 · chunk 297wioxw_h_4e.js 512 952 B · gzip 131 115 · RD3 1   (isti bajtovi kao lokalno)
+```
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 31/37/37/37/36 (uvod/01/02 izlazak/02/03) · trouglova 73916/76056/76056/76056/75240
+                                · visina heroja 4.600 · 0 gresaka — isto kao lokalno
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno („pass"), a produkcija servira isti
+chunk scene po veličini i sadržaju.
+
+**NEXT STEP:** nije odlučeno. Stranica **„smer redizajna"** (paleta — Pavle želi da menja `--forest`; pitanje „smeta ton
+ili monotonija" čeka odgovor), `T1b`. ⚠️ `LESSONS` 328/300 — sažimanje je non-batch koji čeka.
+
+---
+
 ## RD3 (STANDARD) — Svetlo i vazduh scene: nebo van magle, oreoli, bistra topla zora, bez svetlog vela · 2026-09-19
 
 **Implementacija:** `5e2c036` · **Grana:** `rd3-svetlo-scene` (sa `master` @ `48fe6f4`) — **nije spojena ni pušena**:
