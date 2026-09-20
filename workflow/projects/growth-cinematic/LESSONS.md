@@ -326,3 +326,10 @@ proračunom vidljivosti. Važi i za `RD3` (magla): posvetljena magla pravi silue
 maglu"* — magla je problem, ne efekat. A „sunce iza kamere" je već rešio `RD10`. Bez originala bi plan dodao maglu.
 **Pravilo:** za stavku iz Pavlove liste plan prvo traži njegove reči (transkript sesije, `LOG` unos liste) i piše ih u
 manifest; ROADMAP red je sažetak, ne izvor. Posle većih izmena scene (`RD2`, `RD10`, `RD11`) zamerka se meri iznova.
+
+## L36 — Brojčani cilj u acceptance-u mora prvo da se proveri na najgorem kadru, inače je nedostižan po sastavu slike.
+U `RD13` je cilj bio „prosek svetline ≥ 55" za dva kadra. Završni ga je prešao (63,1), a prelaz na 0,88 stao je na
+44,9 — jer u tom kadru kamera gleda nadole i u slici **gotovo da nema neba**, pa prosek vuče asfalt bez obzira na
+svetlo. Cilj je bio postavljen iz brojki drugih kadrova, pre nego što je sastav tog kadra pogledan. **Pravilo:** pre
+nego što brojka uđe u ACCEPTANCE, izmeri je na kadru koji je najdalji od cilja i pitaj šta u njemu fizički može da je
+podigne; ako odgovor ne postoji, ili promeni cilj, ili ga veži za deo kadra (npr. donji pojas) koji se stvarno menja.

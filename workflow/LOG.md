@@ -6,6 +6,69 @@
 
 ---
 
+## RD13 (STANDARD) — Zora na tlu: završni kadar prestaje da pada u noć · 2026-09-20
+
+**Implementacija:** `644e2e1` · **Grana:** `rd13-zora-na-tlu` (sa `master` @ `612259f`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `lib/hero-light.ts` · `lib/hero-scene.ts` · `app/globals.css` ·
+`workflow/projects/growth-cinematic/batches/RD13.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/LESSONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Povod: Pavle je posle release-a `RD3` pogledao sajt i javio *„Zavrsni kadar je previse taman, kao da je noc a pre toga
+izadje sunce.."*. Izmereno pre plana: na 0,88 skrola kadar je **24,7** prosečne svetline, **ispod noći (28,6)**, a
+završni 44,7. Dva uzroka: albedo terena (`#1b2417`/`#101b14`) koji toplo svetlo zore pod ~17° jedva podiže, i donji deo
+`.journey-shade` koji guta 44 % kadra (bez njega dno u 03 34,0 umesto 20,2). Plan, pa „moze execute". Prekidač
+`?zora=0..4`; prvi krug je bio preslab (+3 poena) — **i zato što dev server nije servirao nov CSS** (`L28`, treći put),
+pa varijanta 3 nije ni bila primenjena. Posle brisanja `.next/dev/cache/turbopack` i `.next/dev/static` i jačih
+vrednosti, merenje je proradilo. Pavle je izbor prepustio agentu („biraj ti") → varijanta 3.
+
+IZMERENO (`next start` PID 36224, 03:08, posle `BUILD_ID` 03:07:32; izvori 03:06:47):
+```
+  quick                 npm run lint            exit 0   (i pred commit: exit 0)
+  typecheck             npm run typecheck       exit 0   (i pred commit: exit 0)
+  test                  npm test                exit 0   173/173, 14 fajlova (bez izmene)
+  full                  npm run build           exit 0
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meri se: http://localhost:3000
+  svetlina po pojasevima (vrh -> dno), prosek u zagradi:
+    0,25 (01, noc)   23.9 / 38.3 / 39.5 / 12.6  (28.6)   polazno 23.9 / 38.3 / 38.9 / 13.3 (28.6)  -- u +/-10 %
+    0,62 (02)        81.7 / 88.6 / 56.0 / 101.0 (81.8)   polazno 67.5
+    0,75 (02)       109.8 / 84.1 / 56.4 / 98.9  (87.3)   polazno 70.6
+    0,88 (prelaz)    47.7 / 45.6 / 51.4 / 34.9  (44.9)   polazno 24.7   -- cilj 55 nije dostignut
+    1,00 (03)        83.8 / 62.9 / 58.3 / 47.5  (63.1)   polazno 44.7   -- cilj ispunjen
+  kontrast naslova 03   6.34:1 -> 5.99:1 (podloga L 0.0842 -> 0.0920; AA prag 4.5:1)
+  headless Chrome       scena ready · draw 37/37/37/27/36/36 · trouglova 76056/76056/76056/68562/75240/75240 · 0 gresaka
+  chunk scene           512 952 -> 513 328 B · gzip 131 115 -> 131 263 (+148 B; budzet 1 KiB)
+  nepromenjeno          git diff master: hero-truck / hero-road / hero-terrain 0 linija · CAMERA_PLAN, SUN_*, MOON_DIRECTION isti
+  prekidac              ?zora / is-soft-shade / dawnGround u izvoru: 0 · HeroExperience.tsx bez neto izmene
+```
+
+**Nove kapije:** nema ih — svetlina se meri u browseru, ne u `vitest`-u (tako i planirano). Postojeći testovi (173)
+čuvaju geometriju i prošli su bez popuštanja granica.
+
+**Odstupanja od ACCEPTANCE, prijavljena pa prihvaćena** (Pavle: „prihvatam", detalji u manifestu): prelaz 0,88 je
+**44,9** umesto ≥ 55 (kadar gleda nadole i nema neba; dno jeste ≥ 30), i kontrast naslova u 03 je **5,99:1** umesto
+„ne niže od 6,34:1". Nijedno nije prijavljeno kao PASS.
+
+**`manual`:** PASS — Pavle na `next start` build-u: „manual passs".
+
+**Scope drift:** none — radno stablo + `644e2e1` = `lib/hero-light.ts`, `lib/hero-scene.ts`, `app/globals.css` i
+workflow fajlovi iz EXPECTED-FILES. `components/HeroExperience.tsx` je dirnut u toku rada (prekidač) i vraćen, pa nema
+neto izmene; `CONTEXT.md` nije menjan (broj testova isti).
+
+**Lessons:** `L36` (brojčani cilj u acceptance-u mora prvo da se proveri na najgorem kadru). `L28` se ponovio po treći
+put i sad je koštao jednog celog kruga merenja. ⚠️ `LESSONS` 335/300 — sažimanje je non-batch koji čeka.
+
+**NEXT STEP:** release `RD13` je Pavlova odluka. Zatim **„filmski jezik"** — iz poređenja sa ChatGPT prototipom
+(`09269bb`, video 2026-09-19): skala i prored (broj do 192 px / prored 0,8 naspram naših 150 / 1,0), smena strana po
+poglavljima (levo/desno/centar naspram uvek levo), svetla sekcija sa Georgia serifom posle heroja, detalji zaglavlja.
+Pismo **nije** razlika — prototip je takođe Arial.
+
+---
+
 ## non-batch(release) — `RD3` spojen i pušen; izmeren na deploy-u · 2026-09-20
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

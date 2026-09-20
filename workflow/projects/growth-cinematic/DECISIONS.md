@@ -68,6 +68,18 @@
 
 ## ZATVORENO
 
+### `RD13-LOOK` — zora na tlu: varijanta 3, uz dva prihvaćena odstupanja · 2026-09-20
+- **Povod** (Pavle, posle release-a `RD3`): *„Zavrsni kadar je previse taman, kao da je noc a pre toga izadje sunce.."*
+  Izmereno: prelaz na 0,88 skrola bio je 24,7 prosečne svetline — **ispod noći (28,6)**.
+- **Izbor prepušten agentu** (*„biraj ti, varijanta 3 ili odbijanje?"*) → **varijanta 3** od pet: ambijent u zoru dobija
+  boju neba (`#c49a7c`) i jačinu, albedo terena se podiže 2,6× uz topao ton (asfalt 70 % toga), jedno usmereno svetlo
+  bez senke pada sa strane sunca, a donji deo `.journey-shade` guta 20 % kadra umesto 44 %.
+- **Odbijena je varijanta 4** (ista + viša ekspozicija): dobitak 2 poena, a 02 gubi kontrast.
+- **Dva odstupanja prihvaćena** (*„prihvatam"*), zapisana u manifestu: prelaz 0,88 staje na 44,9 (cilj je bio 55), i
+  kontrast naslova u 03 pada sa 6,34:1 na 5,99:1 (iznad AA praga 4,5:1).
+- ⚠️ Ko dalje dira svetlo: 02 je sada najsvetlije poglavlje (87,3) i tu je granica — jače od toga pere sliku, a to je
+  utisak na koji se Pavle žalio u prvom krugu („mlečno").
+
 ### `RD3-LOOK` — svetlo scene: nebo van magle, oreoli, bistra topla zora, bez svetlog vela · 2026-09-19
 - **Izvor stavke** (Pavle, 2026-09-15): *„Kad se pređe (na trećoj slici) nekako je previše prazno i tmurno, kao da je magla
   i da se sunce jedva probija kroz maglu."* Magla je bila zamerka (`LESSONS` L35); „sunce iza kamere" rešio je `RD10`.
