@@ -6,6 +6,46 @@
 
 ---
 
+## RD14 (STANDARD) — **NAPUŠTEN** posle merenja: skala nije poluga za „filmski" utisak · 2026-09-20
+
+**Implementacija:** nema — kod nije commitovan · **Grana:** `rd14-filmski-kadar` (sa `master` @ `6f737ed`), obrisana
+
+**Changed files:** `workflow/projects/growth-cinematic/batches/RD14.md` (nov, `NAPUŠTEN`) ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Povod: Pavlov snimak ChatGPT prototipa (*„bas vise filmski… ne mislim na scenu nego na ostalo, na boje na pokret, na
+tipografiju"*). Poređenje je rađeno **iz izvora** — prototip je u repou (`09269bb`) — i pokazalo da **pismo nije
+razlika** (i prototip je Arial), nego skala, prored, smena strana i svetla sekcija. Plan `RD14` uzeo je skalu i prored,
+Pavle „moze executi". Prekidač `?kadar=0|1|2` na dev serveru, tri širine, izračunate veličine:
+
+```
+  1024x700   0 danas  h1 65.5/0.98  broj 102.4/1.0  h2 47.1  odnos 2.17x
+             1 proto  h1 64.5/0.86  broj 112.6/0.8  h2 30.7  odnos 3.67x
+  1440x900   0 danas  h1 92.2/0.98  broj 144.0/1.0  h2 66.2  odnos 2.18x
+             1 proto  h1 90.7/0.86  broj 158.4/0.8  h2 43.2  odnos 3.67x
+  1920x1080  0 danas  h1 108/0.98   broj 150/1.0    h2 72.0  odnos 2.08x
+             1 proto  h1 121/0.86   broj 192/0.8    h2 57.6  odnos 3.33x
+  bez horizontalnog preliva; naslov u tri reda u svim varijantama
+```
+
+**Ishod:** Pavle posle pogleda uživo: *„ja ne vidim neke promene u odnosu na danas cak mi se i danas vise svidja"*, pa
+*„napusti i idemo na smenu strana"*. Kod je vraćen (`git checkout` nad `app/globals.css` i
+`components/HeroExperience.tsx`), grana obrisana, ništa nije spojeno.
+
+**Zašto se razlika ne vidi — izmereno:** na 1440 px naslov ide 92 → 91 px, jer na toj širini vlada `vw` deo `clamp`-a;
+razlika u naslovu postoji tek preko ~1700 px. Menjaju se samo broj i podnaslov, a to nije nosilo utisak.
+
+**Vrednost napuštenog batcha:** hipoteza je oborena merenjem i Pavlovim okom pre nego što je bilo šta ušlo u `master`.
+Ostaju dve poluge iz istog poređenja: **smena strana po poglavljima** (Pavlov izbor, sledeći batch) i **svetla krem
+sekcija sa Georgia serifom** posle heroja.
+
+**Scope drift:** none — dirnuta su dva fajla iz EXPECTED-FILES i oba vraćena; u repo ulazi samo zapis.
+
+**NEXT STEP:** plan za smenu strana — 01 levo, 02 desno, finale centrirano; dira `CAMERA_PLAN` (`shift` drži kamion sa
+suprotne strane od teksta) i test kompozicije, koji danas meri samo levu kolonu.
+
+---
+
 ## non-batch(release) — `RD13` spojen i pušen; **Vercel build keš je progutao CSS**, rešeno redeploy-em bez keša · 2026-09-20
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/LESSONS.md` ·
