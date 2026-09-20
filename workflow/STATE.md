@@ -7,7 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **release `RD13`** (Pavlova odluka), pa **„filmski jezik"** — poređenje sa ChatGPT prototipom
+- **Sledeće:** **„filmski jezik"** — poređenje sa ChatGPT prototipom
   (`09269bb`, Pavlov video 2026-09-19) pokazalo je da razlika NIJE u pismu (i prototip je Arial) ni u sceni, nego u:
   skali i proredu (broj do 192 px / prored 0,8 naspram naših 150 / 1,0; naslov 122/0,86 naspram 108/0,98; odnos
   broj:podnaslov 3,25× naspram 2,08×), smeni strana po poglavljima (levo → desno → levo → centar, kod nas uvek levo),
@@ -22,7 +22,8 @@
 - **Poslednji završen:** **`RD13`** (2026-09-20, `644e2e1`) — **Zora na tlu:** ambijent u zoru nosi boju neba, albedo
   terena i asfalta se podiže uz topao ton, jedno usmereno svetlo bez senke sa strane sunca, donji deo `.journey-shade`
   guta 20 % kadra umesto 44 %. Završni kadar 44,7 → 63,1 prosečne svetline, noć nepromenjena; chunk +148 B gzip.
-  `manual` PASS („manual passs"), dva odstupanja prijavljena pa prihvaćena. **Nije spojen ni pušen.**
+  `manual` PASS („manual passs"), dva odstupanja prijavljena pa prihvaćena. Spojen i pušen 2026-09-20; **deploy je prvo
+  bio pola-pola** (JS nov, CSS star zbog Vercel build keša) i sređen redeploy-em bez keša, pa izmeren (`L37`).
 - **Pretposlednji:** **`RD3`** (2026-09-19, `5e2c036`) — **Svetlo scene:** mesec, sunce i zvezde van magle (disk je
   bio 66 % boje magle), meki oreoli oko farova, zadnjih svetala, lampi i truck stop-a, sjajniji asfalt, u zoru ređa topla
   magla i nebo u prelazu, bez svetlog vela na dnu heroja; nov `lib/hero-light.ts`. Varijanta 3 od šest („Biram 3").
@@ -36,8 +37,10 @@
 
 ## Git
 
-- `RD13` (implementacija `644e2e1` + close) na grani **`rd13-zora-na-tlu`** (sa `master` @ `612259f`) — **nije spojen
-  ni pušen**; release je Pavlova odluka. Merenja protiv lokalnog `next start`; deploy nosi `RD3`.
+- `RD13` (`612259f..d1ca86d`, implementacija `644e2e1`) spojen fast-forward-om i pušen 2026-09-20 (Pavle: „spoji i
+  pushuj"); **deploy izmeren protiv njega tek posle redeploy-a bez build keša** — prvi build je dao nov JS (`#c49a7c`)
+  ali **star CSS pod istim imenom**; redeploy je promenio ime (`370vta1vre4jp.css` → `3iu9mf55lgoo0.css`) i doneo pravi
+  preliv. Diskriminator od sada nosi marker za JS **i** CSS (`L37`). `manual` na produkciji nije posebno tražen.
 - `RD3` (`48fe6f4..8339d7b`, implementacija `5e2c036`) spojen fast-forward-om i pušen 2026-09-20 (Pavle: „spoji i
   pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja (kod `RD3` u JS-u koji `/`
   može da učita 0 → 1, `facingEye` i `#b98468`; servirani chunk scene 512 952 B, isti kao lokalno); `manual` na
@@ -70,8 +73,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD3`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11` i `RD3`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD13`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3` i `RD13`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -81,7 +84,7 @@
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
-  `rd3-svetlo-scene`.
+  `rd3-svetlo-scene`, `rd13-zora-na-tlu`.
 
 ## Žive prepreke
 
