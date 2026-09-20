@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import {
-  buildHalos, buildSky, discMaterial, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial, STREET_LIGHTS, truckHalos,
+  buildHalos, buildSky, DAWN_GROUND, discMaterial, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial,
+  STREET_LIGHTS, truckHalos,
 } from './hero-light';
 import { buildRoad, ROAD_DESIGN } from './hero-road';
 import { asphaltTexture, buildTerrain, TERRAIN_STYLE } from './hero-terrain';
@@ -186,6 +187,7 @@ export function createHeroScene(host: HTMLElement) {
       // Glossy asphalt catches the warm rim, the lamps and the headlights like a damp night road, also after the
       // opening frame (RD3); the texture keeps the colour and only adds a surface (RD10).
       const asphalt = asphaltTexture();
+      // RD13: the asphalt is lifted with the ground at dawn, so the road in 03 stops reading as night.
       const road = new THREE.Mesh(
         new THREE.PlaneGeometry(18, 700),
         new THREE.MeshStandardMaterial({ color: "#232d28", roughness: LIGHT_STYLE.asphaltRoughness, metalness: 0.02, map: asphalt, roughnessMap: asphalt }),
@@ -216,7 +218,11 @@ export function createHeroScene(host: HTMLElement) {
       world.add(roadsideGlow.points);
       // Rolling hills and a distant ridge instead of five-sided cones (RD10). The height is a pure function shared
       // with the camera test, so the camera, the poles and the sun are measured against the same ground.
-      world.add(buildTerrain(TERRAIN_STYLE));
+      const terrain = buildTerrain(TERRAIN_STYLE);
+      world.add(terrain);
+      const terrainMaterial = terrain.material as THREE.MeshStandardMaterial;
+      const roadMaterial = road.material as THREE.MeshStandardMaterial;
+      const roadTint = roadMaterial.color.clone();
 
       const truck = new THREE.Group();
       truck.position.set(0, 0, 7);
@@ -263,6 +269,11 @@ export function createHeroScene(host: HTMLElement) {
       const sunrise = new THREE.DirectionalLight("#ffcf9f", 1.2);
       sunrise.position.set(18, 11, 32);
       scene.add(sunrise);
+      // RD13: dawn fill from the sun side, higher up and without a shadow, so the ground facing the camera in 03
+      // stops reading as night. Off at night; no extra draw call.
+      const dawnFill = new THREE.DirectionalLight("#ffd9b0", 0);
+      dawnFill.position.set(26, 30, 34);
+      scene.add(dawnFill);
       const rimNight = new THREE.Color('#ffcf9f');
       const rimDawn = new THREE.Color('#ffb365');
       // The disc sits far away in the sky: drawn first and without depth, so every hill in front of it covers it.
@@ -299,6 +310,12 @@ export function createHeroScene(host: HTMLElement) {
       moonTint: new THREE.Color(LIGHT_STYLE.glow.moonColor),
     };
     const nightZenith = new THREE.Color(LIGHT_STYLE.zenith.night);
+    // RD13: the ground albedo is very dark on purpose (RD10); at dawn the sky lifts it instead of a new light.
+    const ambientNight = new THREE.Color('#8f9f95');
+    const ambientDawn = new THREE.Color(DAWN_GROUND.skyFill);
+    const terrainLift = new THREE.Color(1, 1, 1);
+    // Podizanje nosi i topao ton, da tlo u zoru prestane da bude zelenkasto-sivo.
+    const liftTint = new THREE.Color(...DAWN_GROUND.liftTint);
     const dawnZenith = new THREE.Color(LIGHT_STYLE.zenith.dawn);
     const sunDir = new THREE.Vector3();
     const moonDir = new THREE.Vector3();
@@ -330,7 +347,12 @@ export function createHeroScene(host: HTMLElement) {
       fog.color.copy(nightFog).lerp(fogDawn,daylight);
       fog.density=NIGHT_FOG_DENSITY+(LIGHT_STYLE.dawnDensity-NIGHT_FOG_DENSITY)*daylight;
       // Dawn end values match the previous curve; only the starting frame changed.
-      ambient.intensity=1.28+daylight*.74;
+      ambient.intensity=1.28+daylight*(.74+DAWN_GROUND.skyBoost);
+      ambient.color.copy(ambientNight).lerp(ambientDawn,daylight);
+      terrainLift.setScalar(1).lerp(liftTint,daylight).multiplyScalar(1+(DAWN_GROUND.groundLift-1)*daylight);
+      terrainMaterial.color.copy(terrainLift);
+      roadMaterial.color.copy(roadTint).multiplyScalar(1+(DAWN_GROUND.groundLift-1)*daylight*.7);
+      dawnFill.intensity=DAWN_GROUND.frontFill*daylight;
       moon.intensity=1.9*(1-daylight*.8);
       sunrise.intensity=1.2+daylight*2.2;
       sunrise.color.copy(rimNight).lerp(rimDawn,daylight);

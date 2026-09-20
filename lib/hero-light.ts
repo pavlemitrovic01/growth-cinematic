@@ -56,6 +56,27 @@ export const LIGHT_STYLE = {
 } as const;
 
 /**
+ * Zora na tlu (`RD13`, Pavle 2026-09-20: „Zavrsni kadar je previse taman, kao da je noc a pre toga izadje sunce").
+ * Izmereno pre izmene: na 0,88 skrola kadar je 24,7 prosecne svetline -- ispod noci (28,6), a zavrsni 44,7.
+ *
+ * ⚠️ ZASTO OVAKO. Tlo je namerno vrlo tamno (`#1b2417`/`#101b14`, `RD10`), a toplo svetlo zore pada pod ~17 stepeni,
+ * pa ravno tlo od njega dobija malo; daleka brda izgledaju svetlo samo zato sto ih magla boji u boju neba. Zato zora
+ * podize sam albedo tla i asfalta i dolazi kroz nebo (ambijent), umesto da se dodaje jos jedan jak reflektor.
+ */
+export const DAWN_GROUND = {
+  /** Boja „neba" u ambijentalnom svetlu u zoru (nocu `#8f9f95`). */
+  skyFill: '#c49a7c',
+  /** Dodatna jacina ambijenta u punoj zori (uz postojecih +0,74). */
+  skyBoost: 1.5,
+  /** Mnozilac boje terena u punoj zori; asfalt dobija 70 % istog. */
+  groundLift: 2.6,
+  /** Topao ton koji ide uz podizanje, da tlo u zoru ne ostane zelenkasto-sivo. */
+  liftTint: [1, 0.9, 0.78] as const,
+  /** Jacina toplog fill svetla sa strane sunca u punoj zori (bez senke). */
+  frontFill: 2.4,
+} as const;
+
+/**
  * Disk meseca i sunca: van magle i bez tone mappinga, pa na 110 jedinica ostaje svoje boje. Crta se prvi i ne upisuje
  * dubinu, pa ga svako brdo ispred zaklanja (`RD10`).
  */
