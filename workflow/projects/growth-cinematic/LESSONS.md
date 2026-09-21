@@ -350,3 +350,12 @@ Pravac se može preračunati da se vrati na oznaku, ali tada gleda na drugu stra
 stop. **Pravilo:** ko menja `shift`, fov ili metu kamere u poglavlju sa mesecom ili suncem, prvo meri NDC tela (testovi
 11 i 12) i zrak ka njemu (10 i 15); ako oba ne mogu da prođu, izmena kadra je u sukobu sa Pavlovom oznakom i traži
 njegovu odluku, ne tiho pomeranje.
+
+## L39 — Vizuelna odluka ide PRE plana: Pavle ne odobrava execute za nešto što nije video.
+`RD3`, `RD13` i `RD15` su imali poređenje varijanti **unutar** batch-a (korak posle `/execute`). Za `RD16` je plan sa
+istim korakom odbijen: *„kako da ti kazem execute ako nisam video sta radimo"*. Varijante su zatim napravljene u kopiji
+van repoa (`git archive HEAD` u scratchpad, `npm ci`, `next dev` na drugom portu), `master` je ostao čist i batch nije
+otvoren; posle izbora („4") plan je nosio samo izabrano, bez prekidača i bez neizabranog koda. **Pravilo:** za posao čiji
+je ishod izgled, prvo varijante na pravoj sceni (kontakt list + linkovi), pa plan za jednu. Merenja za acceptance idu
+istom skriptom kojom je meren preview — brojka iz ranijeg batch-a merena drugačije nije osnova (`RD13` 63,1 prema
+`RD16` 49,0 za „isti" finale).

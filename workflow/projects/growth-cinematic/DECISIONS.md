@@ -68,6 +68,21 @@
 
 ## ZATVORENO
 
+### `RD16-LOOK` — boja završnog kadra: tamno neutralno tlo, svetao put i horizont · 2026-09-21
+- **Povod** (Pavle, posle release-a `RD15`): *„okolinu i pozadinu… kao da se neko posrao preko ekrana"*. Izmereno:
+  tlo u finalu 63° pri 9 % svetline, zasićenje 34 % — maslinasto-braon; uzrok je topli ton iz `RD13-LOOK` (`[1, 0.9,
+  0.78]` ×2,6 uz ambijent `#c49a7c`) preko tamnozelenog tla.
+- **Izbor od pet varijanti uživo, PRE plana** (`?tlo=0..4` u kopiji van repoa, kontakt list): 0 danas · 1 zeleno tlo ·
+  2 neutralno-hladno · 3 suva trava / pesak · 4 tamno tlo, svetao put i nebo. Preporuka agenta bila je 1 (tačno uklanja
+  izmereni uzrok, uz `--forest`); Pavle: **„4"**.
+- **Isporučeno:** tlo u zoru neutralno i tamno (ton `[1.42, 0.88, 1.82]` ×0,9 — silueta), asfalt ka `#4a4a4a` ×2,6,
+  ambijent `#a4a2a4`, odbijeno svetlo `#141414`, toplo-beli fill `#fff0dc`, horizont `#e8c7a3` tek posle 02; preliv iza
+  teksta u finalu bez zelenkastog tona (`saturate(0)`). Toplo ostaje samo svetlo (sunce, rub, oreoli), ne površine.
+- **02 vraćen na 89,2** (u preview-u 98,9, danas 87,3): svetli horizont stiže tek u delu skrola 0,8–0,98.
+- **Pregled:** *„manual passs"*.
+- ⚠️ Ko dalje dira zoru: tlo je namerno tamno — svetlina finala (56,0) dolazi iz puta i horizonta. Podizanje tla vraća
+  površinu u kojoj se topao ton opet meša sa zelenim iz boja po temenu.
+
 ### `RD15-LOOK` — centriran finale sa većim naslovom; puna smena strana odbačena · 2026-09-21
 - **Povod:** prototip (`09269bb`) menja strane po poglavljima; Pavle posle napuštenog `RD14`: *„napusti i idemo na smenu
   strana"*.
@@ -93,6 +108,8 @@
   kontrast naslova u 03 pada sa 6,34:1 na 5,99:1 (iznad AA praga 4,5:1).
 - ⚠️ Ko dalje dira svetlo: 02 je sada najsvetlije poglavlje (87,3) i tu je granica — jače od toga pere sliku, a to je
   utisak na koji se Pavle žalio u prvom krugu („mlečno").
+- **Dopuna `RD16` (2026-09-21):** topli ton i podizanje tla ×2,6 zamenjeni su tamnim neutralnim tlom (`RD16-LOOK`);
+  ambijent, fill i donji preliv iz ove odluke ostaju kao mehanizam, sa novim bojama.
 
 ### `RD3-LOOK` — svetlo scene: nebo van magle, oreoli, bistra topla zora, bez svetlog vela · 2026-09-19
 - **Izvor stavke** (Pavle, 2026-09-15): *„Kad se pređe (na trećoj slici) nekako je previše prazno i tmurno, kao da je magla
@@ -107,6 +124,8 @@
 - **Preporuka agenta bila je ista** (3): 2 ostavlja zoru kao ravan braon zid; 4 uvodi plavu kojoj na sajtu nema para i ide
   protiv toplog svetla iz `S1-LOOK`.
 - **Disk ostaje `#ffd392`** — ponuđen toplo-beli disk iz varijante 5 ako deluje zlatno; Pavle izabrao 3 bez izmene.
+- **Dopuna `RD16` (2026-09-21):** boja magle i horizonta u zoru ide u dva koraka — `#b98468` kroz 02, pa svetli topli
+  `#e8c7a3` u delu skrola 0,8–0,98 (`RD16-LOOK`). Gustina magle (0,0045) i sve ostalo iz ove odluke ostaje.
 - **Pregled:** *„pass"* (produkcijski build, pravi browser).
 - ⚠️ Ko menja boju magle menja i horizont neba (isti `THREE.Color`). Ko menja `--forest` (Pavle želi, 2026-09-19): noćne boje
   scene (nebo `#07110d`, magla `#0d1a16`, vrh neba `#040a08`, `.journey-shade`) su podešene na nju.

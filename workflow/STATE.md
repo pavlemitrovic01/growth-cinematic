@@ -7,35 +7,34 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **nova sesija: boja završnog kadra (03)**. Pavle: *„okolinu i
-  pozadinu… kao da se neko posrao preko ekrana"*. Izmereno: tlo nijansa 62°, iza teksta 47°, put 53° pri 9–24 % svetline
-  — maslinasto-braon; uzrok je topli ton iz `RD13` preko zelenog tla (pre `RD13` tlo 91°). Tri pravca za poređenje:
-  neutralno-hladno tlo (tople samo svetle površine), suva trava / pesak, tamno tlo uz svetao put i nebo.
-  **„Filmski jezik" do sada:** skala i prored nisu poluga (`RD14` napušten); smena strana ne ide u 01/02 zbog meseca i
+- **Sledeće:** **release `RD16` je Pavlova odluka** (grana `rd16-boja-zavrsnog-kadra`, nije spojena ni pušena; posle
+  push-a diskriminator za JS **i** CSS — `#e8c7a3` u chunk-u scene, `filter:saturate(0)` u CSS-u, `L37`). Za vizuelne
+  odluke od sada **varijante PRE plana** (`L39`). **„Filmski jezik" do sada:** skala i prored nisu poluga (`RD14` napušten); smena strana ne ide u 01/02 zbog meseca i
   sunca (`RD15`, `L38`) — ostaje **svetla krem sekcija sa Georgia serifom posle heroja** (van scene, bez tog sukoba).
   Uz to stranica **„smer redizajna"** (paleta; Pavle želi da menja `--forest`), **`T1b`**
   (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu.
   `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD15`** (2026-09-21, `47e365d`) — **Centriran finale sa većim naslovom:** finale 03 u sredini
+- **Poslednji završen:** **`RD16`** (2026-09-21, `fe04aeb`) — **Boja završnog kadra:** maslinasto-braon (topli ton
+  `RD13` preko zelenog tla, Pavle: *„kao da se neko posrao preko ekrana"*) zamenjen tamnim neutralnim tlom, svetlim
+  putem i toplim horizontom koji stiže tek posle 02. Pet varijanti uživo pre plana, Pavle „4". Finale 49,0 → 56,0,
+  tlo 63° s34 → 27° s15, 02 89,2, noć ista; chunk +84 B gzip. `manual` PASS („manual passs"). **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD15`** (2026-09-21, `47e365d`) — **Centriran finale sa većim naslovom:** finale 03 u sredini
   (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva, strane poglavlja kao podatak (`BEAT_SIDES`);
   puna smena strana odbačena merenjem (mesec/sunce van kadra ili iza brda, `L38`). `manual` PASS. Spojen i pušen
   2026-09-21, izmeren na deploy-u (JS i CSS stigli zajedno).
-- **Pretposlednji:** **`RD13`** (2026-09-20, `644e2e1`) — **Zora na tlu:** ambijent u zoru nosi boju neba, albedo
-  terena i asfalta se podiže uz topao ton, jedno usmereno svetlo bez senke sa strane sunca, donji deo `.journey-shade`
-  guta 20 % kadra umesto 44 %. Završni kadar 44,7 → 63,1 prosečne svetline, noć nepromenjena; chunk +148 B gzip.
-  `manual` PASS („manual passs"), dva odstupanja prijavljena pa prihvaćena. Spojen i pušen 2026-09-20; **deploy je prvo
-  bio pola-pola** (JS nov, CSS star zbog Vercel build keša) i sređen redeploy-em bez keša, pa izmeren (`L37`).
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `RD16` na grani **`rd16-boja-zavrsnog-kadra`** (sa `master` @ `18b8465`; implementacija `fe04aeb` + close commit) —
+  **nije spojena ni pušena**; release je Pavlova odluka.
 - `RD15` (`6f737ed..c1f9037`, implementacija `47e365d`; nosi i zapis `0efa23d` o napuštenom `RD14`) spojen
   fast-forward-om i pušen 2026-09-21 (Pavle: „spoji i pusuj pa prelazim"); **deploy izmeren protiv njega**, uz nov build
   potvrđen diskriminatorom PRE merenja za **JS i CSS** (niz strana 0 → 1, `journey-shade-right` 0 → 1, kontrola three 1

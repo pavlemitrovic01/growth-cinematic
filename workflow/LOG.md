@@ -6,6 +6,64 @@
 
 ---
 
+## RD16 (STANDARD) — Boja završnog kadra: tamno neutralno tlo, svetao put i horizont · 2026-09-21
+
+**Implementacija:** `fe04aeb` · **Grana:** `rd16-boja-zavrsnog-kadra` (sa `master` @ `18b8465`) — **nije spojena ni
+pušena**: release je Pavlova odluka
+
+**Changed files:** `lib/hero-light.ts` · `lib/hero-scene.ts` · `app/globals.css` ·
+`workflow/projects/growth-cinematic/batches/RD16.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+Tok:
+1. Prvi plan je poređenje varijanti stavio **unutar** batch-a (kao `RD3`/`RD13`). Pavle: *„kako da ti kazem execute ako
+   nisam video sta radimo"* → varijante napravljene **pre plana**, u kopiji van repoa (`git archive HEAD` u scratchpad,
+   `npm ci`, `next dev` na 3100); `master` čist, batch nije otvoren (`L39`).
+2. Pet varijanti (`?tlo=0..4`): 0 danas · 1 zeleno tlo · 2 neutralno-hladno · 3 suva trava · 4 tamno tlo, svetao put i
+   nebo. Prvi krug: 3 je ostala tamno braon (svetlina 14 %), 2 i 4 skoro iste, sivi preliv menjao i noć → drugi krug
+   sa svetlijim okerom, tamnijim tlom u 4 i prelivom samo u finalu. Preporuka agenta 1; Pavle: **„4"**.
+3. Plan za 4 uz obećanje iz preview-a: 02 (98,9 u preview-u) vraćen na ≤ 90 tako što svetli horizont stiže tek na
+   0,8–0,98 skrola. Pavle: „moze execut".
+
+IZMERENO (`next start` PID 16756 posle ponovnog `build`-a; ista skripta kao preview, headless Chrome, SwiftShader, 1440×900):
+```
+  quick                 npm run lint            exit 0
+  typecheck             npm run typecheck       exit 0
+  test                  npm test                exit 0   173/173, 14 fajlova
+  full                  npm run build           exit 0
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meri se: http://localhost:3000
+
+                        danas (master)                     RD16
+  0,25 noc              23.7/38.3/39.6/12.8  28.6          23.7/38.4/39.4/12.8  28.6
+  0,75 (02)             87.3                               89.2      (preview 4: 98.9)
+  0,88 prelaz           39.0                               44.2
+  1,00 finale           49.0                               56.0      (preview 4: 56.0)
+  tlo u finalu          #1d1e0f 63° s34 l9                 #1a1613 27° s15 l9
+  iza teksta            #45402d 48° s21 l22                #403932 31° s12 l22
+  put desno             #302e1e 53° s23 l15                #453e37 31° s11 l24
+  kontrast naslova 03   11,34:1                            10,51:1   (medijana podloge u okviru naslova)
+  draw                  37/37/27/36                        37/37/27/36 · 0 gresaka
+  chunk scene gzip      130 287 (produkcija)               130 371 (+84 B)
+  nepromenjeno          git diff master: hero-terrain / hero-road / hero-truck / hero-beat 0 linija; CAMERA_PLAN,
+                        SUN_*, MOON_DIRECTION, disk, oreoli, gustina magle bez izmene
+```
+
+`manual`: Pavle u svom browseru (`next start`), ceo hero — *„manual passs"*.
+
+**SCOPE DRIFT:** nema — diff je tačno EXPECTED-FILES (tri fajla koda + manifest, ROADMAP, DECISIONS, LESSONS, STATE,
+LOG). Van gita: privremeni unos `rd16-preview` u `.claude/launch.json` (isključen iz gita preko `.git/info/exclude`)
+dodat i uklonjen; kopija za preview je u scratchpad-u, van repoa.
+
+**LESSONS:** `L39` — vizuelna odluka ide pre plana; acceptance se meri skriptom kojom je meren preview.
+
+**NEXT STEP:** release `RD16` (merge + push) je Pavlova odluka; posle push-a diskriminator za JS (`e8c7a3` u chunk-u
+scene) **i** CSS (`filter:saturate(0)`), pa merenje protiv deploy-a (`L37`).
+
+---
+
 ## non-batch(release) — `RD15` spojen i pušen; izmeren na deploy-u · 2026-09-21
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
