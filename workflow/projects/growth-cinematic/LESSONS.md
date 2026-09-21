@@ -342,3 +342,11 @@ sadržaja, prethodni build je stvarno proizveo star CSS. Bez CSS markera to se n
 **Pravilo:** diskriminator pre merenja nosi marker za **svaku vrstu artefakta koju batch dira** (JS, CSS, slike), a ne
 samo za jednu; marker se traži u **serviranom, minifikovanom** obliku (`rgba(8,17,13,.85)` postaje `#08110dd9`).
 Kad se artefakti ne slažu, prvi potez je redeploy bez build keša, pa ponovo merenje — tek onda se sumnja na CDN.
+
+## L38 — Mesec i sunce su pravci vezani za kadar: ko menja pomeraj kadra, pomera ih po ekranu.
+U `RD15` je tekst 01 prešao desno, `shift` promenio znak, i mesec je sa Pavlove oznake otišao na NDC x −1,1 — van
+ekrana. Disk je pravac od kamere (`RD10`), a oznaka je mesto na ekranu, pa isti pravac u drugom kadru daje drugo mesto.
+Pravac se može preračunati da se vrati na oznaku, ali tada gleda na drugu stranu sveta — u `RD15` pravo u brda i truck
+stop. **Pravilo:** ko menja `shift`, fov ili metu kamere u poglavlju sa mesecom ili suncem, prvo meri NDC tela (testovi
+11 i 12) i zrak ka njemu (10 i 15); ako oba ne mogu da prođu, izmena kadra je u sukobu sa Pavlovom oznakom i traži
+njegovu odluku, ne tiho pomeranje.

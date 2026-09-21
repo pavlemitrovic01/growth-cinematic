@@ -6,6 +6,75 @@
 
 ---
 
+## RD15 (STANDARD) — Centriran finale sa većim naslovom; puna smena strana odbačena merenjem · 2026-09-21
+
+**Implementacija:** `47e365d` · **Grana:** `rd15-smena-strana` (sa `master` @ `0efa23d`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `lib/hero-beat.ts` · `lib/hero-scene.ts` · `app/globals.css` · `__tests__/lib/hero-scene.test.js` ·
+`__tests__/globals-css.test.js` (odobreno proširenje) · `components/HeroExperience.tsx` (odobreno proširenje) ·
+`workflow/projects/growth-cinematic/batches/RD15.md` (nov) · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/LESSONS.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`
+
+Posle napuštenog `RD14` Pavle je izabrao smenu strana iz prototipa. Tok, sve izmereno:
+1. **Prvi krug** (`?strane=0|1|2`): tekst desno je stajao na svetloj strani, jer je tamni preliv pravljen samo za tekst
+   levo → dodato ogledalo preliva koje prati stranu aktivnog poglavlja. Kontrast desno 6,17–6,45:1, centar 5,26:1.
+2. **Kompozicija merena na strani poglavlja** (nov oblik testa 5, sa visinom bloka teksta izmerenom u browseru): centrirani
+   finale **81 %** kamiona ispod teksta, varijanta 2 u 01 **42 %** (granica 25 %). Pomeraj kadra 1,25× (desno) i 1,1×
+   (centar) uz užu kolonu → 0–18 %. Pavle: „ne mogu da odlucim izmedju 1 i 2", pa **„2"**.
+3. **Mesec izlazi iz kadra**: u varijanti 2 tekst 01 je desno, kadar se ogleda, mesec na NDC x **−1,1**. Pravac rešen
+   numerički da se vrati na Pavlovu oznaku (NDC −0,07…0,08 / 0,73…0,89) — ali tada ga zaklanjaju brda i truck stop
+   (testovi 10 i 15 crveni); podizanje: +0,22 → 0,91 (uz ivicu), +0,28 → 1,10 (van kadra). Prozora nema. Isto važi za
+   sunce u 02 (varijanta 1). Pavle: „stani da ne idemo u drift", pa na predlog **„zavrsi rd15"** → samo centriran finale.
+4. **Veći naslov u finalu** (Pavle: „tekst … premali"): `?finale=0|1|2` — 104 px prolazi (0–16,4 %), 124 px ne (31–38 %).
+   Pavle: „1 mi se najvise svidja".
+5. `/close` zaustavljen: `components/HeroExperience.tsx` van spiska (plan je naveo `CinematicHome.tsx`, a preliv živi u
+   `HeroExperience`) → Pavle „odoooobri".
+
+IZMERENO (`next start` PID 7028, 13:15, posle `BUILD_ID` 13:14:31; izvori 13:13:37):
+```
+  quick                 npm run lint            exit 0   (i pred commit)
+  typecheck             npm run typecheck       exit 0   (i pred commit)
+  test                  npm test                exit 0   173/173, 14 fajlova (census K1/A 141 -> 143, odobreno)
+  full                  npm run build           exit 0
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meri se: http://localhost:3000
+  kamion ispod teksta   1440x900   uvod 2,4 · 01 2,7 · 02 5,8 · 03 7,6 %
+                        1920x1080  0 · 0 · 0 · 0 %
+                        1280x1024  12,5 · 9,6 · 14,5 · 16,4 %
+                        1024x650   5,7 · 5,1 · 8,4 · 8,5 %
+  mesec / sunce         na Pavlovim oznakama (testovi 11, 12 zeleni); MOON_DIRECTION i SUN_* bez izmene
+  headless Chrome       scena ready · draw 31/37/37/36 · 0 gresaka
+  chunk scene           513 328 -> 513 482 B · gzip 131 263 -> 131 350 (+87 B)
+  telefon / smanjen     chunk scene 0 / 0 zahteva (kontrola desktop 1) · fotografija ista
+  prekidaci             ?strane / ?finale / is-strane / is-finale u izvoru: 0
+  nepromenjeno          git diff master: hero-light / hero-road / hero-terrain / hero-truck 0 linija; CAMERA_PLAN.path isti
+```
+
+**Kapija dokazano crvena pa zelena** (test 5, kolona na strani poglavlja; sha256 `lib/hero-beat.ts` vraćen):
+```
+  F1  pomeraj centra 1,1 -> 0,6         03 = 76,0 %   (1 failed | 16 passed)
+  F2  centrirana kolona 44vw -> 62vw    03 = 25,1 %   (1 failed | 16 passed)
+  vracanje: sha256 isti · 17/17
+```
+
+**`manual`:** PASS — Pavle na produkcijskom build-u: „manujal pass".
+
+**Scope drift:** none posle odobrenja — `47e365d` + radno stablo = EXPECTED-FILES + `__tests__/globals-css.test.js` i
+`components/HeroExperience.tsx` (oba u `APPROVED-SCOPE-EXPANSION`, sa Pavlovim rečima). `components/CinematicHome.tsx` i
+`__tests__/lib/hero-beat.test.js` nisu dirani.
+
+**Lessons:** `L38` (mesec i sunce su pravci vezani za kadar — promena pomeraja ih pomera, oznaka je mesto na ekranu).
+⚠️ `LESSONS` preko capa (upozorenje).
+
+**NEXT STEP:** release `RD15` (Pavlova odluka). Zatim, **u novoj sesiji**: boja završnog kadra — izmereno maslinasto-braon
+(tlo 62°, iza teksta 47°, put 53° pri 9–24 % svetline), uzrok je topli ton `RD13` preko zelenog tla; tri pravca:
+neutralno-hladno tlo, suva trava/pesak, tamno tlo sa svetlim putem i nebom.
+
+---
+
 ## RD14 (STANDARD) — **NAPUŠTEN** posle merenja: skala nije poluga za „filmski" utisak · 2026-09-20
 
 **Implementacija:** nema — kod nije commitovan · **Grana:** `rd14-filmski-kadar` (sa `master` @ `6f737ed`), obrisana

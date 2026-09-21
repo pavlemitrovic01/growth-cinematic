@@ -68,6 +68,20 @@
 
 ## ZATVORENO
 
+### `RD15-LOOK` — centriran finale sa većim naslovom; puna smena strana odbačena · 2026-09-21
+- **Povod:** prototip (`09269bb`) menja strane po poglavljima; Pavle posle napuštenog `RD14`: *„napusti i idemo na smenu
+  strana"*.
+- **Izbor uživo bio je varijanta 2** (uvod levo, 01 desno, 02 levo, finale centar): *„ne mogu da odlucim izmedju 1 i 2"*,
+  pa *„2"*. **Nije isporučena**: u 01 mesec izlazi iz kadra, a vraćen na oznaku pada iza brda i truck stop-a
+  (`LESSONS` L38; brojke u `batches/RD15.md`). Varijanta 1 ima isti problem sa suncem u 02.
+- **Isporučeno** (Pavle: *„zavrsi rd15"*): samo **finale centriran**, kolona `min(56vw, 820px)`, blok na 44 %; ogledalo
+  tamnog preliva prati stranu poglavlja.
+- **Veći naslov finala** (*„tekst … premali"*, pa od tri veličine *„1 mi se najvise svidja"*): do 104 px. Sa 124 px je
+  31–38 % kamiona stajalo ispod teksta.
+- **Pregled:** *„manujal pass"*.
+- ⚠️ Ko ponovo pokušava tekst desno u 01 ili 02: mesec i sunce su vezani za kadar; bez Pavlove nove oznake ta izmena se
+  ne radi. Strane žive u `BEAT_SIDES` (`lib/hero-beat.ts`), pomeraj u `shiftForSide`.
+
 ### `RD13-LOOK` — zora na tlu: varijanta 3, uz dva prihvaćena odstupanja · 2026-09-20
 - **Povod** (Pavle, posle release-a `RD3`): *„Zavrsni kadar je previse taman, kao da je noc a pre toga izadje sunce.."*
   Izmereno: prelaz na 0,88 skrola bio je 24,7 prosečne svetline — **ispod noći (28,6)**.

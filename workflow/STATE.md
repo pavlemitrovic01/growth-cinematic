@@ -7,36 +7,37 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **„filmski jezik"** — poređenje sa ChatGPT prototipom
-  (`09269bb`, Pavlov video 2026-09-19) pokazalo je da razlika NIJE u pismu (i prototip je Arial) ni u sceni, nego u:
-  skali i proredu (broj do 192 px / prored 0,8 naspram naših 150 / 1,0; naslov 122/0,86 naspram 108/0,98; odnos
-  broj:podnaslov 3,25× naspram 2,08×), smeni strana po poglavljima (levo → desno → levo → centar, kod nas uvek levo),
-  svetloj sekciji sa Georgia serifom odmah posle heroja, i detaljima zaglavlja (tačka „jobs open", pilula sa
-  strelicom, vertikalna traka). Uz to stranica **„smer redizajna"** pre `RD4`–`RD7` — **Pavle 2026-09-19 želi da menja tamnozelenu (`--forest`)**, pa paleta
-  ide na tu stranicu (3–4 osnovne boje na pravom sadržaju, zelena kao kontrola), pitanje „smeta ton ili monotonija" je
-  postavljeno; **`T1b`** (stranica „GROWTH hijerarhija", https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca
-  lansiranja — `V1` (selidba sa Hobby naloga) i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da regruteri zovu sa
-  broja iz `lib/contact.js`.
+- **Sledeće:** **release `RD15`** (Pavlova odluka), pa **u novoj sesiji: boja završnog kadra (03)**. Pavle: *„okolinu i
+  pozadinu… kao da se neko posrao preko ekrana"*. Izmereno: tlo nijansa 62°, iza teksta 47°, put 53° pri 9–24 % svetline
+  — maslinasto-braon; uzrok je topli ton iz `RD13` preko zelenog tla (pre `RD13` tlo 91°). Tri pravca za poređenje:
+  neutralno-hladno tlo (tople samo svetle površine), suva trava / pesak, tamno tlo uz svetao put i nebo.
+  **„Filmski jezik" do sada:** skala i prored nisu poluga (`RD14` napušten); smena strana ne ide u 01/02 zbog meseca i
+  sunca (`RD15`, `L38`) — ostaje **svetla krem sekcija sa Georgia serifom posle heroja** (van scene, bez tog sukoba).
+  Uz to stranica **„smer redizajna"** (paleta; Pavle želi da menja `--forest`), **`T1b`**
+  (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu.
+  `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD13`** (2026-09-20, `644e2e1`) — **Zora na tlu:** ambijent u zoru nosi boju neba, albedo
+- **Poslednji završen:** **`RD15`** (2026-09-21, `47e365d`) — **Centriran finale sa većim naslovom:** finale 03 u sredini
+  (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva, strane poglavlja kao podatak (`BEAT_SIDES`);
+  puna smena strana odbačena merenjem (mesec/sunce van kadra ili iza brda, `L38`). `manual` PASS. **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD13`** (2026-09-20, `644e2e1`) — **Zora na tlu:** ambijent u zoru nosi boju neba, albedo
   terena i asfalta se podiže uz topao ton, jedno usmereno svetlo bez senke sa strane sunca, donji deo `.journey-shade`
   guta 20 % kadra umesto 44 %. Završni kadar 44,7 → 63,1 prosečne svetline, noć nepromenjena; chunk +148 B gzip.
   `manual` PASS („manual passs"), dva odstupanja prijavljena pa prihvaćena. Spojen i pušen 2026-09-20; **deploy je prvo
   bio pola-pola** (JS nov, CSS star zbog Vercel build keša) i sređen redeploy-em bez keša, pa izmeren (`L37`).
-- **Pretposlednji:** **`RD3`** (2026-09-19, `5e2c036`) — **Svetlo scene:** mesec, sunce i zvezde van magle (disk je
-  bio 66 % boje magle), meki oreoli oko farova, zadnjih svetala, lampi i truck stop-a, sjajniji asfalt, u zoru ređa topla
-  magla i nebo u prelazu, bez svetlog vela na dnu heroja; nov `lib/hero-light.ts`. Varijanta 3 od šest („Biram 3").
-  Draw 30–37, chunk +1,7 KiB gzip, test 171 → 173; `manual` PASS („pass"). Spojen i pušen 2026-09-20, izmeren na deploy-u.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `RD15` (implementacija `47e365d` + close) na grani **`rd15-smena-strana`** (sa `master` @ `0efa23d`) — **nije spojen
+  ni pušen**; release je Pavlova odluka. `master` nosi i neposlat zapis `0efa23d` (`RD14` napušten). Merenja protiv
+  lokalnog `next start`; deploy nosi `RD13`.
 - `RD13` (`612259f..d1ca86d`, implementacija `644e2e1`) spojen fast-forward-om i pušen 2026-09-20 (Pavle: „spoji i
   pushuj"); **deploy izmeren protiv njega tek posle redeploy-a bez build keša** — prvi build je dao nov JS (`#c49a7c`)
   ali **star CSS pod istim imenom**; redeploy je promenio ime (`370vta1vre4jp.css` → `3iu9mf55lgoo0.css`) i doneo pravi
