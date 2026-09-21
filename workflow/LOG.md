@@ -6,6 +6,40 @@
 
 ---
 
+## non-batch(release) — `RD17` spojen i pušen; izmeren na deploy-u · 2026-09-22
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `1154b7c..a165df9` fast-forward, push — nosi `299accf` (`RD17`) i `a165df9` (close). Pavlova odluka („spoji i
+pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `1154b7c`, nepomeren) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** — po `L37` za **oba** artefakta koje batch dira: CSS (`--asphalt:#121314` naspram
+`--forest:#08110d`, kontrola `--bone:#f1e7d5`) i JS stranice za grešku (`background:"#121314"` naspram `"#08110d"`,
+kontrola `fontFamily:'system-ui`). Instrument proveren lokalno pre push-a.
+```
+  lokalno      01:21:58   JS: novo 1 / staro 0 · CSS 1fzppvjcbyy4t.css: asphalt 1 / forest 0 · kontrole 2 / 1
+  pre push-a   01:21:59   JS: novo 0 / staro 1 · CSS 1h5fe4eam9do6.css: asphalt 0 / forest 1 · kontrole 2 / 1
+  push         01:22:11   1154b7c..a165df9
+  posle        01:22:21   JS: novo 0 / staro 1 · asphalt 0 / forest 1   (stari build)
+               01:22:43   JS: novo 1 / staro 0 · CSS 1z2h_ir32wsph.css: asphalt 1 / forest 0
+```
+JS i CSS stigli zajedno — bez problema sa build kešom iz `RD13`.
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 37/36 · 0 gresaka
+  svetlina (ista skripta)       noc 28.7 · finale 56.0 (lokalno 28.7 / 56.0)
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno („manual pass").
+
+**NEXT STEP:** `RD7` — ritam naslovne po `SMER-B` (krem posle heroja, forma na kraj; STRICT).
+
+---
+
 ## RD17 (STANDARD) — Paleta asfalt: tamnozelena sajta postaje neutralna tamna scene · 2026-09-22
 
 **Implementacija:** `299accf` · **Grana:** `rd17-paleta-asfalt` (sa `master` @ `1154b7c`) — **nije spojena ni pušena**:

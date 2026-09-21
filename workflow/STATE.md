@@ -7,8 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **release `RD17` je Pavlova odluka** (grana `rd17-paleta-asfalt`, nije spojena ni pušena; posle push-a
-  diskriminator za CSS — `--asphalt:#121314` u serviranom CSS-u, `L37`). Zatim pravac B (`SMER-B`), redom: **`RD7`
+- **Sledeće:** pravac B (`SMER-B`), redom: **`RD7`
   ritam naslovne** (krem sekcija posle heroja, smena svetlo/tamno, forma za povratni poziv na kraj — STRICT, preklapa
   `U2` i deo `RD6`) → `RD4` navigacija sa strane → `RD5` (deo) zaglavlje podstranice sa kadrom. Za vizuelne odluke
   **varijante PRE plana** (`L39`); stranica „smer" (https://claude.ai/artifact/Ai2poYkGM628ZkKuj59Mtf) je već pokazala
@@ -21,7 +20,8 @@
 - **Poslednji završen:** **`RD17`** (2026-09-22, `299accf`) — **Paleta asfalt** (prvi deo pravca B, `SMER-B`):
   `--forest #08110d` → `--asphalt #121314`, tamni tekst `#1c1c1b` i siva `--stone #4b4a47` neutralni, 46 linija u boji
   teksta sa njim, ivice heroja u asfalt; oznaka u guard-u 3,18 → 4,70:1. Noćne boje scene ostale (blag šav, prikazan).
-  Noć 28,6 → 28,7, finale 55,9 → 56,0. `manual` PASS („manual pass"). **Nije spojen ni pušen.**
+  Noć 28,6 → 28,7, finale 55,9 → 56,0. `manual` PASS („manual pass"). Spojen i pušen 2026-09-22, izmeren na deploy-u
+  (JS i CSS stigli zajedno).
 - **Pretposlednji:** **`RD16`** (2026-09-21, `fe04aeb`) — **Boja završnog kadra:** maslinasto-braon (topli ton
   `RD13` preko zelenog tla, Pavle: *„kao da se neko posrao preko ekrana"*) zamenjen tamnim neutralnim tlom, svetlim
   putem i toplim horizontom koji stiže tek posle 02. Pet varijanti uživo pre plana, Pavle „4". Finale 49,0 → 56,0,
@@ -36,8 +36,10 @@
 
 ## Git
 
-- `RD17` na grani **`rd17-paleta-asfalt`** (sa `master` @ `1154b7c`; implementacija `299accf` + close commit) —
-  **nije spojena ni pušena**; release je Pavlova odluka.
+- `RD17` (`1154b7c..a165df9`, implementacija `299accf`) spojen fast-forward-om i pušen 2026-09-22 (Pavle: „spoji i
+  pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja za **CSS i JS**
+  (`--asphalt:#121314` 0 → 1, `global-error` `#121314` 0 → 1, kontrole iste u oba); `manual` na produkciji nije
+  posebno tražen.
 - `RD16` (`18b8465..dbf810b`, implementacija `fe04aeb`) spojen fast-forward-om i pušen 2026-09-21 (Pavle: „spoji i
   pushuuuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja za **JS i CSS**
   (`e8c7a3` 0 → 1, `saturate(0)` u finalu 0 → 1, kontrola three 1 u oba); `manual` na produkciji nije posebno tražen.
@@ -81,8 +83,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD16`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15` i `RD16`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD17`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16` i `RD17`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -92,7 +94,7 @@
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
-  `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`, `rd16-boja-zavrsnog-kadra`.
+  `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`, `rd16-boja-zavrsnog-kadra`, `rd17-paleta-asfalt`.
 
 ## Žive prepreke
 
