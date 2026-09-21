@@ -8,7 +8,7 @@ import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
  * ⚠️ NAMERNO BEZ IJEDNE CSS KLASE. Prenета merena cinjenica iz izvornog projekta: kad
  * root layout padne, `document.styleSheets.length === 0` — stylesheet se ne stigne
  * ucitati. Ovaj ekran mora biti citljiv i bez CSS pipeline-a, pa su sve boje inline
- * literali prepisani iz `globals.css` (`--forest`, `--bone`, `--clay`), a ne
+ * literali prepisani iz `globals.css` (`--asphalt`, `--ink`, `--bone`, `--clay`), a ne
  * `var(--...)` koji bi se ovde razresio u nista.
  *
  * ⚠️ RAZLIKA U ODNOSU NA IZVORNI PROJEKAT: tamo je broj telefona hardkodovan ovde, i
@@ -27,7 +27,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
           alignItems: 'center',
           justifyContent: 'center',
           padding: '24px',
-          background: '#08110d',
+          background: '#121314',
           color: '#f1e7d5',
           fontFamily: 'system-ui, -apple-system, "Segoe UI", sans-serif',
           textAlign: 'center',
@@ -60,7 +60,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
                 padding: '15px 24px',
                 borderRadius: '999px',
                 background: '#f1e7d5',
-                color: '#162019',
+                color: '#1c1c1b',
                 fontSize: '13px',
                 fontWeight: 800,
                 letterSpacing: '.12em',

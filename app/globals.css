@@ -2,7 +2,7 @@
 /* ─── TOKENI ──────────────────────────────────────────────────────────────────
    Do 2026-09-05 su ovde stajala samo prva cetiri para plus `--line`, dok je ostatak
    fajla nosio 27 unikatnih hex i 32 unikatne rgba vrednosti. Sest boja se pritom vec
-   PONASALO kao token — `#455044` se ponavljao 17 puta, `#8a3d12` 8, `#e2b183` 7,
+   PONASALO kao token — danasnji `--stone` (tada „moss") ponavljao se 17 puta, `#8a3d12` 8, `#e2b183` 7,
    `#86502b` 7, `#e6dfce` 6 — a komentar na dnu fajla ih je i NAZIVAO tokenima, iako
    nijedan nije bio deklarisan. Dobile su ime; vrednosti su nepromenjene, pa je izgled
    identican do bajta.
@@ -11,12 +11,18 @@
    tvrdih vrednosti u fajl koji ih vec ima previse. `--ease-out` je isti krivulja koju
    stari sajt koristi u sve cetiri reveal komponente — pokret time ostaje prepoznatljiv.
 
-   ⚠️ NIJE resenо i ceka svoj prolaz: `rgba(22,32,25,…)` je `--ink` prekucan rucno u 17
-   razlicitih alfa vrednosti (~45 pojava), a za greske postoje CETIRI crvene
+   ⚠️ NIJE resenо i ceka svoj prolaz: `rgba(28,28,27,…)` je `--ink` prekucan rucno u 17
+   razlicitih alfa vrednosti (45 pojava), a za greske postoje CETIRI crvene
    (`#e0714f`, `#ffa68b`, `#9d2e16`, `#942b14`). Svodjenje crvenih na dve je vizuelna
    odluka, ne ciscenje, pa ne ide u ovu fazu.
+
+   `RD17` (pravac B, Pavle 2026-09-21: „b"): tamnozelena je postala asfalt, neutralna tamna scene posle `RD16`:
+   stara tamnozelena „forest" -> `--asphalt #121314`, `--ink` -> `#1c1c1b`, siva „moss" -> `--stone #4b4a47`, a prekucani `--ink` iznad
+   sa njim. U starijim komentarima „forest" znaci tamnu podlogu, danas `--asphalt`. ⚠️ Nocne boje scene i preliv preko
+   nje (desktop `.journey-shade`) namerno su ostali na staroj zelenoj: podeseni su uz scenu (`RD3-LOOK`) i
+   menjaju se samo uz poredjenje varijanti (`L39`).
    ─────────────────────────────────────────────────────────────────────────── */
-:root{--forest:#08110d;--bone:#f1e7d5;--ink:#162019;--clay:#c8662e;--line:rgba(241,231,213,.25);--moss:#455044;--bone-dim:#e6dfce;--clay-deep:#8a3d12;--clay-mid:#86502b;--clay-soft:#d5a06d;--clay-light:#e2b183;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
+:root{--asphalt:#121314;--bone:#f1e7d5;--ink:#1c1c1b;--clay:#c8662e;--line:rgba(241,231,213,.25);--stone:#4b4a47;--bone-dim:#e6dfce;--clay-deep:#8a3d12;--clay-mid:#86502b;--clay-soft:#d5a06d;--clay-light:#e2b183;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
 /* ─── PISMO (T1, 2026-09-14) ─────────────────────────────────────────────────
    Pismo sajta je Arial (Pavlova odluka, `T-FONT`). "Growth Sans" postoji samo da uredjaji BEZ
    Arial-a — prakticno Android — dobiju Arimo (OFL, iste sirine slova kao Arial) umesto svog
@@ -34,7 +40,7 @@
 @font-face{font-family:"Growth Sans";font-style:normal;font-weight:700;font-display:swap;src:local("Arial Bold"),local("Arial-BoldMT"),url("/fonts/arimo-v36-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Growth Sans";font-style:italic;font-weight:400;font-display:swap;src:local("Arial Italic"),local("Arial-ItalicMT"),url("/fonts/arimo-v36-latin-italic.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Growth Sans";font-style:italic;font-weight:700;font-display:swap;src:local("Arial Bold Italic"),local("Arial-BoldItalicMT"),url("/fonts/arimo-v36-latin-italic.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--forest)}body{margin:0;background:var(--forest);color:var(--bone);font-family:"Growth Sans",Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--asphalt)}body{margin:0;background:var(--asphalt);color:var(--bone);font-family:"Growth Sans",Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
 /* ─── FORME ───────────────────────────────────────────────────────────────────
    Cinematic jezik: verzal mikro-labele sa sirokim razmakom, tanke linije, clay
    akcenat na CTA (isti krug kao `.primary-cta b`). Dve podloge: `.qa` na forest
@@ -57,7 +63,7 @@
 .label-optional{opacity:.55;letter-spacing:.08em}
 
 /* ── pristanak (TCPA) ── */
-.consent{display:flex;gap:13px;align-items:flex-start;cursor:pointer;padding:16px 18px;border:1px solid rgba(22,32,25,.22);border-radius:10px;background:rgba(22,32,25,.035)}
+.consent{display:flex;gap:13px;align-items:flex-start;cursor:pointer;padding:16px 18px;border:1px solid rgba(28,28,27,.22);border-radius:10px;background:rgba(28,28,27,.035)}
 .consent input[type=checkbox]{width:22px;height:22px;flex-shrink:0;margin:1px 0 0;accent-color:var(--clay)}
 .consent span{font-size:12px;line-height:1.55;opacity:.78}
 .consent a{text-decoration:underline;text-underline-offset:2px}
@@ -85,22 +91,22 @@
 .qa .consent--compact{grid-column:1/-1;grid-row:2}
 .qa .form-error{grid-column:1/-1;margin-top:0}
 .qa--done{display:flex;gap:15px;align-items:flex-start;max-width:760px;padding:26px 28px;border:1px solid rgba(102,168,117,.45);border-radius:14px;background:rgba(102,168,117,.1)}
-.qa-check{display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#66a875;color:var(--forest)}
+.qa-check{display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#66a875;color:var(--asphalt)}
 .qa--done p{margin:0;font-size:14px;line-height:1.6;color:var(--bone)}
 
 /* ── FULL: forma na krem podlozi ── */
 .af{display:flex;flex-direction:column;gap:22px;max-width:760px}
 .af-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .af-field{display:flex;flex-direction:column}
-.af-field input,.af-field select,.af-field textarea{padding:13px 14px;border:1px solid rgba(22,32,25,.28);border-radius:8px;background:#fff;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
+.af-field input,.af-field select,.af-field textarea{padding:13px 14px;border:1px solid rgba(28,28,27,.28);border-radius:8px;background:#fff;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
 .af-field textarea{resize:vertical;line-height:1.5}
-.af-field input:hover,.af-field select:hover,.af-field textarea:hover{border-color:rgba(22,32,25,.5)}
+.af-field input:hover,.af-field select:hover,.af-field textarea:hover{border-color:rgba(28,28,27,.5)}
 .af-field input:focus,.af-field select:focus,.af-field textarea:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(200,102,46,.18)}
 .af-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:34px;padding:9px 9px 9px 22px;border:0;background:var(--ink);color:var(--bone);border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer}
 .af-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--clay);color:#fff;font-size:17px;transition:transform .3s ease}
 .af-submit:hover b,.af-submit:focus-visible b{transform:rotate(45deg)}
 .af-submit:disabled{opacity:.55;cursor:progress}
-.form-done{max-width:640px;padding:40px;border:1px solid rgba(22,32,25,.25);border-radius:16px;background:rgba(102,168,117,.12);color:var(--ink)}
+.form-done{max-width:640px;padding:40px;border:1px solid rgba(28,28,27,.25);border-radius:16px;background:rgba(102,168,117,.12);color:var(--ink)}
 .form-done h2{margin:14px 0 10px;font-size:clamp(1.7rem,3vw,2.4rem);letter-spacing:-.03em}
 .form-done p{margin:0;font-size:14px;line-height:1.65;opacity:.8}
 
@@ -126,9 +132,9 @@
 /* ⚠️ Kontura ide SAMO pod `@supports`. Bez guarda `color:transparent` ostaje kao
    jedino pravilo tamo gde `-webkit-text-stroke` nije podrzan — naslov tada nestaje.
    Zatecen `app/page.tsx` tu gresku nosi; ovde se ne ponavlja. */
-.sub-hero h1 em{font-style:normal;font-weight:500;color:rgba(22,32,25,.62)}
+.sub-hero h1 em{font-style:normal;font-weight:500;color:rgba(28,28,27,.62)}
 @supports (-webkit-text-stroke: 1px currentColor){
-  .sub-hero h1 em{color:transparent;-webkit-text-stroke:1.2px rgba(22,32,25,.6)}
+  .sub-hero h1 em{color:transparent;-webkit-text-stroke:1.2px rgba(28,28,27,.6)}
 }
 .sub-lede{margin:28px 0 0;max-width:62ch;font-size:clamp(14px,1.15vw,17px);line-height:1.6;opacity:.78}
 .sub-trust{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:26px;font-size:11px;letter-spacing:.11em;text-transform:uppercase;opacity:.62}
@@ -141,9 +147,9 @@
 
 /* ─── NAV / FOOTER / MOBILE BAR ───────────────────────────────────────────────*/
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 6vw;border-bottom:1px solid rgba(22,32,25,.2)}
+.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 6vw;border-bottom:1px solid rgba(28,28,27,.2)}
 .subpage .brand{display:inline-flex;align-items:center;gap:11px;font-size:14px;font-weight:800;letter-spacing:.2em;flex-shrink:0}
-.subpage .brand-mark{display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(22,32,25,.42);border-radius:50%;color:var(--clay-deep);letter-spacing:-.08em}
+.subpage .brand-mark{display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(28,28,27,.42);border-radius:50%;color:var(--clay-deep);letter-spacing:-.08em}
 .nav-links{display:flex;gap:26px;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
 /* ⚠️ Ovde su do 2026-09-05 stajala dva MRTVA pravila:
      .nav-links a{opacity:.72;transition:opacity .2s ease}
@@ -159,11 +165,11 @@
    `[aria-current=page]` i dalje oznacava tekucu stranicu. */
 .nav-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
 .nav-call{font-size:11px;font-weight:700;letter-spacing:.1em;opacity:.72}
-.nav-cta{padding:11px 16px;border:1px solid rgba(22,32,25,.45);border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.16em;transition:.25s ease}
+.nav-cta{padding:11px 16px;border:1px solid rgba(28,28,27,.45);border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.16em;transition:.25s ease}
 .nav-cta:hover,.nav-cta:focus-visible{background:var(--ink);color:var(--bone)}
-.nav-toggle{display:none;width:42px;height:42px;border:1px solid rgba(22,32,25,.3);border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
+.nav-toggle{display:none;width:42px;height:42px;border:1px solid rgba(28,28,27,.3);border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
 
-.foot{padding:56px 6vw 40px;border-top:1px solid rgba(22,32,25,.2)}
+.foot{padding:56px 6vw 40px;border-top:1px solid rgba(28,28,27,.2)}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px}
 .foot-tag{margin:16px 0 0;max-width:34ch;font-size:12.5px;line-height:1.65;opacity:.7}
 .foot h2{margin:0 0 14px;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
@@ -173,12 +179,12 @@
    Podvlacenje na hover JESTE radilo i ostaje — zato je uklonjena samo mrtva polovina,
    ne celo pravilo. */
 .foot ul a:hover,.foot ul a:focus-visible{text-decoration:underline;text-underline-offset:3px}
-.foot-legal{margin-top:44px;padding-top:22px;border-top:1px solid rgba(22,32,25,.16);font-size:11px;line-height:1.75;opacity:.62}
+.foot-legal{margin-top:44px;padding-top:22px;border-top:1px solid rgba(28,28,27,.16);font-size:11px;line-height:1.75;opacity:.62}
 .foot-legal p{margin:0}
 .foot-legal a{text-decoration:underline;text-underline-offset:2px}
 
 /* Sticky akcioni bar — samo mobilni. SITEMAP §3: 90% saobracaja je telefon. */
-.mobar{display:none;position:fixed;z-index:20;left:0;right:0;bottom:0;grid-template-columns:1fr 1fr 1.3fr;gap:1px;background:rgba(22,32,25,.22);border-top:1px solid rgba(22,32,25,.22)}
+.mobar{display:none;position:fixed;z-index:20;left:0;right:0;bottom:0;grid-template-columns:1fr 1fr 1.3fr;gap:1px;background:rgba(28,28,27,.22);border-top:1px solid rgba(28,28,27,.22)}
 .mobar a{display:grid;place-items:center;min-height:56px;background:var(--bone);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
 .mobar-cta{background:var(--ink)!important;color:var(--bone)!important}
 
@@ -186,7 +192,7 @@
 .sub-body--wide{max-width:none}
 .sub-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:6vw;align-items:start}
 .sub-section{margin-bottom:64px}
-.sub-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid rgba(22,32,25,.2)}
+.sub-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid rgba(28,28,27,.2)}
 .sub-num{font-size:10px;font-weight:800;letter-spacing:.2em;color:var(--clay-deep)}
 .sub-head h2{margin:0;font-size:clamp(1.3rem,2.2vw,1.9rem);letter-spacing:-.03em}
 .steps{margin:0;padding:0;list-style:none;display:grid;gap:26px}
@@ -196,17 +202,17 @@
 .step p{margin:0;grid-column:2;font-size:14px;line-height:1.65;opacity:.78}
 .sub-2up{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .sub-3up{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
-.card{padding:26px 24px;border:1px solid rgba(22,32,25,.22);border-radius:14px;background:rgba(255,255,255,.5)}
+.card{padding:26px 24px;border:1px solid rgba(28,28,27,.22);border-radius:14px;background:rgba(255,255,255,.5)}
 .card h3{margin:0 0 12px;font-size:16px;letter-spacing:-.02em}
 .card p{margin:0 0 12px;font-size:13.5px;line-height:1.65;opacity:.78}
 .card p:last-child{margin-bottom:0}
-.card--cta{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;background:rgba(22,32,25,.05)}
+.card--cta{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;background:rgba(28,28,27,.05)}
 .sub-caveat{margin:0;padding:22px 24px;border-left:3px solid var(--clay);background:rgba(200,102,46,.07);font-size:14px;line-height:1.7}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;transition:.25s ease;border:1px solid transparent}
 .btn-primary{background:var(--ink);color:var(--bone)}
-.btn-primary:hover,.btn-primary:focus-visible{background:#0c130e}
-.btn-ghost{border-color:rgba(22,32,25,.4);color:var(--ink)}
-.btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(22,32,25,.07)}
+.btn-primary:hover,.btn-primary:focus-visible{background:#0b0c0d}
+.btn-ghost{border-color:rgba(28,28,27,.4);color:var(--ink)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(28,28,27,.07)}
 
 .prose{max-width:66ch;display:flex;flex-direction:column;gap:20px;font-size:15.5px;line-height:1.75}
 .prose p{margin:0}
@@ -220,8 +226,8 @@
 .signature{font-weight:700}
 
 /* ─── FAQ ─────────────────────────────────────────────────────────────────────*/
-.faqlist{max-width:820px;border-top:1px solid rgba(22,32,25,.22)}
-.faq-item{border-bottom:1px solid rgba(22,32,25,.22)}
+.faqlist{max-width:820px;border-top:1px solid rgba(28,28,27,.22)}
+.faq-item{border-bottom:1px solid rgba(28,28,27,.22)}
 /* ⚠️ `U1`: naslov pitanja stoji U `<summary>`-ju, pa mora da nasledi NJEGOVU skalu -- inace
    bi UA velicina (`h2` 1.5em, `h3` 1.17em) povecala pitanja. Do `U1` je ovde stajalo
    `.faq-item h3{margin:0}`, pravilo bez ijednog elementa koji bi uhvatilo. */
@@ -233,10 +239,10 @@
 
 /* ─── TRUCKERS LOUNGE ─────────────────────────────────────────────────────────*/
 .post-list{display:flex;flex-direction:column;gap:30px;max-width:820px}
-.post-card{padding:28px 26px;border:1px solid rgba(22,32,25,.22);border-radius:14px;background:rgba(255,255,255,.5)}
+.post-card{padding:28px 26px;border:1px solid rgba(28,28,27,.22);border-radius:14px;background:rgba(255,255,255,.5)}
 .post-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 .post-meta--article{margin-bottom:28px}
-.post-tag{padding:5px 10px;border:1px solid rgba(22,32,25,.3);border-radius:999px;font-weight:800;opacity:.9}
+.post-tag{padding:5px 10px;border:1px solid rgba(28,28,27,.3);border-radius:999px;font-weight:800;opacity:.9}
 .post-card h2{margin:16px 0 12px;font-size:21px;line-height:1.2;letter-spacing:-.025em}
 .post-card p{margin:0;font-size:14px;line-height:1.7;opacity:.78;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .post-read{display:inline-block;margin-top:18px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
@@ -246,9 +252,9 @@
 .post-body p{margin:0;opacity:.85}
 .post-subhead{margin:14px 0 0;font-size:18px;letter-spacing:-.02em;opacity:1}
 .post-callout{padding:20px 22px;border-left:3px solid var(--clay);background:rgba(200,102,46,.07);font-size:14px;line-height:1.7}
-.post-source{margin-top:10px!important;padding-top:16px;border-top:1px solid rgba(22,32,25,.2);font-size:12.5px;opacity:.68!important}
+.post-source{margin-top:10px!important;padding-top:16px;border-top:1px solid rgba(28,28,27,.2);font-size:12.5px;opacity:.68!important}
 .post-source a{text-decoration:underline;text-underline-offset:2px}
-.post-cta{margin-top:10px;padding:26px;border-radius:14px;background:rgba(22,32,25,.06);text-align:center}
+.post-cta{margin-top:10px;padding:26px;border-radius:14px;background:rgba(28,28,27,.06);text-align:center}
 .post-cta p{margin:0 0 16px;font-weight:700;opacity:1}
 
 /* ─── CONTACT ─────────────────────────────────────────────────────────────────*/
@@ -257,7 +263,7 @@
 .contact-email a{text-decoration:underline;text-underline-offset:3px}
 /* `.qa` je projektovan za forest podlogu; na krem stranici dobija sopstveni tamni panel
    umesto da se preboji — inace bi bone tekst na bone podlozi nestao. */
-.contact-quick{border-radius:16px;background:var(--forest);overflow:hidden}
+.contact-quick{border-radius:16px;background:var(--asphalt);overflow:hidden}
 
 @media(max-width:900px){
 .sub-grid{grid-template-columns:1fr;gap:44px}
@@ -267,9 +273,9 @@
 }
 @media(max-width:720px){
 .nav{padding:16px 20px;flex-wrap:wrap}
-.nav-links{display:none;order:3;flex-basis:100%;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid rgba(22,32,25,.2)}
+.nav-links{display:none;order:3;flex-basis:100%;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid rgba(28,28,27,.2)}
 .nav-links.is-open{display:flex}
-.nav-links a{padding:15px 2px;border-bottom:1px solid rgba(22,32,25,.12);font-size:13px}
+.nav-links a{padding:15px 2px;border-bottom:1px solid rgba(28,28,27,.12);font-size:13px}
 .nav-call{display:none}
 .nav-toggle{display:grid;place-items:center}
 .foot{padding:44px 20px 100px}
@@ -286,7 +292,7 @@
 .brand-mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid currentColor;border-radius:50%;color:#ad5727;letter-spacing:-.08em}
 .eyebrow{margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:.2em}
 .home{background:var(--bone);color:var(--ink)}
-.home .nav{background:var(--forest);color:var(--bone);border-color:var(--line)}
+.home .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
 .home .nav .brand-mark{color:var(--clay-soft);border-color:var(--line)}
 .home .nav-cta{background:var(--bone);color:var(--ink)}
 .home .nav-toggle{color:var(--bone);border-color:var(--line)}
@@ -294,7 +300,7 @@
 .home .nav-links a{border-color:var(--line)}
 .skip-link{position:fixed;left:16px;top:12px;z-index:100;padding:14px 20px;background:var(--bone);color:var(--ink);transform:translateY(-200%)}
 .skip-link:focus{transform:none}
-.journey{position:relative;background:var(--forest);color:var(--bone)}
+.journey{position:relative;background:var(--asphalt);color:var(--bone)}
 .journey-stage{position:relative;isolation:isolate;overflow:hidden}
 .journey-photo{position:absolute;inset:0;z-index:-5}
 .journey-photo img{width:100%;height:100%;object-fit:cover;object-position:65% center}
@@ -304,7 +310,7 @@
 /* Polish 2026-09-15: zatamnjenje je lokalno. Tamna zona drzi kolonu teksta levo, sredina i kamion
    ostaju otvoreni, vignette je blag, a dno ostaje tamno za prelaz u stranicu. Do sada je leva
    polovina kadra bila pod 93 % crne. Pravilo za <=900 px (telefon i fotografija) se ne menja. */
-.journey-shade{position:absolute;inset:0;pointer-events:none;z-index:-3;background:radial-gradient(ellipse 125% 105% at 60% 42%,transparent 60%,rgba(4,12,8,.32) 100%),linear-gradient(90deg,rgba(4,12,8,.82),rgba(4,12,8,.7) 24%,rgba(4,12,8,.38) 44%,rgba(4,12,8,.1) 62%,rgba(4,12,8,0) 78%),linear-gradient(0deg,rgba(8,17,13,.85),rgba(8,17,13,.2) 8%,transparent 20%)}
+.journey-shade{position:absolute;inset:0;pointer-events:none;z-index:-3;background:radial-gradient(ellipse 125% 105% at 60% 42%,transparent 60%,rgba(4,12,8,.32) 100%),linear-gradient(90deg,rgba(4,12,8,.82),rgba(4,12,8,.7) 24%,rgba(4,12,8,.38) 44%,rgba(4,12,8,.1) 62%,rgba(4,12,8,0) 78%),linear-gradient(0deg,rgba(18,19,20,.85),rgba(18,19,20,.2) 8%,transparent 20%)}
 .journey-story{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 3vw;padding:0 6vw}
 .journey-beat{position:relative;padding:40px 0 60px}
 .journey-intro{grid-column:1/-1;min-height:min(760px,calc(100svh - 90px));display:flex;flex-direction:column;justify-content:center;padding:64px 0 88px}
@@ -366,7 +372,7 @@
 .journey[data-side=right] .journey-shade{opacity:0}
 .journey[data-side=right] .journey-shade-right{opacity:1}
 .journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72;filter:saturate(0)}
-.home-callback{scroll-margin-top:20px;background:var(--forest);color:var(--bone);padding:34px 0 44px}
+.home-callback{scroll-margin-top:20px;background:var(--asphalt);color:var(--bone);padding:34px 0 44px}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .home-callback .home-section-top{padding:0 6vw}
 .home-kicker{font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--clay-mid)}
@@ -382,27 +388,27 @@
    brisanje tiho pojelo NJIHOV razdelnik.
    `:not([data-line])` resava to samo od sebe: ko dobije primitiv, gubi staticnu ivicu —
    bez spiska imena koji neko mora da odrzava. */
-.home-section:not([data-line]){border-top:1px solid rgba(22,32,25,.2)}
+.home-section:not([data-line]){border-top:1px solid rgba(28,28,27,.2)}
 .home-section h2{font-size:clamp(40px,5.4vw,82px);line-height:1;letter-spacing:-.055em;margin:30px 0 32px;font-weight:800}
 .home-editorial{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start;margin-top:28px}
 .home-text-link{display:inline-block;padding:12px 0;font-size:14px;font-weight:700;border-bottom:1px solid currentColor}
 .home-steps{list-style:none;padding:0;margin:0}
-.home-steps li{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(22,32,25,.22)}
-.home-steps li:first-child{border-top:1px solid rgba(22,32,25,.22)}
+.home-steps li{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(28,28,27,.22)}
+.home-steps li:first-child{border-top:1px solid rgba(28,28,27,.22)}
 .home-steps li>span{font-size:12px;color:var(--clay-mid);padding-top:5px;letter-spacing:.1em}
 .home-steps h3{font-size:22px;line-height:1.2;letter-spacing:-.025em;margin:0 0 10px}
-.home-steps p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--moss)}
+.home-steps p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--stone)}
 .home-founder blockquote{font:clamp(24px,2.4vw,34px)/1.45 Georgia,serif;margin:30px 0}
 .home-founder .home-signature{font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 30px}
 .home-faq .faqlist{max-width:none}
-.home-close{background:var(--forest);color:var(--bone)}
+.home-close{background:var(--asphalt);color:var(--bone)}
 .home-close h2 em{-webkit-text-stroke-color:var(--bone)}
 .home-close>p{font-size:16px;margin:30px 0 6px}
 .home-close>p a{text-decoration:underline;text-underline-offset:4px}
 .foot-tag{font-size:16px}
-.foot-legal{font-size:14px;opacity:1;color:var(--moss)}
+.foot-legal{font-size:14px;opacity:1;color:var(--stone)}
 .foot ul{font-size:16px}
-.foot h2{font-size:12px;opacity:1;color:var(--moss)}
+.foot h2{font-size:12px;opacity:1;color:var(--stone)}
 /* Forms retain their API behavior, with readable inputs and consent text. */
 .qa-field label,.af-field label{font-size:12px}
 .qa-field input,.af-field input,.af-field select,.af-field textarea{font-size:16px}
@@ -434,7 +440,7 @@
   .journey-intro{min-height:calc(100svh - 140px);padding:48px 0}
   .journey-beat:not(.journey-intro){padding:28px 0;border-top:1px solid var(--line)}
   .journey-photo{bottom:auto;height:calc(100svh - 80px)}
-  .journey-shade{background:linear-gradient(90deg,rgba(4,12,8,.8),rgba(4,12,8,.45)),linear-gradient(0deg,#08110d 5%,transparent)}
+  .journey-shade{background:linear-gradient(90deg,rgba(18,19,20,.8),rgba(18,19,20,.45)),linear-gradient(0deg,var(--asphalt) 5%,transparent)}
   .journey h1{font-size:clamp(42px,8.4vw,76px);max-width:14ch}
   .journey h2{font-size:32px}
   .journey-lede{font-size:16px;line-height:1.6;max-width:46ch}
@@ -464,7 +470,7 @@
 
 /* Shared editorial rhythm across the full site. */
 main:focus{outline:none}
-.subpage .nav{background:var(--forest);color:var(--bone);border-color:var(--line)}
+.subpage .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
 .subpage .nav .brand-mark{color:var(--clay-light);border-color:var(--line)}
 .subpage .nav-cta{background:var(--bone);color:var(--ink)}
 .subpage .nav-toggle{color:var(--bone);border-color:var(--line)}
@@ -475,7 +481,7 @@ main:focus{outline:none}
 .nav-call{font-size:14px;min-height:44px;display:flex;align-items:center}
 .nav-cta{font-size:12px;min-height:44px;display:flex;align-items:center}
 .nav .brand{font-size:14px;flex-shrink:0}
-.sub-hero{max-width:none;padding:64px 6vw 60px;background:var(--forest);color:var(--bone);border-bottom:1px solid var(--line)}
+.sub-hero{max-width:none;padding:64px 6vw 60px;background:var(--asphalt);color:var(--bone);border-bottom:1px solid var(--line)}
 .sub-hero .eyebrow{font-size:12px;letter-spacing:.2em;color:var(--clay-light)}
 .sub-hero h1{max-width:24ch;font-size:clamp(3rem,5.8vw,5.5rem);line-height:1.02;letter-spacing:-.055em;font-weight:800;text-wrap:balance}
 .sub-hero h1 em{color:var(--bone)}
@@ -487,12 +493,12 @@ main:focus{outline:none}
 .sub-body{padding:56px 6vw 88px}
 .sub-grid{grid-template-columns:minmax(0,1fr) minmax(260px,320px);gap:5vw;max-width:1400px}
 .sub-main,.sub-rail,.af,.af-field,.qa-field{min-width:0}
-.sub-trust{margin:0 0 36px;padding-bottom:24px;border-bottom:1px solid rgba(22,32,25,.2);font-size:12px;opacity:1;color:var(--moss);line-height:1.6;letter-spacing:.055em}
+.sub-trust{margin:0 0 36px;padding-bottom:24px;border-bottom:1px solid rgba(28,28,27,.2);font-size:12px;opacity:1;color:var(--stone);line-height:1.6;letter-spacing:.055em}
 .step p,.card p,.prose,.prose--legal,.post-body,.post-card p,.sub-caveat,.post-callout,.contact-email{font-size:16px;line-height:1.75;opacity:1}
 .step-n,.sub-num{font-size:12px}
 .card{padding:28px;border-radius:0;border-width:1px 0 0;background:transparent}
 .card h2,.card h3{font-size:23px;line-height:1.2;letter-spacing:-.035em;margin:0 0 14px}
-.card--cta{background:var(--bone-dim);border:1px solid rgba(22,32,25,.25);position:static;padding:28px}
+.card--cta{background:var(--bone-dim);border:1px solid rgba(28,28,27,.25);position:static;padding:28px}
 
 /* ─── KNOW BEFORE YOU GO — preneto sa naslovne 2026-09-06 (Faza 6) ──────────────
    ⚠️ MAIN-ov `.kbyg-*` grid NIJE prenet. Sekcija koristi `.sub-3up` i `.card` koje stranica
@@ -504,13 +510,13 @@ main:focus{outline:none}
 .kbyg-lead{margin:0 0 8px;max-width:34ch;font-size:clamp(1.15rem,2vw,1.6rem);line-height:1.25;letter-spacing:-.035em;text-wrap:balance}
 .kbyg-ask{margin:18px 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep);opacity:1}
 .kbyg-questions{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.65}
-.kbyg-mods{margin-top:44px;padding-top:28px;border-top:1px solid rgba(22,32,25,.2)}
+.kbyg-mods{margin-top:44px;padding-top:28px;border-top:1px solid rgba(28,28,27,.2)}
 .kbyg-mods-lead{margin:0 0 20px;font-size:16px;font-weight:700;letter-spacing:-.02em}
 .kbyg-mods dl{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .kbyg-mod dt{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep)}
 .kbyg-mod dd{margin:0;font-size:15px;line-height:1.7}
 @media(max-width:900px){.kbyg-mods dl{grid-template-columns:1fr}}
-.card--cta p{color:var(--moss)}
+.card--cta p{color:var(--stone)}
 .btn{min-height:48px;font-size:13px;letter-spacing:.065em;text-align:center}
 .rail-eyebrow{font-size:12px!important;letter-spacing:.13em;font-weight:700;color:var(--clay-mid)!important;margin:0 0 12px!important}
 .rail-steps{padding-left:20px;margin:0 0 12px;font-size:16px;line-height:1.65;display:grid;gap:16px}
@@ -518,15 +524,15 @@ main:focus{outline:none}
 .rail-steps li::marker{color:var(--clay-mid);font-size:13px;font-weight:700}
 .form-heading{margin-bottom:28px}
 .form-heading h2{font-size:26px;letter-spacing:-.03em;margin:0 0 10px}
-.form-heading p{font-size:16px;line-height:1.65;margin:0;color:var(--moss);max-width:60ch}
+.form-heading p{font-size:16px;line-height:1.65;margin:0;color:var(--stone);max-width:60ch}
 .af{max-width:none;position:relative;gap:28px}
 .af-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .af-field label,.qa-field label{font-size:14px;text-transform:none;letter-spacing:0;opacity:1;line-height:1.5;font-weight:700}
 .af-field input,.af-field select,.af-field textarea{width:100%;min-width:0;min-height:52px;border-radius:4px;background:#fffcf5;border-color:#7c8274}
 .af-field select{padding-right:30px}
 .af-field textarea{min-height:100px}
-.field-hint{font-size:13px;line-height:1.5;letter-spacing:0;text-transform:none;opacity:1;color:var(--moss)}
-.label-optional{opacity:1;color:var(--moss);letter-spacing:0;font-weight:400}
+.field-hint{font-size:13px;line-height:1.5;letter-spacing:0;text-transform:none;opacity:1;color:var(--stone)}
+.label-optional{opacity:1;color:var(--stone);letter-spacing:0;font-weight:400}
 .af-submit,.qa-submit{font-size:13px;min-height:56px;letter-spacing:.08em}
 .qa{grid-template-columns:minmax(160px,1fr) minmax(150px,1fr) minmax(150px,1fr) auto;align-items:start;gap:24px}
 .qa-field{min-width:0}
@@ -545,44 +551,44 @@ main:focus{outline:none}
 .consent span{font-size:14px;line-height:1.65}
 .af-field:has(select) label{min-height:42px}
 .contact-direct{display:flex;justify-content:space-between;align-items:center;gap:24px;max-width:1100px}
-.contact-direct p{font-size:16px;color:var(--moss);line-height:1.6;margin:10px 0 0}
+.contact-direct p{font-size:16px;color:var(--stone);line-height:1.6;margin:10px 0 0}
 .contact-number{display:inline-block;font-size:clamp(30px,4vw,54px);letter-spacing:-.04em;font-weight:700;padding:4px 0}
 .contact-number:hover{text-decoration:underline;text-underline-offset:6px}
 .contact-email{overflow-wrap:anywhere}
-.contact-callback{margin-top:48px;padding-top:36px;border-top:1px solid rgba(22,32,25,.25)}
+.contact-callback{margin-top:48px;padding-top:36px;border-top:1px solid rgba(28,28,27,.25)}
 .contact-callback>h2{font-size:30px;letter-spacing:-.035em;margin:0 0 10px}
 .contact-callback>p{font-size:16px;line-height:1.7;margin:0 0 28px}
 .contact-quick{border-radius:0;color:var(--bone)}
 .contact-quick .qa{max-width:none;padding:28px}
 .contact-quick .form-nojs{padding:28px}
-.page-next{display:flex;align-items:center;flex-wrap:wrap;gap:20px 32px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(22,32,25,.25)}
+.page-next{display:flex;align-items:center;flex-wrap:wrap;gap:20px 32px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(28,28,27,.25)}
 .page-next p{font-size:20px;line-height:1.4;margin:0;letter-spacing:-.02em}
 .prose{max-width:68ch;font-size:18px;gap:24px}
 .prose--legal{font-size:16px;max-width:76ch}
 .prose--legal h2{font-size:24px}
 .prose a{text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
 .post-list{max-width:1300px;gap:0}
-.post-card{border:0;border-top:1px solid rgba(22,32,25,.3);border-radius:0;background:transparent;padding:32px 0;display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,2fr);gap:12px 40px}
-.post-meta{font-size:12px;letter-spacing:.02em;opacity:1;color:var(--moss);line-height:1.7}
+.post-card{border:0;border-top:1px solid rgba(28,28,27,.3);border-radius:0;background:transparent;padding:32px 0;display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,2fr);gap:12px 40px}
+.post-meta{font-size:12px;letter-spacing:.02em;opacity:1;color:var(--stone);line-height:1.7}
 .post-card .post-meta{grid-row:1/4;flex-direction:column;align-items:flex-start;gap:16px}
 .post-tag{font-size:12px;letter-spacing:.05em;color:#704120;border-color:#9b8c70;opacity:1}
 .post-card h2{font-size:clamp(24px,2.6vw,36px);line-height:1.2;margin:0;letter-spacing:-.035em}
 .post-card h2 a:hover{text-decoration:underline;text-underline-offset:5px}
-.post-card p{display:block;overflow:visible;max-width:65ch;color:var(--moss)}
+.post-card p{display:block;overflow:visible;max-width:65ch;color:var(--stone)}
 .post-read{font-size:13px;letter-spacing:.06em;justify-self:start;margin:0;padding:10px 0;min-height:44px}
 .post-body{font-size:18px;line-height:1.85;max-width:70ch;gap:24px}
 .post-body p{opacity:1}
 .post-subhead{font-size:28px;line-height:1.25;margin-top:20px}
 .post-back{font-size:13px;letter-spacing:.04em}
 .post-back a{display:inline-block;min-height:44px;padding:10px 0;opacity:1;text-decoration:underline;text-underline-offset:5px}
-.post-source{font-size:14px!important;line-height:1.9;opacity:1!important;color:var(--moss)}
+.post-source{font-size:14px!important;line-height:1.9;opacity:1!important;color:var(--stone)}
 .post-cta{border-radius:0;padding:32px;background:var(--bone-dim)}
 .faq-q{font-size:18px;line-height:1.45;padding:24px 2px}
-.faq-a p{opacity:1;line-height:1.8;color:var(--moss)}
+.faq-a p{opacity:1;line-height:1.8;color:var(--stone)}
 .foot ul{gap:4px}
 .foot ul a{display:inline-block;padding:8px 0;min-height:40px;opacity:1;overflow-wrap:anywhere}
 .foot-grid{grid-template-columns:minmax(0,1.5fr) minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr)}
-.foot-tag{opacity:1;color:var(--moss)}
+.foot-tag{opacity:1;color:var(--stone)}
 .foot-legal a{display:inline-block;padding:6px 0}
 .mobar a{font-size:12px;letter-spacing:.08em}
 @media(min-width:1101px) and (max-width:1200px){
@@ -615,9 +621,9 @@ main:focus{outline:none}
 .error-page{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:100vh;min-height:100svh;max-width:760px;margin:0 auto;padding:8vh 6vw}
 .error-page .eyebrow{margin:0 0 20px;font-size:10px;font-weight:700;letter-spacing:.3em;color:var(--clay-deep)}
 .error-page h1{margin:0;font-size:clamp(2rem,5vw,3.6rem);line-height:1.02;letter-spacing:-.045em;font-weight:850}
-.error-page h1 em{font-style:normal;font-weight:500;color:rgba(22,32,25,.62)}
+.error-page h1 em{font-style:normal;font-weight:500;color:rgba(28,28,27,.62)}
 @supports (-webkit-text-stroke: 1px currentColor){
-  .error-page h1 em{color:transparent;-webkit-text-stroke:2px rgba(22,32,25,.6);font-weight:800}
+  .error-page h1 em{color:transparent;-webkit-text-stroke:2px rgba(28,28,27,.6);font-weight:800}
 }
 .error-page .sub-lede{margin:26px 0 0;max-width:56ch}
 .error-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
@@ -627,7 +633,7 @@ main:focus{outline:none}
 
 /* Traka na vrhu umesto punog ekrana: na prerenderovanim rutama pun overlay bi
    pravio bljesak umesto da resava problem. */
-.route-loading{position:fixed;z-index:90;left:0;right:0;top:0;height:2px;background:rgba(22,32,25,.12);overflow:hidden}
+.route-loading{position:fixed;z-index:90;left:0;right:0;top:0;height:2px;background:rgba(28,28,27,.12);overflow:hidden}
 .route-loading-bar{display:block;width:38%;height:100%;background:var(--clay);animation:route-slide 1.05s ease-in-out infinite}
 @keyframes route-slide{0%{transform:translateX(-105%)}100%{transform:translateX(365%)}}
 @media(prefers-reduced-motion:reduce){
@@ -641,7 +647,7 @@ main:focus{outline:none}
 /* ─── TRI SEKCIJE PRENETE IZ IZVORNOG PROJEKTA ────────────────────────────────
    Sadrzaj je prenet doslovno; izgled je NOV. Nijedna maslinasto-zelena vrednost
    ne prelazi — koriste se postojeci tokeni ove naslovne (`var(--bone-dim)` kao druga krem
-   nijansa, `var(--clay-mid)` kao akcenat, `var(--moss)` kao telesni tekst).
+   nijansa, `var(--clay-mid)` kao akcenat, `var(--stone)` kao telesni tekst).
 
    Sve tri nose `.home-section`, pa nasledjuju postojece responsive ponasanje
    (60px padding ispod 900px, 20px ispod 720px, h2 na 42px) — bez ijednog novog
@@ -665,8 +671,8 @@ main:focus{outline:none}
    1280) i `$0` je u njoj plivao — broj koji ne popunjava svoju kolonu ne cita se kao
    display element nego kao zaostatak. `.42fr` (314px) mu daje kolonu koju popunjava.
 
-   Nijedna nova vrednost: `--bone-dim` podloga, `--clay-mid` labele, `--moss` telo,
-   `rgba(22,32,25,.22)` linija — ista alfa koju `.home-steps li` vec koristi. */
+   Nijedna nova vrednost: `--bone-dim` podloga, `--clay-mid` labele, `--stone` telo,
+   `rgba(28,28,27,.22)` linija — ista alfa koju `.home-steps li` vec koristi. */
 .home-pay{background:var(--bone-dim)}
 .home-pay h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
 .pay-ledger{display:grid;grid-template-columns:minmax(170px,.42fr) 1fr;gap:4vw;align-items:start;margin-top:38px}
@@ -676,12 +682,12 @@ main:focus{outline:none}
 .pay-rows{margin:0}
 /* Ista konvencija linija kao `.home-steps`: ivica ispod svakog reda, plus jedna iznad
    prvog. Ritam pravila na stranici tako ostaje jedan, iako je oblik nov. */
-.pay-rows>div{display:grid;grid-template-columns:15ch 1fr;gap:6px 24px;padding:22px 0;border-bottom:1px solid rgba(22,32,25,.22)}
-.pay-rows>div:first-child{border-top:1px solid rgba(22,32,25,.22)}
+.pay-rows>div{display:grid;grid-template-columns:15ch 1fr;gap:6px 24px;padding:22px 0;border-bottom:1px solid rgba(28,28,27,.22)}
+.pay-rows>div:first-child{border-top:1px solid rgba(28,28,27,.22)}
 .pay-rows dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-mid);padding-top:6px}
 .pay-rows dd{margin:0}
 .pay-rows dd b{display:block;font-size:22px;line-height:1.2;letter-spacing:-.025em;color:var(--ink)}
-.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:var(--moss)}
+.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:var(--stone)}
 
 /* ⚠️ Dva lokalna preloma, jer ih dvokolonski ledger stvarno trazi — `.home-section`
    nasledjuje padding i skalu naslova, ali ne i broj kolona. Tacke su postojece
@@ -719,7 +725,7 @@ main:focus{outline:none}
 .value-axes{display:grid;grid-template-columns:repeat(3,1fr);gap:38px;list-style:none;padding:0;margin:38px 0 0}
 .value-axes li{padding-top:21px}  /* ⚠️ `border-top` uklonjen u `M1`: liniju sada crta primitiv `CRTA` (`[data-line]`),
      jer se ivica ne moze skalirati. Ton je isti — `currentColor` na `opacity:.4` daje
-     `rgba(22,32,25,.4)` na kremu, a na forest sekcijama se sam prilagodjava.
+     `rgba(28,28,27,.4)` na kremu, a na forest sekcijama se sam prilagodjava.
      ⚠️ `padding-top` je 20 -> 21px: `::before` je apsolutno pozicioniran i ne zauzima
      prostor, dok je ivica zauzimala 1px. Bez ovoga je celija 1px niza nego na
      `master`-u — tiha regresija koju nijedna kapija ne vidi (klasa greske L6). */
@@ -729,7 +735,7 @@ main:focus{outline:none}
    a ostatak trajanja bi bio mrtvo vreme. Tacke preloma se ne menjaju. */
 .value-axes h3{width:fit-content;margin:16px 0 0;font-size:clamp(30px,3.5vw,52px);line-height:.95;letter-spacing:-.055em;text-transform:uppercase;font-weight:800;color:var(--ink)}
 .value-q{margin:20px 0 0;font-size:17px;line-height:1.35;letter-spacing:-.02em;color:var(--ink)}
-.value-axes p:last-child{margin:10px 0 0;font-size:15px;line-height:1.65;color:var(--moss)}
+.value-axes p:last-child{margin:10px 0 0;font-size:15px;line-height:1.65;color:var(--stone)}
 
 @media(max-width:900px){
   /* Tri ose od 30px+ ne stoje u tri kolone ispod 900 — „EQUIPMENT" bi se lomio. */
@@ -778,7 +784,7 @@ main:focus{outline:none}
 /* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.
    `min-width` postoji da se „WE DON'T" i „WE DO" ne razidju, pa tekstualna
    kolona ostaje poravnata niz celu listu. */
-.home-guard-list li>span{min-width:92px;font-weight:700;color:#5b6659}
+.home-guard-list li>span{min-width:92px;font-weight:700;color:#81807b}
 .home-guard-list li>span.is-do{color:var(--clay-mid)}
 
 @media(max-width:720px){
@@ -799,17 +805,17 @@ main:focus{outline:none}
    serifu i potpis. Ista podloga, dva razlicita objekta. `D1` to zove „prekid cina".
 
    ⚠️ PET PRAVILA ISPOD NISU KOZMETIKA NEGO CITLJIVOST. Sve nasledjeno je racunalo
-   na krem podlogu: telesni tekst u `--moss` (#455044), ivice u `rgba(22,32,25,.22)`,
-   labele u `#5b6659` i `--clay-mid` (#86502b). Nista od toga se ne vidi na forestu.
+   na krem podlogu: telesni tekst u `--stone`, ivice u `rgba(28,28,27,.22)`,
+   labele u sivoj i `--clay-mid` (#86502b). Nista od toga se ne vidi na forestu.
    Bez ovih preboja sekcija bi bila tamna i prazna, a nijedna kapija to ne bi
    uhvatila — `verify-nojs` gleda inline stilove, ne kontrast. */
 /* ⚠️ `border-top-color` je od `M2b` INERTAN, i NAMERNO ostaje. Obe sekcije sada nose
    `data-line`, pa ih `.home-section:not([data-line])` vise ne bordira — boju nema sta da
-   oboji. Liniju crta `[data-line]::before` preko `currentColor`, sto na `--forest` podlozi
+   oboji. Liniju crta `[data-line]::before` preko `currentColor`, sto na `--asphalt` podlozi
    samo od sebe daje svetlu liniju. Deklaracija stoji kao mreza: ako neko ikad skine
    `data-line` sa ove dve, staticna ivica se vraca i mora se vratiti U SVETLOJ boji, inace
    je tamna ivica na tamnoj podlozi — nevidljiva, i nijedna kapija to ne meri (L8). */
-.home-guard,.home-founder{background:var(--forest);color:var(--bone);border-top-color:var(--line)}
+.home-guard,.home-founder{background:var(--asphalt);color:var(--bone);border-top-color:var(--line)}
 .home-guard h2 em,.home-founder h2 em{-webkit-text-stroke-color:var(--bone)}
 .home-guard .home-kicker,.home-founder .home-kicker{color:var(--clay-light)}
 /* Telesni tekst: `#e3ded1` je vec „telo na forestu" u ovom fajlu (`.journey-lede`),
@@ -825,7 +831,7 @@ main:focus{outline:none}
 /* ─── CONSENT BANER ───────────────────────────────────────────────────────────
    Forest panel sa bone tekstom — isti par kao `.home-callback` i `.home-close`,
    pa baner deluje kao deo sajta a ne kao tudja traka zalepljena na dno. */
-.consent-bar{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:16px 6vw 20px;background:var(--forest);border-top:1px solid var(--line);color:var(--bone)}
+.consent-bar{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:16px 6vw 20px;background:var(--asphalt);border-top:1px solid var(--line);color:var(--bone)}
 .consent-panel{max-width:1100px;margin:0 auto}
 .consent-kicker{margin:0 0 10px;font-size:10px;font-weight:700;letter-spacing:.28em;color:var(--clay-light)}
 .consent-body{margin:0 0 16px;max-width:78ch;font-size:14px;line-height:1.6;opacity:.82}
