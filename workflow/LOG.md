@@ -6,6 +6,42 @@
 
 ---
 
+## non-batch(release) — `RD16` spojen i pušen; izmeren na deploy-u · 2026-09-21
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `18b8465..dbf810b` fast-forward, push — nosi `fe04aeb` (`RD16`) i `dbf810b` (close). Pavlova odluka („spoji i
+pushuuuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `18b8465`, nepomeren) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** — po `L37` za **oba** artefakta: JS `e8c7a3` (horizont `RD16`) u chunk-u scene i CSS
+`saturate(0)` u pravilu centriranog finala, uz kontrolu `centripetal`. Instrument proveren lokalno pre push-a.
+```
+  lokalno      14:48:38   JS 10 · kontrola 1 · RD16 JS 1 · CSS (1njs657d5e1da.css) · RD16 CSS 1
+  pre push-a   14:48:39   JS 10 · kontrola 1 · RD16 JS 0 · CSS (2xzz03of-b6gg.css) · RD16 CSS 0
+  push         14:48:49   18b8465..dbf810b
+  posle        14:48:59   JS 10 · kontrola 1 · RD16 JS 0 · RD16 CSS 0   (stari build)
+               14:49:20   isto
+               14:49:43   JS 10 · kontrola 1 · RD16 JS 1 · CSS (1h5fe4eam9do6.css) · RD16 CSS 1
+```
+JS i CSS stigli zajedno — bez problema sa build kešom iz `RD13`.
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 37/37/27/36 · 0 gresaka
+  svetlina (ista skripta)       noc 28.6 · 02 89.2 · prelaz 0.88 44.2 · finale 55.9 (lokalno 56.0)
+  tlo u finalu                  #191613 27° s15 l9 (lokalno #1a1613 27° s15 l9)
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno („manual passs").
+
+**NEXT STEP:** po Pavlovom izboru — svetla krem sekcija sa Georgia serifom posle heroja, stranica „smer redizajna"
+(paleta, `--forest`) ili `T1b`; otvoreno pitanje o okvirnom datumu prelaska.
+
+---
+
 ## RD16 (STANDARD) — Boja završnog kadra: tamno neutralno tlo, svetao put i horizont · 2026-09-21
 
 **Implementacija:** `fe04aeb` · **Grana:** `rd16-boja-zavrsnog-kadra` (sa `master` @ `18b8465`) — **nije spojena ni
