@@ -45,8 +45,12 @@ export const LIGHT_STYLE = {
   asphaltRoughness: 0.45,
   /** Gustina magle u punoj zori (nocu `NIGHT_FOG_DENSITY`). */
   dawnDensity: 0.0045,
-  /** Boja magle i horizonta u punoj zori (do `RD3` braon `#6c513b`). */
-  dawnFog: '#b98468',
+  /**
+   * Boja magle i horizonta u zoru, u dva koraka (`RD16`): kroz 02 ide do `early` (do `RD16` jedina boja zore; do `RD3`
+   * braon `#6c513b`), a svetli topli horizont `late` stize tek u delu skrola `lateFrom` -> 1, posle 02. Ovako 02 ne
+   * posvetli (izmereno u preview-u: sa svetlim horizontom odmah 02 ide 87 -> 99).
+   */
+  dawnFog: { early: '#b98468', late: '#e8c7a3', lateFrom: [0.8, 0.98] },
   /** Vrh neba nocu i u punoj zori. */
   zenith: { night: '#040a08', dawn: '#3b4757' },
   /** Sjaj oko sunca i oko meseca. */
@@ -62,17 +66,28 @@ export const LIGHT_STYLE = {
  * ⚠️ ZASTO OVAKO. Tlo je namerno vrlo tamno (`#1b2417`/`#101b14`, `RD10`), a toplo svetlo zore pada pod ~17 stepeni,
  * pa ravno tlo od njega dobija malo; daleka brda izgledaju svetlo samo zato sto ih magla boji u boju neba. Zato zora
  * podize sam albedo tla i asfalta i dolazi kroz nebo (ambijent), umesto da se dodaje jos jedan jak reflektor.
+ *
+ * `RD16` (Pavle 2026-09-21, od pet varijanti uzivo: „4"): topli ton preko zelenog tla davao je maslinasto-braon
+ * (tlo 63° pri 9 % svetline -- „kao da se neko posrao preko ekrana"). Sada je tlo u zoru tamno i neutralno (silueta),
+ * a svetlina ide u put i horizont; toplo ostaje samo svetlo (sunce, rub, oreoli), ne povrsine.
  */
 export const DAWN_GROUND = {
-  /** Boja „neba" u ambijentalnom svetlu u zoru (nocu `#8f9f95`). */
-  skyFill: '#c49a7c',
+  /** Boja „neba" u ambijentalnom svetlu u zoru (nocu `#8f9f95`; do `RD16` topla `#c49a7c`). */
+  skyFill: '#a4a2a4',
+  /** Boja odbijenog svetla od tla u zoru (nocu `#1c241b`). */
+  bounce: '#141414',
   /** Dodatna jacina ambijenta u punoj zori (uz postojecih +0,74). */
   skyBoost: 1.5,
-  /** Mnozilac boje terena u punoj zori; asfalt dobija 70 % istog. */
-  groundLift: 2.6,
-  /** Topao ton koji ide uz podizanje, da tlo u zoru ne ostane zelenkasto-sivo. */
-  liftTint: [1, 0.9, 0.78] as const,
-  /** Jacina toplog fill svetla sa strane sunca u punoj zori (bez senke). */
+  /** Mnozilac boje terena u punoj zori (do `RD16` 2,6) -- tlo ostaje blizu noci, kao silueta. */
+  groundLift: 0.9,
+  /** Ton uz mnozilac: ponistava zelenu iz boja po temenu, pa tlo u zoru postaje neutralno tamno (do `RD16` topao). */
+  liftTint: [1.42, 0.88, 1.82] as const,
+  /** Boja asfalta u punoj zori i mnozilac uz nju -- put je svetla traka kroz tamno tlo. */
+  road: '#4a4a4a',
+  roadLift: 2.6,
+  /** Toplo-beli fill sa strane sunca u punoj zori (bez senke; do `RD16` `#ffd9b0`). */
+  frontFillColor: '#fff0dc',
+  /** Jacina tog fill svetla u punoj zori. */
   frontFill: 2.4,
 } as const;
 

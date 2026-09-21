@@ -283,8 +283,8 @@ export function createHeroScene(host: HTMLElement) {
       sunrise.position.set(18, 11, 32);
       scene.add(sunrise);
       // RD13: dawn fill from the sun side, higher up and without a shadow, so the ground facing the camera in 03
-      // stops reading as night. Off at night; no extra draw call.
-      const dawnFill = new THREE.DirectionalLight("#ffd9b0", 0);
+      // stops reading as night. Off at night; no extra draw call. RD16: warm-white, so it lights without tinting.
+      const dawnFill = new THREE.DirectionalLight(DAWN_GROUND.frontFillColor, 0);
       dawnFill.position.set(26, 30, 34);
       scene.add(dawnFill);
       const rimNight = new THREE.Color('#ffcf9f');
@@ -315,7 +315,9 @@ export function createHeroScene(host: HTMLElement) {
 
       const placeCamera = createCameraRig(planForSides());
 
-    const fogDawn = new THREE.Color(LIGHT_STYLE.dawnFog);
+    // RD16: the horizon reaches its light warm colour only after 02, so 02 keeps its exposure.
+    const fogEarly = new THREE.Color(LIGHT_STYLE.dawnFog.early);
+    const fogLate = new THREE.Color(LIGHT_STYLE.dawnFog.late);
     const skyColors = {
       horizon: fog.color,
       zenith: new THREE.Color(),
@@ -326,9 +328,12 @@ export function createHeroScene(host: HTMLElement) {
     // RD13: the ground albedo is very dark on purpose (RD10); at dawn the sky lifts it instead of a new light.
     const ambientNight = new THREE.Color('#8f9f95');
     const ambientDawn = new THREE.Color(DAWN_GROUND.skyFill);
+    const bounceNight = ambient.groundColor.clone();
+    const bounceDawn = new THREE.Color(DAWN_GROUND.bounce);
     const terrainLift = new THREE.Color(1, 1, 1);
-    // Podizanje nosi i topao ton, da tlo u zoru prestane da bude zelenkasto-sivo.
+    // RD16: ton uz mnozilac ponistava zelenu, pa tlo u zoru ostaje tamno i neutralno umesto maslinasto-braon.
     const liftTint = new THREE.Color(...DAWN_GROUND.liftTint);
+    const roadDawn = new THREE.Color(DAWN_GROUND.road);
     const dawnZenith = new THREE.Color(LIGHT_STYLE.zenith.dawn);
     const sunDir = new THREE.Vector3();
     const moonDir = new THREE.Vector3();
@@ -357,14 +362,15 @@ export function createHeroScene(host: HTMLElement) {
       camera.updateProjectionMatrix();
       camera.lookAt(lookAt);
       const daylight=smoothstep(.42,.98,p);
-      fog.color.copy(nightFog).lerp(fogDawn,daylight);
+      fog.color.copy(nightFog).lerp(fogEarly,daylight).lerp(fogLate,smoothstep(...LIGHT_STYLE.dawnFog.lateFrom,p));
       fog.density=NIGHT_FOG_DENSITY+(LIGHT_STYLE.dawnDensity-NIGHT_FOG_DENSITY)*daylight;
       // Dawn end values match the previous curve; only the starting frame changed.
       ambient.intensity=1.28+daylight*(.74+DAWN_GROUND.skyBoost);
       ambient.color.copy(ambientNight).lerp(ambientDawn,daylight);
+      ambient.groundColor.copy(bounceNight).lerp(bounceDawn,daylight);
       terrainLift.setScalar(1).lerp(liftTint,daylight).multiplyScalar(1+(DAWN_GROUND.groundLift-1)*daylight);
       terrainMaterial.color.copy(terrainLift);
-      roadMaterial.color.copy(roadTint).multiplyScalar(1+(DAWN_GROUND.groundLift-1)*daylight*.7);
+      roadMaterial.color.copy(roadTint).lerp(roadDawn,daylight).multiplyScalar(1+(DAWN_GROUND.roadLift-1)*daylight);
       dawnFill.intensity=DAWN_GROUND.frontFill*daylight;
       moon.intensity=1.9*(1-daylight*.8);
       sunrise.intensity=1.2+daylight*2.2;

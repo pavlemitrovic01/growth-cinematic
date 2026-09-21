@@ -359,12 +359,13 @@
   .is-enhanced .journey-beat:nth-of-type(4) .journey-lede{margin-left:auto;margin-right:auto}
 }
 
-/* Ogledalo preliva (`RD15`) prati stranu aktivnog poglavlja; prelaz je mek, pa se smena ne vidi kao skok. */
+/* Ogledalo preliva (`RD15`) prati stranu aktivnog poglavlja; prelaz je mek, pa se smena ne vidi kao skok.
+   U finalu je preliv bez zelenkastog tona (`RD16`): preko tamnog neutralnog tla zeleno-crni preliv daje braon. */
 .journey-shade-right{opacity:0;transform:scaleX(-1)}
-.journey-shade,.journey-shade-right{transition:opacity .45s ease}
+.journey-shade,.journey-shade-right{transition:opacity .45s ease,filter .45s ease}
 .journey[data-side=right] .journey-shade{opacity:0}
 .journey[data-side=right] .journey-shade-right{opacity:1}
-.journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72}
+.journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72;filter:saturate(0)}
 .home-callback{scroll-margin-top:20px;background:var(--forest);color:var(--bone);padding:34px 0 44px}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .home-callback .home-section-top{padding:0 6vw}
