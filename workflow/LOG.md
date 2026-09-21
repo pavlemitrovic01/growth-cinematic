@@ -6,6 +6,60 @@
 
 ---
 
+## RD17 (STANDARD) — Paleta asfalt: tamnozelena sajta postaje neutralna tamna scene · 2026-09-22
+
+**Implementacija:** `299accf` · **Grana:** `rd17-paleta-asfalt` (sa `master` @ `1154b7c`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `app/globals.css` · `app/global-error.tsx` · `workflow/projects/growth-cinematic/batches/RD17.md`
+(nov) · `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Tok:
+1. Stranica „smer redizajna" (https://claude.ai/artifact/Ai2poYkGM628ZkKuj59Mtf) pre plana, po `L39`: pet prekidača
+   (tamna boja, ritam, pismo, navigacija, zaglavlje podstranice) i pravci Danas / A / B / C na pravom sadržaju i
+   kadrovima sa produkcije. Pavle: **„b"** → `SMER-B` u `DECISIONS`, raspodela na četiri batch-a (`RD17` → `RD7` → `RD4`
+   → `RD5`).
+2. Popis zelenkastih boja u CSS-u (zelena dominira, prosek < 120) našao je i dve van tokena: hover dugmeta `#0c130e` i
+   oznaku u guard-u `#5b6659`, koja je imala kontrast 3,18:1.
+3. Zamena sa proverom broja pogodaka po vrednosti; tokeni preimenovani (`--forest` → `--asphalt`, `--moss` → `--stone`).
+   Python na Windows-u je upisao CRLF — vraćeno na LF pre ikakvog merenja.
+4. Na zatvaranju popis nad oba fajla našao `--forest` u komentaru `global-error.tsx` (ranije brojan samo `globals.css`);
+   ispravljeno pre commita.
+
+IZMERENO (`next start` PID 10896 posle `BUILD_ID` 01:17:56; iste skripte pre i posle, headless Chrome, SwiftShader):
+```
+  quick                 npm run lint            exit 0   (i posle ispravke komentara)
+  typecheck             npm run typecheck       exit 0   (i posle ispravke komentara)
+  test                  npm test                exit 0   173/173, 14 fajlova
+  full                  npm run build           exit 0
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   18/18
+  meri se: http://localhost:3000
+
+  popis starih boja     0 u globals.css + global-error.tsx · rgba(4,12,8 = 6 (samo preliv preko scene)
+  kontrast              --stone/bone 7,23 · --stone/bone-dim 6,67 · --ink/bone 13,91 · guard oznaka 3,18 -> 4,70
+                        naslov finala 10,37:1
+  noc 0,25              23.7/38.4/39.4/12.8 28.6  ->  23.7/38.3/39.5/13.3 28.7   (donji pojas +3,9 %, ivica heroja)
+  finale 1,00           55.9 -> 56.0
+  scena                 draw 37/36 · 0 gresaka · git diff master -- lib/ prazan
+  snimci                10 povrsina pre/posle (desktop + telefon) i vrh strane: produkcija (pre) / lokalno (posle)
+```
+
+⚠️ **Šav na vrhu desktopa:** navigacija je asfalt, a nebo heroja ispod nje zelenkasto-crno (noćne boje scene su
+podešene na staru zelenu, `RD3-LOOK`). Prikazan na snimku pre pregleda; Pavle ga nije pomenuo.
+
+`manual`: Pavle u svom browseru (dev server posle nastavka sesije) — *„manual pass"*.
+
+**SCOPE DRIFT:** nema — diff je podskup EXPECTED-FILES (`LESSONS` nije dirnut).
+
+**LESSONS:** nema novog unosa; greška sa popisom (komentar u drugom fajlu) zapisana ovde i u manifestu.
+
+**NEXT STEP:** release `RD17` (merge + push) je Pavlova odluka; posle push-a diskriminator za CSS (`--asphalt:#121314`).
+Zatim `RD7` — ritam naslovne po `SMER-B` (STRICT zbog forme).
+
+---
+
 ## non-batch(release) — `RD16` spojen i pušen; izmeren na deploy-u · 2026-09-21
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

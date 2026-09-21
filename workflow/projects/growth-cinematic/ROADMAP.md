@@ -22,10 +22,10 @@ scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD1
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | smer redizajna | OPEN |
-| `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | smer, `T1b` | OPEN |
-| `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`, koja maslinasta | OPEN |
-| `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `T1b`, kolosek pokreta | OPEN |
+| `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | `SMER-B`: sa strane (posle `RD7`) | OPEN |
+| `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | `SMER-B`: zaglavlje sa kadrom; `T1b` | OPEN |
+| `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`; boja rešena u `RD17`, forma ide na kraj sa `RD7` | OPEN |
+| `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `SMER-B`: krem posle heroja (sledeći); `T1b`, kolosek pokreta | OPEN |
 | `RD8` | Slike: nijedne van rezervne slike heroja — izvor (svoje, licencirane, kadrovi iz scene) | — | odluka Pavla | OPEN |
 | `RD9` | Sadržaj za vozače: više stranica i konteksta, copy pregledati i pojačati, uključujući naslov heroja | STRICT (registar) | Pavlov sadržaj; gde živi registar posle gašenja MAIN-a | čeka sadržaj |
 
@@ -127,6 +127,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `RD17` | **Paleta asfalt** (pravac B, `SMER-B`) — `--forest` → `--asphalt #121314`, tamni tekst i siva neutralni, ivice heroja u asfalt; noćne boje scene ostale (blag šav navigacija → nebo, prikazan); oznaka u guard-u 3,18 → 4,70:1; `manual` PASS; nije spojen ni pušen | 2026-09-22 |
 | `RD16` | **Boja završnog kadra** — maslinasto-braon (topli ton `RD13` preko zelenog tla) zamenjen tamnim neutralnim tlom, svetlim putem i toplim horizontom; pet varijanti uživo PRE plana, Pavle „4"; finale 49,0 → 56,0 prosečne svetline, tlo 63° s34 → 27° s15, 02 89,2, noć ista; `manual` PASS; spojen i pušen 2026-09-21, izmeren na deploy-u | 2026-09-21 |
 | `RD15` | **Centriran finale sa većim naslovom** — puna smena strana iz prototipa odbačena merenjem (tekst desno u 01 ili 02 šalje mesec, odnosno sunce, van kadra ili iza brda); isporučeni centriran finale (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva i strane poglavlja kao podatak (`BEAT_SIDES`); test kompozicije meri kolonu na strani poglavlja; kamion ispod teksta u finalu 0–16,4 %; `manual` PASS; spojen i pušen 2026-09-21, izmeren na deploy-u | 2026-09-21 |
 | `RD14` | **Skala i prored heroja — NAPUSTEN.** Merenje iz prototipa (`09269bb`) i tri varijante uzivo: na 1440 px naslov ide 92 -> 91 px (vlada `vw` deo `clamp`-a), pa se menjaju samo broj i podnaslov; Pavle: „ne vidim neke promene… danas mi se vise svidja". Kod vracen, nista nije spojeno; nalaz ostaje — pismo i skala nisu poluga, ostaju smena strana i svetla sekcija | 2026-09-20 |

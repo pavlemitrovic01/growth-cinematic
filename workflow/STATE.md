@@ -7,32 +7,37 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** po Pavlovom izboru (ispod). Za vizuelne odluke od sada **varijante PRE plana** (`L39`).
-  **„Filmski jezik" do sada:** skala i prored nisu poluga (`RD14` napušten); smena strana ne ide u 01/02 zbog meseca i
-  sunca (`RD15`, `L38`) — ostaje **svetla krem sekcija sa Georgia serifom posle heroja** (van scene, bez tog sukoba).
-  Uz to stranica **„smer redizajna"** (paleta; Pavle želi da menja `--forest`), **`T1b`**
-  (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn). Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu.
-  `U3` čeka Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
+- **Sledeće:** **release `RD17` je Pavlova odluka** (grana `rd17-paleta-asfalt`, nije spojena ni pušena; posle push-a
+  diskriminator za CSS — `--asphalt:#121314` u serviranom CSS-u, `L37`). Zatim pravac B (`SMER-B`), redom: **`RD7`
+  ritam naslovne** (krem sekcija posle heroja, smena svetlo/tamno, forma za povratni poziv na kraj — STRICT, preklapa
+  `U2` i deo `RD6`) → `RD4` navigacija sa strane → `RD5` (deo) zaglavlje podstranice sa kadrom. Za vizuelne odluke
+  **varijante PRE plana** (`L39`); stranica „smer" (https://claude.ai/artifact/Ai2poYkGM628ZkKuj59Mtf) je već pokazala
+  pravac B, pa `RD7` meri svoj deo pre plana. Blag šav navigacija (asfalt) → nebo heroja (zeleno) ostao je posle `RD17`;
+  ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b` (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn)
+  i dalje čeka izbor. Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu. `U3` čeka Pavlovu potvrdu da
+  regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD16`** (2026-09-21, `fe04aeb`) — **Boja završnog kadra:** maslinasto-braon (topli ton
+- **Poslednji završen:** **`RD17`** (2026-09-22, `299accf`) — **Paleta asfalt** (prvi deo pravca B, `SMER-B`):
+  `--forest #08110d` → `--asphalt #121314`, tamni tekst `#1c1c1b` i siva `--stone #4b4a47` neutralni, 46 linija u boji
+  teksta sa njim, ivice heroja u asfalt; oznaka u guard-u 3,18 → 4,70:1. Noćne boje scene ostale (blag šav, prikazan).
+  Noć 28,6 → 28,7, finale 55,9 → 56,0. `manual` PASS („manual pass"). **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD16`** (2026-09-21, `fe04aeb`) — **Boja završnog kadra:** maslinasto-braon (topli ton
   `RD13` preko zelenog tla, Pavle: *„kao da se neko posrao preko ekrana"*) zamenjen tamnim neutralnim tlom, svetlim
   putem i toplim horizontom koji stiže tek posle 02. Pet varijanti uživo pre plana, Pavle „4". Finale 49,0 → 56,0,
   tlo 63° s34 → 27° s15, 02 89,2, noć ista; chunk +84 B gzip. `manual` PASS („manual passs"). Spojen i pušen
   2026-09-21, izmeren na deploy-u (JS i CSS stigli zajedno; finale na produkciji 55,9).
-- **Pretposlednji:** **`RD15`** (2026-09-21, `47e365d`) — **Centriran finale sa većim naslovom:** finale 03 u sredini
-  (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva, strane poglavlja kao podatak (`BEAT_SIDES`);
-  puna smena strana odbačena merenjem (mesec/sunce van kadra ili iza brda, `L38`). `manual` PASS. Spojen i pušen
-  2026-09-21, izmeren na deploy-u (JS i CSS stigli zajedno).
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `RD17` na grani **`rd17-paleta-asfalt`** (sa `master` @ `1154b7c`; implementacija `299accf` + close commit) —
+  **nije spojena ni pušena**; release je Pavlova odluka.
 - `RD16` (`18b8465..dbf810b`, implementacija `fe04aeb`) spojen fast-forward-om i pušen 2026-09-21 (Pavle: „spoji i
   pushuuuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja za **JS i CSS**
   (`e8c7a3` 0 → 1, `saturate(0)` u finalu 0 → 1, kontrola three 1 u oba); `manual` na produkciji nije posebno tražen.

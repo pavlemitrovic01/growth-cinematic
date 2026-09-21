@@ -68,6 +68,24 @@
 
 ## ZATVORENO
 
+### `SMER-B` — pravac redizajna: asfalt, krem posle heroja, Arial, navigacija sa strane, zaglavlje sa kadrom · 2026-09-21
+- **Izvor:** stranica „smer redizajna" (https://claude.ai/artifact/Ai2poYkGM628ZkKuj59Mtf) — naslovna i `/how-it-works`
+  na pravom tekstu i kadrovima scene, pet prekidača + pravci Danas / A / B / C, desktop 1280 i telefon 390. Otvoreno
+  pitanje bilo je „smeta ton ili monotonija"; prekidači su ih razdvojili. Preporuka agenta: B.
+- **Pavle: „b"** → tamna boja **asfalt** `#121314` (ne šuma, ne borova) · **krem sekcija posle heroja** („How it works")
+  uz smenu svetlo/tamno i formu za povratni poziv na kraju · **Arial** (`T-FONT` ostaje; Georgia odbijena, nema je na
+  Androidu) · **navigacija sa strane** (`RD4`) · **zaglavlje podstranice sa kadrom iz scene** (`RD5`).
+- **Redom, svaki sa `manual`:** `RD17` paleta (zatvoren) → `RD7` ritam naslovne + deo `RD6` (forma na kraj, STRICT,
+  preklapa `U2`) → `RD4` navigacija sa strane → `RD5` (deo) zaglavlje sa kadrom.
+- ⚠️ Raspored sa stranice je predlog: forma se seli sa vrha na kraj, „How it works" ide odmah posle heroja. Tekst ostaje
+  doslovno; svaki od tih batch-eva meri svoj deo pre plana.
+
+### `RD17-LOOK` — paleta asfalt · 2026-09-22
+- Deo `SMER-B`. `--forest #08110d` → `--asphalt #121314`, `--ink` → `#1c1c1b`, `--moss` → `--stone #4b4a47`; ivice heroja
+  (donja na desktopu, preliv na telefonu) u asfalt. **Noćne boje scene i preliv preko nje ostali su zeleni** (vidi
+  `RD3-LOOK`): na desktopu se vidi blag šav navigacija (asfalt) → nebo heroja (zelenkasto-crno). Prikazan pre pregleda.
+- **Pregled:** *„manual pass"*. Šav nije pomenut; ako zasmeta, noćne boje scene su zaseban posao sa varijantama (`L39`).
+
 ### `RD16-LOOK` — boja završnog kadra: tamno neutralno tlo, svetao put i horizont · 2026-09-21
 - **Povod** (Pavle, posle release-a `RD15`): *„okolinu i pozadinu… kao da se neko posrao preko ekrana"*. Izmereno:
   tlo u finalu 63° pri 9 % svetline, zasićenje 34 % — maslinasto-braon; uzrok je topli ton iz `RD13-LOOK` (`[1, 0.9,
