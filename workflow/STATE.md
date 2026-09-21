@@ -7,7 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **release `RD15`** (Pavlova odluka), pa **u novoj sesiji: boja završnog kadra (03)**. Pavle: *„okolinu i
+- **Sledeće:** **nova sesija: boja završnog kadra (03)**. Pavle: *„okolinu i
   pozadinu… kao da se neko posrao preko ekrana"*. Izmereno: tlo nijansa 62°, iza teksta 47°, put 53° pri 9–24 % svetline
   — maslinasto-braon; uzrok je topli ton iz `RD13` preko zelenog tla (pre `RD13` tlo 91°). Tri pravca za poređenje:
   neutralno-hladno tlo (tople samo svetle površine), suva trava / pesak, tamno tlo uz svetao put i nebo.
@@ -20,7 +20,8 @@
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
 - **Poslednji završen:** **`RD15`** (2026-09-21, `47e365d`) — **Centriran finale sa većim naslovom:** finale 03 u sredini
   (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva, strane poglavlja kao podatak (`BEAT_SIDES`);
-  puna smena strana odbačena merenjem (mesec/sunce van kadra ili iza brda, `L38`). `manual` PASS. **Nije spojen ni pušen.**
+  puna smena strana odbačena merenjem (mesec/sunce van kadra ili iza brda, `L38`). `manual` PASS. Spojen i pušen
+  2026-09-21, izmeren na deploy-u (JS i CSS stigli zajedno).
 - **Pretposlednji:** **`RD13`** (2026-09-20, `644e2e1`) — **Zora na tlu:** ambijent u zoru nosi boju neba, albedo
   terena i asfalta se podiže uz topao ton, jedno usmereno svetlo bez senke sa strane sunca, donji deo `.journey-shade`
   guta 20 % kadra umesto 44 %. Završni kadar 44,7 → 63,1 prosečne svetline, noć nepromenjena; chunk +148 B gzip.
@@ -35,9 +36,10 @@
 
 ## Git
 
-- `RD15` (implementacija `47e365d` + close) na grani **`rd15-smena-strana`** (sa `master` @ `0efa23d`) — **nije spojen
-  ni pušen**; release je Pavlova odluka. `master` nosi i neposlat zapis `0efa23d` (`RD14` napušten). Merenja protiv
-  lokalnog `next start`; deploy nosi `RD13`.
+- `RD15` (`6f737ed..c1f9037`, implementacija `47e365d`; nosi i zapis `0efa23d` o napuštenom `RD14`) spojen
+  fast-forward-om i pušen 2026-09-21 (Pavle: „spoji i pusuj pa prelazim"); **deploy izmeren protiv njega**, uz nov build
+  potvrđen diskriminatorom PRE merenja za **JS i CSS** (niz strana 0 → 1, `journey-shade-right` 0 → 1, kontrola three 1
+  u oba); `manual` na produkciji nije posebno tražen.
 - `RD13` (`612259f..d1ca86d`, implementacija `644e2e1`) spojen fast-forward-om i pušen 2026-09-20 (Pavle: „spoji i
   pushuj"); **deploy izmeren protiv njega tek posle redeploy-a bez build keša** — prvi build je dao nov JS (`#c49a7c`)
   ali **star CSS pod istim imenom**; redeploy je promenio ime (`370vta1vre4jp.css` → `3iu9mf55lgoo0.css`) i doneo pravi
@@ -74,8 +76,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD13`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3` i `RD13`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD15`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13` i `RD15`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -85,7 +87,7 @@
   `m7-hero-prelaz`, `u1-faq-struktura`, `k1-css-bez-preklapanja`, `r1-resend-sandbox`,
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
-  `rd3-svetlo-scene`, `rd13-zora-na-tlu`.
+  `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`.
 
 ## Žive prepreke
 

@@ -6,6 +6,40 @@
 
 ---
 
+## non-batch(release) — `RD15` spojen i pušen; izmeren na deploy-u · 2026-09-21
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `6f737ed..c1f9037` fast-forward, push — nosi `0efa23d` (`RD14` napušten, zapis), `47e365d` (`RD15`) i `c1f9037`
+(close). Pavlova odluka („spoji i pusuj pa prelazim"). Pre spajanja proveren `origin/master` (`ls-remote` = `6f737ed`,
+nepomeren) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** — po `L37` za **oba** artefakta: JS niz strana poglavlja (`"left","left","left","center"`)
+i CSS ogledalo preliva (`journey-shade-right`), uz kontrolu `centripetal`. Instrument proveren lokalno pre push-a.
+```
+  lokalno      13:51:26   JS 10 · kontrola 1 · RD15 strane 1 · CSS ogledalo 1
+  pre push-a   13:51:29   JS 10 · kontrola 1 · RD15 strane 0 · CSS ogledalo 0
+  push         13:51:41   6f737ed..c1f9037
+  posle        13:51:53   JS 10 · kontrola 1 · RD15 strane 0 · CSS ogledalo 0   (stari build)
+               13:52:21   JS 10 · kontrola 1 · RD15 strane 1 · CSS ogledalo 1   fra1::9j5b2-1789991536391-e699b2f81cf1
+```
+Ovog puta JS i CSS stigli zajedno — bez problema sa build kešom iz `RD13`.
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 18/18
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 37/37/36 (01/02/03) · 0 gresaka
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno („manujal pass").
+
+**NEXT STEP:** nova sesija — boja završnog kadra (03): izmereno maslinasto-braon (tlo 62°, iza teksta 47°, put 53° pri
+9–24 % svetline), uzrok topli ton `RD13` preko zelenog tla; tri pravca u STATE.
+
+---
+
 ## RD15 (STANDARD) — Centriran finale sa većim naslovom; puna smena strana odbačena merenjem · 2026-09-21
 
 **Implementacija:** `47e365d` · **Grana:** `rd15-smena-strana` (sa `master` @ `0efa23d`) — **nije spojena ni pušena**:
