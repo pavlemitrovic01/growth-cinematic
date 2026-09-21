@@ -83,8 +83,11 @@ describe('globals.css', () => {
     /* ⚠️ BROJ SE MENJA SAMO U BATCHU KOJI SVESNO MENJA CSS, nikad kao zaseban „fix testa".
      *  `K1` ga je spustio za dva: spojen `[data-line]::before` i uklonjena mrtva
      *  `.contact-sub`. Ono sto ostaje NIJE nered — izmereno je da tim pravilima redosled
-     *  nosi izgled (`LESSONS` L26). Ko spusti broj, mora da dokaze da se render nije pomerio. */
-    expect(redundant).toBe(141);
+     *  nosi izgled (`LESSONS` L26). Ko spusti broj, mora da dokaze da se render nije pomerio.
+     *  `RD15` ga je podigao za dva (141 -> 143): `.journey-shade` sada ima ogledalo (`journey-shade-right`)
+     *  koje prati stranu aktivnog poglavlja, pa isti selektor postoji u dva konteksta, i `.journey-beat`
+     *  dobija centrirani finale u desktop media query-ju. Oba su namerna i izmerena. */
+    expect(redundant).toBe(143);
   });
 
   it('K1/B — nijedna klasa u CSS-u nije bez ijednog pomena u izvoru', () => {

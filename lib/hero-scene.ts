@@ -3,6 +3,7 @@ import {
   buildHalos, buildSky, DAWN_GROUND, discMaterial, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial,
   STREET_LIGHTS, truckHalos,
 } from './hero-light';
+import { BEAT_SIDES, type BeatSide, shiftForSide } from './hero-beat';
 import { buildRoad, ROAD_DESIGN } from './hero-road';
 import { asphaltTexture, buildTerrain, TERRAIN_STYLE } from './hero-terrain';
 import { buildTruck, TRUCK_DESIGN } from './hero-truck';
@@ -63,6 +64,10 @@ export const SUN_DISTANCE = 110;
  * vozi -- samo dok se okrece. Pravac je izracunat iz kadrova 01 (napredak 0,30-0,42, ekrani 2000x1094 i 1440x900)
  * tako da mesec kroz celo poglavlje stoji oko mesta koje je Pavle oznacio (2026-09-17: „mesec treba biti ovde"):
  * gore, na sredini neba iznad puta.
+ *
+ * ⚠️ `RD15`: kad je tekst u 01 presao desno, kadar se ogledao i mesec je izasao IZ KADRA (NDC x -1,1). Pravac je
+ * preracunat tako da mesec ostane na ISTOJ oznaci na ekranu -- Pavlova odluka je bila mesto na ekranu, ne broj u
+ * kodu. Ko menja `shift` poglavlja 01, mora ponovo da resi ovaj pravac (postupak je u `batches/RD15.md`).
  */
 const MOON_DIRECTION: Vec3 = [0.1103, 0.1553, -0.9817];
 
@@ -117,6 +122,14 @@ export function sunPosition(progress: number, from: { x: number; y: number; z: n
  * Postavlja polozaj kamere i tacku u koju gleda, i vraca objektiv. Kamion prati `progress` (skrol), a
  * kamera prati `camera` (`cameraProgress` iz `lib/hero-beat.ts`).
  */
+/**
+ * Plan sa pomerajem kadra po stranama teksta (`RD15`): `CAMERA_PLAN.shots[i].shift` je jacina, a strana daje znak.
+ * Putanja kamere se ne dira.
+ */
+export function planForSides(sides: readonly BeatSide[] = BEAT_SIDES, plan: CameraPlan = CAMERA_PLAN): CameraPlan {
+  return { path: plan.path, shots: plan.shots.map((shot, i) => ({ ...shot, shift: shiftForSide(sides[i] ?? 'left', shot.shift) })) };
+}
+
 export function createCameraRig(plan: CameraPlan = CAMERA_PLAN) {
   const toVector = ([x, y, z]: Vec3) => new THREE.Vector3(x, y, z);
   const path = new THREE.CatmullRomCurve3(plan.path.map(toVector));
@@ -300,7 +313,7 @@ export function createHeroScene(host: HTMLElement) {
       const starField = new THREE.Points(starsGeo, starMat);
       scene.add(starField);
 
-      const placeCamera = createCameraRig();
+      const placeCamera = createCameraRig(planForSides());
 
     const fogDawn = new THREE.Color(LIGHT_STYLE.dawnFog);
     const skyColors = {

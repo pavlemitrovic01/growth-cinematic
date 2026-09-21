@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import * as THREE from 'three';
-import { createCameraRig, moonPosition, SUN_DISTANCE, SUN_RADIUS, sunPosition, sunVisible, truckZ } from '@/lib/hero-scene';
+import { createCameraRig, moonPosition, planForSides, SUN_DISTANCE, SUN_RADIUS, sunPosition, sunVisible, truckZ } from '@/lib/hero-scene';
 import { discMaterial, fogShare, LIGHT_STYLE, NIGHT_FOG_DENSITY, roadsideHalos, starMaterial, truckHalos } from '@/lib/hero-light';
-import { cameraProgress } from '@/lib/hero-beat';
+import { BEAT_SIDES, cameraProgress } from '@/lib/hero-beat';
 import { TRUCK_DESIGN, truckBounds, truckBoxes } from '@/lib/hero-truck';
 import { ROAD_CORRIDOR, TERRAIN_STYLE, terrainHeight } from '@/lib/hero-terrain';
 import { ROAD_DESIGN, roadsideBoxes } from '@/lib/hero-road';
@@ -70,6 +70,8 @@ const SUN_HIGH_MARK = { x: (1275 / 2000) * 2 - 1, y: 1 - (105 / 1103) * 2 };
 const SUN_RISE_FRAMES = [0.5333, 0.58, 0.63, 0.67, 0.7, 0.74];
 const ROADSIDE = roadsideBoxes(ROAD_DESIGN);
 const ROADSIDE_CLEARANCE = 1;
+// Strane poglavlja (`RD15`): kolona teksta se meri na strani tog poglavlja, ne uvek levo.
+const SIDES = BEAT_SIDES;
 const TRUCK_STOP = ROADSIDE.filter((b) => b.truckStop);
 const HALO_CLEARANCE = 1;
 const ROADSIDE_HALOS = roadsideHalos();
@@ -155,8 +157,28 @@ function truckSurface() {
   return points;
 }
 
+/**
+ * Kolona teksta na ekranu za stranu poglavlja (`RD15`), u pikselima: levo i desno 6vw od svoje ivice, sirine
+ * min(62vw, 880); centar je kolona min(56vw, 820) na sredini. Iste vrednosti stoje u `app/globals.css`.
+ */
+/**
+ * Visina bloka teksta po poglavlju, kao udeo visine ekrana. Izmereno u browseru na 1440x900 (`RD15`): blokovi idu
+ * 265-813, 327-821, 362-856 i 402-778 px (finale sa vecim naslovom, podignut na 44 %). Bez visine bi centrirana
+ * kolona izgledala kao da pokriva ceo kamion.
+ */
+const TEXT_BAND = [[0.294, 0.903], [0.363, 0.912], [0.402, 0.951], [0.447, 0.864]];
+
+function textColumn(side, width) {
+  if (side === 'center') {
+    const span = Math.min(0.56 * width, 820);
+    return [width / 2 - span / 2, width / 2 + span / 2];
+  }
+  const span = Math.min(0.62 * width, 880);
+  return side === 'right' ? [width - 0.06 * width - span, width - 0.06 * width] : [0.06 * width, 0.06 * width + span];
+}
+
 /** Udeo kamiona (po povrsini na ekranu) koji stoji ispod kolone teksta, kao u `render`-u scene. */
-function textShare(place, progress, [width, height], surface) {
+function textShare(place, progress, [width, height], surface, side = 'left', band = [0, 1]) {
   const position = new THREE.Vector3();
   const target = new THREE.Vector3();
   const lens = place(progress, cameraProgress(progress, BEATS), position, target);
@@ -179,8 +201,7 @@ function textShare(place, progress, [width, height], surface) {
     const row = Math.min(rows - 1, Math.floor(((1 - point.y) / 2) * rows));
     grid[row * columns + col] = 1;
   }
-  const left = 0.06 * width;
-  const right = left + Math.min(0.62 * width, 880);
+  const [left, right] = textColumn(side, width);
   let cells = 0;
   let under = 0;
   for (let row = 0; row < rows; row++) {
@@ -188,14 +209,16 @@ function textShare(place, progress, [width, height], surface) {
       if (!grid[row * columns + col]) continue;
       cells++;
       const px = ((col + 0.5) / columns) * width;
-      if (px >= left && px <= right) under++;
+      const py = ((row + 0.5) / rows) * height;
+      if (px >= left && px <= right && py >= band[0] * height && py <= band[1] * height) under++;
     }
   }
   return { cells, share: cells ? under / cells : 1 };
 }
 
 function measure() {
-  const place = createCameraRig();
+  // Isti plan koji scena crta: pomeraj kadra po stranama poglavlja (`RD15`).
+  const place = createCameraRig(planForSides());
   const position = new THREE.Vector3();
   const target = new THREE.Vector3();
   const nearTruck = new Array(SAMPLES).fill(false);
@@ -280,7 +303,7 @@ function measure() {
   );
 
   const surface = truckSurface();
-  const composition = [0, 1 / 3, 2 / 3, 1].map((p) => SCREENS.map((screen) => textShare(place, p, screen, surface)));
+  const composition = [0, 1 / 3, 2 / 3, 1].map((p, i) => SCREENS.map((screen) => textShare(place, p, screen, surface, SIDES[i], TEXT_BAND[i])));
 
   const sunOnScreen = SUN_RISE_FRAMES.map((p) => {
     const lens = place(p, cameraProgress(p, BEATS), position, target);
@@ -315,6 +338,8 @@ function measure() {
     first: { position: position.toArray(), target: target.toArray(), fov: lens.fov, shift: lens.shift },
   };
 }
+
+
 
 const metrics = measure();
 
@@ -417,7 +442,8 @@ describe('kamera u heroju ne prolazi kroz kamion, pored stuba ni kroz tlo (RD2, 
     expect([...position, ...target, fov, shift].map((v) => Number(v.toFixed(6)))).toEqual([-14, 5, -33, 0, 3.3, 7, 40, 0.3]);
   });
 
-  it('5 -- na sredini svakog poglavlja najvise 25% kamiona ispod kolone teksta (1440x900)', () => {
+  it('5 -- na sredini svakog poglavlja najvise 25% kamiona ispod kolone teksta, na strani tog poglavlja (1440x900)', () => {
+    console.log(`izmereno: strane ${SIDES.join('/')}`);
     const shares = metrics.composition.map((row) => Number((row[0].share * 100).toFixed(1)));
     expect(metrics.composition.every((row) => row[0].cells > 0)).toBe(true);
     expect(shares.every((share) => share <= TEXT_SHARE_MAX * 100)).toBe(true);

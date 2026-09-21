@@ -348,6 +348,23 @@
   .is-enhanced .journey-tools{position:absolute;bottom:12px;left:0;right:0;padding-bottom:12px}
   .is-enhanced .journey-scroll{display:flex}
 }
+
+/* Strane poglavlja (`RD15`): 01 desno, finale centrirano; kadar ide na suprotnu stranu (`shiftForSide`).
+   ⚠️ Centriranje ide kroz `left`, ne kroz `transform` -- transform svaki frejm postavlja `HeroExperience`. */
+@media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
+  .is-enhanced .journey-beat:nth-of-type(4){left:calc(50% - min(28vw,410px));top:44%;width:min(56vw,820px);text-align:center}
+  /* Veci naslov finala (Pavle: „tekst mislim da bi trebali da povecamo tu jer je premali"): najveci koji staje --
+     sa 124 px je 31-38 % kamiona stajalo ispod teksta, sa 104 px 0-16 %. */
+  .is-enhanced .journey-beat:nth-of-type(4) h2{font-size:clamp(48px,6vw,104px);line-height:.95}
+  .is-enhanced .journey-beat:nth-of-type(4) .journey-lede{margin-left:auto;margin-right:auto}
+}
+
+/* Ogledalo preliva (`RD15`) prati stranu aktivnog poglavlja; prelaz je mek, pa se smena ne vidi kao skok. */
+.journey-shade-right{opacity:0;transform:scaleX(-1)}
+.journey-shade,.journey-shade-right{transition:opacity .45s ease}
+.journey[data-side=right] .journey-shade{opacity:0}
+.journey[data-side=right] .journey-shade-right{opacity:1}
+.journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72}
 .home-callback{scroll-margin-top:20px;background:var(--forest);color:var(--bone);padding:34px 0 44px}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .home-callback .home-section-top{padding:0 6vw}

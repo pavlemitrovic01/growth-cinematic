@@ -13,6 +13,28 @@
  * three.js u glavni bundle, pa bi ga preuzimali i telefoni koji scenu nikad ne pokrecu.
  */
 
+/**
+ * Strana na kojoj stoji tekst poglavlja (`RD15`, Pavlov izbor 2026-09-20, varijanta 2 od tri uzivo): uvod levo,
+ * 01 desno, 02 levo, finale centrirano.
+ *
+ * ⚠️ Kadar ide na SUPROTNU stranu od teksta: `shift` u `CAMERA_PLAN` je pomeraj slike udesno, pa tekst desno trazi
+ * negativan pomeraj. Strane zive ovde, u cistom modulu, jer ih citaju i raspored, i scena, i test -- da se ne
+ * prepisuju na tri mesta.
+ */
+export type BeatSide = 'left' | 'right' | 'center';
+
+export const BEAT_SIDES: readonly BeatSide[] = ['left', 'left', 'left', 'center'];
+
+/**
+ * Pomeraj kadra za stranu teksta: levo -> kamion desno (+), desno -> kamion levo (-), centar -> jaci pomeraj udesno.
+ *
+ * ⚠️ Mnozioci nisu ukus nego merenje (`RD15`): sa 1,0 i 0,6 je kamion ostajao ispod teksta -- 42 % u poglavlju sa
+ * tekstom desno i 81 % u centriranom finalu, uz granicu od 25 %. Sa 1,25 i 1,1, uz uzu centriranu kolonu, pada na
+ * 18 % i 0 %. Jace od toga (1,4) isecalo je kamion na ivici kadra.
+ */
+export const shiftForSide = (side: BeatSide, shift: number): number =>
+  side === 'right' ? -shift * 1.25 : side === 'center' ? shift * 1.1 : shift;
+
 /** Do ove udaljenosti poglavlje DRZI punu vidljivost. */
 export const BEAT_HOLD = 0.4;
 

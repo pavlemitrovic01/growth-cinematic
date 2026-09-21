@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, type ReactNode } from 'react';
-import { beatOpacity, cameraProgress } from '@/lib/hero-beat';
+import { beatOpacity, BEAT_SIDES, cameraProgress } from '@/lib/hero-beat';
 
 export default function HeroExperience({ children }: { children: ReactNode }) {
   const root = useRef<HTMLElement>(null);
@@ -129,6 +129,7 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
             }
             if (focused) beat.style.opacity = '1';
           });
+          hero!.dataset.side = BEAT_SIDES[active] ?? 'left';
           if (progressBar) progressBar.style.transform = `scaleX(${current})`;
           try {
             scene.render(current, cameraProgress(current, beats.length));
@@ -229,6 +230,8 @@ export default function HeroExperience({ children }: { children: ReactNode }) {
         </noscript>
         <div className="journey-canvas" ref={mount} aria-hidden="true" data-scene-state="static" />
         <div className="journey-shade" aria-hidden="true" />
+        {/* Ogledalo preliva (RD15): tekst na desnoj strani ima istu podlogu kao levo; strana prati aktivno poglavlje. */}
+        <div className="journey-shade journey-shade-right" aria-hidden="true" />
         <div className="journey-story">{children}</div>
         <div className="journey-tools">
           <span className="journey-scroll" aria-hidden="true">SCROLL TO DRIVE <i><b /></i></span>
