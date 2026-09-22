@@ -6,6 +6,61 @@
 
 ---
 
+## RD7 (STRICT) — Ritam naslovne: krem „How it works" posle heroja, smena svetlo/tamno, forma na kraju · 2026-09-22
+
+**Implementacija:** `8c8546b` · **Grana:** `rd7-ritam-naslovne` (sa `master` @ `b211076`) — **nije spojena ni pušena**:
+release je Pavlova odluka
+
+**Changed files:** `components/CinematicHome.tsx` · `app/globals.css` · `tests/rendered-html.test.mjs` ·
+`__tests__/globals-css.test.js` (census) · `workflow/projects/growth-cinematic/batches/RD7.md` (nov) ·
+`workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/projects/growth-cinematic/DECISIONS.md` ·
+`workflow/projects/growth-cinematic/CONTEXT.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+Tok:
+1. Plan je pre odobrenja izneo sukob sa auditom `U2` (audit: „hero → model naplate → proces → brza forma"; `SMER-B`:
+   proces posle heroja, forma na kraju) i podnožje van obima; Pavle: „moze execute".
+2. Polazno: redosled i tonovi izmereni u browseru, payload brze forme snimljen presretanjem (bez prave prijave).
+3. Markup: proces premešten odmah posle heroja, traka `home-callback` uklonjena, `ApplyForm variant="quick"` i
+   `#get-started` u završnom pozivu (tekst levo, forma desno). CSS: naplata tamna, osnivač krem, FAQ svetlo siva,
+   raspored forme u koloni (`.qa` deli i `/contact`, pa osnovna pravila nisu dirana).
+4. Nova `rendered` kapija pala na starom build-u (redosled); ostalih pet tvrdnji dokazano crvene na lažnom serveru sa
+   pravim HTML-om i po jednim prekršajem (traka · dve forme · cilj van završnog poziva · forma van cilja · bez
+   pristanka). Prvi pokušaj „trake" nije pogodio tag (`data-line="true"`, ne `""`) — pao je server, ne kapija; ispravljeno
+   i ponovljeno.
+5. Snimci cele strane su prvo bili prazni u delovima: sadržaj otkriva `IntersectionObserver` tek pri skrolu. Ponovljeni
+   sa `prefers-reduced-motion: reduce` — pre (produkcija) i posle (lokalno).
+6. Restart računara usred batch-a: radno stablo i `.next` netaknuti; `quick`/`typecheck` ponovo pokrenuti.
+
+IZMERENO (`next start` PID 6456, `BUILD_ID` 01:38:40 — noviji od svih izmena izvora):
+```
+  quick                 npm run lint            exit 0
+  typecheck             npm run typecheck       exit 0
+  test                  npm test                exit 0   173/173 (census K1/A 143 -> 142, namerno)
+  full                  npm run build           exit 0
+  verify                npm run verify          exit 0   nojs PASS 14 · claims PASS 13
+  rendered              npm run test:rendered   exit 0   19/19 (nova RD7)
+  meri se: http://localhost:3000
+
+  redosled desktop      process 4229 · pay 5054 · values 5682 · guard 6196 · founder 7195 · faq 7815 · close 8708
+  brza forma            1, u home-close, #get-started, pristanak; payload isti kao pre (presretnut)
+  lokalni API           503 bez baze („Applications are temporarily unavailable…") -- nema prave prijave
+  kontrast              najniži 4,95:1 (kicker na svetlo sivoj); naplata 15,17/13,85/9,61; osnivač 13,91/7,23/5,36
+  scena                 noć 28,7 · finale 56,1 · draw 37/36 · 0 grešaka
+  nedirnuto             git diff master -- components/ApplyForm.tsx app/api lib: prazan
+```
+
+`manual`: Pavle, produkcija („pre") uz lokalno („posle") — *„Mnogo je lepse posle."*, pa *„nisam slao formu. manual
+pass"*. **Odstupanje:** tačku 8 (slanje forme) dokazao je agent presretnutim zahtevom, ne Pavle; zapisano u manifestu.
+
+**SCOPE DRIFT:** nema — diff je podskup EXPECTED-FILES (`LESSONS` nije dirnut).
+
+**LESSONS:** nema novog unosa (snimak cele strane i otkrivanje pokretom zapisano ovde).
+
+**NEXT STEP:** release `RD7` je Pavlova odluka; posle push-a diskriminator za HTML i CSS. ⚠️ Prvo pravo slanje brze forme
+na produkciji pravi pravu prijavu. Zatim `RD4` — navigacija sa strane (`SMER-B`).
+
+---
+
 ## non-batch(release) — `RD17` spojen i pušen; izmeren na deploy-u · 2026-09-22
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

@@ -80,6 +80,20 @@
 - ⚠️ Raspored sa stranice je predlog: forma se seli sa vrha na kraj, „How it works" ide odmah posle heroja. Tekst ostaje
   doslovno; svaki od tih batch-eva meri svoj deo pre plana.
 
+### `RD7-LOOK` — ritam naslovne: krem proces posle heroja, forma na kraju · 2026-09-22
+- Deo `SMER-B`. Redosled: heroj → „How it works" (krem) → naplata (asfalt) → vrednosti (svetlo siva) → „What we don't
+  do" (asfalt) → osnivač (krem) → FAQ (svetlo siva) → završni poziv + brza forma (asfalt). Numeracija 01–05 ide redom.
+- **Traka sa brzom formom posle heroja uklonjena** (`RD6`: „spojiti, ukloniti ili premestiti" → premeštena); `ApplyForm`
+  quick i `#get-started` žive u završnom pozivu, pa „Skip to your next step" vodi na formu. `ApplyForm`, API i tekst
+  pristanka nedirnuti. Naslov trake „Let's talk about your next route." otišao je sa njom.
+- ⚠️ **Redosled `SMER-B` zamenio je auditov za `U2`** („hero → model naplate → proces → brza forma"). Suština nalaza —
+  telefon se ne traži pre obećanja koja ga opravdavaju — ispunjena je jače: forma stoji posle svih obećanja. Prikazano
+  Pavlu u planu pre odobrenja. `U2` ostaje OPEN za rečenicu o pravnom odnosu u telu, jednu numeraciju, kickere na
+  telefonu i skip link pre skrola.
+- **Podnožje ostalo svetlo** (na stranici „smer" bilo tamno) — komponenta svih 13 stranica, ide sa `RD4`/`RD5`.
+- **Pregled:** *„Mnogo je lepse posle."*, pa *„nisam slao formu. manual pass"* — slanje forme dokazao agent (presretnut
+  zahtev), ne Pavle; zapisano kao odstupanje u `batches/RD7.md`.
+
 ### `RD17-LOOK` — paleta asfalt · 2026-09-22
 - Deo `SMER-B`. `--forest #08110d` → `--asphalt #121314`, `--ink` → `#1c1c1b`, `--moss` → `--stone #4b4a47`; ivice heroja
   (donja na desktopu, preliv na telefonu) u asfalt. **Noćne boje scene i preliv preko nje ostali su zeleni** (vidi

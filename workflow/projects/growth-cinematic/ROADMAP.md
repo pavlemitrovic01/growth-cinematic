@@ -24,8 +24,8 @@ scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD1
 |---|---|---|---|---|
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | `SMER-B`: sa strane (posle `RD7`) | OPEN |
 | `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | `SMER-B`: zaglavlje sa kadrom; `T1b` | OPEN |
-| `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`; boja rešena u `RD17`, forma ide na kraj sa `RD7` | OPEN |
-| `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `SMER-B`: krem posle heroja (sledeći); `T1b`, kolosek pokreta | OPEN |
+| `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`; boja rešena u `RD17`, forma ide na kraj sa `RD7` | **rešen:** boja u `RD17`, traka premeštena na kraj u `RD7` |
+| `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `SMER-B`: krem posle heroja (sledeći); `T1b`, kolosek pokreta | **deo zatvoren** 2026-09-22 (`RD7`: ritam naslovne, „How it works" posle heroja); ostaju pokret i podstranice |
 | `RD8` | Slike: nijedne van rezervne slike heroja — izvor (svoje, licencirane, kadrovi iz scene) | — | odluka Pavla | OPEN |
 | `RD9` | Sadržaj za vozače: više stranica i konteksta, copy pregledati i pojačati, uključujući naslov heroja | STRICT (registar) | Pavlov sadržaj; gde živi registar posle gašenja MAIN-a | čeka sadržaj |
 
@@ -37,7 +37,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
 | `T1b` | Hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, gde obris ostaje (`D2`); **prvo stranica sa predlogom**, pa plan (`L-02`, `VD-03`) | STANDARD + `manual` | predlog skale | OPEN |
-| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | — | OPEN |
+| `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | redosled rešen u `RD7` (`SMER-B`) | OPEN — ostalo |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
 | `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
@@ -127,6 +127,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `RD7` | **Ritam naslovne** (pravac B, `SMER-B`) — posle heroja krem „How it works", pa naplata tamna, vrednosti, guard tamna, osnivač krem, FAQ svetlo siva, završni poziv sa brzom formom; traka sa formom posle heroja uklonjena (`RD6`), `#get-started` ide sa formom; redosled zamenio auditov za `U2`; nova `rendered` kapija (19); `manual` PASS (formu nije slao Pavle — dokaz je presretnut zahtev); nije spojen ni pušen | 2026-09-22 |
 | `RD17` | **Paleta asfalt** (pravac B, `SMER-B`) — `--forest` → `--asphalt #121314`, tamni tekst i siva neutralni, ivice heroja u asfalt; noćne boje scene ostale (blag šav navigacija → nebo, prikazan); oznaka u guard-u 3,18 → 4,70:1; `manual` PASS; spojen i pušen 2026-09-22, izmeren na deploy-u | 2026-09-22 |
 | `RD16` | **Boja završnog kadra** — maslinasto-braon (topli ton `RD13` preko zelenog tla) zamenjen tamnim neutralnim tlom, svetlim putem i toplim horizontom; pet varijanti uživo PRE plana, Pavle „4"; finale 49,0 → 56,0 prosečne svetline, tlo 63° s34 → 27° s15, 02 89,2, noć ista; `manual` PASS; spojen i pušen 2026-09-21, izmeren na deploy-u | 2026-09-21 |
 | `RD15` | **Centriran finale sa većim naslovom** — puna smena strana iz prototipa odbačena merenjem (tekst desno u 01 ili 02 šalje mesec, odnosno sunce, van kadra ili iza brda); isporučeni centriran finale (naslov do 104 px, kolona `min(56vw, 820px)`), ogledalo tamnog preliva i strane poglavlja kao podatak (`BEAT_SIDES`); test kompozicije meri kolonu na strani poglavlja; kamion ispod teksta u finalu 0–16,4 %; `manual` PASS; spojen i pušen 2026-09-21, izmeren na deploy-u | 2026-09-21 |
