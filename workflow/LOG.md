@@ -6,6 +6,41 @@
 
 ---
 
+## non-batch(release) — `RD7` spojen i pušen; izmeren na deploy-u · 2026-09-22
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `b211076..f150106` fast-forward, push — nosi `8c8546b` (`RD7`) i `f150106` (close). Pavlova odluka („spoji i
+pushuj"). Pre spajanja proveren `origin/master` (`ls-remote` = `b211076`, nepomeren) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** — po `L37` za **oba** artefakta koje batch dira: serverski HTML naslovne
+(`home-close-form` naspram `home-callback`, kontrola `class="home-close `) i CSS (`.home-close-grid` naspram
+`.home-callback`, kontrola `--asphalt:#121314`). Instrument proveren lokalno pre push-a.
+```
+  lokalno      02:31:09   HTML: close-form 2 / callback 0 · CSS 0d-e3h_ool2fm.css: close-grid 2 / callback 0 · kontrole 1 / 1
+  pre push-a   02:31:09   HTML: close-form 0 / callback 2 · CSS 1z2h_ir32wsph.css: close-grid 0 / callback 7 · kontrole 1 / 1
+  push         02:31:21   b211076..f150106
+  posle        02:31:30   isto kao pre (stari build)
+               02:31:51   HTML: close-form 2 / callback 0 · CSS 3na46zht_km27.css: close-grid 2 / callback 0
+```
+HTML i CSS stigli zajedno — bez problema sa build kešom iz `RD13`.
+
+IZMERENO protiv deploy-a:
+```
+  verify                        nojs PASS 14 · claims PASS 13
+  test:rendered                 19/19 (RD7 kapija zelena na produkciji)
+  meri se: https://growth-cinematic.vercel.app
+  headless Chrome               scena ready · draw 37/36 · 0 gresaka · noc 28.7 · finale 56.0
+  redosled (reduced motion)     process → pay (asfalt) → values → guard (asfalt) → founder → faq → close [brza forma]
+```
+
+`manual` na produkciji nije posebno tražen; Pavle je dao PASS na istom kodu lokalno (formu nije slao — vidi `RD7`).
+⚠️ Brza forma je sada živa na novom mestu: svako pravo slanje na produkciji je prava prijava.
+
+**NEXT STEP:** `RD4` — navigacija sa strane po `SMER-B` (varijante pre plana, `L39`).
+
+---
+
 ## RD7 (STRICT) — Ritam naslovne: krem „How it works" posle heroja, smena svetlo/tamno, forma na kraju · 2026-09-22
 
 **Implementacija:** `8c8546b` · **Grana:** `rd7-ritam-naslovne` (sa `master` @ `b211076`) — **nije spojena ni pušena**:
