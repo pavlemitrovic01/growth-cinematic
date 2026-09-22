@@ -6,6 +6,21 @@
 
 ---
 
+## non-batch(docs) — predaja `RD4` u novu sesiju: varijante navigacije i Pavlova povratna informacija · 2026-09-22
+
+**Changed files:** `workflow/STATE.md` · ovaj `LOG.md`
+
+`RD4` je u fazi varijanti pre plana (`L39`); batch nije otvoren, repo nije diran. Preview kopija van repoa sa
+prekidačem `?nav=0..3` (danas · šina + meni panel · linkovi u šini · šina se širi). Pavle: dopada mu se samo način na
+koji meni izlazi sa strane (panel iz varijante 1), a izgled šine ne. Model je usput prebačen na Sonnet, koji je napravio
+5 novih šina (pogrešno tumačenje); to je vraćeno — iz kopije uklonjen njegov CSS za `?nav=4..8`, skripte i slike;
+repo, `origin` i memorija nisu dirani. Tumačenje agenta (5 navbara koji nisu šina, meni kao panel koji isklizne sa
+strane) čeka Pavlovu potvrdu. Pavle traži novu sesiju — kontekst upisan u STATE.
+
+**NEXT STEP:** nova sesija — potvrditi tumačenje sa Pavlom, pa 5 novih navbara u istoj preview kopiji.
+
+---
+
 ## non-batch(release) — `RD7` spojen i pušen; izmeren na deploy-u · 2026-09-22
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

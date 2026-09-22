@@ -7,6 +7,17 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
+- **U TOKU — `RD4` navigacija, varijante PRE plana (`L39`), batch nije otvoren.** Preview kopija sajta van repoa:
+  `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/5a277d2e-73a9-4d4d-8ad3-33e5b69200ed/scratchpad/rd4/app`
+  (unos `rd4-preview` u `.claude/launch.json`, port 3100, van gita); prekidač `?nav=0..3` pamti se u sesiji
+  (0 danas · 1 šina + meni panel · 2 linkovi uspravno u šini · 3 šina se širi na prelaz), samo ≥ 1025 px, telefon isti;
+  skripta za snimke `rd4-varijante.mjs` u istom scratchpad-u. **Pavle:** dopada mu se SAMO način na koji meni izlazi sa
+  strane (panel iz varijante 1) — mehanizam, ne dizajn; **izgled šine mu se ne dopada** („ne sviđa mi se izgled ovakvog
+  navbara", tražio 5 novih predloga). Sonnet je to shvatio kao 5 novih šina — vraćeno, nije to. **Tumačenje agenta, čeka
+  Pavlovu potvrdu:** 5 navbara koji NISU šina (npr. tanka traka gore preko heroja, plutajuća „pilula", samo logo + dugme
+  za meni u uglu…), svi otvaraju meni kao panel koji stvarno isklizne sa strane (u varijanti 1 panel se samo pojavi, bez
+  klizanja). Ako šina otpada, menja se osa navigacije u `SMER-B` → zapis u `DECISIONS` uz izbor. ⚠️ U Browser panelu
+  prozor je uži od 1025 px (vidi se stara traka) i efekat ume da ne postavi `data-navv` — snimati skriptom.
 - **Sledeće:** pravac B (`SMER-B`): **`RD4` navigacija sa strane** → `RD5` (deo) zaglavlje podstranice sa kadrom (uz njih i
   tamno podnožje). Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
   (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
