@@ -7,19 +7,16 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **U TOKU — `RD4` navigacija, varijante PRE plana (`L39`), batch nije otvoren.** Preview kopija sajta van repoa:
+- **`RD4` — izgled izabran, batch nije otvoren.** Posle pet krugova varijanti Pavle je 2026-09-22 izabrao **`?nav=14`**:
+  staklena pilula desno koja se na prelaz otvara u visok panel i menja boju po pozadini (`DECISIONS` → `RD4-LOOK`;
+  leva šina iz `SMER-B` otpala). Preview kopija van repoa i dalje živi:
   `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/5a277d2e-73a9-4d4d-8ad3-33e5b69200ed/scratchpad/rd4/app`
-  (unos `rd4-preview` u `.claude/launch.json`, port 3100, van gita); prekidač `?nav=0..3` pamti se u sesiji
-  (0 danas · 1 šina + meni panel · 2 linkovi uspravno u šini · 3 šina se širi na prelaz), samo ≥ 1025 px, telefon isti;
-  skripta za snimke `rd4-varijante.mjs` u istom scratchpad-u. **Pavle:** dopada mu se SAMO način na koji meni izlazi sa
-  strane (panel iz varijante 1) — mehanizam, ne dizajn; **izgled šine mu se ne dopada** („ne sviđa mi se izgled ovakvog
-  navbara", tražio 5 novih predloga). Sonnet je to shvatio kao 5 novih šina — vraćeno, nije to. **Tumačenje agenta, čeka
-  Pavlovu potvrdu:** 5 navbara koji NISU šina (npr. tanka traka gore preko heroja, plutajuća „pilula", samo logo + dugme
-  za meni u uglu…), svi otvaraju meni kao panel koji stvarno isklizne sa strane (u varijanti 1 panel se samo pojavi, bez
-  klizanja). Ako šina otpada, menja se osa navigacije u `SMER-B` → zapis u `DECISIONS` uz izbor. ⚠️ U Browser panelu
-  prozor je uži od 1025 px (vidi se stara traka) i efekat ume da ne postavi `data-navv` — snimati skriptom.
-- **Sledeće:** pravac B (`SMER-B`): **`RD4` navigacija sa strane** → `RD5` (deo) zaglavlje podstranice sa kadrom (uz njih i
-  tamno podnožje). Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
+  (unos `rd4-preview` u `.claude/launch.json`, port 3100, van gita; `?nav=0..15`, samo ≥ 1025 px). ⚠️ Dev server u njoj
+  ne preuzima izmene pouzdano — restart uz brisanje `.next/dev/cache/turbopack` i `.next/dev/static`, pa proveriti
+  servirani CSS. Skripte za snimke: `rd4-krug2.mjs`, `rd4-krug3.mjs` u scratchpad-u sesije `5b7bf28e-…`.
+- **Sledeće:** **`/plan RD4` po `RD4-LOOK`** — plan nosi četiri tačke iz odluke (dodir na tabletu, pravo dugme,
+  mehanizam boje po pozadini, uska desna margina na ~1025 px) i pitanje tamnog podnožja (`RD7-LOOK`). Pa `RD5` (deo)
+  zaglavlje podstranice sa kadrom. Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
   (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
   (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn) i dalje čeka izbor; `U2` ostaje za pravnu rečenicu u telu,
   numeraciju, kickere na telefonu i skip link. Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu. `U3` čeka

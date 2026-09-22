@@ -79,6 +79,26 @@
   preklapa `U2`) → `RD4` navigacija sa strane → `RD5` (deo) zaglavlje sa kadrom.
 - ⚠️ Raspored sa stranice je predlog: forma se seli sa vrha na kraj, „How it works" ide odmah posle heroja. Tekst ostaje
   doslovno; svaki od tih batch-eva meri svoj deo pre plana.
+- ⚠️ **„Navigacija sa strane" zamenjena** staklenom pilulom desno — `RD4-LOOK` (2026-09-22).
+
+### `RD4-LOOK` — navigacija: staklena pilula desno, otvara se na prelaz, boja po pozadini · 2026-09-22
+- Deo `SMER-B`, ali **menja njegovu osu „navigacija sa strane"**. Pet krugova varijanti na pravom sajtu (kopija van
+  repoa, `?nav=N`): leva šina (1–3) odbijena — zadržan samo mehanizam **širenja na prelaz miša** iz 3; pet izgleda levo
+  koji nisu šina (4–8) odbijeni; male pilule desno (9–10) — *„premali su i preklapa se"*; krupne (11–12) — *„12 mi je
+  relativno okej ali se još uvek slabo vidi"*; tri obrade 12 za vidljivost (13–15). **Pavle: „14 definitivno"**.
+- **Desktop ≥ 1025 px:** gornje trake nema, sve lebdi. Gore levo staklena kapsula znak + GROWTH (60 px); gore desno
+  staklena kapsula telefon + APPLY NOW, uvek vidljiva. **Meni:** uspravna staklena pilula desno po sredini (64 × 150,
+  ☰ + MENU); na prelaz miša ili fokus postaje visok stakleni panel uz desnu ivicu (440 px, od ispod gornjeg reda do
+  24 px od dna), linkovi 30 px. Zaglavlje podstranice dobija 112 px odozgo da kapsule ne legnu na naslov.
+- **Zatvorena pilula menja boju po pozadini:** krem (`--bone`, tamni znak) dok je ispod nje tamno, tamno staklo dok je
+  ispod nje svetlo (krem sekcije). Otvoren panel i kapsule su uvek tamno staklo (`rgba(18,19,20,.62)`, blur 18 px).
+- **Telefon (< 1025 px) nije deo izbora** — ostaje današnja traka.
+- ⚠️ **Za plan, Pavlu nije postavljeno kao pitanje:** (1) preview otvara samo mišem i fokusom — tablet ≥ 1025 bez miša
+  traži otvaranje dodirom; (2) MENU je u preview-u pseudo-element — u kodu pravo dugme sa `aria-expanded`, Esc zatvara;
+  (3) boja po pozadini se u preview-u uzorkuje ispod centra pilule pri skrolu (`elementsFromPoint`) — plan bira
+  mehanizam; (4) na ~1025 px pilula sa razmakom (80 px) ulazi u desnu marginu (6vw = 61 px).
+- Preview: `?nav=14` u kopiji van repoa (putanja u `STATE`) — CSS u blokovima „krug 4" i „krug 5" na kraju
+  `app/globals.css`, prekidač i praćenje pozadine u `components/Nav.tsx`.
 
 ### `RD7-LOOK` — ritam naslovne: krem proces posle heroja, forma na kraju · 2026-09-22
 - Deo `SMER-B`. Redosled: heroj → „How it works" (krem) → naplata (asfalt) → vrednosti (svetlo siva) → „What we don't

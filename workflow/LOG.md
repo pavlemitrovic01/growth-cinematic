@@ -6,6 +6,21 @@
 
 ---
 
+## non-batch(docs) — `RD4-LOOK` zapisan: navigacija je staklena pilula desno · 2026-09-22
+
+**Changed files:** `workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Varijante pre plana (`L39`) u preview kopiji van repoa; repo, `origin` i runtime kod nisu dirani. Pavle je razjasnio da
+mu se iz `?nav=3` sviđa samo širenje šine, pa su išla četiri kruga: levo bez šine (4–8, odbijeno), male pilule desno
+(9–10, „premali su i preklapa se"), krupne (11–12, „12 relativno okej ali se slabo vidi"), vidljivost 12 (13–15).
+Izbor: **`?nav=14`** („14 definitivno") — pilula desno po sredini, otvara se u panel na prelaz, zatvorena menja boju
+po pozadini. Leva šina iz `SMER-B` otpala; odluka i četiri otvorene tačke za plan u `DECISIONS` → `RD4-LOOK`.
+
+**NEXT STEP:** `/plan RD4` po `RD4-LOOK`.
+
+---
+
 ## non-batch(docs) — predaja `RD4` u novu sesiju: varijante navigacije i Pavlova povratna informacija · 2026-09-22
 
 **Changed files:** `workflow/STATE.md` · ovaj `LOG.md`
