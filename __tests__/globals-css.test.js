@@ -86,8 +86,10 @@ describe('globals.css', () => {
      *  nosi izgled (`LESSONS` L26). Ko spusti broj, mora da dokaze da se render nije pomerio.
      *  `RD15` ga je podigao za dva (141 -> 143): `.journey-shade` sada ima ogledalo (`journey-shade-right`)
      *  koje prati stranu aktivnog poglavlja, pa isti selektor postoji u dva konteksta, i `.journey-beat`
-     *  dobija centrirani finale u desktop media query-ju. Oba su namerna i izmerena. */
-    expect(redundant).toBe(143);
+     *  dobija centrirani finale u desktop media query-ju. Oba su namerna i izmerena.
+     *  `RD7` ga je spustio za jedan (143 -> 142): traka sa formom posle heroja je uklonjena, pa
+     *  `.home-callback .home-section-top` (stajao i sam i u grupi za telefon) vise ne postoji. */
+    expect(redundant).toBe(142);
   });
 
   it('K1/B — nijedna klasa u CSS-u nije bez ijednog pomena u izvoru', () => {

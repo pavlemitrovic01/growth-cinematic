@@ -505,3 +505,27 @@ test('T1/A — Growth Sans: instaliran Arial prvi, Arimo samo kao zamena, bez pr
   }
   assert.equal(urls.size, 2, `CSS: ocekivana 2 Arimo fajla (normal i italic), nadjeno ${urls.size}`);
 });
+
+/**
+ * `RD7` (pravac B, `SMER-B`, Pavle 2026-09-22) — ritam naslovne i mesto brze forme.
+ *
+ * ⚠️ ZASTO KAPIJA. Forma sa pristankom je STRICT povrsina: do `RD7` je stajala u traci odmah posle heroja i trazila
+ * telefon pre obecanja koja ga opravdavaju (audit `U2`). Sada zivi u zavrsnom pozivu. Kapija meri dve stvari koje bi
+ * tiho mogle da se vrate: REDOSLED sekcija po `SMER-B` i da postoji TACNO JEDNA brza forma, unutar `home-close`, sa
+ * `#get-started` (cilj „Skip to your next step") i pristankom. Redosled se meri u renderovanom HTML-u, ne u izvoru.
+ */
+test('RD7 — naslovna po SMER-B: proces posle heroja, brza forma samo u zavrsnom pozivu', async () => {
+  const html = await (await get('/')).text();
+  const at = (cls) => html.search(new RegExp(`<section[^>]*class="${cls}[ "]`));
+  const order = ['journey', 'home-process', 'home-pay', 'home-values', 'home-guard', 'home-founder', 'home-faq', 'home-close'];
+  const pos = order.map(at);
+  order.forEach((cls, i) => assert.ok(pos[i] >= 0, `sekcija ${cls} ne postoji`));
+  for (let i = 1; i < order.length; i++) assert.ok(pos[i - 1] < pos[i], `redosled: ${order[i - 1]} mora pre ${order[i]}`);
+  assert.ok(!html.includes('home-callback'), 'traka sa formom posle heroja ne sme da postoji');
+  assert.equal((html.match(/id="qa-first"/g) || []).length, 1, 'tacno jedna brza forma na naslovnoj');
+  const close = pos[order.indexOf('home-close')];
+  const target = html.indexOf('id="get-started"');
+  assert.ok(target > close, '#get-started mora biti u zavrsnom pozivu');
+  assert.ok(html.indexOf('id="qa-first"') > target, 'brza forma mora biti unutar #get-started');
+  assert.ok(html.indexOf('name="tcpaConsent"', target) > target, 'pristanak mora biti uz brzu formu');
+});

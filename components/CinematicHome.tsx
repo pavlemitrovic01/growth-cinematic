@@ -60,17 +60,30 @@ export default function CinematicHome() {
           </article>
         </HeroExperience>
 
-        <section className="home-callback" id="get-started" aria-labelledby="callback-heading">
-          <div className="home-section-top"><span className="home-kicker">YOUR NEXT STEP</span><h2 id="callback-heading">Let’s talk about your next route.</h2></div>
-          <ApplyForm variant="quick" />
+        {/*
+          ⚠️ `RD7` (pravac B, `SMER-B`, Pavle 2026-09-22): „How it works" je PRVA sekcija posle heroja, na krem
+          podlozi -- `RD7` „How it works istaci". Do tada je ovde stajala tamna traka sa brzom formom, koja je trazila
+          telefon pre obecanja koja ga opravdavaju (audit `U2`); forma je presla u zavrsni poziv (`#get-started`).
+        */}
+        <section data-line className="home-process home-section" aria-labelledby="process-heading">
+          <div className="home-section-top"><span className="home-kicker">01 / HOW IT WORKS</span><span className="home-kicker">FROM FIRST CALL TO NEXT MILE</span></div>
+          <div className="home-editorial">
+            <div className="process-lede"><h2 data-wipe id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
+            <ol data-stagger className="home-steps">
+              <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
+              <li><span>02</span><div><h3>Have a real conversation.</h3><p>{CALLBACK_SENTENCE} We go through your priorities and qualifications.</p></div></li>
+              <li><span>03</span><div><h3>Compare the details.</h3><p>Pay rates, home time schedule, equipment models, and average weekly miles — we give you the real deal up front, not after you sign. Ask about deductions before choosing a carrier.</p></div></li>
+              <li><span>04</span><div><h3>Choose your next route.</h3><p>We help with the next steps. Start dates depend on your paperwork and the carrier’s requirements.</p></div></li>
+            </ol>
+          </div>
         </section>
 
         {/*
           Transparentnost naknade. Prenето iz MAIN-a doslovno — `docs/CLAIMS.md` C5 izricito
           dozvoljava „100% free for drivers", a dopuna L1 dozvoljava i negativno obecanje
           izvedeno iz modela („we don't get paid unless you actually start").
-          Stoji odmah ispod forme jer podupire `$0` tvrdnju iz heroja; nema broj sekcije
-          zato sto je potporni blok, ne poglavlje.
+          Od `RD7` stoji odmah posle procesa, na tamnoj podlozi, i podupire `$0` tvrdnju iz heroja; nema broj
+          sekcije zato sto je potporni blok, ne poglavlje.
 
           ⚠️ OBLIK PROMENJEN 2026-09-09 — `D1`, prva sekcija koja iz **editorial** prelazi u
           **utility**. Do tada je nosila `home-editorial`: naslov levo, jedan pasus proze desno
@@ -133,19 +146,6 @@ export default function CinematicHome() {
                 <dd><b>Nothing</b><span>No hidden cuts.</span></dd>
               </div>
             </dl>
-          </div>
-        </section>
-
-        <section data-line className="home-process home-section" aria-labelledby="process-heading">
-          <div className="home-section-top"><span className="home-kicker">01 / HOW IT WORKS</span><span className="home-kicker">FROM FIRST CALL TO NEXT MILE</span></div>
-          <div className="home-editorial">
-            <div className="process-lede"><h2 data-wipe id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
-            <ol data-stagger className="home-steps">
-              <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
-              <li><span>02</span><div><h3>Have a real conversation.</h3><p>{CALLBACK_SENTENCE} We go through your priorities and qualifications.</p></div></li>
-              <li><span>03</span><div><h3>Compare the details.</h3><p>Pay rates, home time schedule, equipment models, and average weekly miles — we give you the real deal up front, not after you sign. Ask about deductions before choosing a carrier.</p></div></li>
-              <li><span>04</span><div><h3>Choose your next route.</h3><p>We help with the next steps. Start dates depend on your paperwork and the carrier’s requirements.</p></div></li>
-            </ol>
           </div>
         </section>
 
@@ -311,26 +311,37 @@ export default function CinematicHome() {
           <Accordion items={homeFaqItems()} level={3} />
         </section>
 
+        {/*
+          ⚠️ `RD7`: brza forma zivi OVDE, uz poslednji poziv, posle svih obecanja (`SMER-B`). `#get-started` ide sa njom,
+          pa „Skip to your next step" iz heroja i dalje vodi pravo na formu. `ApplyForm` i tekst pristanka su isti.
+        */}
         <section data-line className="home-close home-section" aria-labelledby="close-heading">
-          <span className="home-kicker">THE NEXT MILE IS YOURS</span>
-          <h2 data-wipe id="close-heading">Ready for<br /><em>your next route?</em></h2>
-          <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
-          {/*
-            CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
-            tacno jednom mestu (`app/how-it-works`, i to skracena na prvu polovinu) — a pripada
-            ovde, uz sam broj telefona, jer opisuje bas taj poziv.
+          <div className="home-close-grid">
+            <div className="home-close-copy">
+              <span className="home-kicker">THE NEXT MILE IS YOURS</span>
+              <h2 data-wipe id="close-heading">Ready for<br /><em>your next route?</em></h2>
+              <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
+              {/*
+                CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
+                tacno jednom mestu (`app/how-it-works`, i to skracena na prvu polovinu) — a pripada
+                ovde, uz sam broj telefona, jer opisuje bas taj poziv.
 
-            ⚠️ Druga recenica NIJE ukras nego granica. C13 je ALLOWED za ovaj oblik i
-            PROHIBITED za „Available 24/7", „around the clock" i sve sto implicira garantovan
-            odgovor van radnih sati. Tim je dostupan svaki dan do kasno, pa je iskusenje da se
-            to napise jace — ali vozac koji posalje poruku u 4 ujutru odgovor nece dobiti.
-            „Daily — weekends included" nosi ceo adut; „staffed hours" cuva istinu.
+                ⚠️ Druga recenica NIJE ukras nego granica. C13 je ALLOWED za ovaj oblik i
+                PROHIBITED za „Available 24/7", „around the clock" i sve sto implicira garantovan
+                odgovor van radnih sati. Tim je dostupan svaki dan do kasno, pa je iskusenje da se
+                to napise jace — ali vozac koji posalje poruku u 4 ujutru odgovor nece dobiti.
+                „Daily — weekends included" nosi ceo adut; „staffed hours" cuva istinu.
 
-            Bez objavljenog rasporeda namerno: raspored bi suzio ono sto je stvarno tacno.
-          */}
-          <p>Call or text us daily — weekends included. We typically respond quickly during staffed hours.</p>
-          <p>Hiring for your fleet? <Link href="/for-carriers">Let’s talk drivers ↗</Link></p>
-          <Link className="home-text-link" href="/truckers-lounge">Explore the Truckers Lounge ↗</Link>
+                Bez objavljenog rasporeda namerno: raspored bi suzio ono sto je stvarno tacno.
+              */}
+              <p>Call or text us daily — weekends included. We typically respond quickly during staffed hours.</p>
+              <p>Hiring for your fleet? <Link href="/for-carriers">Let’s talk drivers ↗</Link></p>
+              <Link className="home-text-link" href="/truckers-lounge">Explore the Truckers Lounge ↗</Link>
+            </div>
+            <div className="home-close-form" id="get-started">
+              <ApplyForm variant="quick" />
+            </div>
+          </div>
         </section>
       </main>
       <Footer />

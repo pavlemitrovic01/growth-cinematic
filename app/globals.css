@@ -372,13 +372,9 @@
 .journey[data-side=right] .journey-shade{opacity:0}
 .journey[data-side=right] .journey-shade-right{opacity:1}
 .journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72;filter:saturate(0)}
-.home-callback{scroll-margin-top:20px;background:var(--asphalt);color:var(--bone);padding:34px 0 44px}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
-.home-callback .home-section-top{padding:0 6vw}
 .home-kicker{font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--clay-mid)}
-.home-callback .home-kicker,.home-close .home-kicker{color:var(--clay-light)}
-.home-callback h2{font-size:24px;line-height:1.25;letter-spacing:-.03em;margin:0}
-.home-callback .qa{max-width:none;padding-bottom:0}
+.home-pay .home-kicker,.home-close .home-kicker{color:var(--clay-light)}
 .home-section{padding:80px 6vw}
 /* ⚠️ SELEKTOR SKRACEN, NE OBRISAN (`LESSONS` L4). Do `M2b` je `border-top` stajao na
    `.home-section` bezuslovno. Sest sekcija je tada preslo na primitiv `CRTA`, koji istu
@@ -400,11 +396,23 @@
 .home-steps p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--stone)}
 .home-founder blockquote{font:clamp(24px,2.4vw,34px)/1.45 Georgia,serif;margin:30px 0}
 .home-founder .home-signature{font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 30px}
+.home-faq{background:var(--bone-dim)}
 .home-faq .faqlist{max-width:none}
 .home-close{background:var(--asphalt);color:var(--bone)}
 .home-close h2 em{-webkit-text-stroke-color:var(--bone)}
-.home-close>p{font-size:16px;margin:30px 0 6px}
-.home-close>p a{text-decoration:underline;text-underline-offset:4px}
+.home-close-copy>p{font-size:16px;margin:30px 0 6px}
+.home-close-copy>p a{text-decoration:underline;text-underline-offset:4px}
+/* `RD7` (`SMER-B`): brza forma je presla sa trake posle heroja u zavrsni poziv. `.qa` je projektovan kao traka preko
+   cele sirine (cetiri kolone) i deli ga `/contact`, pa se osnovna pravila ne diraju: ovde dobija raspored koji vec ima
+   ispod 1200 px (tekst i dugme preko cele sirine, dva polja jedno do drugog), u koloni pored poziva. */
+.home-close-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:6vw;align-items:start}
+.home-close-form{scroll-margin-top:20px;padding-top:12px}
+.home-close-form .qa{grid-template-columns:1fr 1fr;max-width:none;margin:0;padding:0;align-items:start}
+.home-close-form .qa-copy{grid-column:1/-1;grid-row:auto;padding:0}
+.home-close-form .qa-lede{max-width:none}
+.home-close-form .qa-submit{grid-column:1/-1;grid-row:auto;margin:0;justify-content:space-between}
+.home-close-form .qa .consent{grid-column:1/-1;grid-row:auto}
+@media(max-width:900px){.home-close-grid{grid-template-columns:1fr;gap:44px}.home-close-form .qa{grid-template-columns:1fr}}
 .foot-tag{font-size:16px}
 .foot-legal{font-size:14px;opacity:1;color:var(--stone)}
 .foot ul{font-size:16px}
@@ -449,7 +457,7 @@
   .journey-cta{font-size:11px;gap:18px}
 }
 @media(max-width:480px){
-  .home-section,.home-callback .home-section-top,.journey-story,.journey-tools{padding-left:20px;padding-right:20px}
+  .home-section,.journey-story,.journey-tools{padding-left:20px;padding-right:20px}
   .journey h1{font-size:clamp(38px,10.5vw,50px)}
   .journey-intro{min-height:calc(100svh - 136px);padding:32px 0}
   .journey-actions{gap:8px}
@@ -466,7 +474,7 @@
   *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
 
-.form-nojs{font-size:16px;line-height:1.6;padding:24px 0}.form-nojs a{text-decoration:underline}.home-callback .form-nojs{padding:24px 6vw}
+.form-nojs{font-size:16px;line-height:1.6;padding:24px 0}.form-nojs a{text-decoration:underline}.home-close-form .form-nojs{padding:24px 0}
 
 /* Shared editorial rhythm across the full site. */
 main:focus{outline:none}
@@ -673,21 +681,21 @@ main:focus{outline:none}
 
    Nijedna nova vrednost: `--bone-dim` podloga, `--clay-mid` labele, `--stone` telo,
    `rgba(28,28,27,.22)` linija — ista alfa koju `.home-steps li` vec koristi. */
-.home-pay{background:var(--bone-dim)}
+.home-pay{background:var(--asphalt);color:var(--bone)}
 .home-pay h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
 .pay-ledger{display:grid;grid-template-columns:minmax(170px,.42fr) 1fr;gap:4vw;align-items:start;margin-top:38px}
 .pay-figure{margin:0}
-.pay-figure strong{display:block;font-size:clamp(84px,11vw,158px);line-height:.84;letter-spacing:-.07em;font-weight:800;color:var(--ink)}
-.pay-figure span{display:block;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-mid)}
+.pay-figure strong{display:block;font-size:clamp(84px,11vw,158px);line-height:.84;letter-spacing:-.07em;font-weight:800;color:var(--bone)}
+.pay-figure span{display:block;margin-top:16px;font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--clay-light)}
 .pay-rows{margin:0}
 /* Ista konvencija linija kao `.home-steps`: ivica ispod svakog reda, plus jedna iznad
    prvog. Ritam pravila na stranici tako ostaje jedan, iako je oblik nov. */
-.pay-rows>div{display:grid;grid-template-columns:15ch 1fr;gap:6px 24px;padding:22px 0;border-bottom:1px solid rgba(28,28,27,.22)}
-.pay-rows>div:first-child{border-top:1px solid rgba(28,28,27,.22)}
-.pay-rows dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-mid);padding-top:6px}
+.pay-rows>div{display:grid;grid-template-columns:15ch 1fr;gap:6px 24px;padding:22px 0;border-bottom:1px solid var(--line)}
+.pay-rows>div:first-child{border-top:1px solid var(--line)}
+.pay-rows dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-light);padding-top:6px}
 .pay-rows dd{margin:0}
-.pay-rows dd b{display:block;font-size:22px;line-height:1.2;letter-spacing:-.025em;color:var(--ink)}
-.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:var(--stone)}
+.pay-rows dd b{display:block;font-size:22px;line-height:1.2;letter-spacing:-.025em;color:var(--bone)}
+.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:#e3ded1}
 
 /* ⚠️ Dva lokalna preloma, jer ih dvokolonski ledger stvarno trazi — `.home-section`
    nasledjuje padding i skalu naslova, ali ne i broj kolona. Tacke su postojece
@@ -792,12 +800,15 @@ main:focus{outline:none}
   .home-guard-list li>span{min-width:0}
 }
 
-/* ── `guard` + `founder` — CINEMATIC (D1, 2026-09-09) ─────────────────────────
+/* ── `guard` — CINEMATIC (D1, 2026-09-09; `founder` izasao u `RD7`) ──────────
    Trece i cetvrto od cetiri iz `D1`. Do 2026-09-09 su bile dve krem sekcije u
-   editorial ritmu; sada su forest/bone, jedna do druge, namerno.
+   editorial ritmu; tada su postale forest/bone, jedna do druge, namerno.
+   ⚠️ `RD7` (`SMER-B`, 2026-09-22): `founder` se vratio na krem -- ritam pravca B smenjuje svetlo i tamno
+   (pay tamna, values svetla, guard tamna, founder krem, faq svetla, close tamna), pa dve tamne jedna do druge
+   vise ne stoje. Pravila ispod nose samo `guard`; obrazlozenje ispod ostaje kao zapis zasto je bilo tako.
 
    ⚠️ NIJEDNA NOVA VREDNOST I NIJEDAN NOV MEHANIZAM. Par forest/bone vec postoji
-   na `.home-callback` i `.home-close`; ovde se samo primenjuje na jos dve sekcije.
+   na `.home-close`; ovde se samo primenjuje na jos jednu sekciju.
    To je cela razlika prema `pay` i `values`, gde je oblik trebalo izmisliti.
 
    ⚠️ DVE TAMNE JEDNA DO DRUGE NISU MONOTONIJA, jer se razlikuju po FORMI:
@@ -815,13 +826,13 @@ main:focus{outline:none}
    samo od sebe daje svetlu liniju. Deklaracija stoji kao mreza: ako neko ikad skine
    `data-line` sa ove dve, staticna ivica se vraca i mora se vratiti U SVETLOJ boji, inace
    je tamna ivica na tamnoj podlozi — nevidljiva, i nijedna kapija to ne meri (L8). */
-.home-guard,.home-founder{background:var(--asphalt);color:var(--bone);border-top-color:var(--line)}
-.home-guard h2 em,.home-founder h2 em{-webkit-text-stroke-color:var(--bone)}
-.home-guard .home-kicker,.home-founder .home-kicker{color:var(--clay-light)}
+.home-guard{background:var(--asphalt);color:var(--bone);border-top-color:var(--line)}
+.home-guard h2 em{-webkit-text-stroke-color:var(--bone)}
+.home-guard .home-kicker{color:var(--clay-light)}
 /* Telesni tekst: `#e3ded1` je vec „telo na forestu" u ovom fajlu (`.journey-lede`),
    ne nova vrednost. Preboj ide ovde jer je `.home-steps p` deljen sa `process`-om,
    koji ostaje krem — deljeni selektor se ne dira, dodaje se uzi. */
-.home-guard p,.home-founder p{color:#e3ded1}
+.home-guard p{color:#e3ded1}
 .home-guard .home-steps li,.home-guard .home-steps li:first-child{border-color:var(--line)}
 /* WE DON'T se prigusuje, WE DO nosi clay — ista podela kao na kremu, drugim sredstvom.
    `opacity` umesto nove rgba vrednosti: fajl to vec radi (`.qa-lede`, `.consent-body`). */
@@ -829,7 +840,7 @@ main:focus{outline:none}
 .home-guard-list li>span.is-do{color:var(--clay-light);opacity:1}
 
 /* ─── CONSENT BANER ───────────────────────────────────────────────────────────
-   Forest panel sa bone tekstom — isti par kao `.home-callback` i `.home-close`,
+   Forest panel sa bone tekstom — isti par kao `.home-close`,
    pa baner deluje kao deo sajta a ne kao tudja traka zalepljena na dno. */
 .consent-bar{position:fixed;z-index:60;left:0;right:0;bottom:0;padding:16px 6vw 20px;background:var(--asphalt);border-top:1px solid var(--line);color:var(--bone)}
 .consent-panel{max-width:1100px;margin:0 auto}
