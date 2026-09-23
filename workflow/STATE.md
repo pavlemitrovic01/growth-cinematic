@@ -16,7 +16,8 @@
   `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
 - **Poslednji završen:** **`TTI3`** (2026-09-24, `9c83a2e`) — **Logo firme i crveni akcenti**: crveni „TTI" u krugu
   u navigaciji, podnožju, faviconu, ikonici na telefonu, JSON-LD-u i slici za deljenje; `--clay*` nose crvenu iz loga
-  (`#e2111a` / `#b10713`). Kapije lokalno sve exit 0; Pavle: *„da za test, manual pass pushuj"*.
+  (`#e2111a` / `#b10713`). Kapije lokalno sve exit 0; Pavle: *„da za test, manual pass pushuj"*. Spojen i pušen
+  2026-09-24 (`9747839..6091a5b`); build živ u 01:08, **deploy nije meren** (odloženo do domena).
 - **Pretposlednji:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
   linkovima, tamno zaglavlje sa fotografijom (obične strane — vozač, forme — izlazak sunca, članci — noć), pun tekst u
   naslovima i na naslovnoj, veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret (`Reveal.tsx`; bez
@@ -33,6 +34,8 @@
 
 ## Git
 
+- `TTI3` (`9747839..6091a5b`, implementacija `9c83a2e`) spojen fast-forward-om i pušen 2026-09-24 (Pavle: „manual pass
+  pushuj"). **Deploy nije meren**; potvrđeno samo da vercel.app služi logo i crveni CSS (01:08:38).
 - `TTI2` (`9523a66..553c902`, implementacija `9d19efa`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „manual pass
   spoji pushuj"). **Deploy nije meren**; potvrđeno samo da vercel.app služi nov CSS (`hero-02-dawn`, 15:28:22).
 - `TTI1` (`2a6c160..c4d99ca`, implementacija `4e3fad8`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „moze
@@ -96,8 +99,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI2`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2`, `TTI1` i `TTI2`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI3`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2`, `TTI1`, `TTI2` i `TTI3`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -108,7 +111,7 @@
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
   `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`, `rd16-boja-zavrsnog-kadra`, `rd17-paleta-asfalt`, `rd7-ritam-naslovne`,
-  `tti1-obican-sajt`, `tti2-lepse-podstranice`.
+  `tti1-obican-sajt`, `tti2-lepse-podstranice`, `tti3-logo`.
 
 ## Žive prepreke
 

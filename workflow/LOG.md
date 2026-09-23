@@ -6,6 +6,18 @@
 
 ---
 
+## non-batch(release) — `TTI3` spojen i pušen; build živ · 2026-09-24
+
+**Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `9747839..6091a5b` fast-forward, push 01:08:04 (Pavle: *„manual pass pushuj"*). Provera da je build živ (nije
+kapija): u 01:08:38 naslovna na `growth-cinematic.vercel.app` nosi `logo-96`, CSS `#e2111a` 4× i 0 stare narandžaste,
+`/icon-32.png` 200. **Merenje `verify`/`rendered` na deploy-u: NIJE POKRENUTO** — odloženo do domena (Pavle).
+
+**NEXT STEP:** domen/DNS/Resend/env i merenje na `ttirecruiting.us` kad Pavle kaže.
+
+---
+
 ## `TTI3` — Logo firme i crveni akcenti · 2026-09-24
 
 **Changed files:** `components/Nav.tsx` · `components/Footer.tsx` · `components/StructuredData.tsx` · `app/layout.tsx` ·
