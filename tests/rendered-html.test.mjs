@@ -529,3 +529,32 @@ test('RD7 — naslovna po SMER-B: proces posle heroja, brza forma samo u zavrsno
   assert.ok(html.indexOf('id="qa-first"') > target, 'brza forma mora biti unutar #get-started');
   assert.ok(html.indexOf('name="tcpaConsent"', target) > target, 'pristanak mora biti uz brzu formu');
 });
+
+/**
+ * `RD4` (`RD4-LOOK`, Pavle 2026-09-22) — na >= 1025 px meni je staklena pilula desno.
+ *
+ * ⚠️ ZASTO KAPIJA. Dve stvari bi tiho mogle da se pokvare, a nijedna se ne vidi na telefonu ni u izvoru CSS-a:
+ *  1. Pilula mora biti PRAVO DUGME koje kontrolise `#nav-links` — preview je MENU crtao pseudo-elementom, a tada ga
+ *     tastatura i citac ekrana ne vide, a tablet bez misa nema cime da otvori meni.
+ *  2. `<noscript>` pravilo za navigaciju ne sme da vazi iznad 1024 px. Do `RD4` je vazilo do 1200 px i bez JS-a bi
+ *     rasporedilo linkove u mrezu UNUTAR pilule na 1025–1200 px.
+ *  Uz to: pilula stoji ODMAH ispred `<nav>` — na tome visi otvaranje prelazom preko pilule (`+` u CSS-u).
+ * Meri se na svakoj strani koja nosi navigaciju (`GATED_ROUTES`), u renderovanom HTML-u.
+ */
+test('RD4 — pilula je dugme koje kontrolise #nav-links; noscript navigacije ne vazi iznad 1024 px', async () => {
+  for (const path of GATED_ROUTES) {
+    const html = await (await get(path)).text();
+    const pills = tokenize(html).filter((t) => !t.close && t.tag === 'button' && /class="nav-pill"/.test(t.blob));
+    assert.equal(pills.length, 1, `${path}: tacno jedna pilula`);
+    for (const [attr, value] of [['type', 'button'], ['aria-controls', 'nav-links'], ['aria-expanded', 'false']]) {
+      assert.ok(pills[0].blob.includes(`${attr}="${value}"`), `${path}: pilula nema ${attr}="${value}"\n  ${pills[0].raw}`);
+    }
+    // CSS otvara panel i prelazom preko pilule (`.nav-pill:hover+.nav-links`), pa pilula mora biti ODMAH ispred `<nav>`.
+    const pill = html.indexOf('class="nav-pill"');
+    const between = html.slice(html.indexOf('</button>', pill) + '</button>'.length, html.indexOf('id="nav-links"'));
+    assert.ok(/^<nav\b[^>]*$/.test(between), `${path}: pilula mora stajati odmah ispred <nav id="nav-links">, izmedju je: ${between.slice(0, 120)}`);
+    const widths = [...html.matchAll(/@media\(max-width:(\d+)px\)\{\.nav-links\{display:grid!important/g)].map((m) => Number(m[1]));
+    assert.equal(widths.length, 1, `${path}: noscript pravilo navigacije nije nadjeno`);
+    assert.ok(widths[0] <= 1024, `${path}: noscript navigacije vazi do ${widths[0]} px — razbija pilulu na 1025+`);
+  }
+});

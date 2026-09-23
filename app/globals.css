@@ -1056,3 +1056,60 @@ main:focus{outline:none}
   html.js-motion [data-wipe]:not(.is-in){clip-path:inset(-.3em 100% -.3em -.3em)}
   html.js-motion [data-line]:not(.is-in)::before{transform:scaleX(0)}
 }
+
+/* ===== RD4 — navigacija na >= 1025 px: staklene kapsule gore, pilula desno koja se otvara u panel (`RD4-LOOK`) =====
+   Telefon (< 1025) ostaje kakav je bio: pilula (dugme odmah ispred `<nav>`) se ne vidi, meni i dalje otvara
+   `nav-toggle`. ⚠️ Pilula NEMA omotac: omotac sa `display:contents` je raspored ostavljao istim, ali je izmereno menjao
+   zagladjivanje zaglavlja na telefonu (do 52/255 na ivici znaka) — bez njega je 0 razlicitih piksela.
+   ⚠️ Na >= 1025 `.nav` je providan sloj preko celog ekrana (pointer-events:none), a znak, kapsula, pilula i panel su
+   fixed. Zato `.nav` NE SME da dobije transform, filter ni backdrop-filter: svaki od njih pravi containing block, pa bi
+   se fixed deca vezala za njega umesto za ekran.
+   ⚠️ Panel je sam `<nav>`: zatvoren je velicine pilule i lezi ISPOD nje; pilula (dugme, z-index 2) je providna i nosi
+   samo ☰ MENU. Linkovi su fiksne sirine i vezani za desnu ivicu, pa se tekst ne prelama dok panel raste ulevo.
+   ⚠️ Zatvoren panel je KREM dok `Nav.tsx` na `<header>` ne stavi `data-tone="light"` (svetla pozadina ispod pilule) —
+   tada je tamno staklo. Krem je polazno stanje jer su heroj i zaglavlja podstranica tamni, i ostaje kad JS ne radi.
+   ⚠️ Otvara se na tri nacina: prelaz misa (samo uz `hover:hover` — na dodir bi :hover ostao „zalepljen" i panel se ne bi
+   zatvorio), fokus tastature na linku (`:focus-visible`, ne `:focus-within` — klik misem ostavlja fokus na pilulu, pa bi
+   panel ostao otvoren i posle drugog klika) i klik/dodir na pilulu (`.is-open`, `aria-expanded`).
+   ⚠️ Zatvoreni linkovi NE primaju klik (`pointer-events:none`) — izmereno u `RD4`: nevidljiv spisak preko pilule je jeo
+   dodir, pa se na tabletu bez misa meni nije otvarao. Tastaturi ostaju dostupni — Tab na link otvara panel.
+   ⚠️ Selektori ovde ne nose zareze unutar `:is()`/`:has()`: census `K1/A` deli selektore po zarezu. */
+.nav-pill{display:none}
+@media(min-width:1025px){
+  .subpage .nav{--glass:rgba(18,19,20,.62);--glass-edge:rgba(241,231,213,.22);--glass-lift:inset 0 1px 0 rgba(255,255,255,.1),0 10px 30px rgba(0,0,0,.18);position:fixed;inset:0;z-index:60;display:block;padding:0;border:0;background:none;pointer-events:none}
+  .subpage .nav .brand{position:fixed;top:20px;left:20px;height:60px;padding:0 24px 0 12px;border:1px solid var(--glass-edge);border-radius:999px;background:var(--glass);box-shadow:var(--glass-lift);font-size:15px;pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+  .subpage .nav .nav-actions{position:fixed;top:20px;right:20px;height:60px;padding:0 6px 0 24px;gap:18px;border:1px solid var(--glass-edge);border-radius:999px;background:var(--glass);box-shadow:var(--glass-lift);pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
+  .subpage .nav .nav-call{opacity:1;font-size:15px}
+  .subpage .nav .nav-cta{min-height:48px;padding:0 24px;font-size:13px}
+  .subpage .nav .nav-toggle{display:none}
+  .subpage .nav .nav-links{position:fixed;top:calc(50% - 75px);right:16px;display:flex;width:64px;height:150px;flex-direction:column;align-items:flex-end;justify-content:center;gap:0;margin:0;padding:0;overflow:hidden;border:1px solid var(--glass-edge);border-radius:32px;background:var(--glass);box-shadow:var(--glass-lift);pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);transition:top .36s var(--ease-out),width .36s var(--ease-out),height .36s var(--ease-out),border-radius .36s var(--ease-out),background-color .3s ease,border-color .3s ease,box-shadow .36s var(--ease-out)}
+  .subpage .nav:not([data-tone=light]) .nav-links{border-color:rgba(255,255,255,.55);background-color:rgba(241,231,213,.95);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 32px rgba(0,0,0,.35)}
+  .subpage .nav .nav-links a{flex-shrink:0;width:352px;min-height:66px;margin:0 44px 0 0;padding:0;border-bottom:1px solid rgba(241,231,213,.14);color:var(--bone);font-size:30px;font-weight:700;letter-spacing:-.02em;text-transform:none;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease,color .2s ease}
+  .subpage .nav .nav-links a:last-child{border-bottom:0}
+  .subpage .nav .nav-links a::after{display:none}
+  .subpage .nav .nav-links a:hover,.subpage .nav .nav-links a[aria-current=page]{color:var(--clay-light)}
+  .subpage .nav-pill{position:fixed;top:calc(50% - 75px);right:16px;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;width:64px;height:150px;padding:0 0 0 .2em;border:0;border-radius:32px;background:none;color:var(--bone);font:inherit;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;pointer-events:auto;transition:opacity .15s ease,color .3s ease}
+  .subpage .nav:not([data-tone=light]) .nav-pill{color:var(--ink)}
+  .subpage .nav-pill>span:first-child{font-size:26px;line-height:1;letter-spacing:0}
+  .subpage .nav-pill:focus-visible{outline-offset:-8px}
+  .subpage .nav .nav-links.is-open,.subpage .nav .nav-links:has(:focus-visible){top:100px;width:440px;height:calc(100vh - 124px);border-color:var(--glass-edge);border-radius:30px;background-color:var(--glass);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 30px 70px rgba(0,0,0,.4)}
+  .subpage .nav-pill[aria-expanded=true],.subpage .nav:has(.nav-links :focus-visible) .nav-pill{opacity:0;pointer-events:none}
+  .subpage .nav .nav-links.is-open a,.subpage .nav .nav-links:has(:focus-visible) a{opacity:1;pointer-events:auto;transition-delay:.12s,0s}
+  /* Gornje trake vise nema u toku strane: zaglavlje podstranice se spusta ispod kapsula, a heroj bez scene gubi 90 px
+     koje je oduzimao za nju. Uz scenu (`is-enhanced`) naslov je „beat" sa min-height:0 — ne dira se. */
+  .subpage .sub-hero{padding-top:112px}
+  .subpage .journey:not(.is-enhanced) .journey-intro{min-height:min(760px,100svh)}
+}
+/* Prelaz misa: pilula lezi preko panela, pa panel otvara i prelaz preko nje i preko samog panela. Cim se pilula ugasi
+   (pointer-events:none), mis je vec nad panelom koji raste ispod nje — otvaranje ne trepne. */
+@media(min-width:1025px) and (hover:hover){
+  .subpage .nav .nav-links:hover,.subpage .nav .nav-pill:hover+.nav-links{top:100px;width:440px;height:calc(100vh - 124px);border-color:var(--glass-edge);border-radius:30px;background-color:var(--glass);box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 30px 70px rgba(0,0,0,.4)}
+  .subpage .nav-pill:hover,.subpage .nav:has(.nav-links:hover) .nav-pill{opacity:0;pointer-events:none}
+  .subpage .nav .nav-links:hover a,.subpage .nav .nav-pill:hover+.nav-links a{opacity:1;pointer-events:auto;transition-delay:.12s,0s}
+}
+/* Uska desna margina: 6vw je 61 px na 1025 i 80 px tek na 1340. Pilula od 64 px na 16 px od ivice zauzima 80 px, pa
+   bi do 1339 px usla u kolonu teksta — ovde je 52 px na 8 px (60 px). */
+@media(min-width:1025px) and (max-width:1339px){
+  .subpage .nav .nav-links{top:calc(50% - 66px);right:8px;width:52px;height:132px;border-radius:26px}
+  .subpage .nav-pill{top:calc(50% - 66px);right:8px;width:52px;height:132px;gap:8px;border-radius:26px;font-size:11px}
+}
