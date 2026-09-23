@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import Nav from './Nav';
 import Footer from './Footer';
 import MobileBar from './MobileBar';
+import Reveal from './Reveal';
 
 export default function PageShell({ eyebrow, title, lede, children, wide = false, variant = 'default' }: {
   eyebrow: string; title: ReactNode; lede?: ReactNode; children: ReactNode;
@@ -11,9 +12,9 @@ export default function PageShell({ eyebrow, title, lede, children, wide = false
     <div className={'subpage subpage--' + variant}>
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav />
-      {/* ⚠️ suppressHydrationWarning -- vidi `components/CinematicHome.tsx`: `route-in` stize
-          imperativno iz `Motion.tsx`, van React-ovog rendera. */}
-      <main id="main-content" tabIndex={-1} suppressHydrationWarning>
+      {/* TTI2: `suppressHydrationWarning` je ostao iz vremena `Motion.tsx` (obrisan u TTI1) -- klase ovde vise ne
+          stizu pre hidracije (`Reveal.tsx` radi posle nje), pa atribut nije potreban. */}
+      <main id="main-content" tabIndex={-1}>
         <header className="sub-hero">
           <p className="eyebrow">{eyebrow}</p>
           {/* ⚠️ `data-wipe` dodat u `M2` (2026-09-09) — JEDNA linija koja stize na SVE
@@ -41,6 +42,7 @@ export default function PageShell({ eyebrow, title, lede, children, wide = false
       </main>
       <Footer />
       <MobileBar />
+      <Reveal />
     </div>
   );
 }

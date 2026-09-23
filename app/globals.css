@@ -886,7 +886,6 @@ main:focus{outline:none}
    `.route-loading`) plus `.skip-link`. Stari sajt je na to naleteo i zapisao u svom
    `PageTransition.jsx`. */
 @keyframes motion-fade{from{opacity:0}}
-.route-in{animation:motion-fade var(--dur) var(--ease-out)}
 
 /* ── 1 · reveal i 2 · stagger — jedino sto sakriva, i jedino iza dve kapije ── */
 [data-reveal]{transition:opacity var(--dur-slow) var(--ease-out),transform var(--dur-slow) var(--ease-out)}
@@ -1066,3 +1065,131 @@ main:focus{outline:none}
 .mobar--two{grid-template-columns:1fr 1.3fr}
 /* TTI1: znak „G" je zamenjen tekstom „TTI" u istom krugu. */
 .brand-mark{font-size:10px;font-weight:800;letter-spacing:0}
+
+
+/* ═══ TTI2 — obican uredan izgled podstranica (Pavle 2026-09-23) ═══════════════════════════════════
+   Isproban u kopiji van repoa kao pravac „B": tamna gornja traka sa linkovima, tamno zaglavlje sa fotografijom,
+   pun tekst u naslovima, siri raspored, kartice, tamno podnozje. Prefiks `html:root` (0,1,1) je namerno jaci od
+   pravila iz RD4 (staklena pilula), koja ostaju iznad nepromenjena -- ovde ih samo nadjacavamo, ne brisemo. */
+html:root{--pg:var(--bone);--hd-bg:var(--asphalt);--hd-fg:var(--bone);--hd-em:var(--clay-light);--hd-lede:#d9d3c6;--nv-bg:var(--asphalt);--nv-fg:var(--bone);--nv-line:rgba(241,231,213,.14);--card:#fffdf8;--card-line:rgba(28,28,27,.14);--card-shadow:0 1px 2px rgba(28,28,27,.05);--muted:#4b4a47;--btn:var(--ink);--btn-fg:var(--bone);--btn-hover:var(--clay-deep)}
+
+html:root .subpage{background:var(--pg)}
+
+/* Navigacija: obicna gornja traka */
+html:root .subpage .nav{background:var(--nv-bg);color:var(--nv-fg);border-bottom:1px solid var(--nv-line)}
+html:root .subpage .nav .brand-mark{border-color:var(--nv-line)}
+@media(min-width:1025px){
+  html:root .subpage .nav{position:sticky;top:0;inset:auto;z-index:60;display:flex;align-items:center;gap:28px;padding:12px max(24px,calc((100% - 1200px)/2));pointer-events:auto}
+  html:root .subpage .nav .brand,
+  html:root .subpage .nav .nav-actions{position:static;height:auto;padding:0;border:0;background:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  html:root .subpage .nav .nav-links{position:static;width:auto;height:auto;margin-left:auto;flex-direction:row;align-items:center;gap:26px;overflow:visible;border:0;border-radius:0;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;transition:none}
+  html:root .subpage .nav .nav-links a{width:auto;min-height:44px;margin:0;border:0;color:inherit;font-size:14px;font-weight:600;letter-spacing:0;text-transform:none;opacity:1;pointer-events:auto}
+  html:root .subpage .nav .nav-links a:hover,
+  html:root .subpage .nav .nav-links a[aria-current=page]{color:var(--hd-em);text-decoration:none}
+  html:root .subpage .nav-pill{display:none}
+  html:root .subpage .nav .nav-call{font-size:14px}
+  html:root .subpage .nav .nav-cta{min-height:44px;padding:0 20px;font-size:12px}
+}
+
+/* Zaglavlje podstranice */
+html:root .sub-hero{padding:72px max(24px,calc((100% - 1200px)/2)) 64px;background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.72) 62%,rgba(18,19,20,.35) 100%),url(/images/hero-01-night.jpg) 80% 55%/cover no-repeat var(--asphalt);color:var(--hd-fg);border-bottom:0}
+html:root .sub-hero .eyebrow{font-size:13px;letter-spacing:.16em;color:var(--hd-em);margin-bottom:18px}
+html:root .sub-hero h1{font-size:clamp(2.5rem,4.6vw,4.4rem);line-height:1.05;letter-spacing:-.04em;font-weight:800;max-width:22ch}
+html:root .sub-hero h1 em{color:var(--hd-em);-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
+html:root .sub-lede{font-size:19px;line-height:1.6;color:var(--hd-lede);max-width:60ch}
+
+/* Telo: sira kolona, jedna numeracija, veci tekst */
+html:root .sub-body{max-width:1248px;margin:0 auto;padding:64px 24px 104px}
+html:root .sub-grid{grid-template-columns:minmax(0,1fr) 340px;gap:56px;max-width:none}
+html:root .sub-trust{margin:0 0 48px;padding:0 0 24px;font-size:13px;letter-spacing:.06em;color:var(--muted);opacity:1;border-bottom:1px solid rgba(28,28,27,.12)}
+html:root .sub-head .sub-num,
+html:root .sub-3up .sub-section .sub-num{display:none}
+html:root .sub-head{border:0;padding:0;margin-bottom:24px}
+html:root .sub-head h2{font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:800;letter-spacing:-.035em}
+html:root .sub-section{margin-bottom:80px}
+html:root .sub-section > p,
+html:root .prose,
+html:root .post-body{font-size:17px;line-height:1.75}
+html:root .prose--legal{max-width:76ch;font-size:16px}
+html:root .prose--legal h2{font-size:21px;font-weight:800}
+html:root .steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+html:root .step{display:block;padding:26px;border:1px solid var(--card-line);border-radius:16px;background:var(--card);box-shadow:var(--card-shadow)}
+html:root .step-n{display:block;margin-bottom:14px;font-size:28px;font-weight:800;letter-spacing:-.03em;color:var(--clay)}
+html:root .step h3{font-size:20px;margin-bottom:8px}
+html:root .step p{font-size:16px;opacity:1;color:var(--muted)}
+html:root .card{padding:28px;border:1px solid var(--card-line);border-radius:16px;background:var(--card);box-shadow:var(--card-shadow)}
+html:root .card h2,
+html:root .card h3{font-size:21px;font-weight:800}
+html:root .card p{font-size:16px;opacity:1;color:var(--muted)}
+html:root .card--cta{top:96px;background:var(--asphalt);color:var(--bone);border-color:transparent}
+html:root .card--cta p,
+html:root .card--cta .rail-steps{color:#d9d3c6}
+html:root .card--cta .btn-ghost{border-color:rgba(241,231,213,.4);color:var(--bone)}
+html:root .card--cta .btn-primary{background:var(--bone);color:var(--ink)}
+html:root .sub-caveat{border-radius:0 12px 12px 0;font-size:16px}
+html:root .kbyg-questions{font-size:16px}
+html:root .btn{font-size:13px;letter-spacing:.08em;padding:15px 24px}
+html:root .btn-primary{background:var(--btn);color:var(--btn-fg)}
+html:root .btn-primary:hover{background:var(--btn-hover)}
+html:root .faqlist{max-width:900px;border-top:0}
+html:root .faq-item{margin-bottom:12px;padding:0 24px;border:1px solid var(--card-line);border-radius:14px;background:var(--card);box-shadow:var(--card-shadow)}
+html:root .faq-q{font-size:18px}
+html:root .faq-a p{font-size:16px;opacity:1;color:var(--muted)}
+html:root .post-list{max-width:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+html:root .post-card{display:flex;flex-direction:column;gap:14px;padding:28px;border:1px solid var(--card-line);border-radius:16px;background:var(--card);box-shadow:var(--card-shadow)}
+html:root .post-card .post-meta{grid-row:auto;flex-direction:row;flex-wrap:wrap;align-items:center;gap:10px}
+html:root .post-card h2{font-size:22px;line-height:1.25}
+html:root .post-card .post-read{align-self:flex-start;margin-top:auto}
+html:root .contact-direct{padding:32px;border:1px solid var(--card-line);border-radius:18px;background:var(--card);box-shadow:var(--card-shadow);max-width:none}
+html:root .sub-3up .sub-section{margin:0;padding:24px;border-radius:14px;background:var(--card);border:1px solid var(--card-line)}
+html:root .sub-3up .sub-section h2{font-size:19px;font-weight:800;margin:0 0 8px}
+html:root .contact-callback{margin-top:56px;padding:0;border:0}
+html:root .contact-quick{border-radius:18px;overflow:hidden}
+html:root .page-next{padding:28px 32px;border-radius:18px;background:var(--card);border:1px solid var(--card-line)}
+@media(max-width:1024px){html:root .sub-grid{grid-template-columns:1fr}}
+@media(max-width:767px){
+  html:root .sub-hero{padding:48px 20px 44px;background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-01-night-mobile.jpg) 70% 40%/cover no-repeat var(--asphalt)}
+  html:root .sub-hero h1{font-size:clamp(2.2rem,9vw,3rem)}
+  html:root .sub-body{padding:40px 20px 88px}
+  html:root .steps,
+  html:root .post-list{grid-template-columns:1fr}
+}
+/* Podnozje: B i C tamno, A belo */
+html:root .foot h2{color:var(--clay-light)}
+html:root .foot-tag{color:#c9c2b5;opacity:1}
+html:root .foot-legal{color:#b9b2a5;border-top-color:var(--line)}
+html:root .foot .brand-mark{color:var(--clay-light);border-color:var(--line)}
+/* Pokret: blago podizanje pri skrolu (samo uz JS i bez reduced-motion) */
+@media(prefers-reduced-motion:no-preference){
+  .rv{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
+  .rv.rv-in{opacity:1;transform:none}
+  html:root .post-card,html:root .sub-3up .sub-section{transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),box-shadow .25s ease}
+  html:root .post-card:hover,html:root .sub-3up .sub-section:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(28,28,27,.1)}
+}
+
+/* Fotografija u zaglavlju po vrsti stranice: obicne -- vozac za volanom, forme -- kamion u izlasku sunca, clanci -- noc. */
+html:root .subpage--form .sub-hero{background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.72) 62%,rgba(18,19,20,.3) 100%),url(/images/hero-03-sunrise.jpg) 75% 32%/cover no-repeat var(--asphalt)}
+html:root .subpage--default .sub-hero{background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.7) 62%,rgba(18,19,20,.25) 100%),url(/images/hero-02-dawn.jpg) 80% 45%/cover no-repeat var(--asphalt)}
+@media(max-width:767px){
+  html:root .subpage--form .sub-hero{background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-03-sunrise-mobile.jpg) 70% 30%/cover no-repeat var(--asphalt)}
+  html:root .subpage--default .sub-hero{background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-02-dawn-mobile.jpg) 70% 40%/cover no-repeat var(--asphalt)}
+}
+/* Traka navigacije je sada u toku strane: tastatura i otvoren meni ne smeju da je vrate u panel iz RD4. */
+@media(min-width:1025px){
+  html:root .subpage .nav .nav-links.is-open,
+  html:root .subpage .nav .nav-links:has(:focus-visible){position:static;width:auto;height:auto;border:0;border-radius:0;background:none!important;box-shadow:none!important}
+  html:root .home .home-hero{padding-top:96px}
+  html:root [id]{scroll-margin-top:88px}
+}
+/* Naslovna i podnozje: isto tamno podnozje svuda; od zavrsnog poziva ga deli linija. */
+html:root .foot{background:var(--asphalt);color:var(--bone);border-top:1px solid var(--line)}
+/* Ulaz zaglavlja: cist CSS na ucitavanju (bez JS-a i bez kapije), blag i kratak. */
+@media(prefers-reduced-motion:no-preference){
+  html:root .sub-hero>*,html:root .home-hero-copy>*{animation:motion-rise .8s var(--ease-out) both}
+  html:root .sub-hero>:nth-child(2),html:root .home-hero-copy>:nth-child(2){animation-delay:.08s}
+  html:root .sub-hero>:nth-child(n+3),html:root .home-hero-copy>:nth-child(n+3){animation-delay:.16s}
+}
+/* Naslovna: i tamo pun tekst umesto obrisa -- na svetlim sekcijama tamna glina, na tamnim svetla. */
+html:root .home-hero h1 em{color:var(--clay-light);-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
+html:root .home-section h2 em{-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;color:var(--clay-deep);font-weight:800}
+html:root .home-pay h2 em,html:root .home-guard h2 em,html:root .home-close h2 em{color:var(--clay-light)}

@@ -4,6 +4,7 @@ import { APPLY_CTA } from '@/lib/cta';
 import Nav from './Nav';
 import Footer from './Footer';
 import MobileBar from './MobileBar';
+import Reveal from './Reveal';
 import ApplyForm from './ApplyForm';
 import Accordion from './Accordion';
 import { homeFaqItems } from '@/lib/faq';
@@ -328,6 +329,7 @@ export default function Home() {
       </main>
       <Footer />
       <MobileBar />
+      <Reveal />
     </div>
   );
 }
