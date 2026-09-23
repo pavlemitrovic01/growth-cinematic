@@ -7,8 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- ⚠️ **`H2` je zatvoren ali NIJE spojen ni pušen** — grana `h2-hidratacija` (`05a64b0` + close commit) čeka Pavlovu reč.
-- **Sledeće:** **release `H2`**, pa `RD5` (deo) zaglavlje podstranice sa kadrom i **tamno podnožje**
+- **Sledeće:** `RD5` (deo) zaglavlje podstranice sa kadrom i **tamno podnožje**
   (`RD7-LOOK`, preporuka: ide uz `RD5`). ⚠️ Pouka iz `H2` (znak hidratacije, `load` nije kraj hidratacije, rok koji
   visi o kadru) **nije upisana u `LESSONS`** — fajl nije bio u obimu `H2`; ide non-batch ako Pavle kaže. Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
   (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
@@ -21,7 +20,8 @@
   preuzme metu (znak je React-ov čvor na elementu, uz rok od 2,5 s i proveru koja ne visi o kadru). Izmereno **22 → 0**
   upozorenja na 30 učitavanja; watchdog netaknut (blokiran JS → sadržaj se vidi posle 3 s). Sedam novih testova, svi
   dokazano crveni pre koda; `test` 173 → 182. Dve pogrešne pretpostavke oborene merenjem (`load` nije kraj hidratacije;
-  rok u kadru se ne okine kad kadrova nema). Pavle: *„manual pass"*. **Nije spojen ni pušen.**
+  rok u kadru se ne okine kad kadrova nema). Pavle: *„manual pass"*. Spojen i pušen 2026-09-23, izmeren na deploy-u
+  (marker u JS-u 0 → 1; na produkciji React preuzme metu 711 ms, klasa 1054 ms).
 - **Pretposlednji:** **`RD4`** (2026-09-23, `217df2a`) — **Navigacija: staklena pilula desno** (`RD4-LOOK`, treći
   deo pravca B). Na ≥ 1025 px gornje trake nema: znak i telefon + APPLY lebde u staklenim kapsulama, meni je pilula
   desno po sredini koja se na prelaz miša, fokus tastature ili dodir otvara u panel 440 px uz desnu ivicu; zatvorena

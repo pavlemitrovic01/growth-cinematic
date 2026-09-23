@@ -42,7 +42,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
 | `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
 | `H1` | Higijena: `data-reveal`, starter SVG-ovi, komentari sa „90%" i `SITEMAP.md`, `NoFallbackError` (`L-18`, `L-21`) | LEAN | — | OPEN |
-| `H2` | Hidratacija: `Motion.tsx` dodaje `is-in` pre hidratacije, pa React u dev-u prijavi neslaganje atributa na `<h1 data-wipe>` (Pavle video 2026-09-23 uz `RD4`; starije od njega) | STANDARD + `manual` | — | **zatvoren** 2026-09-23 (`05a64b0`), čeka spajanje |
+| `H2` | Hidratacija: `Motion.tsx` dodaje `is-in` pre hidratacije, pa React u dev-u prijavi neslaganje atributa na `<h1 data-wipe>` (Pavle video 2026-09-23 uz `RD4`; starije od njega) | STANDARD + `manual` | — | **zatvoren, spojen i pušen** 2026-09-23 (`05a64b0`) |
 | `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
 
 ⚠️ **`K1` je zatvoren merenjem, ne čišćenjem** (`LESSONS` L26): od 109 preklapanja samo jedno se

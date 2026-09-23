@@ -6,6 +6,31 @@
 
 ---
 
+## non-batch(release) — `H2` spojen i pušen; izmeren na deploy-u · 2026-09-23
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `b030adf..5e0725d` fast-forward, push (Pavle: „spoji i pushuj"). Pre spajanja provereno da je `origin/master`
+nepomeren (`b030adf`) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** (`L37`) — batch dira samo JS, pa marker ide u servirani JS. ⚠️ Prvi kandidat
+`__reactFiber$` je **odbačen**: taj string nosi i sam React, pa je bio 1 i pre push-a. Uzet je izraz iz nove funkcije:
+```
+  pre push-a   03:46:11   JS 589 331 B: startsWith("__reactFiber 0 · kontrole data-motion-ready 1, „APPLY NOW" 1
+  push         03:47:07   b030adf..5e0725d
+  posle        03:47:22   jos stari build (marker 0)
+               03:47:43   JS 590 048 B: marker 1 · kontrole iste
+```
+
+**VERIFICATION na produkciji** (`meri se: https://growth-cinematic.vercel.app`): `verify` PASS 14 + 13 ·
+`rendered` 20/20. Otkrivanje izmereno na deploy-u: React preuzme metu 711 ms, `data-motion-ready` 757 ms, klasa
+1054 ms — naslov se otkriva, watchdog se ne dira.
+
+**NEXT STEP:** `RD5` (deo) zaglavlje podstranice sa kadrom i tamno podnožje. Pouka iz `H2` još nije u `LESSONS`
+(fajl nije bio u obimu) — čeka Pavlovu odluku.
+
+---
+
 ## `H2` — Hidratacija: pokret ne dira DOM pre nego što React preuzme metu · 2026-09-23
 
 **Changed files:** `components/Motion.tsx` · `lib/motion-reveal.ts` · `__tests__/motion-reveal.test.js` ·
