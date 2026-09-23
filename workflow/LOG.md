@@ -6,6 +6,18 @@
 
 ---
 
+## non-batch(release) — `TTI2` spojen i pušen; build živ · 2026-09-23
+
+**Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `9523a66..553c902` fast-forward, push 15:27:55 (Pavle: *„manual pass spoji pushuj"*). Provera da je build živ
+(nije kapija): u 15:28:22 `growth-cinematic.vercel.app/how-it-works` služi CSS `1n4tubkmbgpxl.css` sa `hero-02-dawn`
+(nov u `TTI2`); `/` 200. **Merenje `verify`/`rendered` na deploy-u: NIJE POKRENUTO** — Pavle ga je odložio do domena.
+
+**NEXT STEP:** predaja klijentu; domen/DNS/Resend/env i merenje na `ttirecruiting.us` kad Pavle kaže.
+
+---
+
 ## `TTI2` — Lepše podstranice: navigacija, zaglavlje sa fotografijom, kartice, pokret · 2026-09-23
 
 **Changed files:** `app/globals.css` · `components/Home.tsx` · `components/PageShell.tsx` · `components/Reveal.tsx`

@@ -17,7 +17,8 @@
 - **Poslednji završen:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
   linkovima, tamno zaglavlje sa fotografijom (obične strane — vozač, forme — izlazak sunca, članci — noć), pun tekst u
   naslovima i na naslovnoj, veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret (`Reveal.tsx`; bez
-  JS-a ništa skriveno). Forme netaknute. Kapije lokalno sve exit 0; Pavle: *„manual pass spoji pushuj"*.
+  JS-a ništa skriveno). Forme netaknute. Kapije lokalno sve exit 0; Pavle: *„manual pass spoji pushuj"*. Spojen i pušen
+  2026-09-23 (`9523a66..553c902`); build živ u 15:28, **deploy nije meren** (odloženo do domena).
 - **Pretposlednji:** **`TTI1`** (2026-09-23, `4e3fad8`) — **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`).
   GROWTH.CO / Capljinac LLC → **TTIrecruiting**, `info@ttirecruiting.us`, telefon **(312) 584-1777** iza `HAS_PHONE`
   (prazan broj sklanja telefon i rečenice o pozivu sa celog sajta). TCPA samo ime, verzija pristanka
@@ -37,6 +38,8 @@
 
 ## Git
 
+- `TTI2` (`9523a66..553c902`, implementacija `9d19efa`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „manual pass
+  spoji pushuj"). **Deploy nije meren**; potvrđeno samo da vercel.app služi nov CSS (`hero-02-dawn`, 15:28:22).
 - `TTI1` (`2a6c160..c4d99ca`, implementacija `4e3fad8`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „moze
   spoji i pushuj"). **Deploy NIJE meren** — Pavle je merenje odložio do domena; samo potvrđeno da
   `growth-cinematic.vercel.app` u 14:52:44 služi nov HTML (`584-1777` 10×, `GROWTH` 0, `journey-canvas` 0).
@@ -98,8 +101,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI1`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2` i `TTI1`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI2`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2`, `TTI1` i `TTI2`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -110,7 +113,7 @@
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
   `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`, `rd16-boja-zavrsnog-kadra`, `rd17-paleta-asfalt`, `rd7-ritam-naslovne`,
-  `tti1-obican-sajt`.
+  `tti1-obican-sajt`, `tti2-lepse-podstranice`.
 
 ## Žive prepreke
 
