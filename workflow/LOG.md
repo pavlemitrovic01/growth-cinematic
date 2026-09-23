@@ -6,6 +6,49 @@
 
 ---
 
+## `TTI1` — Običan sajt pod imenom TTIrecruiting, bez 3D scene i pokreta · 2026-09-23
+
+**Changed files:** 55 u implementaciji `4e3fad8` — ime i kontakt (`lib/contact.js`, `lib/seo.js`, `lib/email.js`,
+`lib/validation.js`, `lib/faq.js`, `lib/posts.js`, `lib/form-options.js`, obe forme, tri API rute, `Nav`, `Footer`,
+`MobileBar`, `NoScriptContact`, `StructuredData`, `layout`, `error`, `global-error`, `not-found`, deset stranica,
+`favicon.svg`, `og.jpg`); naslovna (`app/page.tsx`, `Home.tsx` nov, `globals.css`; obrisani `CinematicHome`,
+`HeroExperience`, `Motion`, `motion-reveal`, šest `hero-*` modula i četiri njihova testa; `package.json` +
+`package-lock.json` bez `three`); kapije (`validation.test`, `globals-css.test`, `rendered-html.test`,
+`verify-nojs`). Close: `batches/TTI1.md`, `STATE.md`, ovaj `LOG.md`, `ROADMAP.md`, `DECISIONS.md`, `CONTEXT.md`,
+`LESSONS.md`. **Grana:** `tti1-obican-sajt` (sa `master` `2a6c160`) · **Tier:** STRICT.
+
+Pavle je zaustavio kinematski kolosek (*„stani sve ovo treba da prepravimo u najobicniji recruiting sajt koji
+isporucujemo danas"*) i dao činjenice: ime i pravni naziv **TTIrecruiting**, domen `ttirecruiting.us` i mejl na
+GoDaddy-u, prijave na `info@`, telefon naknadno (**(312) 584-1777**, stigao pre close-a), `growthcdl.com` se gasi.
+
+**Crveno pre zelenog:**
+```
+  validation.test (verzija pristanka)   pre koda: expected '2026-09-06' to be '2026-09-23' · posle 45/45
+  K1/A census                           142 -> izmereno 141 posle brisanja mrtvog CSS-a
+  verify-nojs protiv STARE produkcije   exit 1, 49 nalaza (meri se: https://growth-cinematic.vercel.app):
+     staro ime u HTML-u "GROWTH" · tel:/sms: link bez telefona · kontakt (info@...) nedostupan ·
+     tekst trazi poziv bez telefona: "Or call" (/), "Call or text" (/apply, /how-it-works), "CALL OR TEXT" (/contact)
+  rendered protiv STARE produkcije      pass 19 / fail 2: TTI1 „naslovna ne sme imati markup 3D scene",
+                                        RD7 „sekcija home-hero ne postoji"
+```
+Provere nad telefonom (tel:/sms:, tekst o pozivu) važe samo dok je broj prazan — izmerene su u tom stanju, pre upisa broja.
+
+**VERIFICATION** (lokalno, `next start`, PID 34908, `meri se: http://localhost:3000`, posle upisa broja):
+`quick` exit 0 · `typecheck` exit 0 · `test` exit 0, **135/135** (182 pre; obrisani testovi scene i pokreta) ·
+`full` exit 0 · `verify` exit 0, 14 + 13 ruta PASS · `rendered` exit 0, **21/21** · `WebGLRenderer` u `.next/static`:
+0 fajlova · stari broj `226-3786` ni na jednoj ruti, novi na svakoj · konzola 0 grešaka (desktop i telefon).
+**`manual`:** Pavle, *„manual pass"*. **Nezavisan pregled** (drugi agent, pravna i API površina): bez defekata.
+**Deploy:** NIJE MEREN — batch nije spojen ni pušen, domen nije povezan.
+
+**SCOPE DRIFT:** nema — 58 izmenjenih putanja, sve u EXPECTED-FILES (poređenje `git status` sa manifestom). Dva
+odstupanja u sadržaju, oba u očekivanim fajlovima i zapisana u manifestu: mrtav CSS obrisan jer je `K1/B` pao;
+11 rečenica o pozivu stavljeno iza `HAS_PHONE` posle snimka `/contact`.
+
+**NEXT STEP:** release `TTI1` na Pavlovu reč, pa domen/DNS/Resend/env i merenje na `ttirecruiting.us`. Otvoreno:
+Google indeks (`NEXT_PUBLIC_SITE_LIVE`) i važi li „daily, weekends included" za novi broj.
+
+---
+
 ## non-batch(release) — `H2` spojen i pušen; izmeren na deploy-u · 2026-09-23
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

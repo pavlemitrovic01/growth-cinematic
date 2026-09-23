@@ -359,3 +359,11 @@ otvoren; posle izbora („4") plan je nosio samo izabrano, bez prekidača i bez 
 je ishod izgled, prvo varijante na pravoj sceni (kontakt list + linkovi), pa plan za jednu. Merenja za acceptance idu
 istom skriptom kojom je meren preview — brojka iz ranijeg batch-a merena drugačije nije osnova (`RD13` 63,1 prema
 `RD16` 49,0 za „isti" finale).
+
+## L40 — Kad kontakt podatak nestane, ostaju rečenice koje ga traže; pretraga po linkovima ih ne vidi.
+U `TTI1` je telefon privremeno sklonjen iza `HAS_PHONE`: svaki `tel:`/`sms:` link i svaki prikaz broja bili su uslovni,
+`verify` i `rendered` zeleni. Tek snimak `/contact` pokazao je *„Call or text — that is the fastest way"* bez ijednog
+broja na strani — i još deset takvih rečenica (naslovna, `/apply`, `/how-it-works`, poruke o grešci u formama i API-ju).
+Pretraga je išla po konstantama (`PHONE_*`), a rečenica ne uvozi konstantu. **Pravilo:** kad se ukloni ili isprazni
+podatak (telefon, mejl, rok), pretražuje se i **tekst koji ga pominje** (`call`, `text`, `email us`…), ne samo
+upotrebe konstante; poruke o grešci dele jedan izvor (`REACH_US`), a provera nad serverskim HTML-om hvata povratak.

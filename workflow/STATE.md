@@ -7,41 +7,38 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** `RD5` (deo) zaglavlje podstranice sa kadrom i **tamno podnožje**
-  (`RD7-LOOK`, preporuka: ide uz `RD5`). ⚠️ Pouka iz `H2` (znak hidratacije, `load` nije kraj hidratacije, rok koji
-  visi o kadru) **nije upisana u `LESSONS`** — fajl nije bio u obimu `H2`; ide non-batch ako Pavle kaže. Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
-  (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
-  (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn) i dalje čeka izbor; `U2` ostaje za pravnu rečenicu u telu,
-  numeraciju, kickere na telefonu i skip link. Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu. `U3` čeka
-  Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
-  ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
-  brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`H2`** (2026-09-23, `05a64b0`) — **Hidratacija**: pokret više ne dira DOM pre nego što React
-  preuzme metu (znak je React-ov čvor na elementu, uz rok od 2,5 s i proveru koja ne visi o kadru). Izmereno **22 → 0**
-  upozorenja na 30 učitavanja; watchdog netaknut (blokiran JS → sadržaj se vidi posle 3 s). Sedam novih testova, svi
-  dokazano crveni pre koda; `test` 173 → 182. Dve pogrešne pretpostavke oborene merenjem (`load` nije kraj hidratacije;
-  rok u kadru se ne okine kad kadrova nema). Pavle: *„manual pass"*. Spojen i pušen 2026-09-23, izmeren na deploy-u
-  (marker u JS-u 0 → 1; na produkciji React preuzme metu 711 ms, klasa 1054 ms).
-- **Pretposlednji:** **`RD4`** (2026-09-23, `217df2a`) — **Navigacija: staklena pilula desno** (`RD4-LOOK`, treći
-  deo pravca B). Na ≥ 1025 px gornje trake nema: znak i telefon + APPLY lebde u staklenim kapsulama, meni je pilula
-  desno po sredini koja se na prelaz miša, fokus tastature ili dodir otvara u panel 440 px uz desnu ivicu; zatvorena
-  pilula menja boju po pozadini (krem na tamnom, tamno staklo na svetlom). Telefon **0 piksela razlike**. Nova
-  `rendered` kapija (20), crvena na šest prekršaja. Merenjem nađena i popravljena greška: nevidljivi linkovi su jeli
-  dodir na pilulu. Pavle: *„imamo eror ali manual pass"* — greška je dev-only hidratacija iz `Motion.tsx`, starija od
-  `RD4` (vodi se kao `H2`). Spojen i pušen 2026-09-23, izmeren na deploy-u (HTML, CSS i JS stigli zajedno).
+- **Sledeće:** **release `TTI1`** — spajanje u `master` i push kad Pavle kaže, pa domen i mejl:
+  GoDaddy DNS (`A @ → 76.76.21.21`, `CNAME www → cname.vercel-dns.com`, **MX GoDaddy pošte se ne dira**) i Resend
+  domen `ttirecruiting.us` radi Pavle; Vercel domen + env (`NEXT_PUBLIC_SITE_URL`, `LEAD_NOTIFICATION_EMAIL`,
+  `LEAD_FROM_EMAIL` posle potvrde Resend-a) radi agent uz Pavlovo „da". Meri se `verify` + `rendered` na
+  `ttirecruiting.us`. ⚠️ **Otvoreno za Pavla:** (1) ide li sajt u Google indeks (`NEXT_PUBLIC_SITE_LIVE`) — ako da,
+  `rendered` test za `noindex` pada na produkciji i menja se; (2) važi li za novi broj „Call or text us daily —
+  weekends included" (vraćeno sa telefonom, pitano pre close-a, bez odgovora). Kinematski kolosek (`RD5`, `T1b`,
+  `M2c`–`M6`, `RD8`) je **napušten** 2026-09-23 (`TTI-IME`); pouka iz `H2` se ne upisuje — okidač (`Motion.tsx`) je
+  obrisan. Ostatak lanca lansiranja — `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
+- **Poslednji završen:** **`TTI1`** (2026-09-23, `4e3fad8`) — **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`).
+  GROWTH.CO / Capljinac LLC → **TTIrecruiting**, `info@ttirecruiting.us`, telefon **(312) 584-1777** iza `HAS_PHONE`
+  (prazan broj sklanja telefon i rečenice o pozivu sa celog sajta). TCPA samo ime, verzija pristanka
+  `2026-09-06` → `2026-09-23`. Naslovna: statična fotografija umesto three.js scene; `Motion.tsx` uklonjen sa celog
+  sajta, uz mrtav CSS (`K1/B`); three van paketa, `test` 182 → 135 (obrisani testovi scene i pokreta), `rendered`
+  20 → 21. Četiri nove provere, sve crvene na staroj produkciji. Nezavisan pregled pravne/API površine: bez defekata.
+  Pavle: *„manual pass"*. **Nije spojen ni pušen.**
+- **Pretposlednji:** **`H2`** (2026-09-23, `05a64b0`) — hidratacija pokreta 22 → 0; spojen, pušen i izmeren na deploy-u.
+  Kod koji je popravio obrisan je u `TTI1`.
 - ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
   uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
-- `H2` (`h2-hidratacija`, implementacija `05a64b0` + close commit) — **nije spojen ni pušen**, grana čeka Pavlovu reč.
-  Kapije merene lokalno protiv `next start` (`BUILD_ID` 03:38:50); deploy još nije meren, jer ga nema.
+- `TTI1` (`tti1-obican-sajt`, implementacija `4e3fad8` + close commit, sa `master` `2a6c160`) — **nije spojen ni
+  pušen**, čeka Pavlovu reč. Kapije merene lokalno protiv `next start` (PID 34908, meta `http://localhost:3000`).
+- `H2` (`2a6c160`) spojen fast-forward-om i pušen 2026-09-23; deploy izmeren (marker u JS-u 0 → 1).
 - `RD4` (`cf95c47..2909d52`, implementacija `217df2a`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „spoji i
   pushuj"); nosi i non-batch `68aa001` i `85d58fc`. **Deploy izmeren protiv njega**, uz nov build potvrđen
   diskriminatorom PRE merenja za **HTML, CSS i JS** (`nav-pill` u HTML-u 0 → 1, u CSS-u 0 → 1 uz novo ime
@@ -99,8 +96,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `RD7`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17` i `RD7`.
+- Grana istine **`master`**: jednak `origin/master` (`2a6c160`) posle release zapisa `H2`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4` i `H2`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -114,9 +111,10 @@
 
 ## Žive prepreke
 
-- **Stari sajt (MAIN) uskoro ide offline** — Pavle 2026-09-13. Zato je nalaz iz `R1` (prijave sa
-  dva sajta se u inbox-u ne razlikuju) **nebitan i ne radi se**. Do samog prelaska MAIN je i dalje
-  živ, indeksiran i ne dira se.
+- **Stari sajt (MAIN, `growthcdl.com`) se gasi** — Pavle 2026-09-23, uz prelazak na TTIrecruiting. Gašenje ili
+  preusmerenje (preporuka: 301 na `ttirecruiting.us`) radi Pavle; ovaj projekat MAIN ne dira.
+- ⚠️ **Obaveštenje o prijavi stiže na `info@ttirecruiting.us` tek kad Resend potvrdi domen.** Do tada je pošiljalac
+  sandbox, koji isporučuje samo na adresu Resend naloga; prijava se i dalje upisuje u bazu.
 - ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
   prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
 - **Sedam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + tri

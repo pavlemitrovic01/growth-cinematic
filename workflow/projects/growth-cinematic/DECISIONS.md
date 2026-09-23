@@ -68,6 +68,15 @@
 
 ## ZATVORENO
 
+### `TTI-IME` — običan sajt pod imenom TTIrecruiting, isporuka isti dan · 2026-09-23
+- **Pavle:** *„stani sve ovo treba da prepravimo u najobicniji recruiting sajt koji isporucujemo danas menjamo ime
+  firme u ttirecruiting kupili smo domen ttirecruiting.us mail je info@ttirecruiting.us"*.
+- **Činjenice (Pavle, isti dan):** pravni naziv tačno **„TTIrecruiting"** (bez „LLC"); domen i mejl na GoDaddy-u;
+  prijave na `info@ttirecruiting.us`; telefon **(312) 584-1777**; `growthcdl.com` se gasi.
+- **Posledice:** 3D scena i pokret izlaze (`TTI1`); `RD5`, `RD8`, `T1b` i kolosek pokreta su napušteni; tekst sekcija
+  ostaje. TCPA, privacy i terms menjaju **samo ime** — `LEG-1` i `LEG-2` ostaju OPEN, pregled i dalje ide advokatu.
+- ⚠️ `SMER-B` i `*-LOOK` odluke ispod opisuju sajt koji više ne postoji u tom obliku; ostaju kao istorija.
+
 ### `SMER-B` — pravac redizajna: asfalt, krem posle heroja, Arial, navigacija sa strane, zaglavlje sa kadrom · 2026-09-21
 - **Izvor:** stranica „smer redizajna" (https://claude.ai/artifact/Ai2poYkGM628ZkKuj59Mtf) — naslovna i `/how-it-works`
   na pravom tekstu i kadrovima scene, pet prekidača + pravci Danas / A / B / C, desktop 1280 i telefon 390. Otvoreno

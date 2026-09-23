@@ -5,7 +5,7 @@
 > `docs/STATUS-ARCHIVE.md`. Postavljeno 2026-09-09.
 
 ## Stack
-- **Next.js 16.3.4** (app router) · React 19.2.6 · **TypeScript** · three.js 0.160 · Tailwind 4
+- **Next.js 16.3.4** (app router) · React 19.2.6 · **TypeScript** · Tailwind 4 · three.js **uklonjen** u `TTI1`
 - **Deploy: Vercel** (`growth-cinematic`, nalog „pavle's projects" — **Hobby**), git-connected:
   push na `master` triggeruje deploy. ⚠️ Hobby je nekomercijalan po Vercel uslovima; **pre pravog
   saobraćaja projekat se seli na tim** (`team_lFVUISCch3euonXJEBmOdfiA`).
@@ -29,7 +29,7 @@
 | `rendered` | `npm run test:rendered` | STANDARD, STRICT — **traži pokrenut server** |
 | `manual` | Pavlov pregled u **pravom** browseru | STRICT · **i sve što zavisi od skrola** |
 
-- **`test`:** vitest, **182 u 14 fajlova** (izmereno 2026-09-23, `H2`). `test:rendered` je zasebnih **20** (od `RD4`)
+- **`test`:** vitest, **135 u 10 fajlova** (izmereno 2026-09-23, `TTI1`). `test:rendered` je zasebnih **21** (od `TTI1`)
   HTTP testova nad renderovanim HTML-om.
 - ⚠️ **Vitest hvata SAMO `__tests__/**/*.test.js`** (`vitest.config.mts`). Fajl imenovan
   `.test.ts` bio bi **tiho preskočen** — kapije zelene, a test nikad pokrenut. Posle dodavanja
@@ -68,9 +68,10 @@
   (bila 10 do brisanja `stories`, 2026-09-09).
 - Naslovna posle `D1`: hero(C) · callback(forma) · pay(**U**) · process(E, sticky) · values(**U**) ·
   guard(**C**) · founder(**C**) · faq(E) · close(C).
-- **13 komponenti.** Ključne: `HeroExperience` (three.js), `CinematicHome`, `Motion` (reveal/
-  stagger/sweep pogon), `ApplyForm` (quick/full), `PageShell`, `Accordion`.
-- API rute rade i bez Resend-a: vraćaju **503 „pozovite nas"**, nikad lažnu potvrdu. Upis u bazu
+- **13 komponenti** (od `TTI1`). Ključne: `Home` (statična naslovna), `ApplyForm` (quick/full), `PageShell`,
+  `Accordion`. Kontakt iz jednog izvora: `lib/contact.js` (`HAS_PHONE` sklanja telefon kad je broj prazan, `REACH_US`
+  za poruke o grešci).
+- API rute rade i bez Resend-a: vraćaju **503 sa `REACH_US`**, nikad lažnu potvrdu. Upis u bazu
   ide **ispred** 503-a namerno.
 
 ## Namerno ugašeno (env)

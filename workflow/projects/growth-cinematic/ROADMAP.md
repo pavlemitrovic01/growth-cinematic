@@ -9,6 +9,9 @@ Sajt je **funkcionalno kompletan, deploy-ovan i izmeren protiv deploy-a**, pod `
 Kolosek je od 2026-09-08 **dizajn i pokret** (Pavlova odluka, ispred Resenda). `D1` je zatvoren
 2026-09-09 — sve četiri strukturne izmene su u `master`-u.
 
+⚠️ **Od 2026-09-23 sajt je običan, pod imenom TTIrecruiting** (`TTI1`, `TTI-IME`): 3D scena i pokret su uklonjeni,
+pa su redizajn (`RD5`, `RD8`), `T1b` i ceo kolosek pokreta **napušteni**. Redovi ispod ostaju kao istorija.
+
 **Od 2026-09-11 kolosek je završetak po auditu** — `docs/AUDIT-2026-09.md`. Ocene: kvalitet
 urađenog 82, završenost 61 (~72 posle `R1`), spremnost za produkciju 34.
 
@@ -23,7 +26,7 @@ scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD1
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
 | `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | `RD4-LOOK`: staklena pilula desno (izabrano 2026-09-22) | **zatvoren, spojen i pušen** 2026-09-23 (`217df2a`) |
-| `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | `SMER-B`: zaglavlje sa kadrom; `T1b` | OPEN |
+| `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | `SMER-B`: zaglavlje sa kadrom; `T1b` | **napušten** 2026-09-23 (`TTI-IME`; varijante su bile na stranici, izbor nije pao) |
 | `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`; boja rešena u `RD17`, forma ide na kraj sa `RD7` | **rešen:** boja u `RD17`, traka premeštena na kraj u `RD7` |
 | `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `SMER-B`: krem posle heroja (sledeći); `T1b`, kolosek pokreta | **deo zatvoren** 2026-09-22 (`RD7`: ritam naslovne, „How it works" posle heroja); ostaju pokret i podstranice |
 | `RD8` | Slike: nijedne van rezervne slike heroja — izvor (svoje, licencirane, kadrovi iz scene) | — | odluka Pavla | OPEN |
@@ -36,7 +39,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `T1b` | Hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, gde obris ostaje (`D2`); **prvo stranica sa predlogom**, pa plan (`L-02`, `VD-03`) | STANDARD + `manual` | predlog skale | OPEN |
+| `T1b` | Hijerarhija na Arial-u — skala umesto 55 veličina, nadnaslovi kao putokazi, gde obris ostaje (`D2`); **prvo stranica sa predlogom**, pa plan (`L-02`, `VD-03`) | STANDARD + `manual` | predlog skale | **napušten** 2026-09-23 (`TTI-IME`) |
 | `U2` | Naslovna: redosled poverenja, jedna numeracija, kickeri, skip link (`IA-05`, `POS-01`, `L-08`, `L-09`) | STANDARD + `manual` | redosled rešen u `RD7` (`SMER-B`) | OPEN — ostalo |
 | `U3` | Uspešna stanja formi — sledeći korak, broj za čuvanje (`IA-06`) | STRICT | — | OPEN |
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
@@ -57,6 +60,8 @@ koja se menja — i **usklađen `docs/MOTION.md`** (non-batch), jer je `M2c` spe
 dokumenta koji opisuje sekcije kojih više nema.
 
 ## Kolosek pokreta — posle `T1b`
+
+⚠️ **Napušten 2026-09-23:** `Motion.tsx` i `MOTION_GATE` su obrisani u `TTI1`, pa redovi ispod nemaju na čemu da stoje.
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
@@ -128,6 +133,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
+| `TTI1` | **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`) — GROWTH.CO / Capljinac LLC → TTIrecruiting, `info@ttirecruiting.us`, telefon (312) 584-1777 iza `HAS_PHONE`; TCPA samo ime, verzija pristanka `2026-09-23`; statična naslovna umesto three.js scene, pokret uklonjen sa celog sajta uz mrtav CSS; `test` 182 → 135, `rendered` 21; četiri nove provere crvene na staroj produkciji; nezavisan pregled bez defekata; `manual` PASS; **nije spojen ni pušen** | 2026-09-23 |
 | `RD7` | **Ritam naslovne** (pravac B, `SMER-B`) — posle heroja krem „How it works", pa naplata tamna, vrednosti, guard tamna, osnivač krem, FAQ svetlo siva, završni poziv sa brzom formom; traka sa formom posle heroja uklonjena (`RD6`), `#get-started` ide sa formom; redosled zamenio auditov za `U2`; nova `rendered` kapija (19); `manual` PASS (formu nije slao Pavle — dokaz je presretnut zahtev); spojen i pušen 2026-09-22, izmeren na deploy-u | 2026-09-22 |
 | `RD17` | **Paleta asfalt** (pravac B, `SMER-B`) — `--forest` → `--asphalt #121314`, tamni tekst i siva neutralni, ivice heroja u asfalt; noćne boje scene ostale (blag šav navigacija → nebo, prikazan); oznaka u guard-u 3,18 → 4,70:1; `manual` PASS; spojen i pušen 2026-09-22, izmeren na deploy-u | 2026-09-22 |
 | `RD16` | **Boja završnog kadra** — maslinasto-braon (topli ton `RD13` preko zelenog tla) zamenjen tamnim neutralnim tlom, svetlim putem i toplim horizontom; pet varijanti uživo PRE plana, Pavle „4"; finale 49,0 → 56,0 prosečne svetline, tlo 63° s34 → 27° s15, 02 89,2, noć ista; `manual` PASS; spojen i pušen 2026-09-21, izmeren na deploy-u | 2026-09-21 |
