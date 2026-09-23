@@ -7,11 +7,9 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- ⚠️ **`RD4` je zatvoren ali NIJE spojen ni pušen** — grana `rd4-pilula-desno` (`217df2a` + close commit) čeka
-  Pavlovu reč. Na produkciji je i dalje stara traka.
-- **Sledeće:** **release `RD4`** (spajanje, push, merenje na deploy-u uz diskriminator PRE merenja za HTML, CSS **i**
-  JS — `L37`), pa `RD5` (deo) zaglavlje podstranice sa kadrom i **tamno podnožje** (`RD7-LOOK`, preporuka: ide uz
-  `RD5`). Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
+- **Sledeće:** **`H2` — hidratacija** (`Motion.tsx` dodaje `is-in` pre hidratacije, pa React u dev-u prijavi neslaganje
+  atributa na `<h1 data-wipe>`; Pavle 2026-09-23: *„pa cemo sredjivati napravljenu gresku"*). Pa `RD5` (deo) zaglavlje
+  podstranice sa kadrom i **tamno podnožje** (`RD7-LOOK`, preporuka: ide uz `RD5`). Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
   (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
   (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn) i dalje čeka izbor; `U2` ostaje za pravnu rečenicu u telu,
   numeraciju, kickere na telefonu i skip link. Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu. `U3` čeka
@@ -24,7 +22,7 @@
   pilula menja boju po pozadini (krem na tamnom, tamno staklo na svetlom). Telefon **0 piksela razlike**. Nova
   `rendered` kapija (20), crvena na šest prekršaja. Merenjem nađena i popravljena greška: nevidljivi linkovi su jeli
   dodir na pilulu. Pavle: *„imamo eror ali manual pass"* — greška je dev-only hidratacija iz `Motion.tsx`, starija od
-  `RD4`. **Nije spojen ni pušen.**
+  `RD4` (vodi se kao `H2`). Spojen i pušen 2026-09-23, izmeren na deploy-u (HTML, CSS i JS stigli zajedno).
 - **Pretposlednji:** **`RD7`** (2026-09-22, `8c8546b`) — **Ritam naslovne** (drugi deo pravca B): posle heroja krem
   „How it works", pa naplata tamna, vrednosti, guard tamna, osnivač krem, FAQ svetlo siva, završni poziv sa brzom
   formom. Spojen i pušen 2026-09-22, izmeren na deploy-u.
@@ -38,8 +36,12 @@
 
 ## Git
 
-- `RD4` (`rd4-pilula-desno`, implementacija `217df2a` + close commit) — **nije spojen ni pušen**, grana čeka Pavlovu
-  reč. Kapije merene lokalno protiv `next start` (`BUILD_ID` 02:33:42); deploy još nije meren, jer ga nema.
+- `RD4` (`cf95c47..2909d52`, implementacija `217df2a`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „spoji i
+  pushuj"); nosi i non-batch `68aa001` i `85d58fc`. **Deploy izmeren protiv njega**, uz nov build potvrđen
+  diskriminatorom PRE merenja za **HTML, CSS i JS** (`nav-pill` u HTML-u 0 → 1, u CSS-u 0 → 1 uz novo ime
+  `3na46zht_km27.css` → `0h8p3k4kvl123.css`, `(min-width: 1025px)` u JS-u 0 → 1; kontrole `nav-links`, `--asphalt`,
+  „APPLY NOW" i „Open menu" iste u oba). Na produkciji `verify` 14 + 13 i `rendered` 20/20; `manual` na produkciji nije
+  posebno tražen.
 - `RD7` (`b211076..f150106`, implementacija `8c8546b`) spojen fast-forward-om i pušen 2026-09-22 (Pavle: „spoji i
   pushuj"); **deploy izmeren protiv njega**, uz nov build potvrđen diskriminatorom PRE merenja za **HTML i CSS**
   (`home-close-form` 0 → 2, `.home-close-grid` 0 → 2, `home-callback` → 0, kontrole iste u oba); `rendered` 19/19 na

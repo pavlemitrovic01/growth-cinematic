@@ -6,6 +6,32 @@
 
 ---
 
+## non-batch(release) — `RD4` spojen i pušen; izmeren na deploy-u · 2026-09-23
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `cf95c47..2909d52` fast-forward, push (Pavle: „spoji i pushuj pa cemo sredjivati napravljenu gresku"). Nosi
+`217df2a` (`RD4`), `2909d52` (close) i dva non-batch docs commita (`68aa001`, `85d58fc`). Pre spajanja provereno da je
+`origin/master` nepomeren (`ls-remote` = `cf95c47`) i da je fast-forward moguć.
+
+**Diskriminator PRE merenja** — po `L37` za **sva tri** artefakta koja batch dira:
+```
+  pre push-a   02:44:52   HTML nav-pill 0 · CSS 3na46zht_km27.css nav-pill 0 · JS (588 308 B) „(min-width: 1025px)" 0
+                          kontrole: nav-links 1 · --asphalt:#121314 1 · „APPLY NOW" 1 · „Open menu" 1
+  push         02:45:32   cf95c47..2909d52
+  posle        02:45:48   jos stari build (HTML nav-pill 0)
+               02:46:04   HTML nav-pill 1 · CSS 0h8p3k4kvl123.css nav-pill 1 · JS (589 331 B) marker 1
+                          kontrole iste u oba
+```
+
+**VERIFICATION na produkciji** (`meri se: https://growth-cinematic.vercel.app`): `verify` PASS 14 + 13 ·
+`rendered` 20/20, uključujući `RD4` kapiju. `manual` na produkciji nije posebno tražen.
+
+**NEXT STEP:** `H2` — hidratacija (`Motion.tsx` dodaje `is-in` pre hidratacije; dev-only upozorenje koje je Pavle
+video uz `RD4`, a starije je od njega).
+
+---
+
 ## `RD4` — Navigacija: staklena pilula desno (`RD4-LOOK`) · 2026-09-23
 
 **Changed files:** `components/Nav.tsx` · `app/globals.css` · `tests/rendered-html.test.mjs` ·

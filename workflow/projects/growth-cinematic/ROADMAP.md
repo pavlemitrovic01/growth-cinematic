@@ -22,7 +22,7 @@ scene (`RD10`) zatvoreni, spojeni i pušeni 2026-09-17; američki tegljač (`RD1
 
 | ID | Posao | Tier | Zavisi od | Status |
 |---|---|---|---|---|
-| `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | `RD4-LOOK`: staklena pilula desno (izabrano 2026-09-22) | **zatvoren** 2026-09-23 (`217df2a`), čeka spajanje |
+| `RD4` | Navigacija manje „oldschool", cinematic, po mogućstvu sa strane | STANDARD + `manual` | `RD4-LOOK`: staklena pilula desno (izabrano 2026-09-22) | **zatvoren, spojen i pušen** 2026-09-23 (`217df2a`) |
 | `RD5` | Podstranice: nov šablon (`PageShell`, 13 površina) — zaglavlje sa vizualom, ritam, pokret | STANDARD + `manual` | `SMER-B`: zaglavlje sa kadrom; `T1b` | OPEN |
 | `RD6` | Naslovna: tamna traka sa brzom formom posle heroja (spojiti, ukloniti ili premestiti) i „maslinasta" boja | STRICT (forma, pristanak) | `U2`; boja rešena u `RD17`, forma ide na kraj sa `RD7` | **rešen:** boja u `RD17`, traka premeštena na kraj u `RD7` |
 | `RD7` | Ostatak sajta „basic": smena svetlo/tamno, pokret, šta vodi oko; „How it works" istaći (gde — Pavle) | STANDARD + `manual` | `SMER-B`: krem posle heroja (sledeći); `T1b`, kolosek pokreta | **deo zatvoren** 2026-09-22 (`RD7`: ritam naslovne, „How it works" posle heroja); ostaju pokret i podstranice |
@@ -42,6 +42,7 @@ batch-evima (audit `:51`), nezavisno od ovog koloseka.
 | `U4` | `/for-carriers` iz početka (`POS-02`, `IA-01`–`IA-03`) | STRICT | copy + registar (`RULES §9`) | čeka sadržaj |
 | `U5` | „jobs" u naslovima i `h1` (`L-22`) | STRICT | registar (`RULES §9`) | čeka sadržaj |
 | `H1` | Higijena: `data-reveal`, starter SVG-ovi, komentari sa „90%" i `SITEMAP.md`, `NoFallbackError` (`L-18`, `L-21`) | LEAN | — | OPEN |
+| `H2` | Hidratacija: `Motion.tsx` dodaje `is-in` pre hidratacije, pa React u dev-u prijavi neslaganje atributa na `<h1 data-wipe>` (Pavle video 2026-09-23 uz `RD4`; starije od njega) | STANDARD | — | OPEN |
 | `G3` | Claims kapija: pravilo za `C41`, pokrivenost upisana u `CONTEXT` (`L-23`) | STRICT | `AUD-OBIM` | blokirano odlukom |
 
 ⚠️ **`K1` je zatvoren merenjem, ne čišćenjem** (`LESSONS` L26): od 109 preklapanja samo jedno se
