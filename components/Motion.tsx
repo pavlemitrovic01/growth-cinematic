@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
-import { groupByObserved } from '@/lib/motion-reveal';
+import { afterHydration, groupByObserved } from '@/lib/motion-reveal';
 
 /**
  * Pogon za `reveal`, `stagger` i `sweep` iz Faze 2, plus `wipe` i `line` iz `M1`.
@@ -16,6 +16,9 @@ import { groupByObserved } from '@/lib/motion-reveal';
  * skriveno stanje zivi u CSS-u iza klase `html.js-motion` koju dodaje JS, pa bez JS-a
  * nikad ne postoji. Detalji u `app/globals.css`, blok MOTION.
  */
+/** Mete pokreta; ista lista se koristi za znak hidratacije i za posmatranje. */
+const SELECTOR = '[data-reveal],[data-stagger],[data-wipe],[data-line]';
+
 export default function Motion() {
   const pathname = usePathname();
   const isFirstRender = useRef(true);
@@ -32,57 +35,93 @@ export default function Motion() {
     if (!root.classList.contains('js-motion')) return;
 
     /**
-     * ⚠️ WATCHDOG, DRUGA POLOVINA. Inline skripta je postavila tajmer koji sklanja
-     * `js-motion` ako se ovaj atribut ne pojavi na vreme. Postavljanjem atributa
-     * preuzimamo odgovornost: od ovog trenutka observer otkriva sadrzaj.
-     *
-     * Scenario zbog kog watchdog postoji: hidracija padne ili se ova komponenta iz bilo
-     * kog razloga ne montira. Bez njega bi sadrzaj ostao skriven zauvek, a `verify-nojs`
-     * to ne bi uhvatio jer gleda samo inline stilove.
-     *
-     * ⚠️ ZASTO SE CEKA VIDLJIVOST. Izmereno 2026-09-05: u tabu sa
-     * `visibilityState === "hidden"` browser ne isporucuje IntersectionObserver callback-ove
-     * uopste — provereno kontrolnim observer-om koji nema veze sa ovom komponentom, i ni on
-     * se nije okinuo. Prva verzija je atribut postavljala odmah po montiranju i time
-     * RAZORUZAVALA watchdog: komponenta je ziva, observer cuti, sadrzaj ostaje skriven.
-     *
-     * Realan scenario je otvaranje sajta u pozadinskom tabu (srednji klik, „open in new
-     * tab"). Sada se odgovornost preuzima tek kad tab stvarno postane vidljiv; do tada
-     * watchdog radi svoj posao i posle 3s otkriva sve bez animacije. Gore izgleda, ali se
-     * vidi — a to je jedini ishod koji sme da postoji.
+     * ⚠️ `H2` (2026-09-23). Sve ispod ceka `afterHydration`: dok se strana strimuje, React jos
+     * hidrira delove stabla, a klasa dodata pre toga daje neslaganje koje React NE ispravlja (i
+     * sledece iscrtavanje bi je skinulo, pa bi se sadrzaj ponovo sakrio). Odgovornost prema
+     * watchdog-u se preuzima tek ovde, unutar odlozenog dela — da odlaganje ne razoruza tajmer.
      */
-    let claimWhenVisible: (() => void) | null = null;
-    if (document.visibilityState === 'visible') {
-      root.setAttribute('data-motion-ready', '1');
-    } else {
-      claimWhenVisible = () => {
-        if (document.visibilityState !== 'visible') return;
-        root.setAttribute('data-motion-ready', '1');
-        if (claimWhenVisible) document.removeEventListener('visibilitychange', claimWhenVisible);
-      };
-      document.addEventListener('visibilitychange', claimWhenVisible);
-    }
-
-    // ⚠️ Jedan izlaz iz efekta odavde nadole: listener iznad mora da se skloni i kad meta
-    // nema (promena rute na stranicu bez `data-reveal` elemenata), inace curi po navigaciji.
-    const detach = () => {
-      if (claimWhenVisible) document.removeEventListener('visibilitychange', claimWhenVisible);
+    const host = {
+      now: () => performance.now(),
+      requestAnimationFrame: (handler: () => void) => window.requestAnimationFrame(handler),
+      cancelAnimationFrame: (handle: number) => window.cancelAnimationFrame(handle),
+      setTimeout: (handler: () => void, ms: number) => window.setTimeout(handler, ms),
+      clearTimeout: (handle: number) => window.clearTimeout(handle),
     };
 
     /**
-     * ⚠️ `[data-wipe]` i `[data-line]` dodati u `M1` (2026-09-09). Oba primitiva drze
-     * skriveno pocetno stanje iza `:not(.is-in)`, pa im observer MORA dodeliti klasu —
-     * bez ovog prosirenja bi ostali skriveni dok watchdog ne odradi svoje posle 3s.
+     * ⚠️ ZNAK DA JE REACT PREUZEO METU. React pri hidrataciji zakaci svoj cvor na DOM element pod
+     * kljucem `__reactFiber$…` (isti trag koji koristi React DevTools). Dok ga nema, meta je jos
+     * „samo HTML sa servera" i svaka izmena njenih atributa daje neslaganje.
+     *
+     * ⚠️ Oslanja se na unutrasnjost React-a, pa je namerno napisano kao znak koji SME da izostane:
+     * ako kljuca nema, `afterHydration` posle roka svejedno pokrece posao (vidi `lib/motion-reveal.ts`).
+     * Najgori ishod promene unutrasnjosti je danasnje ponasanje, ne skriven sadrzaj.
      */
-    const targets = document.querySelectorAll<HTMLElement>('[data-reveal],[data-stagger],[data-wipe],[data-line]');
-    if (!targets.length) return detach;
+    const hydrated = () => {
+      const meta = document.querySelector(SELECTOR);
+      return !!meta && Object.keys(meta).some((key) => key.startsWith('__reactFiber$'));
+    };
 
-    // ⚠️ `RD1`: posmatra se element iz `lib/motion-reveal.ts`, ne uvek sama meta — `[data-wipe]` je
-    // skriven isecanjem na nultu povrsinu, pa ga posmatrac na njemu samom nikad ne vidi. Vise meta
-    // moze deliti jedno posmatranje (roditelj koji je i sam meta).
-    const groups = groupByObserved(targets);
+    let teardown: (() => void) | null = null;
+    const cancelWait = afterHydration(host, hydrated, () => { teardown = start(); });
+    return () => {
+      cancelWait();
+      teardown?.();
+    };
 
-    const observer = new IntersectionObserver(
+    function start() {
+      /**
+       * ⚠️ WATCHDOG, DRUGA POLOVINA. Inline skripta je postavila tajmer koji sklanja
+       * `js-motion` ako se ovaj atribut ne pojavi na vreme. Postavljanjem atributa
+       * preuzimamo odgovornost: od ovog trenutka observer otkriva sadrzaj.
+       *
+       * Scenario zbog kog watchdog postoji: hidracija padne ili se ova komponenta iz bilo
+       * kog razloga ne montira. Bez njega bi sadrzaj ostao skriven zauvek, a `verify-nojs`
+       * to ne bi uhvatio jer gleda samo inline stilove.
+       *
+       * ⚠️ ZASTO SE CEKA VIDLJIVOST. Izmereno 2026-09-05: u tabu sa
+       * `visibilityState === "hidden"` browser ne isporucuje IntersectionObserver callback-ove
+       * uopste — provereno kontrolnim observer-om koji nema veze sa ovom komponentom, i ni on
+       * se nije okinuo. Prva verzija je atribut postavljala odmah po montiranju i time
+       * RAZORUZAVALA watchdog: komponenta je ziva, observer cuti, sadrzaj ostaje skriven.
+       *
+       * Realan scenario je otvaranje sajta u pozadinskom tabu (srednji klik, „open in new
+       * tab"). Sada se odgovornost preuzima tek kad tab stvarno postane vidljiv; do tada
+       * watchdog radi svoj posao i posle 3s otkriva sve bez animacije. Gore izgleda, ali se
+       * vidi — a to je jedini ishod koji sme da postoji.
+       */
+      let claimWhenVisible: (() => void) | null = null;
+      if (document.visibilityState === 'visible') {
+        root.setAttribute('data-motion-ready', '1');
+      } else {
+        claimWhenVisible = () => {
+          if (document.visibilityState !== 'visible') return;
+          root.setAttribute('data-motion-ready', '1');
+          if (claimWhenVisible) document.removeEventListener('visibilitychange', claimWhenVisible);
+        };
+        document.addEventListener('visibilitychange', claimWhenVisible);
+      }
+
+      // ⚠️ Jedan izlaz iz efekta odavde nadole: listener iznad mora da se skloni i kad meta
+      // nema (promena rute na stranicu bez `data-reveal` elemenata), inace curi po navigaciji.
+      const detach = () => {
+        if (claimWhenVisible) document.removeEventListener('visibilitychange', claimWhenVisible);
+      };
+
+      /**
+       * ⚠️ `[data-wipe]` i `[data-line]` dodati u `M1` (2026-09-09). Oba primitiva drze
+       * skriveno pocetno stanje iza `:not(.is-in)`, pa im observer MORA dodeliti klasu —
+       * bez ovog prosirenja bi ostali skriveni dok watchdog ne odradi svoje posle 3s.
+       */
+      const targets = document.querySelectorAll<HTMLElement>(SELECTOR);
+      if (!targets.length) return detach;
+
+      // ⚠️ `RD1`: posmatra se element iz `lib/motion-reveal.ts`, ne uvek sama meta — `[data-wipe]` je
+      // skriven isecanjem na nultu povrsinu, pa ga posmatrac na njemu samom nikad ne vidi. Vise meta
+      // moze deliti jedno posmatranje (roditelj koji je i sam meta).
+      const groups = groupByObserved(targets);
+
+      const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
           if (!entry.isIntersecting) continue;
@@ -97,13 +136,14 @@ export default function Motion() {
       // cele sekcije. `data-wipe` stoji na pojedinacnim naslovima, pa niz prag sada znaci
       // da i sitan element okine cim udje, a ne da mora da se pokaze pola njega.
       { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
-    );
+      );
 
-    for (const observed of groups.keys()) observer.observe(observed);
-    return () => {
+      for (const observed of groups.keys()) observer.observe(observed);
+      return () => {
       observer.disconnect();
       detach();
-    };
+      };
+    }
   }, [pathname]);
 
   // ── sweep: prelaz rute ─────────────────────────────────────────────────────

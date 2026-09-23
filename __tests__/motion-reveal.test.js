@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { observedFor, groupByObserved } from '@/lib/motion-reveal';
+import { observedFor, groupByObserved, afterHydration } from '@/lib/motion-reveal';
 
 /**
  * `RD1` — koji element posmatrac vidljivosti gleda za metu pokreta. Bez browsera: vitest ovde radi
@@ -60,5 +60,136 @@ describe('groupByObserved', () => {
     expect(all).toHaveLength(2);
     expect(all.includes(h1)).toBe(true);
     expect(all.includes(block)).toBe(true);
+  });
+});
+
+/**
+ * `H2` (2026-09-23) — kada sme da se dira DOM.
+ *
+ * ⚠️ ZASTO POSTOJI. Posmatrac je dodavao `is-in` dok React jos hidrira deo stabla koji se strimuje,
+ * pa je React prijavljivao neslaganje atributa koje „nece ispraviti": element nosi klasu koju React
+ * ne zna da postoji, i sledece iscrtavanje tog dela bi je skinulo — a sadrzaj iza `:not(.is-in)` je
+ * skriven. Izmereno pre popravke: 22 upozorenja na 30 ucitavanja (10 ruta x 3 prolaza).
+ *
+ * Zato se rad odlaze do `load`, pa jos jedan kadar. Host je najmanji mogucí (`readyState`, `load`,
+ * `requestAnimationFrame`), da se ponasanje proverava bez browsera.
+ */
+function host() {
+  const h = {
+    vreme: 0,
+    kadrovi: [],
+    tajmeri: [],
+    now: () => h.vreme,
+    requestAnimationFrame: (fn) => { h.kadrovi.push(fn); return h.kadrovi.length; },
+    cancelAnimationFrame: (id) => { h.kadrovi[id - 1] = null; },
+    setTimeout: (fn, ms) => { h.tajmeri.push({ fn, kada: h.vreme + ms }); return h.tajmeri.length; },
+    clearTimeout: (id) => { h.tajmeri[id - 1] = null; },
+    /** odigra jedan kadar; `ms` pomera sat pre njega */
+    kadar(ms = 16) { h.vreme += ms; h.tajmeriNaRedu(); const red = h.kadrovi.splice(0); red.forEach((fn) => fn && fn()); },
+    /** pomera sat BEZ kadra — tako izgleda tab u kome kadrovi ne stizu */
+    bezKadra(ms) { h.vreme += ms; h.tajmeriNaRedu(); },
+    tajmeriNaRedu() {
+      for (const t of h.tajmeri) if (t && t.kada <= h.vreme) { t.fn(); h.tajmeri[h.tajmeri.indexOf(t)] = null; }
+    },
+  };
+  return h;
+}
+
+describe('afterHydration', () => {
+  it('ne pokrece posao dok React nije preuzeo metu', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => false, () => { pokrenuto += 1; });
+    for (let i = 0; i < 5; i++) h.kadar();
+    expect(pokrenuto).toBe(0);
+  });
+
+  it('pokrece posao u prvom kadru posle preuzimanja', () => {
+    const h = host();
+    let preuzeto = false;
+    let pokrenuto = 0;
+    afterHydration(h, () => preuzeto, () => { pokrenuto += 1; });
+    h.kadar();
+    expect(pokrenuto).toBe(0);
+    preuzeto = true;
+    h.kadar();
+    expect(pokrenuto).toBe(1);
+  });
+
+  it('pokrece posao samo jednom', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => true, () => { pokrenuto += 1; });
+    h.kadar();
+    h.kadar();
+    expect(pokrenuto).toBe(1);
+  });
+
+  /* ⚠️ Rok postoji da watchdog ne ostane jedina zastita: ako znak preuzimanja nikad ne stigne
+   *  (React promeni unutrasnjost), sadrzaj se otkriva svakako, i to PRE nego sto watchdog na 3 s
+   *  skine `js-motion`. */
+  it('posle roka pokrece posao i bez preuzimanja', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => false, () => { pokrenuto += 1; }, 2500);
+    h.kadar(2000);
+    expect(pokrenuto).toBe(0);
+    h.kadar(600);
+    expect(pokrenuto).toBe(1);
+  });
+
+  /* ⚠️ Ni znak preuzimanja ne sme da visi o kadru: izmereno u produkcijskom buildu, u jednom prolazu
+   *  kadar nije stigao 2,6 s, pa je sadrzaj cekao rok iako je React metu preuzeo na 172 ms. */
+  it('primecuje preuzimanje i kad kadrovi ne stizu', () => {
+    const h = host();
+    let preuzeto = false;
+    let pokrenuto = 0;
+    afterHydration(h, () => preuzeto, () => { pokrenuto += 1; }, 2500);
+    h.bezKadra(60);
+    expect(pokrenuto).toBe(0);
+    preuzeto = true;
+    h.bezKadra(60);
+    expect(pokrenuto).toBe(1);
+  });
+
+  /* ⚠️ Rok NE SME da visi o kadru. Izmereno u produkcijskom buildu: kadar je jednom kasnio 2,6 s, a
+   *  rok se proveravao samo unutar njega — pa je sadrzaj stajao skriven dok kadar ne stigne. */
+  it('rok pokrece posao i kad kadrovi uopste ne stizu', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => false, () => { pokrenuto += 1; }, 2500);
+    h.bezKadra(2600);
+    expect(pokrenuto).toBe(1);
+  });
+
+  it('kad posao krene po kadru, tajmer se gasi i ne pokrece ga drugi put', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => true, () => { pokrenuto += 1; }, 2500);
+    h.kadar();
+    h.bezKadra(5000);
+    expect(pokrenuto).toBe(1);
+  });
+
+  /* ⚠️ Promena rute gasi efekat pre nego sto kadar stigne; posao tada NE SME da se pokrene, inace
+   *  posmatrac ostane na staroj strani. */
+  it('otkazivanje zaustavlja i kadar i tajmer', () => {
+    const h = host();
+    let preuzeto = false;
+    let pokrenuto = 0;
+    const otkazi = afterHydration(h, () => preuzeto, () => { pokrenuto += 1; }, 2500);
+    otkazi();
+    preuzeto = true;
+    h.kadar();
+    h.bezKadra(5000);
+    expect(pokrenuto).toBe(0);
+  });
+
+  /* Kad je meta vec preuzeta u trenutku montiranja, nema sta da se ceka. */
+  it('pokrece posao odmah ako je meta vec preuzeta', () => {
+    const h = host();
+    let pokrenuto = 0;
+    afterHydration(h, () => true, () => { pokrenuto += 1; });
+    expect(pokrenuto).toBe(1);
   });
 });
