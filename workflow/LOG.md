@@ -6,6 +6,18 @@
 
 ---
 
+## non-batch(workflow) — predaja sesije: `TTI4` predlog čeka „idi" · 2026-09-24
+
+**Changed files:** `workflow/STATE.md` · ovaj `LOG.md`
+
+Pavle je tražio da ostatak sajta prati logo i TTI. Pravac isproban u kopiji van repoa i prikazan kao poređenje; Pavle je
+pre odgovora tražio novu sesiju. STATE → „Sledeće" nosi pet tačaka predloga, plan (`TTI4`, STANDARD + `manual`),
+putanje kopije, skripte i poređenja, i upozorenje o censusu `K1/A`. Repo kod nije diran.
+
+**NEXT STEP:** nova sesija — `/kickoff`, pa `TTI4` na Pavlovo „idi".
+
+---
+
 ## non-batch(release) — `TTI3` spojen i pušen; build živ · 2026-09-24
 
 **Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`

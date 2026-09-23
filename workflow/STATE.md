@@ -7,7 +7,17 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **domen i mejl za `TTI1`**, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
+- **Sledeće:** **`TTI4` — ostatak sajta u identitetu loga** (Pavle 2026-09-24: *„treba prilagoditi i ostatak sajta
+  logo-u i generalno TTI-u"*). Predlog je prikazan (danas | predlog, naslovna/How it works/Apply), **čeka Pavlovo „idi"**
+  ili izbacivanje neke tačke: (1) krem i topla siva → bela i neutralna siva, (2) fotografije crno-bele, (3) naslovi u
+  masnom kurzivu kao „TTI", (4) crvena dugmad sa belim tekstom (i APPLY NOW, forme), (5) crvena linija ispod zaglavlja i
+  iznad podnožja. Tekst, forme i raspored isti. Plan: STANDARD + `manual`, grana `tti4-identitet`, EXPECTED
+  `app/globals.css` · `app/global-error.tsx` · `__tests__/globals-css.test.js` + workflow fajlovi. Isproban u kopiji van
+  repoa: `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/app` (prekidač nije potreban — kopija je ceo predlog; `tti4-preview` u `.claude/launch.json`, port 3100),
+  transformacija boja `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/neutral.py` (sve ne-crvene boje van komentara → ista svetlina u sivoj), poređenje
+  `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/shots/cmp.jpg`. ⚠️ Pri prenosu u repo **spojiti** pravila sa postojećim `html:root .sub-hero`, `.foot`,
+  `.btn-primary`, `.card--cta .btn-primary` umesto dopisivanja (census `K1/A`); `global-error.tsx` ima boje upisane u kod.
+  Posle toga — domen i mejl za `TTI1`, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
   `CNAME www → cname.vercel-dns.com`, **MX GoDaddy pošte se ne dira**) i Resend domen `ttirecruiting.us` radi Pavle;
   Vercel domen + env (`NEXT_PUBLIC_SITE_URL`, `LEAD_NOTIFICATION_EMAIL`, `LEAD_FROM_EMAIL` posle potvrde Resend-a)
   radi agent uz Pavlovo „da"; zatim `verify` + `rendered` na `ttirecruiting.us` i probna prijava. Google indeks:
