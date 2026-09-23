@@ -37,7 +37,7 @@ export default function StructuredData() {
             name: 'TTIrecruiting',
             legalName: 'TTIrecruiting',
             url: SITE_URL,
-            logo: new URL('/favicon.svg', SITE_URL).href,
+            logo: new URL('/logo-512.png', SITE_URL).href,
             image: SOCIAL_IMAGE.url,
             description: SITE_DESCRIPTION,
             email: EMAIL,

@@ -90,8 +90,10 @@ describe('globals.css', () => {
      *  `RD7` ga je spustio za jedan (143 -> 142): traka sa formom posle heroja je uklonjena, pa
      *  `.home-callback .home-section-top` (stajao i sam i u grupi za telefon) vise ne postoji.
      *  `TTI1` ga je spustio za jedan (142 -> 141): pravila 3D scene i pokreta su obrisana zajedno sa scenom
-     *  (`K1/B` ih je prijavio kao mrtve); broj je izmeren posle brisanja, ne izracunat. */
-    expect(redundant).toBe(141);
+     *  (`K1/B` ih je prijavio kao mrtve); broj je izmeren posle brisanja, ne izracunat.
+     *  `TTI3` ga je spustio za dva (141 -> 139): znak „TTI" (`.brand-mark`) zamenjen je logom firme, pa su obrisana
+     *  sva njegova pravila, medju kojima i dva ponovljena. Izmereno posle brisanja. */
+    expect(redundant).toBe(139);
   });
 
   it('K1/B — nijedna klasa u CSS-u nije bez ijednog pomena u izvoru', () => {

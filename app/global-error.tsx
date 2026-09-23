@@ -40,7 +40,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
               fontSize: '11px',
               fontWeight: 700,
               letterSpacing: '.28em',
-              color: '#d5a06d',
+              color: '#f0525a',
             }}
           >
             SOMETHING BROKE

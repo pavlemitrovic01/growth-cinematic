@@ -22,7 +22,9 @@
    nje (desktop `.journey-shade`) namerno su ostali na staroj zelenoj: podeseni su uz scenu (`RD3-LOOK`) i
    menjaju se samo uz poredjenje varijanti (`L39`).
    ─────────────────────────────────────────────────────────────────────────── */
-:root{--asphalt:#121314;--bone:#f1e7d5;--ink:#1c1c1b;--clay:#c8662e;--line:rgba(241,231,213,.25);--stone:#4b4a47;--bone-dim:#e6dfce;--clay-deep:#8a3d12;--clay-mid:#86502b;--clay-soft:#d5a06d;--clay-light:#e2b183;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
+/* TTI3 (2026-09-23): `--clay*` nose CRVENU iz loga (#e2111a svetla, #b10713 tamna), ne vise glinu -- ime tokena je
+   ostalo da se ne bi diralo stotinu pravila. `--clay-deep` na krem podlozi 5,9:1, `--clay-light` na asfaltu 5,4:1. */
+:root{--asphalt:#121314;--bone:#f1e7d5;--ink:#1c1c1b;--clay:#e2111a;--line:rgba(241,231,213,.25);--stone:#4b4a47;--bone-dim:#e6dfce;--clay-deep:#b10713;--clay-mid:#9e0f18;--clay-soft:#f0525a;--clay-light:#ff5a60;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
 /* ─── PISMO (T1, 2026-09-14) ─────────────────────────────────────────────────
    Pismo sajta je Arial (Pavlova odluka, `T-FONT`). "Growth Sans" postoji samo da uredjaji BEZ
    Arial-a — prakticno Android — dobiju Arimo (OFL, iste sirine slova kao Arial) umesto svog
@@ -101,7 +103,7 @@
 .af-field input,.af-field select,.af-field textarea{padding:13px 14px;border:1px solid rgba(28,28,27,.28);border-radius:8px;background:#fff;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
 .af-field textarea{resize:vertical;line-height:1.5}
 .af-field input:hover,.af-field select:hover,.af-field textarea:hover{border-color:rgba(28,28,27,.5)}
-.af-field input:focus,.af-field select:focus,.af-field textarea:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(200,102,46,.18)}
+.af-field input:focus,.af-field select:focus,.af-field textarea:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(226,17,26,.18)}
 .af-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:34px;padding:9px 9px 9px 22px;border:0;background:var(--ink);color:var(--bone);border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer}
 .af-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--clay);color:#fff;font-size:17px;transition:transform .3s ease}
 .af-submit:hover b,.af-submit:focus-visible b{transform:rotate(45deg)}
@@ -149,7 +151,6 @@
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 6vw;border-bottom:1px solid rgba(28,28,27,.2)}
 .subpage .brand{display:inline-flex;align-items:center;gap:11px;font-size:14px;font-weight:800;letter-spacing:.2em;flex-shrink:0}
-.subpage .brand-mark{display:grid;place-items:center;width:32px;height:32px;border:1px solid rgba(28,28,27,.42);border-radius:50%;color:var(--clay-deep);letter-spacing:-.08em}
 .nav-links{display:flex;gap:26px;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
 /* ⚠️ Ovde su do 2026-09-05 stajala dva MRTVA pravila:
      .nav-links a{opacity:.72;transition:opacity .2s ease}
@@ -207,7 +208,7 @@
 .card p{margin:0 0 12px;font-size:13.5px;line-height:1.65;opacity:.78}
 .card p:last-child{margin-bottom:0}
 .card--cta{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;background:rgba(28,28,27,.05)}
-.sub-caveat{margin:0;padding:22px 24px;border-left:3px solid var(--clay);background:rgba(200,102,46,.07);font-size:14px;line-height:1.7}
+.sub-caveat{margin:0;padding:22px 24px;border-left:3px solid var(--clay);background:rgba(226,17,26,.07);font-size:14px;line-height:1.7}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;transition:.25s ease;border:1px solid transparent}
 .btn-primary{background:var(--ink);color:var(--bone)}
 .btn-primary:hover,.btn-primary:focus-visible{background:#0b0c0d}
@@ -251,7 +252,7 @@
 .post-body{max-width:70ch;display:flex;flex-direction:column;gap:18px;font-size:15px;line-height:1.75}
 .post-body p{margin:0;opacity:.85}
 .post-subhead{margin:14px 0 0;font-size:18px;letter-spacing:-.02em;opacity:1}
-.post-callout{padding:20px 22px;border-left:3px solid var(--clay);background:rgba(200,102,46,.07);font-size:14px;line-height:1.7}
+.post-callout{padding:20px 22px;border-left:3px solid var(--clay);background:rgba(226,17,26,.07);font-size:14px;line-height:1.7}
 .post-source{margin-top:10px!important;padding-top:16px;border-top:1px solid rgba(28,28,27,.2);font-size:12.5px;opacity:.68!important}
 .post-source a{text-decoration:underline;text-underline-offset:2px}
 .post-cta{margin-top:10px;padding:26px;border-radius:14px;background:rgba(28,28,27,.06);text-align:center}
@@ -289,11 +290,9 @@
 /* A readable photographic story is the baseline. Only a successfully rendered
    desktop canvas enables the sticky chapters. No script is needed to reveal copy. */
 .brand{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:800;letter-spacing:.2em}
-.brand-mark{display:grid;place-items:center;width:34px;height:34px;border:1px solid currentColor;border-radius:50%;color:#ad5727;letter-spacing:-.08em}
 .eyebrow{margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:.2em}
 .home{background:var(--bone);color:var(--ink)}
 .home .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
-.home .nav .brand-mark{color:var(--clay-soft);border-color:var(--line)}
 .home .nav-cta{background:var(--bone);color:var(--ink)}
 .home .nav-toggle{color:var(--bone);border-color:var(--line)}
 .home .nav-links{border-color:var(--line)}
@@ -420,7 +419,6 @@
 /* Shared editorial rhythm across the full site. */
 main:focus{outline:none}
 .subpage .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
-.subpage .nav .brand-mark{color:var(--clay-light);border-color:var(--line)}
 .subpage .nav-cta{background:var(--bone);color:var(--ink)}
 .subpage .nav-toggle{color:var(--bone);border-color:var(--line)}
 .subpage .nav-links,.subpage .nav-links a{border-color:var(--line)}
@@ -548,14 +546,12 @@ main:focus{outline:none}
   .sub-grid{grid-template-columns:1fr;gap:40px}.af-row{grid-template-columns:repeat(2,minmax(0,1fr))}.af-field:has(select) label{min-height:42px}.foot-grid{grid-template-columns:1fr 1fr}.contact-direct{align-items:flex-start;flex-direction:column}.qa{grid-template-columns:1fr 1fr}.qa-copy{grid-column:1/-1}.post-card{grid-template-columns:1fr;gap:16px}.post-card .post-meta{grid-row:auto;flex-direction:row;gap:12px}.sub-hero{padding:48px 6vw}.sub-body{padding-top:40px}
 }
 @media(max-width:720px){
-  .sub-hero,.subpage--form .sub-hero{padding:36px 20px 40px}.sub-body{padding:32px 20px 56px}.sub-hero h1,.subpage--form .sub-hero h1{font-size:clamp(36px,9vw,56px)}.subpage--article .sub-hero h1{font-size:clamp(32px,8vw,42px);line-height:1.13}.sub-lede{font-size:16px;margin-top:20px}.sub-hero .eyebrow{font-size:12px}.foot-grid{grid-template-columns:1fr}.foot{padding-bottom:calc(88px + env(safe-area-inset-bottom))}.af-row{grid-template-columns:1fr;gap:24px}.af-field:has(select) label{min-height:0}.qa{grid-template-columns:1fr;padding:28px 20px}.qa-copy,.qa-field,.qa-submit{grid-column:1}.qa-submit{margin:0}.contact-quick .qa{padding:24px 20px}.form-heading h2{font-size:24px}.card{padding:24px 0}.card--cta{padding:24px}.contact-actions{width:100%}.contact-actions .btn{flex:1}.post-body{font-size:17px}.post-subhead{font-size:25px}.post-card h2{font-size:27px}.post-meta{gap:10px}.faq-q{font-size:17px}.page-next{align-items:flex-start;flex-direction:column}.nav-cta{font-size:11px}.nav .brand{font-size:12px;gap:8px}.nav .brand-mark{width:30px;height:30px}.journey-eyebrow{font-size:12px;letter-spacing:.13em}
+  .sub-hero,.subpage--form .sub-hero{padding:36px 20px 40px}.sub-body{padding:32px 20px 56px}.sub-hero h1,.subpage--form .sub-hero h1{font-size:clamp(36px,9vw,56px)}.subpage--article .sub-hero h1{font-size:clamp(32px,8vw,42px);line-height:1.13}.sub-lede{font-size:16px;margin-top:20px}.sub-hero .eyebrow{font-size:12px}.foot-grid{grid-template-columns:1fr}.foot{padding-bottom:calc(88px + env(safe-area-inset-bottom))}.af-row{grid-template-columns:1fr;gap:24px}.af-field:has(select) label{min-height:0}.qa{grid-template-columns:1fr;padding:28px 20px}.qa-copy,.qa-field,.qa-submit{grid-column:1}.qa-submit{margin:0}.contact-quick .qa{padding:24px 20px}.form-heading h2{font-size:24px}.card{padding:24px 0}.card--cta{padding:24px}.contact-actions{width:100%}.contact-actions .btn{flex:1}.post-body{font-size:17px}.post-subhead{font-size:25px}.post-card h2{font-size:27px}.post-meta{gap:10px}.faq-q{font-size:17px}.page-next{align-items:flex-start;flex-direction:column}.nav-cta{font-size:11px}.nav .brand{font-size:12px;gap:8px}.journey-eyebrow{font-size:12px;letter-spacing:.13em}
 }
 @media(forced-colors:active){.sub-hero h1 em,.home-section h2 em{-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;color:CanvasText}.journey-cta,.btn,.nav-cta{border:1px solid ButtonText}}
 
 .rail-steps{list-style:decimal}
 @media(max-width:720px){.nav-call{display:none}}
-
-.brand-mark{border:0}.brand-mark svg{width:100%;height:100%}
 @media(min-width:1201px){.qa-submit{grid-row:1}.qa .consent{grid-row:2}}
 @media(max-width:720px){body:has(input:focus,select:focus,textarea:focus) .mobar{visibility:hidden}}
 /* Reserve the same first-chapter position before and after WebGL initializes. */
@@ -1064,7 +1060,6 @@ main:focus{outline:none}
 /* TTI1: bez telefona mobilna traka ima dve akcije (Email + Apply). */
 .mobar--two{grid-template-columns:1fr 1.3fr}
 /* TTI1: znak „G" je zamenjen tekstom „TTI" u istom krugu. */
-.brand-mark{font-size:10px;font-weight:800;letter-spacing:0}
 
 
 /* ═══ TTI2 — obican uredan izgled podstranica (Pavle 2026-09-23) ═══════════════════════════════════
@@ -1077,7 +1072,6 @@ html:root .subpage{background:var(--pg)}
 
 /* Navigacija: obicna gornja traka */
 html:root .subpage .nav{background:var(--nv-bg);color:var(--nv-fg);border-bottom:1px solid var(--nv-line)}
-html:root .subpage .nav .brand-mark{border-color:var(--nv-line)}
 @media(min-width:1025px){
   html:root .subpage .nav{position:sticky;top:0;inset:auto;z-index:60;display:flex;align-items:center;gap:28px;padding:12px max(24px,calc((100% - 1200px)/2));pointer-events:auto}
   html:root .subpage .nav .brand,
@@ -1158,7 +1152,6 @@ html:root .page-next{padding:28px 32px;border-radius:18px;background:var(--card)
 html:root .foot h2{color:var(--clay-light)}
 html:root .foot-tag{color:#c9c2b5;opacity:1}
 html:root .foot-legal{color:#b9b2a5;border-top-color:var(--line)}
-html:root .foot .brand-mark{color:var(--clay-light);border-color:var(--line)}
 /* Pokret: blago podizanje pri skrolu (samo uz JS i bez reduced-motion) */
 @media(prefers-reduced-motion:no-preference){
   .rv{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
@@ -1193,3 +1186,10 @@ html:root .foot{background:var(--asphalt);color:var(--bone);border-top:1px solid
 html:root .home-hero h1 em{color:var(--clay-light);-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
 html:root .home-section h2 em{-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;color:var(--clay-deep);font-weight:800}
 html:root .home-pay h2 em,html:root .home-guard h2 em,html:root .home-close h2 em{color:var(--clay-light)}
+/* TTI3: logo firme (krug sa crvenim „TTI") umesto znaka „TTI" iz TTI1. Ime pored ostaje -- na 44 px „RECRUITING" u
+   krugu nije citljiv. `.brand-mark` (i sva njegova pravila) je obrisan zajedno sa znakom. */
+.brand-logo{display:block;flex-shrink:0;width:44px;height:44px;border-radius:50%}
+.foot .brand-logo{width:64px;height:64px}
+@media(max-width:767px){.nav .brand-logo{width:38px;height:38px}}
+/* TTI3: nadnaslov u tamnoj bocnoj kartici -- tamna crvena na asfaltu se ne cita; svetla crvena 5,4:1. */
+html:root .card--cta .rail-eyebrow{color:var(--clay-light)!important}

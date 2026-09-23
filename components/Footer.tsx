@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import ConsentSettingsButton from './ConsentSettingsButton';
 import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
 
@@ -23,7 +24,7 @@ export default function Footer() {
       <div className="foot-grid">
         <div className="foot-brand">
           <Link className="brand" href="/" aria-label="TTIrecruiting home">
-            <span className="brand-mark" aria-hidden="true">TTI</span>
+            <Image className="brand-logo" src="/logo-192.png" width={64} height={64} alt="" />
             <span>TTIrecruiting</span>
           </Link>
           <p className="foot-tag">

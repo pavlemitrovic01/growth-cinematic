@@ -14,7 +14,11 @@ export const metadata: Metadata = {
   robots: { index: IS_LIVE, follow: IS_LIVE },
   openGraph: { title: SITE_TITLE, description: SITE_DESCRIPTION, siteName: 'TTIrecruiting', locale: 'en_US', type: 'website', images: [SOCIAL_IMAGE] },
   twitter: { card: 'summary_large_image', title: SITE_TITLE, description: SITE_DESCRIPTION, images: [SOCIAL_IMAGE.url] },
-  icons: { icon: '/favicon.svg', shortcut: '/favicon.svg' },
+  icons: {
+    icon: [{ url: '/icon-32.png', sizes: '32x32', type: 'image/png' }, { url: '/logo-192.png', sizes: '192x192', type: 'image/png' }],
+    shortcut: '/icon-32.png',
+    apple: '/apple-touch-icon.png',
+  },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

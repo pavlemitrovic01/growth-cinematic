@@ -1,6 +1,7 @@
 'use client';
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
@@ -72,7 +73,7 @@ export default function Nav() {
   }, [pathname]);
   return (
     <header className="nav" ref={header}>
-      <Link className="brand" href="/" aria-label="TTIrecruiting home"><span className="brand-mark" aria-hidden="true">TTI</span><span>TTIrecruiting</span></Link>
+      <Link className="brand" href="/" aria-label="TTIrecruiting home"><Image className="brand-logo" src="/logo-96.png" width={44} height={44} alt="" priority /><span>TTIrecruiting</span></Link>
       {/* RD4: pilula je dugme ODMAH ispred `<nav>`, bez omotaca. Na telefonu je skrivena. ⚠️ Omotac sa
           `display:contents` je izmereno menjao zagladjivanje zaglavlja na telefonu (raspored isti, pikseli ne), pa ga nema. */}
       <button ref={pill} type="button" className="nav-pill" aria-expanded={open} aria-controls="nav-links" onClick={() => setOpen(!open)}>
