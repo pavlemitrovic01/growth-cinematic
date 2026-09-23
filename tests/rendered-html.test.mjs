@@ -213,7 +213,8 @@ test('homepage includes the full story, navigation and a real application path i
   const response = await get('/');
   const html = await response.text();
   assert.equal((html.match(/<h1[\s>]/g) || []).length, 1);
-  for (const text of ['Your next route.', 'Partner carriers.', 'Cost to drivers.', 'get-started', '/for-carriers', '/about', '/truckers-lounge']) assert.ok(html.includes(text), text);
+  // TTI1: „Partner carriers." i „Cost to drivers." su bili poglavlja 3D scene i otisli su sa njom; `$0` nosi sekcija naplate.
+  for (const text of ['Your next route.', 'partner carriers', 'How we get paid.', 'get-started', '/for-carriers', '/about', '/truckers-lounge']) assert.ok(html.includes(text), text);
   assert.ok(!html.includes('cdn.jsdelivr.net'));
   assert.ok(!html.includes('verified carriers'));
   assert.ok(!html.includes('+10000000000'));
@@ -331,7 +332,8 @@ test('G1/B — data-line nikad unutar data-wipe elementa', async () => {
 /** C — census. ⚠️ TRIPWIRE, NE DEKORACIJA. Promena ovih brojeva je legitimna, ali ide u ISTOM
  *  batchu koji menja markup — nikad kao zaseban „fix testa".
  *
- *  ⚠️ `data-beat` (hero) se NE broji: vozi ga `HeroExperience.tsx`, nije iz recnika pokreta.
+ *  ⚠️ TTI1 (2026-09-23): `Motion.tsx` je uklonjen, pa atributi vise nista ne pokrecu -- census ostaje kao
+ *  tripwire nad markupom naslovne dok se atributi ne obrisu zasebnim poslom.
  *  Census pokriva tacno ono sto `Motion.tsx:76` posmatra — taj red je izvor istine za spisak
  *  ispod, koji je ovde nuzno dupliran. */
 test('G1/C — census motion atributa na naslovnoj', async () => {
@@ -517,7 +519,7 @@ test('T1/A — Growth Sans: instaliran Arial prvi, Arimo samo kao zamena, bez pr
 test('RD7 — naslovna po SMER-B: proces posle heroja, brza forma samo u zavrsnom pozivu', async () => {
   const html = await (await get('/')).text();
   const at = (cls) => html.search(new RegExp(`<section[^>]*class="${cls}[ "]`));
-  const order = ['journey', 'home-process', 'home-pay', 'home-values', 'home-guard', 'home-founder', 'home-faq', 'home-close'];
+  const order = ['home-hero', 'home-process', 'home-pay', 'home-values', 'home-guard', 'home-founder', 'home-faq', 'home-close'];
   const pos = order.map(at);
   order.forEach((cls, i) => assert.ok(pos[i] >= 0, `sekcija ${cls} ne postoji`));
   for (let i = 1; i < order.length; i++) assert.ok(pos[i - 1] < pos[i], `redosled: ${order[i - 1]} mora pre ${order[i]}`);
@@ -557,4 +559,20 @@ test('RD4 — pilula je dugme koje kontrolise #nav-links; noscript navigacije ne
     assert.equal(widths.length, 1, `${path}: noscript pravilo navigacije nije nadjeno`);
     assert.ok(widths[0] <= 1024, `${path}: noscript navigacije vazi do ${widths[0]} px — razbija pilulu na 1025+`);
   }
+});
+
+/**
+ * `TTI1` (Pavle 2026-09-23) — obican sajt: naslovna nema 3D scenu, heroj je staticna fotografija.
+ *
+ * ⚠️ ZASTO KAPIJA. Scena je bila najveci deo JS-a i jedini izvor gresaka hidratacije (`H2`). Kapija meri da se ne vrati
+ * tiho: nijedan `<canvas>`, nijedan trag `journey` markupa, a heroj ima fotografiju i jedini `<h1>`.
+ */
+test('TTI1 — naslovna bez 3D scene: staticni heroj sa fotografijom', async () => {
+  const html = await (await get('/')).text();
+  assert.ok(!/<canvas[\s>]/.test(html), 'naslovna ne sme imati <canvas>');
+  assert.ok(!html.includes('journey-canvas') && !/class="journey[ "]/.test(html), 'naslovna ne sme imati markup 3D scene');
+  const hero = html.search(/<section[^>]*class="home-hero[ "]/);
+  assert.ok(hero >= 0, 'heroj `home-hero` ne postoji');
+  assert.ok(html.indexOf('/images/hero-01-night.jpg', hero) > hero, 'heroj mora imati fotografiju');
+  assert.ok(html.indexOf('<h1', hero) > hero, '<h1> mora biti u heroju');
 });

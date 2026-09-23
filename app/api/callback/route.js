@@ -3,6 +3,7 @@ import { isValidPhone, isConsentGranted, buildConsentRecord, isWithinLength, MAX
 import { isEmailConfigured, sendLead } from '@/lib/email';
 import { checkRateLimit, isHoneypotTripped, HONEYPOT_FIELD, clientIp } from '@/lib/rate-limit';
 import { recordLead } from '@/lib/leads';
+import { REACH_US } from '@/lib/contact';
 
 // F1a: Resend slanje ukljuceno. Uspeh se vraca samo ako je mejl stvarno otisao.
 
@@ -12,7 +13,7 @@ export async function POST(req) {
     const limit = await checkRateLimit(req, 'callback');
     if (!limit.ok) {
       return NextResponse.json(
-        { error: 'Too many requests. Please try again later, or call us directly.' },
+        { error: `Too many requests. Please try again later, or ${REACH_US}.` },
         { status: 429 }
       );
     }
@@ -47,7 +48,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Validation failed', fields: errors }, { status: 400 });
     }
 
-    const consentRecord = buildConsentRecord('Capljinac LLC only (one-to-one)', clientIp(req));
+    const consentRecord = buildConsentRecord('TTIrecruiting only (one-to-one)', clientIp(req));
 
     // ⚠️ Upis IDE I OVDE, pre 503-a. Bez ovoga baza ne pokriva bas slucaj zbog kojeg
     // postoji: mejl nije podesen -> ruta izlazi rano -> lead nestaje bez traga.
@@ -63,7 +64,7 @@ export async function POST(req) {
       });
       console.error('[callback] Email nije podesen — callback zahtev NIJE poslat.', { phone });
       return NextResponse.json(
-        { error: 'Callback requests are temporarily unavailable. Please call us directly.' },
+        { error: `Callback requests are temporarily unavailable. Please ${REACH_US} instead.` },
         { status: 503 }
       );
     }
@@ -94,7 +95,7 @@ export async function POST(req) {
         consentRecord,
       });
       return NextResponse.json(
-        { error: 'Callback requests are temporarily unavailable. Please call us directly.' },
+        { error: `Callback requests are temporarily unavailable. Please ${REACH_US} instead.` },
         { status: 503 }
       );
     }

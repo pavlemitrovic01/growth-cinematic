@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import ConsentSettingsButton from './ConsentSettingsButton';
-import { PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
 
 /**
  * Footer. Struktura i tekst preneti iz MAIN-a (`components/Footer.jsx`).
@@ -10,8 +10,8 @@ import { PHONE_DISPLAY, PHONE_TEL_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact'
  * ostaje isti: recenica razdvaja agenciju od prevoznika i poslodavca, sto je tvrdnja
  * o pravnom odnosu, ne marketinski tekst.
  *
- * ⚠️ Ime firme je „Capljinac LLC" (MAIN D17, Pavlova direktna potvrda), ne
- * „GROWTH.CO Recruiting Group LLC" — ta druga varijanta je bila halucinacija koju je
+ * ⚠️ Ime firme je „TTIrecruiting" (MAIN D17, Pavlova direktna potvrda), ne
+ * „TTIrecruiting Recruiting Group LLC" — ta druga varijanta je bila halucinacija koju je
  * CL2 uklonio sa 8 mesta.
  *
  * ⚠️ FMCSA/USDOT/MC red NE POSTOJI namerno. U MAIN-u je uklonjen iz footera dok se ne
@@ -22,9 +22,9 @@ export default function Footer() {
     <footer className="foot">
       <div className="foot-grid">
         <div className="foot-brand">
-          <Link className="brand" href="/" aria-label="GROWTH home">
-            <span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" /><path d="M25 17a10 10 0 1 0 1 14v-7h-9" fill="none" stroke="currentColor" strokeWidth="3" /><path d="m29 20 8-8m-8 0h8v8" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg></span>
-            <span>GROWTH</span>
+          <Link className="brand" href="/" aria-label="TTIrecruiting home">
+            <span className="brand-mark" aria-hidden="true">TTI</span>
+            <span>TTIrecruiting</span>
           </Link>
           <p className="foot-tag">
             Honest CDL-A driver recruiting. We match drivers with partner carriers across the 48
@@ -68,9 +68,11 @@ export default function Footer() {
         <div>
           <h2>Get in touch</h2>
           <ul>
-            <li>
-              <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>
-            </li>
+            {HAS_PHONE ? (
+              <li>
+                <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>
+              </li>
+            ) : null}
             <li>
               <a href={EMAIL_HREF}>{EMAIL}</a>
             </li>
@@ -80,11 +82,11 @@ export default function Footer() {
 
       <div className="foot-legal">
         <p>
-          GROWTH.CO is a driver recruiting agency and acts as an intermediary. We are not a motor
+          TTIrecruiting is a driver recruiting agency and acts as an intermediary. We are not a motor
           carrier or an employer.
         </p>
         <p>
-          © {new Date().getFullYear()} Capljinac LLC. All rights reserved. ·{' '}
+          © {new Date().getFullYear()} TTIrecruiting. All rights reserved. ·{' '}
           <Link href="/privacy">Privacy Policy</Link> · <Link href="/terms">Terms</Link>
         </p>
         {/*

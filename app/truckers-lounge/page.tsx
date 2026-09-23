@@ -7,7 +7,7 @@ import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/truckers-lounge',
-  title: 'Truckers Lounge: CDL-A Driver Resources | GROWTH.CO',
+  title: 'Truckers Lounge: CDL-A Driver Resources | TTIrecruiting',
   description: 'Practical guides to CDL training, return-to-duty questions and the details to check before accepting a driving job.',
 });
 

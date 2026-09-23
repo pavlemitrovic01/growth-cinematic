@@ -2,13 +2,13 @@ import type { Metadata } from 'next';
 import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
-import { EMAIL, EMAIL_HREF, LEGAL_ENTITY, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { EMAIL, EMAIL_HREF, HAS_PHONE, LEGAL_ENTITY, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/terms',
-  title: 'Terms of Service | GROWTH.CO',
-  description: 'The terms that govern use of the GROWTH.CO website and recruiting services.',
+  title: 'Terms of Service | TTIrecruiting',
+  description: 'The terms that govern use of the TTIrecruiting website and recruiting services.',
 });
 
 /**
@@ -44,7 +44,7 @@ const SECTIONS = [
   {
     n: '01',
     h: 'Our Role',
-    p: `GROWTH.CO is operated by ${LEGAL_ENTITY}. GROWTH.CO acts strictly as a recruiting agency and intermediary between CDL-A drivers and motor carriers. We are not a motor carrier, broker, or employer. We do not guarantee employment, specific miles, pay, or home time; these terms are ultimately agreed upon directly between the driver and the hiring carrier.`,
+    p: `This website is operated by ${LEGAL_ENTITY}. TTIrecruiting acts strictly as a recruiting agency and intermediary between CDL-A drivers and motor carriers. We are not a motor carrier, broker, or employer. We do not guarantee employment, specific miles, pay, or home time; these terms are ultimately agreed upon directly between the driver and the hiring carrier.`,
   },
   {
     n: '02',
@@ -59,7 +59,7 @@ const SECTIONS = [
   {
     n: '04',
     h: 'Limitation of Liability',
-    p: 'GROWTH.CO shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use of our services, including disputes between drivers and carriers.',
+    p: 'TTIrecruiting shall not be liable for any direct, indirect, incidental, or consequential damages resulting from the use of our services, including disputes between drivers and carriers.',
   },
   {
     n: '05',
@@ -73,7 +73,7 @@ export default function Terms() {
     <PageShell eyebrow="LEGAL" title="Terms of Service">
       <div className="prose prose--legal">
         <p>
-          Welcome to GROWTH.CO. By accessing or using our website and services, you agree to be
+          Welcome to TTIrecruiting. By accessing or using our website and services, you agree to be
           bound by these Terms of Service.
         </p>
         <p className="legal-updated">Last updated: {LEGAL_UPDATED}</p>
@@ -92,8 +92,8 @@ export default function Terms() {
             <span className="sub-num">06</span> Contact
           </h2>
           <p>
-            Questions about these Terms can go to <a href={EMAIL_HREF}>{EMAIL}</a>, or call{' '}
-            <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>. For how we handle your information, see
+            Questions about these Terms can go to <a href={EMAIL_HREF}>{EMAIL}</a>
+            {HAS_PHONE ? <>, or call <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a></> : null}. For how we handle your information, see
             our <Link href="/privacy">Privacy Policy</Link>.
           </p>
         </section>
@@ -108,9 +108,11 @@ export default function Terms() {
         <Link className="btn btn-primary" href="/apply">
           {APPLY_CTA} ↗
         </Link>
-        <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-          Call {PHONE_DISPLAY}
-        </a>
+        {HAS_PHONE ? (
+          <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+            Call {PHONE_DISPLAY}
+          </a>
+        ) : null}
       </div>
     </PageShell>
   );

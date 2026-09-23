@@ -9,7 +9,7 @@ import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/faq',
-  title: 'CDL-A Driver FAQ: Pay, Fees, SAP | GROWTH.CO',
+  title: 'CDL-A Driver FAQ: Pay, Fees, SAP | TTIrecruiting',
   description:
     'Straight answers on pay, fees, violations, SAP, home time and how fast you can start driving.',
 });

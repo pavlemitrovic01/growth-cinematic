@@ -1,5 +1,5 @@
 import { SITE_URL, SITE_DESCRIPTION, SOCIAL_IMAGE } from '@/lib/seo';
-import { EMAIL, PHONE_TEL_HREF } from '@/lib/contact';
+import { EMAIL, HAS_PHONE, PHONE_TEL_HREF } from '@/lib/contact';
 
 export function JsonLd({ data }: { data: unknown }) {
   return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, '\\u003c') }} />;
@@ -9,7 +9,7 @@ export function JsonLd({ data }: { data: unknown }) {
  * Organizacioni graf sajta.
  *
  * ⚠️ TIP JE `EmploymentAgency`, NE `Organization`. To nije kozmetika: schema.org ima
- * tacan tip za posrednika u zaposljavanju, a GROWTH to jeste. Generican `Organization`
+ * tacan tip za posrednika u zaposljavanju, a TTIrecruiting to jeste. Generican `Organization`
  * pretrazivacu ne kaze cime se firma bavi. Prenета odluka iz originalnog sajta.
  *
  * ⚠️ `address` nosi SAMO `addressCountry`. Fizicka postanska adresa firme jos ne
@@ -34,14 +34,14 @@ export default function StructuredData() {
           {
             '@type': 'EmploymentAgency',
             '@id': SITE_URL + '/#organization',
-            name: 'GROWTH.CO',
-            legalName: 'Capljinac LLC',
+            name: 'TTIrecruiting',
+            legalName: 'TTIrecruiting',
             url: SITE_URL,
             logo: new URL('/favicon.svg', SITE_URL).href,
             image: SOCIAL_IMAGE.url,
             description: SITE_DESCRIPTION,
             email: EMAIL,
-            telephone: PHONE_TEL_HREF.replace('tel:', ''),
+            ...(HAS_PHONE ? { telephone: PHONE_TEL_HREF.replace('tel:', '') } : {}),
             areaServed: { '@type': 'Country', name: 'United States' },
             address: { '@type': 'PostalAddress', addressCountry: 'US' },
           },
@@ -49,7 +49,7 @@ export default function StructuredData() {
             '@type': 'WebSite',
             '@id': SITE_URL + '/#website',
             url: SITE_URL,
-            name: 'GROWTH.CO',
+            name: 'TTIrecruiting',
             inLanguage: 'en-US',
             publisher: { '@id': SITE_URL + '/#organization' },
           },

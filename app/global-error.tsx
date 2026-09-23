@@ -1,6 +1,6 @@
 'use client';
 
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { EMAIL_HREF, HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
 /**
  * Hvata pad SAMOG root layout-a — zato mora imati sopstvene `<html>` i `<body>`.
@@ -49,11 +49,11 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
             Something broke on our end.
           </h1>
           <p style={{ margin: '18px 0 30px', fontSize: '16px', lineHeight: 1.6, color: 'rgba(241,231,213,.75)' }}>
-            Not you — us. Call or text and a real person will help.
+            Not you — us. {HAS_PHONE ? 'Call or text' : 'Email us'} and a real person will help.
           </p>
           <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
             <a
-              href={PHONE_TEL_HREF}
+              href={HAS_PHONE ? PHONE_TEL_HREF : EMAIL_HREF}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -67,7 +67,7 @@ export default function GlobalError({ reset }: { error: Error & { digest?: strin
                 textDecoration: 'none',
               }}
             >
-              CALL {PHONE_DISPLAY}
+              {HAS_PHONE ? `CALL ${PHONE_DISPLAY}` : 'EMAIL US'}
             </a>
             <button
               type="button"

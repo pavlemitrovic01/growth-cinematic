@@ -40,7 +40,7 @@ export async function generateMetadata({
   if (!post) return {};
   return pageMeta({
     path: `/truckers-lounge/${post.slug}`,
-    title: `${post.title} | GROWTH.CO`,
+    title: `${post.title} | TTIrecruiting`,
     description: post.description,
     article: true,
   });
@@ -68,7 +68,7 @@ function ArticleBlock({ block }: { block: Block }) {
         </aside>
       );
     // ⚠️ Izvor je VIDLJIVO odvojen od tela clanka: citalac mora da razlikuje federalnu
-    // cinjenicu (FMCSA) od onoga sto GROWTH tvrdi o sebi.
+    // cinjenicu (FMCSA) od onoga sto TTIrecruiting tvrdi o sebi.
     case 'source':
       return (
         <p className="post-source">

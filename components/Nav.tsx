@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
 const LINKS = [
   { href: '/how-it-works', label: 'How it works' },
@@ -72,7 +72,7 @@ export default function Nav() {
   }, [pathname]);
   return (
     <header className="nav" ref={header}>
-      <Link className="brand" href="/" aria-label="GROWTH home"><span className="brand-mark" aria-hidden="true"><svg viewBox="0 0 48 48" width="34" height="34" aria-hidden="true"><circle cx="24" cy="24" r="20" fill="none" stroke="currentColor" /><path d="M25 17a10 10 0 1 0 1 14v-7h-9" fill="none" stroke="currentColor" strokeWidth="3" /><path d="m29 20 8-8m-8 0h8v8" fill="none" stroke="currentColor" strokeWidth="2.5" /></svg></span><span>GROWTH</span></Link>
+      <Link className="brand" href="/" aria-label="TTIrecruiting home"><span className="brand-mark" aria-hidden="true">TTI</span><span>TTIrecruiting</span></Link>
       {/* RD4: pilula je dugme ODMAH ispred `<nav>`, bez omotaca. Na telefonu je skrivena. ⚠️ Omotac sa
           `display:contents` je izmereno menjao zagladjivanje zaglavlja na telefonu (raspored isti, pikseli ne), pa ga nema. */}
       <button ref={pill} type="button" className="nav-pill" aria-expanded={open} aria-controls="nav-links" onClick={() => setOpen(!open)}>
@@ -82,7 +82,7 @@ export default function Nav() {
         {LINKS.map(link => <Link key={link.href} href={link.href} aria-current={pathname === link.href || pathname.startsWith(link.href + '/') ? 'page' : undefined} onClick={() => setOpen(false)}>{link.label}</Link>)}
       </nav>
       <div className="nav-actions">
-        <a className="nav-call" href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>
+        {HAS_PHONE ? <a className="nav-call" href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a> : null}
         <Link className="nav-cta" href="/apply" aria-current={pathname === '/apply' ? 'page' : undefined}>APPLY NOW</Link>
         <button ref={button} type="button" className="nav-toggle" aria-expanded={open} aria-controls="nav-links" onClick={() => setOpen(!open)}>
           <span className="sr-only">{open ? 'Close menu' : 'Open menu'}</span><span aria-hidden="true">{open ? '✕' : '☰'}</span>

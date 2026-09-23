@@ -3,14 +3,14 @@ import { CALLBACK_SENTENCE } from '@/lib/contact';
 import Link from 'next/link';
 import ApplyForm from '@/components/ApplyForm';
 import PageShell from '@/components/PageShell';
-import { PHONE_DISPLAY, PHONE_TEL_HREF, PHONE_SMS_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF, PHONE_SMS_HREF, EMAIL, EMAIL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/contact',
-  title: 'Contact a CDL-A Recruiter | GROWTH.CO',
+  title: 'Contact a CDL-A Recruiter | TTIrecruiting',
   description:
-    'Call, text or email GROWTH about your next driving job. You can also request a callback. Free for drivers.',
+    'Email TTIrecruiting about your next driving job, or request a callback. Free for drivers.',
 });
 
 /**
@@ -40,6 +40,7 @@ export default function Contact() {
       }
       lede="Questions about a job, your experience or hiring drivers? Let’s talk."
     >
+      {HAS_PHONE ? (
       <div className="contact-direct">
         <div>
           <p className="rail-eyebrow">CALL OR TEXT</p>
@@ -60,9 +61,10 @@ export default function Contact() {
           </a>
         </div>
       </div>
+      ) : null}
 
       <p className="contact-email">
-        Prefer email? <a href={EMAIL_HREF}>{EMAIL}</a>
+        {HAS_PHONE ? 'Prefer email?' : 'Email us:'} <a href={EMAIL_HREF}>{EMAIL}</a>
       </p>
 
       {/*
@@ -76,8 +78,8 @@ export default function Contact() {
             <span className="sub-num">01</span> Looking for a driving job
           </h2>
           <p>
-            Call or text — that is the fastest way. If you would rather write it down, the full
-            application takes about two minutes and it is{' '}
+            {HAS_PHONE ? 'Call or text — that is the fastest way. If you would rather write it down, the full application' : 'The full application'}{' '}
+            takes about two minutes and it is{' '}
             <Link href="/apply">right here</Link>.
           </p>
         </section>

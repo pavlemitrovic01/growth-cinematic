@@ -6,6 +6,7 @@ import {
 import { isEmailConfigured, sendLead } from '@/lib/email';
 import { checkRateLimit, isHoneypotTripped, HONEYPOT_FIELD, clientIp } from '@/lib/rate-limit';
 import { recordLead } from '@/lib/leads';
+import { REACH_US } from '@/lib/contact';
 
 // F1a: Resend slanje ukljuceno. Ruta vraca uspeh ISKLJUCIVO ako je mejl stvarno
 // otisao — svaki drugi ishod je 503 "pozovite nas", nikad lazna potvrda.
@@ -21,7 +22,7 @@ export async function POST(req) {
     const limit = await checkRateLimit(req, 'apply');
     if (!limit.ok) {
       return NextResponse.json(
-        { error: 'Too many requests. Please try again later, or call us directly.' },
+        { error: `Too many requests. Please try again later, or ${REACH_US}.` },
         { status: 429 }
       );
     }
@@ -86,7 +87,7 @@ export async function POST(req) {
     }
 
     // Zapis o pristanku — belezi se STVARNA vrednost, trenutak i IP, ne hardkodovano "Yes".
-    const consentRecord = buildConsentRecord('Capljinac LLC only (one-to-one)', clientIp(req));
+    const consentRecord = buildConsentRecord('TTIrecruiting only (one-to-one)', clientIp(req));
 
     // ⚠️ Upis IDE I OVDE, pre 503-a. Bez ovoga baza ne pokriva bas slucaj zbog kojeg
     // postoji: mejl nije podesen -> ruta izlazi rano -> lead nestaje bez traga.
@@ -106,7 +107,7 @@ export async function POST(req) {
         phone,
       });
       return NextResponse.json(
-        { error: 'Applications are temporarily unavailable. Please call or text us instead.' },
+        { error: `Applications are temporarily unavailable. Please ${REACH_US} instead.` },
         { status: 503 }
       );
     }
@@ -161,7 +162,7 @@ export async function POST(req) {
         consentRecord,
       });
       return NextResponse.json(
-        { error: 'Applications are temporarily unavailable. Please call or text us instead.' },
+        { error: `Applications are temporarily unavailable. Please ${REACH_US} instead.` },
         { status: 503 }
       );
     }

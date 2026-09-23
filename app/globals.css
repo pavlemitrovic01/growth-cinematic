@@ -300,31 +300,16 @@
 .home .nav-links a{border-color:var(--line)}
 .skip-link{position:fixed;left:16px;top:12px;z-index:100;padding:14px 20px;background:var(--bone);color:var(--ink);transform:translateY(-200%)}
 .skip-link:focus{transform:none}
-.journey{position:relative;background:var(--asphalt);color:var(--bone)}
-.journey-stage{position:relative;isolation:isolate;overflow:hidden}
-.journey-photo{position:absolute;inset:0;z-index:-5}
-.journey-photo img{width:100%;height:100%;object-fit:cover;object-position:65% center}
-.journey-canvas{position:absolute;inset:0;z-index:-4;opacity:0}
-.journey-canvas canvas{display:block;width:100%;height:100%}
-.journey-canvas[data-scene-state=ready]{opacity:1}
 /* Polish 2026-09-15: zatamnjenje je lokalno. Tamna zona drzi kolonu teksta levo, sredina i kamion
    ostaju otvoreni, vignette je blag, a dno ostaje tamno za prelaz u stranicu. Do sada je leva
    polovina kadra bila pod 93 % crne. Pravilo za <=900 px (telefon i fotografija) se ne menja. */
-.journey-shade{position:absolute;inset:0;pointer-events:none;z-index:-3;background:radial-gradient(ellipse 125% 105% at 60% 42%,transparent 60%,rgba(4,12,8,.32) 100%),linear-gradient(90deg,rgba(4,12,8,.82),rgba(4,12,8,.7) 24%,rgba(4,12,8,.38) 44%,rgba(4,12,8,.1) 62%,rgba(4,12,8,0) 78%),linear-gradient(0deg,rgba(18,19,20,.85),rgba(18,19,20,.2) 8%,transparent 20%)}
-.journey-story{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 3vw;padding:0 6vw}
-.journey-beat{position:relative;padding:40px 0 60px}
-.journey-intro{grid-column:1/-1;min-height:min(760px,calc(100svh - 90px));display:flex;flex-direction:column;justify-content:center;padding:64px 0 88px}
 .journey-eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--clay-light);margin:0 0 28px}
-.journey h1{font-size:clamp(48px,6.4vw,108px);line-height:.98;letter-spacing:-.065em;font-weight:800;margin:0;max-width:13ch}
-.journey h1 em,.journey h2 em,.home-section h2 em{font-weight:500;font-style:normal;color:inherit}
+.home-section h2 em{font-weight:500;font-style:normal;color:inherit}
 @supports(-webkit-text-stroke:1px currentColor){
   /* T1 (Pavle 2026-09-14, varijanta 2): debela slova i ivica 2 px. Tanka ivica od 1 px bila je
      najslabiji deo naslova. Tezina ide SAMO ovde, pod `@supports` — bez obrisa drugi red ostaje 500. */
-  .journey h1 em,.journey h2 em{color:transparent;-webkit-text-stroke:2px var(--bone);font-weight:800}
   .home-section h2 em{color:transparent;-webkit-text-stroke:2px currentColor;color:var(--ink);-webkit-text-fill-color:transparent;font-weight:800}
 }
-.journey h2{font-size:clamp(25px,2.4vw,36px);line-height:1.12;letter-spacing:-.035em;margin:0;max-width:18ch}
-.journey-number{display:block;font-size:clamp(64px,6vw,100px);letter-spacing:-.07em;line-height:1;margin-bottom:16px}
 .journey-lede{font-size:17px;line-height:1.7;max-width:46ch;margin:24px 0 28px;color:#e3ded1}
 .journey-actions{display:flex;align-items:center;gap:18px 26px;flex-wrap:wrap}
 .journey-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:56px;padding:8px 8px 8px 22px;border-radius:40px;background:var(--bone);color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
@@ -332,46 +317,12 @@
 .journey-cta:hover b{transform:rotate(45deg)}
 .journey-call{font-size:14px;line-height:1.5;padding:12px 0;text-decoration:underline;text-underline-offset:5px;color:var(--bone)}
 .journey-reassure{margin:16px 0 0;font-size:13px;line-height:1.5;color:#e3ded1;opacity:.72}
-.journey-tools{padding:0 6vw 26px;display:flex;align-items:center;justify-content:space-between;gap:20px}
-.journey-tools>a{font-size:12px;color:var(--bone);min-height:44px;display:flex;align-items:center;text-decoration:underline;text-underline-offset:5px}
-.journey-scroll{display:none;font-size:11px;letter-spacing:.2em;align-items:center;gap:14px}
-.journey-scroll i{display:block;width:80px;height:2px;background:var(--line)}
-.journey-scroll b{display:block;width:100%;height:100%;background:var(--bone);transform:scaleX(0);transform-origin:left}
-@media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
-  /* Fotografska podloga se KRIJE tamo gde scena ionako dolazi, i to iz CSS-a — na prvi
-     paint. Klasa iz JS-a bi stigla tek posle hidracije, dakle posle bljeska koji resava.
-     .is-scene-off je vraca kad se ispostavi da scene nece biti (pad WebGL-a, saveData,
-     izlazak iz uslova); noscript blok je vraca kad JS uopste ne postoji. */
-  .journey-photo{opacity:0}
-  .journey.is-scene-off .journey-photo{opacity:1}
-  .journey.is-enhanced{height:460svh}
-  .is-enhanced .journey-stage{position:sticky;top:0;height:100svh}
-  .is-enhanced .journey-story{position:absolute;inset:0;display:block;padding:0}
-  .is-enhanced .journey-beat{position:absolute;left:6vw;top:50%;width:min(62vw,880px);padding:0;min-height:0;display:block;opacity:0;transform:translate3d(0,-50%,0);will-change:transform,opacity}
-  .is-enhanced .journey-intro{opacity:1}
-  .journey.is-enhanced h2{font-size:clamp(36px,4.6vw,72px)}
-  .is-enhanced .journey-number{font-size:clamp(80px,10vw,150px)}
-  .is-enhanced .journey-tools{position:absolute;bottom:12px;left:0;right:0;padding-bottom:12px}
-  .is-enhanced .journey-scroll{display:flex}
-}
 
 /* Strane poglavlja (`RD15`): 01 desno, finale centrirano; kadar ide na suprotnu stranu (`shiftForSide`).
    ⚠️ Centriranje ide kroz `left`, ne kroz `transform` -- transform svaki frejm postavlja `HeroExperience`. */
-@media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
-  .is-enhanced .journey-beat:nth-of-type(4){left:calc(50% - min(28vw,410px));top:44%;width:min(56vw,820px);text-align:center}
-  /* Veci naslov finala (Pavle: „tekst mislim da bi trebali da povecamo tu jer je premali"): najveci koji staje --
-     sa 124 px je 31-38 % kamiona stajalo ispod teksta, sa 104 px 0-16 %. */
-  .is-enhanced .journey-beat:nth-of-type(4) h2{font-size:clamp(48px,6vw,104px);line-height:.95}
-  .is-enhanced .journey-beat:nth-of-type(4) .journey-lede{margin-left:auto;margin-right:auto}
-}
 
 /* Ogledalo preliva (`RD15`) prati stranu aktivnog poglavlja; prelaz je mek, pa se smena ne vidi kao skok.
    U finalu je preliv bez zelenkastog tona (`RD16`): preko tamnog neutralnog tla zeleno-crni preliv daje braon. */
-.journey-shade-right{opacity:0;transform:scaleX(-1)}
-.journey-shade,.journey-shade-right{transition:opacity .45s ease,filter .45s ease}
-.journey[data-side=right] .journey-shade{opacity:0}
-.journey[data-side=right] .journey-shade-right{opacity:1}
-.journey[data-side=center] .journey-shade,.journey[data-side=center] .journey-shade-right{opacity:.72;filter:saturate(0)}
 .home-section-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
 .home-kicker{font-size:12px;letter-spacing:.16em;font-weight:700;color:var(--clay-mid)}
 .home-pay .home-kicker,.home-close .home-kicker{color:var(--clay-light)}
@@ -444,22 +395,12 @@
 @media(max-width:900px){
   .home-editorial{grid-template-columns:1fr;gap:28px;margin-top:20px}
   .home-section{padding:60px 6vw}
-  .journey-story{grid-template-columns:1fr;padding:0 6vw}
-  .journey-intro{min-height:calc(100svh - 140px);padding:48px 0}
-  .journey-beat:not(.journey-intro){padding:28px 0;border-top:1px solid var(--line)}
-  .journey-photo{bottom:auto;height:calc(100svh - 80px)}
-  .journey-shade{background:linear-gradient(90deg,rgba(18,19,20,.8),rgba(18,19,20,.45)),linear-gradient(0deg,var(--asphalt) 5%,transparent)}
-  .journey h1{font-size:clamp(42px,8.4vw,76px);max-width:14ch}
-  .journey h2{font-size:32px}
   .journey-lede{font-size:16px;line-height:1.6;max-width:46ch}
-  .journey-number{font-size:64px}
   .journey-eyebrow{font-size:11px;margin-bottom:24px}
   .journey-cta{font-size:11px;gap:18px}
 }
 @media(max-width:480px){
-  .home-section,.journey-story,.journey-tools{padding-left:20px;padding-right:20px}
-  .journey h1{font-size:clamp(38px,10.5vw,50px)}
-  .journey-intro{min-height:calc(100svh - 136px);padding:32px 0}
+  .home-section{padding-left:20px;padding-right:20px}
   .journey-actions{gap:8px}
   .journey-actions .journey-cta{width:100%}
   .home-section h2{font-size:42px}
@@ -609,7 +550,7 @@ main:focus{outline:none}
 @media(max-width:720px){
   .sub-hero,.subpage--form .sub-hero{padding:36px 20px 40px}.sub-body{padding:32px 20px 56px}.sub-hero h1,.subpage--form .sub-hero h1{font-size:clamp(36px,9vw,56px)}.subpage--article .sub-hero h1{font-size:clamp(32px,8vw,42px);line-height:1.13}.sub-lede{font-size:16px;margin-top:20px}.sub-hero .eyebrow{font-size:12px}.foot-grid{grid-template-columns:1fr}.foot{padding-bottom:calc(88px + env(safe-area-inset-bottom))}.af-row{grid-template-columns:1fr;gap:24px}.af-field:has(select) label{min-height:0}.qa{grid-template-columns:1fr;padding:28px 20px}.qa-copy,.qa-field,.qa-submit{grid-column:1}.qa-submit{margin:0}.contact-quick .qa{padding:24px 20px}.form-heading h2{font-size:24px}.card{padding:24px 0}.card--cta{padding:24px}.contact-actions{width:100%}.contact-actions .btn{flex:1}.post-body{font-size:17px}.post-subhead{font-size:25px}.post-card h2{font-size:27px}.post-meta{gap:10px}.faq-q{font-size:17px}.page-next{align-items:flex-start;flex-direction:column}.nav-cta{font-size:11px}.nav .brand{font-size:12px;gap:8px}.nav .brand-mark{width:30px;height:30px}.journey-eyebrow{font-size:12px;letter-spacing:.13em}
 }
-@media(forced-colors:active){.sub-hero h1 em,.journey h1 em,.journey h2 em,.home-section h2 em{-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;color:CanvasText}.journey-cta,.btn,.nav-cta{border:1px solid ButtonText}}
+@media(forced-colors:active){.sub-hero h1 em,.home-section h2 em{-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;color:CanvasText}.journey-cta,.btn,.nav-cta{border:1px solid ButtonText}}
 
 .rail-steps{list-style:decimal}
 @media(max-width:720px){.nav-call{display:none}}
@@ -618,10 +559,6 @@ main:focus{outline:none}
 @media(min-width:1201px){.qa-submit{grid-row:1}.qa .consent{grid-row:2}}
 @media(max-width:720px){body:has(input:focus,select:focus,textarea:focus) .mobar{visibility:hidden}}
 /* Reserve the same first-chapter position before and after WebGL initializes. */
-@media(min-width:1024px) and (min-height:650px) and (prefers-reduced-motion:no-preference){
-  .journey:not(.is-enhanced) .journey-story{grid-template-rows:100svh auto}
-  .journey:not(.is-enhanced) .journey-intro{align-self:center;min-height:0;padding:0;width:min(62vw,880px)}
-}
 
 /* ─── GRANICE GRESKE I PRELAZNO STANJE ────────────────────────────────────────
    `.error-page` je samostalna: ne oslanja se ni na jednu klasu koju nose Nav,
@@ -962,11 +899,6 @@ main:focus{outline:none}
 [data-stagger]>*:nth-child(5){transition-delay:280ms}
 [data-stagger]>*:nth-child(n+6){transition-delay:350ms}
 
-@media(prefers-reduced-motion:no-preference){
-  html.js-motion [data-reveal]:not(.is-in){opacity:0;transform:translateY(18px)}
-  html.js-motion [data-stagger]:not(.is-in)>*:not([data-line]):not([data-wipe]){opacity:0;transform:translateY(14px)}
-}
-
 /* ── 7 · OTKRIVANJE — otkrivanje s leva (M1, 2026-09-09) ──────────────────────
    Novi primitiv. Zamenjuje fade-up, koji je najgenericka animacija na vebu i do
    sada je bio JEDINA ulazna animacija na sajtu.
@@ -1053,8 +985,6 @@ main:focus{outline:none}
 /* Stanja novih primitiva — OBA iza iste dve kapije. Vidi D1 obrazlozenje gore. */
 @media(prefers-reduced-motion:no-preference){
   html.js-motion [data-wipe]{clip-path:inset(-.3em)}
-  html.js-motion [data-wipe]:not(.is-in){clip-path:inset(-.3em 100% -.3em -.3em)}
-  html.js-motion [data-line]:not(.is-in)::before{transform:scaleX(0)}
 }
 
 /* ===== RD4 — navigacija na >= 1025 px: staklene kapsule gore, pilula desno koja se otvara u panel (`RD4-LOOK`) =====
@@ -1098,7 +1028,6 @@ main:focus{outline:none}
   /* Gornje trake vise nema u toku strane: zaglavlje podstranice se spusta ispod kapsula, a heroj bez scene gubi 90 px
      koje je oduzimao za nju. Uz scenu (`is-enhanced`) naslov je „beat" sa min-height:0 — ne dira se. */
   .subpage .sub-hero{padding-top:112px}
-  .subpage .journey:not(.is-enhanced) .journey-intro{min-height:min(760px,100svh)}
 }
 /* Prelaz misa: pilula lezi preko panela, pa panel otvara i prelaz preko nje i preko samog panela. Cim se pilula ugasi
    (pointer-events:none), mis je vec nad panelom koji raste ispod nje — otvaranje ne trepne. */
@@ -1113,3 +1042,27 @@ main:focus{outline:none}
   .subpage .nav .nav-links{top:calc(50% - 66px);right:8px;width:52px;height:132px;border-radius:26px}
   .subpage .nav-pill{top:calc(50% - 66px);right:8px;width:52px;height:132px;gap:8px;border-radius:26px;font-size:11px}
 }
+
+/* ─── TTI1 — obican staticni heroj naslovne (2026-09-23) ─────────────────────────
+   Zamenjuje 3D scenu; pravila scene (`.journey`, `.journey-stage/-photo/-canvas/-shade/-story/-beat/-tools`) i
+   pokreta (`html.js-motion ... .is-in`) obrisana su u istom batchu, jer ih je `K1/B` prijavio kao mrtve. Fotografija je ista
+   `hero-01-night` koja je bila rezerva scene; preliv sleva drzi tekst citljivim. Tipografija naslova je
+   prepisana sa `.journey h1`, da naslovna izgleda isto kao i do sada, samo bez scene. */
+.home-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(820px,calc(100svh - 80px));padding:140px 6vw 96px;background:var(--asphalt);color:var(--bone);overflow:hidden}
+.home-hero-photo{position:absolute;inset:0;z-index:-2}
+.home-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:65% center}
+.home-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--asphalt) 0%,rgba(18,19,20,.78) 38%,rgba(18,19,20,.15) 78%),linear-gradient(0deg,var(--asphalt) 0%,transparent 30%)}
+.home-hero-copy{max-width:720px}
+.home-hero h1{font-size:clamp(48px,6.4vw,108px);line-height:.98;letter-spacing:-.065em;font-weight:800;margin:0;max-width:13ch}
+.home-hero h1 em{font-weight:500;font-style:normal;color:inherit}
+@supports(-webkit-text-stroke:1px currentColor){.home-hero h1 em{color:transparent;-webkit-text-stroke:2px var(--bone);font-weight:800}}
+@media(forced-colors:active){.home-hero h1 em{-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;color:CanvasText}}
+@media(max-width:767px){
+  .home-hero{align-items:flex-end;min-height:calc(100svh - 64px);padding:120px 20px 48px}
+  .home-hero::after{background:linear-gradient(0deg,var(--asphalt) 10%,rgba(18,19,20,.72) 55%,rgba(18,19,20,.3) 100%)}
+  .home-hero h1{font-size:clamp(38px,10.5vw,56px);max-width:14ch}
+}
+/* TTI1: bez telefona mobilna traka ima dve akcije (Email + Apply). */
+.mobar--two{grid-template-columns:1fr 1.3fr}
+/* TTI1: znak „G" je zamenjen tekstom „TTI" u istom krugu. */
+.brand-mark{font-size:10px;font-weight:800;letter-spacing:0}

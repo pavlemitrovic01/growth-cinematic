@@ -3,7 +3,7 @@ import { CALLBACK_SENTENCE } from '@/lib/contact';
 import Link from 'next/link';
 import ApplyForm from '@/components/ApplyForm';
 import PageShell from '@/components/PageShell';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { FAQ_ITEMS } from '@/lib/faq';
 import { pageMeta } from '@/lib/seo';
 
@@ -18,7 +18,7 @@ import { pageMeta } from '@/lib/seo';
  * does not guarantee a job"), pa bi dve kopije znacile dve tvrdnje koje mogu da se raziju.
  */
 const VIOLATIONS_ANSWER = FAQ_ITEMS.find((item) => item.id === 'violations')?.a ?? '';
-export const metadata: Metadata = pageMeta({ path: '/apply', title: 'Apply — CDL-A Driver Recruiting | GROWTH.CO', description: 'Tell us about your CDL and driving experience. A GROWTH recruiter helps you compare carrier options. Free for drivers, with no obligation to accept an offer.' });
+export const metadata: Metadata = pageMeta({ path: '/apply', title: 'Apply — CDL-A Driver Recruiting | TTIrecruiting', description: 'Tell us about your CDL and driving experience. A TTIrecruiting recruiter helps you compare carrier options. Free for drivers, with no obligation to accept an offer.' });
 export default function ApplyPage() {
   return (
     <PageShell variant="form" eyebrow="DRIVER APPLICATION" title={<>Your next route.<br /><em>Starts here.</em></>} lede="About two minutes. No resume or account needed. Free for drivers, always.">
@@ -31,7 +31,7 @@ export default function ApplyPage() {
       <div className="sub-trust">
         <span>Free for drivers, always</span>
         <span>48 contiguous states</span>
-        <span>Call or text daily, weekends included</span>
+        {HAS_PHONE ? <span>Call or text daily, weekends included</span> : null}
       </div>
 
       <div className="sub-grid">
@@ -48,8 +48,12 @@ export default function ApplyPage() {
               <li>We discuss pay, home time, equipment and your experience.</li>
               <li>You compare the options and decide. Applying does not commit you to a job.</li>
             </ol>
-            <p>Prefer to talk before filling this out?</p>
-            <a className="btn btn-ghost" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a>
+            {HAS_PHONE ? (
+              <>
+                <p>Prefer to talk before filling this out?</p>
+                <a className="btn btn-ghost" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a>
+              </>
+            ) : null}
           </div>
         </aside>
       </div>

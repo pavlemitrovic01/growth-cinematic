@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { APPLY_CTA } from '@/lib/cta';
 import PageShell from '@/components/PageShell';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
 /**
  * 404 u tonu brenda (`docs/SITEMAP.md` §5). Vozac koji je pogresio URL ne sme da
@@ -37,9 +37,11 @@ export default function NotFound() {
         <Link className="btn btn-primary" href="/apply">
           {APPLY_CTA} ↗
         </Link>
-        <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-          Call {PHONE_DISPLAY}
-        </a>
+        {HAS_PHONE ? (
+          <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+            Call {PHONE_DISPLAY}
+          </a>
+        ) : null}
       </div>
       <p className="contact-email">
         Or start over from the <Link href="/">home page</Link>.

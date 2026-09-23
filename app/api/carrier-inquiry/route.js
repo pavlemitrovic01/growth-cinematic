@@ -3,6 +3,7 @@ import { isValidPhone, isValidEmail, isConsentGranted, buildConsentRecord, isWit
 import { isEmailConfigured, sendLead } from '@/lib/email';
 import { checkRateLimit, isHoneypotTripped, HONEYPOT_FIELD, clientIp } from '@/lib/rate-limit';
 import { recordLead } from '@/lib/leads';
+import { REACH_US } from '@/lib/contact';
 
 // F1a: Resend slanje ukljuceno. Uspeh se vraca samo ako je mejl stvarno otisao.
 
@@ -12,7 +13,7 @@ export async function POST(req) {
     const limit = await checkRateLimit(req, 'carrier');
     if (!limit.ok) {
       return NextResponse.json(
-        { error: 'Too many requests. Please try again later, or call us directly.' },
+        { error: `Too many requests. Please try again later, or ${REACH_US}.` },
         { status: 429 }
       );
     }
@@ -46,7 +47,7 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Validation failed', fields: errors }, { status: 400 });
     }
 
-    const consentRecord = buildConsentRecord('Capljinac LLC only (one-to-one)', clientIp(req));
+    const consentRecord = buildConsentRecord('TTIrecruiting only (one-to-one)', clientIp(req));
 
     // ⚠️ Upis IDE I OVDE, pre 503-a. Bez ovoga baza ne pokriva bas slucaj zbog kojeg
     // postoji: mejl nije podesen -> ruta izlazi rano -> lead nestaje bez traga.

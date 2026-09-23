@@ -3,12 +3,12 @@ import { CALLBACK_SENTENCE } from '@/lib/contact';
 import { APPLY_CTA } from '@/lib/cta';
 import Link from 'next/link';
 import PageShell from '@/components/PageShell';
-import { PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/how-it-works',
-  title: 'How CDL-A Driver Placement Works | GROWTH.CO',
+  title: 'How CDL-A Driver Placement Works | TTIrecruiting',
   description:
     'The whole process, start to finish: apply in 2 minutes, usually get a callback within 15–20 minutes during staffed hours. No fees for drivers.',
 });
@@ -17,7 +17,7 @@ const STEPS = [
   {
     n: '01',
     h: 'Apply',
-    p: "Two minutes: CDL class, experience, and what you're looking for. No resume, no account to create. If you'd rather talk first, call us instead.",
+    p: "Two minutes: CDL class, experience, and what you're looking for. No resume, no account to create." + (HAS_PHONE ? " If you'd rather talk first, call us instead." : ''),
   },
   {
     n: '02',
@@ -117,7 +117,7 @@ export default function HowItWorks() {
       lede="From the first conversation to onboarding: here is what we do, what you decide and what depends on the carrier."
     >
       <div className="sub-trust">
-        <span>Call or text us daily — weekends included</span>
+        {HAS_PHONE ? <span>Call or text us daily — weekends included</span> : null}
         <span>Free for drivers, always</span>
         <span>One recruiter, start to finish</span>
       </div>
@@ -277,9 +277,11 @@ export default function HowItWorks() {
             <Link className="btn btn-primary" href="/apply">
               {APPLY_CTA} ↗
             </Link>
-            <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-              Call us
-            </a>
+            {HAS_PHONE ? (
+              <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+                Call us
+              </a>
+            ) : null}
           </div>
         </aside>
       </div>

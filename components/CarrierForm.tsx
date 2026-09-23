@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
-import { PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
+import { EMAIL_HREF, HAS_PHONE, PHONE_TEL_HREF, PHONE_SMS_HREF, REACH_US } from '@/lib/contact';
 import { messageForFields } from '@/lib/form-options';
 
 /**
@@ -26,9 +26,9 @@ const PHONE_TITLE = 'Enter all 10 digits, including the area code.';
  */
 const CONSENT_TEXT = (
   <>
-    By checking this box, I agree that <strong>Capljinac LLC</strong> may contact me by phone
+    By checking this box, I agree that <strong>TTIrecruiting</strong> may contact me by phone
     call, text message (SMS) and email at the number and address I provided — including by
-    automated means — about driver recruiting services. This consent is for Capljinac LLC only.
+    automated means — about driver recruiting services. This consent is for TTIrecruiting only.
     Consent is not a condition of any service, and I can opt out at any time by replying STOP.
     Message and data rates may apply. See
     our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms</Link>.
@@ -87,7 +87,7 @@ export default function CarrierForm() {
       if (!res.ok || payload.success !== true) {
         // Isti SEC-2b fix kao u ApplyForm — server salje `fields`, klijent ih prevodi
         // u recenicu umesto da prikaze doslovno „Validation failed".
-        const fallback = payload.error || 'Something went wrong. Please call or text us instead.';
+        const fallback = payload.error || `Something went wrong. Please ${REACH_US} instead.`;
         setErrorMsg(messageForFields(payload.fields, fallback));
         setStatus('error');
         requestAnimationFrame(() => feedback.current?.focus());
@@ -95,7 +95,7 @@ export default function CarrierForm() {
       }
       setStatus('success');
     } catch {
-      setErrorMsg('We could not reach our server. Please call or text us instead.');
+      setErrorMsg(`We could not reach our server. Please ${REACH_US} instead.`);
       setStatus('error');
       requestAnimationFrame(() => feedback.current?.focus());
     } finally {
@@ -183,9 +183,15 @@ export default function CarrierForm() {
         <div ref={feedback} tabIndex={-1} role="alert" className="form-error">
           {errorMsg}
           <br />
-          <a href={PHONE_TEL_HREF}>Call us</a>
-          {' · '}
-          <a href={PHONE_SMS_HREF}>Text us</a>
+          {HAS_PHONE ? (
+            <>
+              <a href={PHONE_TEL_HREF}>Call us</a>
+              {' · '}
+              <a href={PHONE_SMS_HREF}>Text us</a>
+            </>
+          ) : (
+            <a href={EMAIL_HREF}>Email us</a>
+          )}
         </div>
       )}
     </form></>

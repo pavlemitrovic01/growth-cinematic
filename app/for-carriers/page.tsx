@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import CarrierForm from '@/components/CarrierForm';
 import PageShell from '@/components/PageShell';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/for-carriers',
-  title: 'Hire CDL-A Drivers | GROWTH.CO',
+  title: 'Hire CDL-A Drivers | TTIrecruiting',
   description:
-    'Talk to GROWTH about your lanes, equipment and hiring requirements. CDL-A driver recruiting, with payment only for successful placements.',
+    'Talk to TTIrecruiting about your lanes, equipment and hiring requirements. CDL-A driver recruiting, with payment only for successful placements.',
 });
 
 /**
@@ -69,9 +69,11 @@ export default function ForCarriersPage() {
               <li>We match driver experience and preferences to your requirements.</li>
               <li>Your team makes the hiring decision. We help coordinate the next steps.</li>
             </ol>
-            <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-              Call {PHONE_DISPLAY}
-            </a>
+            {HAS_PHONE ? (
+              <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+                Call {PHONE_DISPLAY}
+              </a>
+            ) : null}
           </div>
         </aside>
       </div>
@@ -108,7 +110,7 @@ export default function ForCarriersPage() {
           </h2>
           {/* Doslovno iz `Footer.tsx` — C18. B2B posetiocu ovo ne sme biti sitan slog u futeru. */}
           <p>
-            GROWTH.CO is a driver recruiting agency and acts as an intermediary. We are not a
+            TTIrecruiting is a driver recruiting agency and acts as an intermediary. We are not a
             motor carrier or an employer. Hiring decisions, employment terms and pay are agreed
             between you and the driver.
           </p>

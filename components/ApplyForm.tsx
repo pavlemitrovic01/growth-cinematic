@@ -4,7 +4,7 @@ import { useRef, useState, type FormEvent } from 'react';
 import Link from 'next/link';
 import NoScriptContact from './NoScriptContact';
 import { HONEYPOT_FIELD } from '@/lib/honeypot';
-import { PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
+import { EMAIL_HREF, HAS_PHONE, PHONE_TEL_HREF, PHONE_SMS_HREF, REACH_US } from '@/lib/contact';
 import {
   CDL_CLASSES,
   EXPERIENCE_LEVELS,
@@ -28,7 +28,7 @@ const PHONE_HINT = 'Include your area code';
 
 /**
  * ⚠️ TCPA — PRAVNI TEKST, PRENET DOSLOVNO IZ MAIN-a. Ne parafrazirati, ne skracivati.
- * Pristanak je one-to-one (samo Capljinac LLC, bez „and partners"), nije uslov za uslugu,
+ * Pristanak je one-to-one (samo TTIrecruiting, bez „and partners"), nije uslov za uslugu,
  * i nosi opt-out. Svaka izmena formulacije trazi novu `CONSENT_TEXT_VERSION` u
  * `lib/validation.js`, jer se verzija upisuje uz svaki pristanak u bazu.
  *
@@ -41,9 +41,9 @@ const PHONE_HINT = 'Include your area code';
  */
 const CONSENT_TEXT = (
   <>
-    By checking this box, I agree that <strong>Capljinac LLC</strong> may contact me by phone
+    By checking this box, I agree that <strong>TTIrecruiting</strong> may contact me by phone
     call, text message (SMS) and email at the number and address I provided — including by
-    automated means — about driving opportunities. This consent is for Capljinac LLC only.
+    automated means — about driving opportunities. This consent is for TTIrecruiting only.
     Consent is not a condition of any service, and I can opt out at any time by replying STOP.
     Message and data rates may apply. See
     our <Link href="/privacy">Privacy Policy</Link> and <Link href="/terms">Terms</Link>.
@@ -134,7 +134,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
         // je taj projekat imao. Server VEC salje `fields` sa imenom polja koje je palo, a
         // klijent je tu informaciju bacao i prikazivao doslovno „Validation failed".
         // `messageForFields` je pretvara u recenicu koja kaze STA da se popravi.
-        const fallback = payload.error || 'Something went wrong. Please call or text us instead.';
+        const fallback = payload.error || `Something went wrong. Please ${REACH_US} instead.`;
         setErrorMsg(messageForFields(payload.fields, fallback));
         setStatus('error');
         requestAnimationFrame(() => feedback.current?.focus());
@@ -142,7 +142,7 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
       }
       setStatus('success');
     } catch {
-      setErrorMsg('We could not reach our server. Please call or text us instead.');
+      setErrorMsg(`We could not reach our server. Please ${REACH_US} instead.`);
       setStatus('error');
       requestAnimationFrame(() => feedback.current?.focus());
     } finally {
@@ -154,9 +154,15 @@ export default function ApplyForm({ variant = 'full' }: { variant?: 'quick' | 'f
     <div ref={feedback} tabIndex={-1} role="alert" className="form-error">
       {errorMsg}
       <br />
-      <a href={PHONE_TEL_HREF}>Call us</a>
-      {' · '}
-      <a href={PHONE_SMS_HREF}>Text us</a>
+      {HAS_PHONE ? (
+        <>
+          <a href={PHONE_TEL_HREF}>Call us</a>
+          {' · '}
+          <a href={PHONE_SMS_HREF}>Text us</a>
+        </>
+      ) : (
+        <a href={EMAIL_HREF}>Email us</a>
+      )}
     </div>
   );
 

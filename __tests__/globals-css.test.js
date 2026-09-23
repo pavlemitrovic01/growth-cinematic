@@ -88,8 +88,10 @@ describe('globals.css', () => {
      *  koje prati stranu aktivnog poglavlja, pa isti selektor postoji u dva konteksta, i `.journey-beat`
      *  dobija centrirani finale u desktop media query-ju. Oba su namerna i izmerena.
      *  `RD7` ga je spustio za jedan (143 -> 142): traka sa formom posle heroja je uklonjena, pa
-     *  `.home-callback .home-section-top` (stajao i sam i u grupi za telefon) vise ne postoji. */
-    expect(redundant).toBe(142);
+     *  `.home-callback .home-section-top` (stajao i sam i u grupi za telefon) vise ne postoji.
+     *  `TTI1` ga je spustio za jedan (142 -> 141): pravila 3D scene i pokreta su obrisana zajedno sa scenom
+     *  (`K1/B` ih je prijavio kao mrtve); broj je izmeren posle brisanja, ne izracunat. */
+    expect(redundant).toBe(141);
   });
 
   it('K1/B — nijedna klasa u CSS-u nije bez ijednog pomena u izvoru', () => {

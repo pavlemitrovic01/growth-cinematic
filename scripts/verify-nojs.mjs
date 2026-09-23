@@ -23,6 +23,7 @@
  */
 import { PAGE_PATHS } from '../lib/routes.js';
 import { POSTS } from '../lib/posts.js';
+import { EMAIL, HAS_PHONE, PHONE_DISPLAY } from '../lib/contact.js';
 
 /**
  * Origin koji se meri. `--base` gadja bilo koji origin (deploy), `--port` ostaje za localhost.
@@ -104,8 +105,19 @@ if (uncovered.length) {
   process.exit(1);
 }
 
-/** Telefon mora biti dohvatljiv sa SVAKE rute — bez JS-a je to jedini izlaz. */
-const PHONE = '(240) 226-3786';
+/**
+ * Kontakt mora biti dohvatljiv sa SVAKE rute — bez JS-a je to jedini izlaz.
+ *
+ * ⚠️ TTI1 (2026-09-23): telefon je prazan dok ga Pavle ne posalje (`lib/contact.js`), pa je dohvatljiv
+ * kontakt tada MEJL. Izvodi se iz izvora: kad broj stigne, kapija sama ponovo trazi telefon.
+ */
+const CONTACT = HAS_PHONE ? PHONE_DISPLAY : EMAIL;
+
+/**
+ * TTI1: staro ime ne sme da se pojavi nigde u serverskom HTML-u (tekst, meta, JSON-LD). Velika slova su
+ * namerna: interni kljucevi (`growth.consent`) i porodica fonta „Growth Sans" se posetiocu ne prikazuju.
+ */
+const LEGACY_BRAND = /GROWTH|Capljinac|growthcdl|corecruitinggroup/;
 
 /** Inline stilovi koji sadrzaj cine nevidljivim ili ga izbacuju iz kadra. */
 const HIDING = [
@@ -175,7 +187,14 @@ for (const route of ROUTES) {
     fails.push(`${route.path} — naslov clanka nije u serverskom HTML-u`);
   }
 
-  if (!html.includes(PHONE)) fails.push(`${route.path} — telefon nije dohvatljiv bez JS-a`);
+  if (!html.includes(CONTACT)) fails.push(`${route.path} — kontakt (${CONTACT}) nije dohvatljiv bez JS-a`);
+  const legacy = html.match(LEGACY_BRAND);
+  if (legacy) fails.push(`${route.path} — staro ime u HTML-u: "${legacy[0]}"`);
+  // Bez broja ne sme da postoji nijedan `tel:`/`sms:` link — prazan link je gori od nikakvog.
+  if (!HAS_PHONE && /href="(tel|sms):/.test(html)) fails.push(`${route.path} — tel:/sms: link bez telefona`);
+  // ...i nijedna recenica ne sme da salje posetioca da zove broj koji ne postoji (TTI1, nadjeno na snimku /contact).
+  const callCopy = !HAS_PHONE && text.match(/\b(call or text|call us|or call|text us)\b/i);
+  if (callCopy) fails.push(`${route.path} — tekst trazi poziv bez telefona: "${callCopy[0]}"`);
 
   for (const rule of HIDING) {
     const hits = html.match(new RegExp(rule.re.source, 'g')) ?? [];
@@ -201,4 +220,4 @@ if (fails.length) {
   for (const f of fails) console.error('  · ' + f);
   process.exit(1);
 }
-console.log(`PASS — ${rows.length} ruta, sadrzaj i telefon dostupni bez JavaScripta.`);
+console.log(`PASS — ${rows.length} ruta, sadrzaj i kontakt dostupni bez JavaScripta.`);

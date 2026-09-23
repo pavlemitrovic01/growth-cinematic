@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { APPLY_CTA } from '@/lib/cta';
 import type { Metadata } from 'next';
 import PageShell from '@/components/PageShell';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/about',
-  title: 'About GROWTH.CO — CDL-A Recruiting',
+  title: 'About TTIrecruiting — CDL-A Recruiting',
   description:
-    'Why GROWTH.CO exists, who runs it, and how we work with CDL-A drivers. Free for drivers, with the details explained before you decide.',
+    'Why TTIrecruiting exists, who runs it, and how we work with CDL-A drivers. Free for drivers, with the details explained before you decide.',
 });
 
 const STORY = [
@@ -27,7 +27,7 @@ const STORY = [
   </>,
   <>I heard those calls often enough to stop being surprised by them.</>,
   <>
-    <strong>GROWTH is built around that gap.</strong> You get the real numbers before you commit —
+    <strong>TTIrecruiting is built around that gap.</strong> You get the real numbers before you commit —
     including the ones that don&apos;t help us — and then you decide for yourself.
   </>,
   <>That&apos;s the whole company. There isn&apos;t a second idea.</>,
@@ -64,7 +64,7 @@ export default function About() {
         {STORY.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
-        <p className="signature">— Nate Mikic, Founder, GROWTH.CO</p>
+        <p className="signature">— Nate Mikic, Founder, TTIrecruiting</p>
       </div>
 
       <div className="sub-3up" data-stagger>
@@ -87,9 +87,11 @@ export default function About() {
           <Link className="btn btn-primary" href="/apply">
             {APPLY_CTA} ↗
           </Link>
-          <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-            Call {PHONE_DISPLAY}
-          </a>
+          {HAS_PHONE ? (
+            <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+              Call {PHONE_DISPLAY}
+            </a>
+          ) : null}
         </div>
         <p className="contact-email">
           Or see <Link href="/how-it-works">how the process works</Link>.

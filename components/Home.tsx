@@ -1,64 +1,46 @@
 import Link from 'next/link';
 import { CALLBACK_SENTENCE } from '@/lib/contact';
 import { APPLY_CTA } from '@/lib/cta';
-import HeroExperience from './HeroExperience';
 import Nav from './Nav';
 import Footer from './Footer';
 import MobileBar from './MobileBar';
 import ApplyForm from './ApplyForm';
 import Accordion from './Accordion';
 import { homeFaqItems } from '@/lib/faq';
-import { PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
 function ApplyLink({ children = APPLY_CTA }: { children?: React.ReactNode }) {
   return <Link className="journey-cta" href="/apply"><span>{children}</span><b aria-hidden="true">↗</b></Link>;
 }
 
-export default function CinematicHome() {
+export default function Home() {
   return (
     <div className="home subpage">
       <a className="skip-link" href="#main-content">Skip to content</a>
       <Nav />
-      {/*
-        ⚠️ suppressHydrationWarning -- isti razlog kao na <html> u `app/layout.tsx`, drugo
-        mesto. `Motion.tsx:111-113` dodaje `route-in` na ovaj element IMPERATIVNO pri
-        promeni rute (fade prelaza), dakle van React-ovog rendera. React zato pri sledecoj
-        hidraciji zatice klasu koju njegovo stablo ne deklarise i prijavljuje nesklad.
-        Deluje samo na ovaj element, ne na stablo ispod.
-      */}
-      <main id="main-content" suppressHydrationWarning>
-        <HeroExperience>
-          <article className="journey-beat journey-intro" data-beat>
+      <main id="main-content">
+        {/*
+          TTI1 (2026-09-23): obican staticni heroj umesto 3D scene. Tekst je prvo poglavlje stare scene, doslovno;
+          ostala tri poglavlja su otpala („20+ Partner carriers" vise nije na naslovnoj, `$0` nosi sekcija naplate).
+        */}
+        <section className="home-hero" aria-labelledby="hero-heading">
+          <picture className="home-hero-photo">
+            <source media="(max-width: 767px)" srcSet="/images/hero-01-night-mobile.jpg" />
+            <img src="/images/hero-01-night.jpg" alt="" width="1672" height="941" fetchPriority="high" />
+          </picture>
+          <div className="home-hero-copy">
             <p className="journey-eyebrow">CDL-A RECRUITING / YOUR ROAD FORWARD</p>
-            <h1>Your next route.<br /><em>Straight answers.</em></h1>
+            <h1 id="hero-heading">Your next route.<br /><em>Straight answers.</em></h1>
             <p className="journey-lede">Pay, home time, equipment. Know the details before you commit. We connect CDL-A drivers with partner carriers — free for drivers, always.</p>
-            <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Or call {PHONE_DISPLAY}</a></div>
+            <div className="journey-actions"><ApplyLink />{HAS_PHONE ? <a className="journey-call" href={PHONE_TEL_HREF}>Or call {PHONE_DISPLAY}</a> : null}</div>
             {/*
               PRENETO iz `app/apply/page.tsx:49`, gde je stajalo u bocnoj traci -- dakle vozac
               ga je video TEK POSTO klikne. C53 zabranjuje da dugme obecava bilo sta osim onoga
               sto radi („Start your application"), pa mekoca ide PORED dugmeta, ne u njega.
-              Nije konstanta: obicna recenica bez reda u registru, i u izvoru stoji kao deo
-              duze recenice, pa bi izdvajanje dodalo indirekciju bez zastite.
             */}
             <p className="journey-reassure">Applying does not commit you to a job.</p>
-          </article>
-          <article className="journey-beat" data-beat>
-            <p className="journey-eyebrow">01 / THE PEOPLE</p>
-            <h2><strong className="journey-number">20+</strong> Partner carriers.<br /><em>Your priorities first.</em></h2>
-            <p className="journey-lede">Tell us where you live, the routes you want and when you need to be home. We work from there. Opportunities depend on carrier availability and requirements.</p>
-          </article>
-          <article className="journey-beat" data-beat>
-            <p className="journey-eyebrow">02 / THE DEAL</p>
-            <h2><strong className="journey-number">$0</strong> Cost to drivers.<br /><em>Always.</em></h2>
-            <p className="journey-lede">Carriers pay our placement fee. You pay nothing to apply, talk to us or get matched. It never comes out of your paycheck.</p>
-          </article>
-          <article className="journey-beat" data-beat>
-            <p className="journey-eyebrow">03 / THE NEXT MILE</p>
-            <h2>A better route<br /><em>starts with a call.</em></h2>
-            <p className="journey-lede">One conversation about what matters to you. Clear options. The decision stays yours.</p>
-            <ApplyLink />
-          </article>
-        </HeroExperience>
+          </div>
+        </section>
 
         {/*
           ⚠️ `RD7` (pravac B, `SMER-B`, Pavle 2026-09-22): „How it works" je PRVA sekcija posle heroja, na krem
@@ -70,7 +52,7 @@ export default function CinematicHome() {
           <div className="home-editorial">
             <div className="process-lede"><h2 data-wipe id="process-heading">The details<br />make the<br /><em>difference.</em></h2><Link className="home-text-link" href="/how-it-works">See the whole process ↗</Link></div>
             <ol data-stagger className="home-steps">
-              <li><span>01</span><div><h3>Tell us what matters.</h3><p>Apply online or call. Start with your experience, home base and the kind of driving you want.</p></div></li>
+              <li><span>01</span><div><h3>Tell us what matters.</h3><p>{HAS_PHONE ? 'Apply online or call.' : 'Apply online.'} Start with your experience, home base and the kind of driving you want.</p></div></li>
               <li><span>02</span><div><h3>Have a real conversation.</h3><p>{CALLBACK_SENTENCE} We go through your priorities and qualifications.</p></div></li>
               <li><span>03</span><div><h3>Compare the details.</h3><p>Pay rates, home time schedule, equipment models, and average weekly miles — we give you the real deal up front, not after you sign. Ask about deductions before choosing a carrier.</p></div></li>
               <li><span>04</span><div><h3>Choose your next route.</h3><p>We help with the next steps. Start dates depend on your paperwork and the carrier’s requirements.</p></div></li>
@@ -277,10 +259,10 @@ export default function CinematicHome() {
         </section>
 
         <section data-line className="home-founder home-section" aria-labelledby="founder-heading">
-          <span className="home-kicker">04 / WHY GROWTH</span>
+          <span className="home-kicker">04 / WHY TTIrecruiting</span>
           <div className="home-editorial">
             <h2 data-wipe id="founder-heading">Built around<br /><em>the honest part.</em></h2>
-            <div><blockquote>“You get the real numbers before you commit — including the ones that don’t help us — and then you decide for yourself.”</blockquote><p className="home-signature">Nate Mikic / Founder</p><p>Four years in CDL-A recruiting taught our founder where the details get lost. GROWTH is built around that gap.</p><Link href="/about" className="home-text-link">Read our story ↗</Link></div>
+            <div><blockquote>“You get the real numbers before you commit — including the ones that don’t help us — and then you decide for yourself.”</blockquote><p className="home-signature">Nate Mikic / Founder</p><p>Four years in CDL-A recruiting taught our founder where the details get lost. TTIrecruiting is built around that gap.</p><Link href="/about" className="home-text-link">Read our story ↗</Link></div>
           </div>
         </section>
 
@@ -320,7 +302,7 @@ export default function CinematicHome() {
             <div className="home-close-copy">
               <span className="home-kicker">THE NEXT MILE IS YOURS</span>
               <h2 data-wipe id="close-heading">Ready for<br /><em>your next route?</em></h2>
-              <div className="journey-actions"><ApplyLink /><a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a></div>
+              <div className="journey-actions"><ApplyLink />{HAS_PHONE ? <a className="journey-call" href={PHONE_TEL_HREF}>Call {PHONE_DISPLAY}</a> : null}</div>
               {/*
                 CLAIMS C13, kanonska dozvoljena formulacija, doslovno. Do 2026-09-05 je zivela na
                 tacno jednom mestu (`app/how-it-works`, i to skracena na prvu polovinu) — a pripada
@@ -334,7 +316,7 @@ export default function CinematicHome() {
 
                 Bez objavljenog rasporeda namerno: raspored bi suzio ono sto je stvarno tacno.
               */}
-              <p>Call or text us daily — weekends included. We typically respond quickly during staffed hours.</p>
+              {HAS_PHONE ? <p>Call or text us daily — weekends included. We typically respond quickly during staffed hours.</p> : null}
               <p>Hiring for your fleet? <Link href="/for-carriers">Let’s talk drivers ↗</Link></p>
               <Link className="home-text-link" href="/truckers-lounge">Explore the Truckers Lounge ↗</Link>
             </div>

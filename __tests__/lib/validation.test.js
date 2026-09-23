@@ -174,11 +174,11 @@ describe('isConsentGranted', () => {
 describe('buildConsentRecord', () => {
   it('returns the expected shape with the given scope', () => {
     const before = Date.now();
-    const record = buildConsentRecord('Capljinac LLC only (one-to-one)');
+    const record = buildConsentRecord('TTIrecruiting only (one-to-one)');
     const after = Date.now();
 
     expect(record.granted).toBe(true);
-    expect(record.scope).toBe('Capljinac LLC only (one-to-one)');
+    expect(record.scope).toBe('TTIrecruiting only (one-to-one)');
     // ⚠️ LEAD1 je podigao verziju sa '2026-07-30' jer je LEG-1 promenio Chatbot consent
     // tekst. `textVersion` identifikuje TEKST koji je vozac video — da je ostala stara,
     // zapis bi tvrdio da je prikazan stari tekst, tj. isti kvar koji LEG-1 popravlja.
@@ -187,7 +187,10 @@ describe('buildConsentRecord', () => {
     // je usao u sam `CONSENT_TEXT` (obe forme), pa se vidljivi tekst promenio. Do tada su
     // quick i full forma prikazivale RAZLICIT tekst pod ISTOM verzijom, obe kao
     // `source: apply` — iz zapisa se nije moglo razluciti sta je vozac video.
-    expect(record.textVersion).toBe('2026-09-06');
+    //
+    // ⚠️ TTI1 je podigao sa '2026-09-06' na '2026-09-23': ime u tekstu pristanka (obe forme) je
+    // promenjeno u „TTIrecruiting". Ostatak teksta je isti, ali vozac je video drugaciju recenicu.
+    expect(record.textVersion).toBe('2026-09-23');
 
     const grantedAtMs = new Date(record.grantedAt).getTime();
     expect(record.grantedAt).toBe(new Date(grantedAtMs).toISOString());
@@ -197,7 +200,7 @@ describe('buildConsentRecord', () => {
 
   // LEAD1/SEC-3 — standardni TCPA dokazni zapis nosi i adresu sa koje je pristanak stigao.
   it('belezi IP kada je prosledjen', () => {
-    const record = buildConsentRecord('Capljinac LLC only (one-to-one)', '203.0.113.7');
+    const record = buildConsentRecord('TTIrecruiting only (one-to-one)', '203.0.113.7');
     expect(record.ip).toBe('203.0.113.7');
   });
 

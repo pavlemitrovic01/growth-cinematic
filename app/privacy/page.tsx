@@ -4,13 +4,13 @@ import Link from 'next/link';
 import PageShell from '@/components/PageShell';
 import ConsentSettingsButton from '@/components/ConsentSettingsButton';
 import { isConsentRequired } from '@/lib/consent';
-import { EMAIL, EMAIL_HREF, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
+import { EMAIL, EMAIL_HREF, HAS_PHONE, LEGAL_UPDATED, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 import { pageMeta } from '@/lib/seo';
 
 export const metadata: Metadata = pageMeta({
   path: '/privacy',
-  title: 'Privacy Policy | GROWTH.CO',
-  description: 'How GROWTH.CO collects, uses, stores and shares your personal information.',
+  title: 'Privacy Policy | TTIrecruiting',
+  description: 'How TTIrecruiting collects, uses, stores and shares your personal information.',
 });
 
 /**
@@ -71,7 +71,7 @@ const SECTIONS = [
     n: '03',
     h: 'TCPA Consent and Communications',
     body: [
-      'By opting in on our application form, you provide express written consent under the Telephone Consumer Protection Act (TCPA) to receive SMS messages and phone calls — including by automated means — from Capljinac LLC only. We do not obtain this consent on behalf of any other company, and carriers we introduce you to must obtain their own consent to contact you. Consent is not a condition of any service. You may opt out at any time by replying STOP to an SMS or telling us during a phone call.',
+      'By opting in on our application form, you provide express written consent under the Telephone Consumer Protection Act (TCPA) to receive SMS messages and phone calls — including by automated means — from TTIrecruiting only. We do not obtain this consent on behalf of any other company, and carriers we introduce you to must obtain their own consent to contact you. Consent is not a condition of any service. You may opt out at any time by replying STOP to an SMS or telling us during a phone call.',
     ],
   },
   {
@@ -98,7 +98,7 @@ export default function Privacy() {
     <PageShell eyebrow="LEGAL" title="Privacy Policy">
       <div className="prose prose--legal">
         <p>
-          This Privacy Policy describes how GROWTH.CO (&quot;we&quot;, &quot;us&quot;, or
+          This Privacy Policy describes how TTIrecruiting (&quot;we&quot;, &quot;us&quot;, or
           &quot;our&quot;) collects, uses, and shares your personal information when you use our
           website or services.
         </p>
@@ -192,8 +192,8 @@ export default function Privacy() {
           </h2>
           <p>
             If you have any questions about this Privacy Policy, please contact us at{' '}
-            <a href={EMAIL_HREF}>{EMAIL}</a>, or call{' '}
-            <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a>. The terms that govern use of the site
+            <a href={EMAIL_HREF}>{EMAIL}</a>
+            {HAS_PHONE ? <>, or call <a href={PHONE_TEL_HREF}>{PHONE_DISPLAY}</a></> : null}. The terms that govern use of the site
             are in our <Link href="/terms">Terms of Service</Link>.
           </p>
         </section>
@@ -205,9 +205,11 @@ export default function Privacy() {
         <Link className="btn btn-primary" href="/apply">
           {APPLY_CTA} ↗
         </Link>
-        <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
-          Call {PHONE_DISPLAY}
-        </a>
+        {HAS_PHONE ? (
+          <a className="btn btn-ghost" href={PHONE_TEL_HREF}>
+            Call {PHONE_DISPLAY}
+          </a>
+        ) : null}
       </div>
     </PageShell>
   );

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import Link from 'next/link';
-import { PHONE_DISPLAY, PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
+import { EMAIL_HREF, HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF, PHONE_SMS_HREF } from '@/lib/contact';
 
 /**
  * Granica greske za rutni segment. Renderuje se UNUTAR root layout-a, pa je
@@ -31,11 +31,11 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
           <em>on our end.</em>
         </h1>
         <p className="sub-lede">
-          Not you — us. Call or text and a real person will help, or try loading the page again.
+          Not you — us. {HAS_PHONE ? 'Call or text' : 'Email us'} and a real person will help, or try loading the page again.
         </p>
         <div className="error-actions">
-          <a className="btn btn-primary" href={PHONE_TEL_HREF}>
-            Call {PHONE_DISPLAY} ↗
+          <a className="btn btn-primary" href={HAS_PHONE ? PHONE_TEL_HREF : EMAIL_HREF}>
+            {HAS_PHONE ? `Call ${PHONE_DISPLAY}` : 'Email us'} ↗
           </a>
           <button type="button" className="btn btn-ghost" onClick={reset}>
             Try again
@@ -44,9 +44,11 @@ export default function Error({ error, reset }: { error: Error & { digest?: stri
             Back to homepage
           </Link>
         </div>
-        <p className="error-alt">
-          Prefer to text? <a href={PHONE_SMS_HREF}>Send us a message</a>.
-        </p>
+        {HAS_PHONE ? (
+          <p className="error-alt">
+            Prefer to text? <a href={PHONE_SMS_HREF}>Send us a message</a>.
+          </p>
+        ) : null}
       </main>
     </div>
   );
