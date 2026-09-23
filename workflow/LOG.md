@@ -6,6 +6,59 @@
 
 ---
 
+## `RD4` — Navigacija: staklena pilula desno (`RD4-LOOK`) · 2026-09-23
+
+**Changed files:** `components/Nav.tsx` · `app/globals.css` · `tests/rendered-html.test.mjs` ·
+`workflow/projects/growth-cinematic/batches/RD4.md` · `.../ROADMAP.md` · `.../CONTEXT.md` · `.../DECISIONS.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`. **Implementacija:** `217df2a` · **Grana:** `rd4-pilula-desno` (sa `master`
+`85d58fc`) · **Tier:** STANDARD + `manual`.
+
+Na ≥ 1025 px gornje trake više nema: znak i telefon + APPLY lebde u staklenim kapsulama, a meni je uspravna staklena
+pilula desno po sredini (64 × 150, na 1025–1339 px 52 × 132) koja se otvara u panel 440 px uz desnu ivicu. Otvaraju je
+tri stvari: prelaz miša (samo uz `hover:hover`), fokus tastature na linku (`:focus-visible`) i klik ili dodir na
+pilulu (`aria-expanded`/`.is-open`). Zatvorena pilula menja boju po pozadini ispod sebe — krem na tamnom, tamno staklo
+na svetlom — preko `data-tone` na `<header>`. Telefon (< 1025 px) nije diran.
+
+**VERIFICATION** (`next start`, `BUILD_ID` 02:33:42, PID provereno; meta ispisana `meri se: http://localhost:3000`):
+`quick` 0 · `typecheck` 0 · `test` 173/173 (census `K1/A` 142) · `full` 0 · `verify` PASS 14 + 13 · `rendered` 20/20.
+
+**Nova kapija dokazano crvena pa zelena** (`RULES §6`) — prekršaji ubacivani kroz posrednika nad pravim HTML-om, repo
+nedirnut:
+```
+  noscript do 1200 px      pala: „noscript navigacije vazi do 1200 px — razbija pilulu na 1025+"
+  bez aria-controls        pala: „pilula nema aria-controls=nav-links"
+  div umesto dugmeta       pala: „tacno jedna pilula"
+  bez pilule               pala: „tacno jedna pilula"
+  pilula posle <nav>       pala: „pilula mora stajati odmah ispred <nav id=nav-links>"
+  nesto izmedju            pala: isto, sa ispisom <span></span> izmedju
+  bez prekrsaja            20/20 zeleno
+```
+
+**Izmereno u pravom Chrome-u:** najmanji razmak pilule od teksta 225 / 17 / 23 px (1025 / 1280 / 1440) — nijedan
+negativan; otvoren panel 440 × 776 ne seče kapsule; 48 uzoraka boje pilule se slaže sa pozadinom ispod nje; bez miša
+(`hover:none`) prelaz ne otvara, dodir otvara, Esc zatvara i vraća fokus; Tab redosled skip-link → znak → pilula
+(zatvorena) → prvi link (otvara); **telefon 390 i 1024 px: 0 različitih piksela naspram `master`-a**, isti snimak
+ponovljen bajt po bajt.
+
+**Greška nađena merenjem:** zatvoren spisak linkova ležao je preko pilule i jeo dodir — popravljeno
+(`pointer-events:none`), inače se na tabletu bez miša meni ne bi otvarao. Mišem se ne bi videlo.
+
+**Odstupanja od plana** (ista EXPECTED-FILES površina, sva tri u manifestu): nema omotača `nav-menu` (izmereno je
+menjao zaglađivanje zaglavlja na telefonu, 1198 piksela) — pilula je dugme odmah ispred `<nav>`, panel je sam `<nav>`;
+uska pilula do 1339 px umesto 1279; `data-tone` nosi `<header>`, a čita se tačka gde pilula stoji zatvorena.
+
+**SCOPE_DRIFT:** nema — `git diff master...HEAD` daje tačno `components/Nav.tsx`, `app/globals.css`,
+`tests/rendered-html.test.mjs`, ostalo su dokumenti iz EXPECTED-FILES.
+
+**`manual`:** Pavle 2026-09-23, *„imamo eror ali manual pass"*. ⚠️ Ta greška nije iz `RD4`: dev-only upozorenje o
+hidrataciji na `<h1 data-wipe>` dolazi iz `Motion.tsx` (`is-in` se dodaje posle učitavanja), koji `RD4` ne dira; ista
+poruka postoji i u preview kopiji sa kodom od pre `RD4`. **Ostaje otvoreno, van ovog batcha.**
+
+**NEXT STEP:** release `RD4` — spajanje i push su Pavlova odluka; posle push-a deploy se meri uz diskriminator PRE
+merenja za HTML, CSS **i** JS (`L37`).
+
+---
+
 ## non-batch(docs) — `RD4-LOOK` zapisan: navigacija je staklena pilula desno · 2026-09-22
 
 **Changed files:** `workflow/projects/growth-cinematic/DECISIONS.md` · `workflow/projects/growth-cinematic/ROADMAP.md` ·

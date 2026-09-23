@@ -99,6 +99,14 @@
   mehanizam; (4) na ~1025 px pilula sa razmakom (80 px) ulazi u desnu marginu (6vw = 61 px).
 - Preview: `?nav=14` u kopiji van repoa (putanja u `STATE`) — CSS u blokovima „krug 4" i „krug 5" na kraju
   `app/globals.css`, prekidač i praćenje pozadine u `components/Nav.tsx`.
+- **Isporučeno u `RD4` 2026-09-23 (`217df2a`); četiri otvorene tačke rešene ovako:** (1) **dodir** — pilula je pravo
+  dugme, prelaz miša otvara samo uz `hover:hover`, a dodir i tastatura idu preko `aria-expanded`/`.is-open`;
+  (2) **dugme** — `<button class="nav-pill">` sa `aria-controls="nav-links"`, Esc zatvara i vraća fokus, kapija u
+  `rendered` to čuva; (3) **boja po pozadini** — `Nav.tsx` pri skrolu uzima prvu neprovidnu pozadinu ispod tačke gde
+  pilula stoji zatvorena i stavlja `data-tone` na `<header>` (bez dodavanja atributa drugim komponentama);
+  (4) **uska margina** — do 1339 px pilula je 52 px na 8 px od ivice. ⚠️ Pilula **nema omotač** — omotač sa
+  `display:contents` je izmereno menjao zaglađivanje zaglavlja na telefonu, pa je dugme odmah ispred `<nav>`, a panel
+  je sam `<nav>`.
 
 ### `RD7-LOOK` — ritam naslovne: krem proces posle heroja, forma na kraju · 2026-09-22
 - Deo `SMER-B`. Redosled: heroj → „How it works" (krem) → naplata (asfalt) → vrednosti (svetlo siva) → „What we don't
