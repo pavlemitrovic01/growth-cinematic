@@ -6,6 +6,27 @@
 
 ---
 
+## `TTI2` — Lepše podstranice: navigacija, zaglavlje sa fotografijom, kartice, pokret · 2026-09-23
+
+**Changed files:** `app/globals.css` · `components/Home.tsx` · `components/PageShell.tsx` · `components/Reveal.tsx`
+(nov) — implementacija `9d19efa`; close: `batches/TTI2.md`, `STATE.md`, ovaj `LOG.md`, `ROADMAP.md`.
+**Grana:** `tti2-lepse-podstranice` (sa `master` `9523a66`) · **Tier:** STANDARD + `manual`.
+
+Pavle: podstranice su *„previse basic… kao kostur"*; *„obican sajt sa slikama… lepom tipografijom i motionom… u jednom
+batchu"*. Izgled je prethodno isproban u kopiji van repoa (pravac „B" od tri) i prenet bez prekidača.
+
+**VERIFICATION** (lokalno, `next start`, PID 16872, `meri se: http://localhost:3000`): `quick` exit 0 · `typecheck`
+exit 0 · `test` exit 0, 135/135 · `full` exit 0 · `verify` exit 0, 14 + 13 · `rendered` exit 0, 21/21 · konzola 0 ·
+skrol kroz `/how-it-works`: 17 → 0 sakrivenih · 6 vidljivih linkova u traci na 1440 px. **`manual`:** Pavle,
+*„manual pass spoji pushuj"*. Na putu: `K1/A` 149 → 144 → 141 (spojena ponovljena pravila; zarez u `:is()` census
+cita kao dva selektora), `K1/B` nasao mrtav `.route-in` — obrisan.
+
+**SCOPE DRIFT:** nema (podskup manifesta).
+
+**NEXT STEP:** release na Pavlovu reč (data u istoj poruci), pa domen/DNS/Resend/env kad Pavle kaže.
+
+---
+
 ## non-batch(release) — `TTI1` spojen i pušen; merenje odloženo · 2026-09-23
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

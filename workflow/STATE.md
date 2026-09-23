@@ -14,7 +14,11 @@
   Pavle *„moze a i ne mora"* — ostaje `noindex` dok ne kaže (ako da, `rendered` test za `noindex` se menja).
   Kinematski kolosek (`RD5`, `T1b`, `M2c`–`M6`, `RD8`) je **napušten** (`TTI-IME`). Ostatak lanca lansiranja —
   `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
-- **Poslednji završen:** **`TTI1`** (2026-09-23, `4e3fad8`) — **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`).
+- **Poslednji završen:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
+  linkovima, tamno zaglavlje sa fotografijom (obične strane — vozač, forme — izlazak sunca, članci — noć), pun tekst u
+  naslovima i na naslovnoj, veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret (`Reveal.tsx`; bez
+  JS-a ništa skriveno). Forme netaknute. Kapije lokalno sve exit 0; Pavle: *„manual pass spoji pushuj"*.
+- **Pretposlednji:** **`TTI1`** (2026-09-23, `4e3fad8`) — **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`).
   GROWTH.CO / Capljinac LLC → **TTIrecruiting**, `info@ttirecruiting.us`, telefon **(312) 584-1777** iza `HAS_PHONE`
   (prazan broj sklanja telefon i rečenice o pozivu sa celog sajta). TCPA samo ime, verzija pristanka
   `2026-09-06` → `2026-09-23`. Naslovna: statična fotografija umesto three.js scene; `Motion.tsx` uklonjen sa celog
@@ -22,8 +26,6 @@
   20 → 21. Četiri nove provere, sve crvene na staroj produkciji. Nezavisan pregled pravne/API površine: bez defekata.
   Pavle: *„manual pass"*; broj *„vazi za sve"* (i „daily, weekends included"). Spojen i pušen 2026-09-23;
   **deploy nije meren** (odloženo po Pavlu), samo potvrđeno da je build živ.
-- **Pretposlednji:** **`H2`** (2026-09-23, `05a64b0`) — hidratacija pokreta 22 → 0; spojen, pušen i izmeren na deploy-u.
-  Kod koji je popravio obrisan je u `TTI1`.
 - ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
   uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
