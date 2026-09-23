@@ -14,24 +14,19 @@
   Pavle *„moze a i ne mora"* — ostaje `noindex` dok ne kaže (ako da, `rendered` test za `noindex` se menja).
   Kinematski kolosek (`RD5`, `T1b`, `M2c`–`M6`, `RD8`) je **napušten** (`TTI-IME`). Ostatak lanca lansiranja —
   `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
-- **Poslednji završen:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
+- **Poslednji završen:** **`TTI3`** (2026-09-24, `9c83a2e`) — **Logo firme i crveni akcenti**: crveni „TTI" u krugu
+  u navigaciji, podnožju, faviconu, ikonici na telefonu, JSON-LD-u i slici za deljenje; `--clay*` nose crvenu iz loga
+  (`#e2111a` / `#b10713`). Kapije lokalno sve exit 0; Pavle: *„da za test, manual pass pushuj"*.
+- **Pretposlednji:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
   linkovima, tamno zaglavlje sa fotografijom (obične strane — vozač, forme — izlazak sunca, članci — noć), pun tekst u
   naslovima i na naslovnoj, veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret (`Reveal.tsx`; bez
   JS-a ništa skriveno). Forme netaknute. Kapije lokalno sve exit 0; Pavle: *„manual pass spoji pushuj"*. Spojen i pušen
   2026-09-23 (`9523a66..553c902`); build živ u 15:28, **deploy nije meren** (odloženo do domena).
-- **Pretposlednji:** **`TTI1`** (2026-09-23, `4e3fad8`) — **Običan sajt pod imenom TTIrecruiting** (`TTI-IME`).
-  GROWTH.CO / Capljinac LLC → **TTIrecruiting**, `info@ttirecruiting.us`, telefon **(312) 584-1777** iza `HAS_PHONE`
-  (prazan broj sklanja telefon i rečenice o pozivu sa celog sajta). TCPA samo ime, verzija pristanka
-  `2026-09-06` → `2026-09-23`. Naslovna: statična fotografija umesto three.js scene; `Motion.tsx` uklonjen sa celog
-  sajta, uz mrtav CSS (`K1/B`); three van paketa, `test` 182 → 135 (obrisani testovi scene i pokreta), `rendered`
-  20 → 21. Četiri nove provere, sve crvene na staroj produkciji. Nezavisan pregled pravne/API površine: bez defekata.
-  Pavle: *„manual pass"*; broj *„vazi za sve"* (i „daily, weekends included"). Spojen i pušen 2026-09-23;
-  **deploy nije meren** (odloženo po Pavlu), samo potvrđeno da je build živ.
 - ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
   uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`TTI1` običan sajt pod imenom TTIrecruiting — spojen i pušen 2026-09-23, `RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).

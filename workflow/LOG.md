@@ -6,6 +6,28 @@
 
 ---
 
+## `TTI3` — Logo firme i crveni akcenti · 2026-09-24
+
+**Changed files:** `components/Nav.tsx` · `components/Footer.tsx` · `components/StructuredData.tsx` · `app/layout.tsx` ·
+`app/globals.css` · `app/global-error.tsx` · `public/logo-96.png` · `public/logo-192.png` · `public/logo-512.png` ·
+`public/icon-32.png` · `public/apple-touch-icon.png` · `public/og.jpg` · `public/favicon.svg` (obrisan) ·
+`__tests__/globals-css.test.js` (odobreno proširenje) — implementacija `9c83a2e`; close: `batches/TTI3.md`, `STATE.md`,
+ovaj `LOG.md`, `ROADMAP.md`. **Grana:** `tti3-logo` (sa `master` `9747839`) · **Tier:** STANDARD + `manual`.
+
+Pavle je poslao logo firme (izabran crveni „TTI" u krugu, ne zeleni metalni) i tražio *„logo i akcenti u crvenoj"*.
+Logo očišćen van repoa (krug nađen po tamnom prstenu: centar 800,537, r 364; unutrašnji šum u belo; kružna maska 4×).
+
+**VERIFICATION** (lokalno, `next start`, PID 15860, `meri se: http://localhost:3000`): `quick` exit 0 · `typecheck`
+exit 0 · `test` exit 0, 135/135 · `full` exit 0 · `verify` exit 0, 14 + 13 · `rendered` exit 0, 21/21 · CSS: 0 starih
+narandžastih, `#e2111a` 4× · ikonice i logo 200 · konzola 0. `K1/A` 141 → 139 izmereno (obrisana dva ponovljena
+pravila znaka), izmena broja uz Pavlovo *„da za test"*. **`manual`:** Pavle, *„manual pass pushuj"*.
+
+**SCOPE DRIFT:** nema — sve u manifestu plus odobreno proširenje (`__tests__/globals-css.test.js`).
+
+**NEXT STEP:** release (Pavle je rekao u istoj poruci), pa domen/DNS/Resend/env kad Pavle kaže.
+
+---
+
 ## non-batch(release) — `TTI2` spojen i pušen; build živ · 2026-09-23
 
 **Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
