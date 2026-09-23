@@ -6,6 +6,25 @@
 
 ---
 
+## non-batch(release) — `TTI1` spojen i pušen; merenje odloženo · 2026-09-23
+
+**Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`
+
+`master` `2a6c160..c4d99ca` fast-forward, push 14:52:00 (Pavle: *„moze spoji i pushuj"*). Pre spajanja provereno da je
+`origin/master` nepomeren (`2a6c160`) i da je fast-forward moguć.
+
+**Merenje na deploy-u: NIJE POKRENUTO** — Pavle: GoDaddy DNS, Resend, Vercel domen/env i merenje *„kad sve
+završimo"*. Urađena je samo provera da je build živ (nije kapija): `https://growth-cinematic.vercel.app/` u 14:52:44
+služi nov HTML — `584-1777` 10×, `GROWTH` 0, `journey-canvas` 0.
+
+**Pavlovi odgovori:** telefon *„vazi za sve"* — „Call or text us daily — weekends included" važi za (312) 584-1777;
+Google indeks *„moze a i ne mora"* — ostaje `noindex` (bez promene env-a) dok ne kaže drugačije.
+
+**NEXT STEP:** kad Pavle kaže — GoDaddy DNS i Resend (Pavle), Vercel domen + env (agent uz „da"), pa `verify` +
+`rendered` na `ttirecruiting.us` i probna prijava.
+
+---
+
 ## `TTI1` — Običan sajt pod imenom TTIrecruiting, bez 3D scene i pokreta · 2026-09-23
 
 **Changed files:** 55 u implementaciji `4e3fad8` — ime i kontakt (`lib/contact.js`, `lib/seo.js`, `lib/email.js`,
