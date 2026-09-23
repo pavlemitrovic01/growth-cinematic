@@ -6,6 +6,55 @@
 
 ---
 
+## `H2` — Hidratacija: pokret ne dira DOM pre nego što React preuzme metu · 2026-09-23
+
+**Changed files:** `components/Motion.tsx` · `lib/motion-reveal.ts` · `__tests__/motion-reveal.test.js` ·
+`workflow/projects/growth-cinematic/batches/H2.md` · `.../ROADMAP.md` · `.../CONTEXT.md` · `workflow/STATE.md` ·
+ovaj `LOG.md`. **Implementacija:** `05a64b0` · **Grana:** `h2-hidratacija` (sa `master` `b030adf`) ·
+**Tier:** STANDARD + `manual`.
+
+Posmatrač je dodavao `is-in` usred hidratacije, pa je React prijavljivao neslaganje atributa koje po sopstvenoj poruci
+**neće ispraviti** — element je nosio klasu koju React ne zna da postoji, a sledeće iscrtavanje tog dela bi je skinulo
+i sadržaj iza `:not(.is-in)` bi se ponovo sakrio. Sada se čeka znak sa same mete (React zakači svoj čvor na element),
+uz rok od 2,5 s i proveru koja ide i kadrom i kratkim tajmerom. Watchdog ostaje poslednja zaštita.
+
+**VERIFICATION** (`next start`, `BUILD_ID` 03:38:50, PID provereno; `meri se: http://localhost:3000`):
+`quick` 0 · `typecheck` 0 · `test` **182/182** (bilo 173) · `full` 0 · `verify` PASS 14 + 13 · `rendered` 20/20.
+
+**Novi testovi dokazano crveni pa zeleni** (`RULES §6`): prvo `afterHydration is not a function` za svih pet, pa posle
+promene ugovora još dva (`rok pokrece posao i kad kadrovi uopste ne stizu`, `primecuje preuzimanje i kad kadrovi ne
+stizu`) — svaki crven sa svojom porukom pre koda.
+
+**Izmereno u browseru** (10 ruta × 3 prolaza, dev):
+```
+  PRE                   22 upozorenja / 30 ucitavanja; skrivenih meta u kadru: nema
+  posle 1. pokusaja     23 — cekanje na `load` NIJE pomoglo. Trag /terms: load 391 ms, klasa 483 ms, upozorenje ipak
+                        (React u dev-u hidrira deo stabla posle `load`-a)
+  POSLE                 0 upozorenja / 30 ucitavanja; skrivenih meta u kadru: nema
+  watchdog              blokiran JS strane: h1 skriven do ~2,6 s, pa `js-motion` skinut i sadrzaj vidljiv
+                        blokirani kadrovi: nasa provera preko tajmera otkriva sadrzaj i pre watchdog-a
+  vreme otkrivanja      produkcijski build: React preuzme metu ~170–210 ms, `data-motion-ready` odmah za njim
+```
+⚠️ Druga pogrešna pretpostavka oborena merenjem: rok koji se proverava samo u kadru ne može da se okine kad kadrovi ne
+stižu — izmeren prolaz u kome kadar nije stigao 2,6 s. Zato rok ima svoj tajmer.
+
+**SCOPE_DRIFT:** nema — `git diff master...HEAD` daje tačno `components/Motion.tsx`, `lib/motion-reveal.ts`,
+`__tests__/motion-reveal.test.js`; ostalo su dokumenti iz EXPECTED-FILES.
+
+⚠️ **Oslanjanje na unutrašnjost React-a:** znak je ključ `__reactFiber$…` na DOM elementu. Napisan je tako da sme da
+izostane — ako React promeni unutrašnjost, posle roka se sve odvija kao pre `H2`. Rešenje bez unutrašnjosti tražilo bi
+`app/globals.css`, koji nije bio u obimu.
+
+⚠️ **`LESSONS` nije upisan** — fajl nije u EXPECTED-FILES ovog batcha. Pouka (znak hidratacije; `load` nije kraj
+hidratacije; rok koji visi o kadru) čeka non-batch odluku.
+
+**`manual`:** Pavle 2026-09-23, *„manual pass"*.
+
+**NEXT STEP:** release `H2` — spajanje i push su Pavlova odluka; posle push-a deploy se meri uz diskriminator PRE
+merenja (`L37`).
+
+---
+
 ## non-batch(release) — `RD4` spojen i pušen; izmeren na deploy-u · 2026-09-23
 
 **Changed files:** `workflow/projects/growth-cinematic/ROADMAP.md` · `workflow/STATE.md` · ovaj `LOG.md`

@@ -7,35 +7,41 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **`H2` — hidratacija** (`Motion.tsx` dodaje `is-in` pre hidratacije, pa React u dev-u prijavi neslaganje
-  atributa na `<h1 data-wipe>`; Pavle 2026-09-23: *„pa cemo sredjivati napravljenu gresku"*). Pa `RD5` (deo) zaglavlje
-  podstranice sa kadrom i **tamno podnožje** (`RD7-LOOK`, preporuka: ide uz `RD5`). Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
+- ⚠️ **`H2` je zatvoren ali NIJE spojen ni pušen** — grana `h2-hidratacija` (`05a64b0` + close commit) čeka Pavlovu reč.
+- **Sledeće:** **release `H2`**, pa `RD5` (deo) zaglavlje podstranice sa kadrom i **tamno podnožje**
+  (`RD7-LOOK`, preporuka: ide uz `RD5`). ⚠️ Pouka iz `H2` (znak hidratacije, `load` nije kraj hidratacije, rok koji
+  visi o kadru) **nije upisana u `LESSONS`** — fajl nije bio u obimu `H2`; ide non-batch ako Pavle kaže. Za vizuelne odluke **varijante PRE plana** (`L39`). Blag šav navigacija (asfalt) → nebo heroja
   (zeleno) ostao je posle `RD17`; ako zasmeta, noćne boje scene su zaseban posao sa varijantama. `T1b`
   (https://claude.ai/artifact/FMR8hbAMF8u7Q9ia3KwsLn) i dalje čeka izbor; `U2` ostaje za pravnu rečenicu u telu,
   numeraciju, kickere na telefonu i skip link. Ostatak lanca lansiranja — `V1` i pravni tekstovi advokatu. `U3` čeka
   Pavlovu potvrdu da regruteri zovu sa broja iz `lib/contact.js`.
   ⚠️ **Otvoreno pitanje za Pavla: okvirni datum prelaska.** `ROADMAP` `X1` („tek kad postoje
   brojke") ne prati izjavu od 2026-09-13 da se MAIN gasi kad novi sajt preuzme domen.
-- **Poslednji završen:** **`RD4`** (2026-09-23, `217df2a`) — **Navigacija: staklena pilula desno** (`RD4-LOOK`, treći
+- **Poslednji završen:** **`H2`** (2026-09-23, `05a64b0`) — **Hidratacija**: pokret više ne dira DOM pre nego što React
+  preuzme metu (znak je React-ov čvor na elementu, uz rok od 2,5 s i proveru koja ne visi o kadru). Izmereno **22 → 0**
+  upozorenja na 30 učitavanja; watchdog netaknut (blokiran JS → sadržaj se vidi posle 3 s). Sedam novih testova, svi
+  dokazano crveni pre koda; `test` 173 → 182. Dve pogrešne pretpostavke oborene merenjem (`load` nije kraj hidratacije;
+  rok u kadru se ne okine kad kadrova nema). Pavle: *„manual pass"*. **Nije spojen ni pušen.**
+- **Pretposlednji:** **`RD4`** (2026-09-23, `217df2a`) — **Navigacija: staklena pilula desno** (`RD4-LOOK`, treći
   deo pravca B). Na ≥ 1025 px gornje trake nema: znak i telefon + APPLY lebde u staklenim kapsulama, meni je pilula
   desno po sredini koja se na prelaz miša, fokus tastature ili dodir otvara u panel 440 px uz desnu ivicu; zatvorena
   pilula menja boju po pozadini (krem na tamnom, tamno staklo na svetlom). Telefon **0 piksela razlike**. Nova
   `rendered` kapija (20), crvena na šest prekršaja. Merenjem nađena i popravljena greška: nevidljivi linkovi su jeli
   dodir na pilulu. Pavle: *„imamo eror ali manual pass"* — greška je dev-only hidratacija iz `Motion.tsx`, starija od
   `RD4` (vodi se kao `H2`). Spojen i pušen 2026-09-23, izmeren na deploy-u (HTML, CSS i JS stigli zajedno).
-- **Pretposlednji:** **`RD7`** (2026-09-22, `8c8546b`) — **Ritam naslovne** (drugi deo pravca B): posle heroja krem
-  „How it works", pa naplata tamna, vrednosti, guard tamna, osnivač krem, FAQ svetlo siva, završni poziv sa brzom
-  formom. Spojen i pušen 2026-09-22, izmeren na deploy-u.
-  ⚠️ Brza forma je živa na novom mestu; slanje na produkciji još niko nije uradio — prvo pravo slanje je prava prijava.
+- ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
+  uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`RD17` paleta asfalt — spojen i pušen 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `H2` (`h2-hidratacija`, implementacija `05a64b0` + close commit) — **nije spojen ni pušen**, grana čeka Pavlovu reč.
+  Kapije merene lokalno protiv `next start` (`BUILD_ID` 03:38:50); deploy još nije meren, jer ga nema.
 - `RD4` (`cf95c47..2909d52`, implementacija `217df2a`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „spoji i
   pushuj"); nosi i non-batch `68aa001` i `85d58fc`. **Deploy izmeren protiv njega**, uz nov build potvrđen
   diskriminatorom PRE merenja za **HTML, CSS i JS** (`nav-pill` u HTML-u 0 → 1, u CSS-u 0 → 1 uz novo ime
