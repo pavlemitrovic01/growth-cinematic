@@ -24,7 +24,10 @@
    ─────────────────────────────────────────────────────────────────────────── */
 /* TTI3 (2026-09-23): `--clay*` nose CRVENU iz loga (#e2111a svetla, #b10713 tamna), ne vise glinu -- ime tokena je
    ostalo da se ne bi diralo stotinu pravila. `--clay-deep` na krem podlozi 5,9:1, `--clay-light` na asfaltu 5,4:1. */
-:root{--asphalt:#121314;--bone:#f1e7d5;--ink:#1c1c1b;--clay:#e2111a;--line:rgba(241,231,213,.25);--stone:#4b4a47;--bone-dim:#e6dfce;--clay-deep:#b10713;--clay-mid:#9e0f18;--clay-soft:#f0525a;--clay-light:#ff5a60;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
+/* TTI4 (2026-09-24): sajt je svetao, a crvena tamnija (#b81920, Pavle: „crvena je malo prejaka"). `--clay-light` i
+   `--clay-soft` vise nisu svetla crvena za tamnu podlogu nego ista crvena, jer tamnih podloga nema; heroj preko slike
+   ima svoje vrednosti. Tople nijanse su u istom batchu prevedene u neutralnu sivu iste svetline. */
+:root{--asphalt:#131313;--bone:#f5f5f4;--ink:#111111;--clay:#b81920;--line:rgba(245,245,244,.2);--stone:#4a4a4a;--bone-dim:#e9e9e8;--clay-deep:#9a1219;--clay-mid:#9a1219;--clay-soft:#b81920;--clay-light:#b81920;--dur-fast:.18s;--dur:.28s;--dur-slow:.6s;--ease-out:cubic-bezier(.22,1,.36,1)}
 /* ─── PISMO (T1, 2026-09-14) ─────────────────────────────────────────────────
    Pismo sajta je Arial (Pavlova odluka, `T-FONT`). "Growth Sans" postoji samo da uredjaji BEZ
    Arial-a — prakticno Android — dobiju Arimo (OFL, iste sirine slova kao Arial) umesto svog
@@ -42,7 +45,7 @@
 @font-face{font-family:"Growth Sans";font-style:normal;font-weight:700;font-display:swap;src:local("Arial Bold"),local("Arial-BoldMT"),url("/fonts/arimo-v36-latin.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Growth Sans";font-style:italic;font-weight:400;font-display:swap;src:local("Arial Italic"),local("Arial-ItalicMT"),url("/fonts/arimo-v36-latin-italic.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 @font-face{font-family:"Growth Sans";font-style:italic;font-weight:700;font-display:swap;src:local("Arial Bold Italic"),local("Arial-BoldItalicMT"),url("/fonts/arimo-v36-latin-italic.woff2") format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
-*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--asphalt)}body{margin:0;background:var(--asphalt);color:var(--bone);font-family:"Growth Sans",Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}html{scroll-behavior:smooth;background:#fff}body{margin:0;background:#fff;color:var(--bone);font-family:"Growth Sans",Arial,Helvetica,sans-serif}a{color:inherit;text-decoration:none}button,a{-webkit-tap-highlight-color:transparent}
 /* ─── FORME ───────────────────────────────────────────────────────────────────
    Cinematic jezik: verzal mikro-labele sa sirokim razmakom, tanke linije, clay
    akcenat na CTA (isti krug kao `.primary-cta b`). Dve podloge: `.qa` na forest
@@ -65,11 +68,11 @@
 .label-optional{opacity:.55;letter-spacing:.08em}
 
 /* ── pristanak (TCPA) ── */
-.consent{display:flex;gap:13px;align-items:flex-start;cursor:pointer;padding:16px 18px;border:1px solid rgba(28,28,27,.22);border-radius:10px;background:rgba(28,28,27,.035)}
+.consent{display:flex;gap:13px;align-items:flex-start;cursor:pointer;padding:16px 18px;border:1px solid rgba(28,28,28,.22);border-radius:10px;background:rgba(28,28,28,.035)}
 .consent input[type=checkbox]{width:22px;height:22px;flex-shrink:0;margin:1px 0 0;accent-color:var(--clay)}
 .consent span{font-size:12px;line-height:1.55;opacity:.78}
 .consent a{text-decoration:underline;text-underline-offset:2px}
-.consent--compact{padding:13px 15px;border-color:var(--line);background:rgba(241,231,213,.05)}
+.consent--compact{padding:13px 15px;border-color:var(--line);background:rgba(232,232,232,.05)}
 .consent--compact span{font-size:11.5px;line-height:1.5;opacity:.72}
 
 .form-error{margin-top:15px;color:#e0714f;font-size:12px;line-height:1.55}
@@ -82,33 +85,33 @@
 .qa-lede{margin:0;font-size:13px;line-height:1.5;opacity:.72;max-width:26ch}
 .qa-field{display:flex;flex-direction:column}
 .qa-field label,.af-field label{margin-bottom:9px;font-size:10px;font-weight:700;letter-spacing:.17em;text-transform:uppercase;opacity:.72}
-.qa-field input{padding:13px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--bone);font-size:15px;font-family:inherit;transition:border-color .25s ease}
-.qa-field input:hover{border-bottom-color:rgba(241,231,213,.5)}
+.qa-field input{padding:13px 2px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
+.qa-field input:hover{border-bottom-color:#555}
 .qa-field input:focus{outline:none;border-bottom-color:var(--clay)}
 .qa-field input:focus-visible{outline:none}
-.qa-submit{grid-column:4;display:inline-flex;align-items:center;gap:26px;padding:9px 9px 9px 21px;border:0;background:var(--bone);color:var(--ink);border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer;white-space:nowrap}
-.qa-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--clay);color:#fff;font-size:17px;transition:transform .3s ease}
+.qa-submit{grid-column:4;display:inline-flex;align-items:center;gap:26px;padding:9px 9px 9px 21px;border:0;background:var(--clay);color:#fff;border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer;white-space:nowrap}
+.qa-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:var(--clay);font-size:17px;transition:transform .3s ease}
 .qa-submit:hover b,.qa-submit:focus-visible b{transform:rotate(45deg)}
 .qa-submit:disabled{opacity:.55;cursor:progress}
 .qa .consent--compact{grid-column:1/-1;grid-row:2}
 .qa .form-error{grid-column:1/-1;margin-top:0}
-.qa--done{display:flex;gap:15px;align-items:flex-start;max-width:760px;padding:26px 28px;border:1px solid rgba(102,168,117,.45);border-radius:14px;background:rgba(102,168,117,.1)}
-.qa-check{display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#66a875;color:var(--asphalt)}
+.qa--done{display:flex;gap:15px;align-items:flex-start;max-width:760px;padding:26px 28px;border:1px solid rgba(150,150,150,.45);border-radius:14px;background:rgba(150,150,150,.1)}
+.qa-check{display:grid;place-items:center;flex-shrink:0;width:34px;height:34px;border-radius:50%;background:#969696;color:var(--asphalt)}
 .qa--done p{margin:0;font-size:14px;line-height:1.6;color:var(--bone)}
 
 /* ── FULL: forma na krem podlozi ── */
 .af{display:flex;flex-direction:column;gap:22px;max-width:760px}
 .af-row{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .af-field{display:flex;flex-direction:column}
-.af-field input,.af-field select,.af-field textarea{padding:13px 14px;border:1px solid rgba(28,28,27,.28);border-radius:8px;background:#fff;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
+.af-field input,.af-field select,.af-field textarea{padding:13px 14px;border:1px solid rgba(28,28,28,.28);border-radius:8px;background:#fff;color:var(--ink);font-size:15px;font-family:inherit;transition:border-color .25s ease}
 .af-field textarea{resize:vertical;line-height:1.5}
-.af-field input:hover,.af-field select:hover,.af-field textarea:hover{border-color:rgba(28,28,27,.5)}
+.af-field input:hover,.af-field select:hover,.af-field textarea:hover{border-color:rgba(28,28,28,.5)}
 .af-field input:focus,.af-field select:focus,.af-field textarea:focus{outline:none;border-color:var(--clay-deep);box-shadow:0 0 0 3px rgba(226,17,26,.18)}
-.af-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:34px;padding:9px 9px 9px 22px;border:0;background:var(--ink);color:var(--bone);border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer}
-.af-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--clay);color:#fff;font-size:17px;transition:transform .3s ease}
+.af-submit{align-self:flex-start;display:inline-flex;align-items:center;gap:34px;padding:9px 9px 9px 22px;border:0;background:var(--clay);color:#fff;border-radius:999px;font:inherit;font-size:10px;font-weight:800;letter-spacing:.15em;cursor:pointer}
+.af-submit b{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:#fff;color:var(--clay);font-size:17px;transition:transform .3s ease}
 .af-submit:hover b,.af-submit:focus-visible b{transform:rotate(45deg)}
 .af-submit:disabled{opacity:.55;cursor:progress}
-.form-done{max-width:640px;padding:40px;border:1px solid rgba(28,28,27,.25);border-radius:16px;background:rgba(102,168,117,.12);color:var(--ink)}
+.form-done{max-width:640px;padding:40px;border:1px solid rgba(28,28,28,.25);border-radius:16px;background:rgba(150,150,150,.12);color:var(--ink)}
 .form-done h2{margin:14px 0 10px;font-size:clamp(1.7rem,3vw,2.4rem);letter-spacing:-.03em}
 .form-done p{margin:0;font-size:14px;line-height:1.65;opacity:.8}
 
@@ -134,9 +137,9 @@
 /* ⚠️ Kontura ide SAMO pod `@supports`. Bez guarda `color:transparent` ostaje kao
    jedino pravilo tamo gde `-webkit-text-stroke` nije podrzan — naslov tada nestaje.
    Zatecen `app/page.tsx` tu gresku nosi; ovde se ne ponavlja. */
-.sub-hero h1 em{font-style:normal;font-weight:500;color:rgba(28,28,27,.62)}
+.sub-hero h1 em{font-style:normal;font-weight:500;color:rgba(28,28,28,.62)}
 @supports (-webkit-text-stroke: 1px currentColor){
-  .sub-hero h1 em{color:transparent;-webkit-text-stroke:1.2px rgba(28,28,27,.6)}
+  .sub-hero h1 em{color:transparent;-webkit-text-stroke:1.2px rgba(28,28,28,.6)}
 }
 .sub-lede{margin:28px 0 0;max-width:62ch;font-size:clamp(14px,1.15vw,17px);line-height:1.6;opacity:.78}
 .sub-trust{display:flex;flex-wrap:wrap;gap:12px 28px;margin-top:26px;font-size:11px;letter-spacing:.11em;text-transform:uppercase;opacity:.62}
@@ -149,7 +152,7 @@
 
 /* ─── NAV / FOOTER / MOBILE BAR ───────────────────────────────────────────────*/
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 6vw;border-bottom:1px solid rgba(28,28,27,.2)}
+.nav{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:22px 6vw;border-bottom:1px solid rgba(28,28,28,.2)}
 .subpage .brand{display:inline-flex;align-items:center;gap:11px;font-size:14px;font-weight:800;letter-spacing:.2em;flex-shrink:0}
 .nav-links{display:flex;gap:26px;font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase}
 /* ⚠️ Ovde su do 2026-09-05 stajala dva MRTVA pravila:
@@ -166,11 +169,11 @@
    `[aria-current=page]` i dalje oznacava tekucu stranicu. */
 .nav-actions{display:flex;align-items:center;gap:14px;flex-shrink:0}
 .nav-call{font-size:11px;font-weight:700;letter-spacing:.1em;opacity:.72}
-.nav-cta{padding:11px 16px;border:1px solid rgba(28,28,27,.45);border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.16em;transition:.25s ease}
-.nav-cta:hover,.nav-cta:focus-visible{background:var(--ink);color:var(--bone)}
-.nav-toggle{display:none;width:42px;height:42px;border:1px solid rgba(28,28,27,.3);border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
+.nav-cta{padding:11px 16px;border:1px solid rgba(28,28,28,.45);border-radius:999px;background:var(--clay);color:#fff;font-size:10px;font-weight:800;letter-spacing:.16em;transition:.25s ease}
+.nav-cta:hover,.nav-cta:focus-visible{background:var(--clay-deep);color:#fff}
+.nav-toggle{display:none;width:42px;height:42px;border:1px solid rgba(28,28,28,.3);border-radius:10px;background:transparent;color:var(--ink);font:inherit;font-size:17px;cursor:pointer}
 
-.foot{padding:56px 6vw 40px;border-top:1px solid rgba(28,28,27,.2)}
+.foot{padding:56px 6vw 40px;border-top:1px solid rgba(28,28,28,.2)}
 .foot-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:40px}
 .foot-tag{margin:16px 0 0;max-width:34ch;font-size:12.5px;line-height:1.65;opacity:.7}
 .foot h2{margin:0 0 14px;font-size:10px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;opacity:.55}
@@ -180,20 +183,20 @@
    Podvlacenje na hover JESTE radilo i ostaje — zato je uklonjena samo mrtva polovina,
    ne celo pravilo. */
 .foot ul a:hover,.foot ul a:focus-visible{text-decoration:underline;text-underline-offset:3px}
-.foot-legal{margin-top:44px;padding-top:22px;border-top:1px solid rgba(28,28,27,.16);font-size:11px;line-height:1.75;opacity:.62}
+.foot-legal{margin-top:44px;padding-top:22px;border-top:1px solid rgba(28,28,28,.16);font-size:11px;line-height:1.75;opacity:.62}
 .foot-legal p{margin:0}
 .foot-legal a{text-decoration:underline;text-underline-offset:2px}
 
 /* Sticky akcioni bar — samo mobilni. SITEMAP §3: 90% saobracaja je telefon. */
-.mobar{display:none;position:fixed;z-index:20;left:0;right:0;bottom:0;grid-template-columns:1fr 1fr 1.3fr;gap:1px;background:rgba(28,28,27,.22);border-top:1px solid rgba(28,28,27,.22)}
+.mobar{display:none;position:fixed;z-index:20;left:0;right:0;bottom:0;grid-template-columns:1fr 1fr 1.3fr;gap:1px;background:rgba(28,28,28,.22);border-top:1px solid rgba(28,28,28,.22)}
 .mobar a{display:grid;place-items:center;min-height:56px;background:var(--bone);color:var(--ink);font-size:11px;font-weight:800;letter-spacing:.15em;text-transform:uppercase}
-.mobar-cta{background:var(--ink)!important;color:var(--bone)!important}
+.mobar-cta{background:var(--clay)!important;color:#fff!important}
 
 /* ─── SADRZAJ PODSTRANICA ─────────────────────────────────────────────────────*/
 .sub-body--wide{max-width:none}
 .sub-grid{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:6vw;align-items:start}
 .sub-section{margin-bottom:64px}
-.sub-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid rgba(28,28,27,.2)}
+.sub-head{display:flex;align-items:baseline;gap:16px;margin-bottom:28px;padding-bottom:14px;border-bottom:1px solid rgba(28,28,28,.2)}
 .sub-num{font-size:10px;font-weight:800;letter-spacing:.2em;color:var(--clay-deep)}
 .sub-head h2{margin:0;font-size:clamp(1.3rem,2.2vw,1.9rem);letter-spacing:-.03em}
 .steps{margin:0;padding:0;list-style:none;display:grid;gap:26px}
@@ -203,17 +206,17 @@
 .step p{margin:0;grid-column:2;font-size:14px;line-height:1.65;opacity:.78}
 .sub-2up{display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .sub-3up{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:48px}
-.card{padding:26px 24px;border:1px solid rgba(28,28,27,.22);border-radius:14px;background:rgba(255,255,255,.5)}
+.card{padding:26px 24px;border:1px solid rgba(28,28,28,.22);border-radius:14px;background:rgba(255,255,255,.5)}
 .card h3{margin:0 0 12px;font-size:16px;letter-spacing:-.02em}
 .card p{margin:0 0 12px;font-size:13.5px;line-height:1.65;opacity:.78}
 .card p:last-child{margin-bottom:0}
-.card--cta{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;background:rgba(28,28,27,.05)}
+.card--cta{position:sticky;top:24px;display:flex;flex-direction:column;gap:12px;background:rgba(28,28,28,.05)}
 .sub-caveat{margin:0;padding:22px 24px;border-left:3px solid var(--clay);background:rgba(226,17,26,.07);font-size:14px;line-height:1.7}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:14px 22px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;transition:.25s ease;border:1px solid transparent}
 .btn-primary{background:var(--ink);color:var(--bone)}
-.btn-primary:hover,.btn-primary:focus-visible{background:#0b0c0d}
-.btn-ghost{border-color:rgba(28,28,27,.4);color:var(--ink)}
-.btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(28,28,27,.07)}
+.btn-primary:hover,.btn-primary:focus-visible{background:#0c0c0c}
+.btn-ghost{border-color:rgba(28,28,28,.4);color:var(--ink)}
+.btn-ghost:hover,.btn-ghost:focus-visible{background:rgba(28,28,28,.07)}
 
 .prose{max-width:66ch;display:flex;flex-direction:column;gap:20px;font-size:15.5px;line-height:1.75}
 .prose p{margin:0}
@@ -227,8 +230,8 @@
 .signature{font-weight:700}
 
 /* ─── FAQ ─────────────────────────────────────────────────────────────────────*/
-.faqlist{max-width:820px;border-top:1px solid rgba(28,28,27,.22)}
-.faq-item{border-bottom:1px solid rgba(28,28,27,.22)}
+.faqlist{max-width:820px;border-top:1px solid rgba(28,28,28,.22)}
+.faq-item{border-bottom:1px solid rgba(28,28,28,.22)}
 /* ⚠️ `U1`: naslov pitanja stoji U `<summary>`-ju, pa mora da nasledi NJEGOVU skalu -- inace
    bi UA velicina (`h2` 1.5em, `h3` 1.17em) povecala pitanja. Do `U1` je ovde stajalo
    `.faq-item h3{margin:0}`, pravilo bez ijednog elementa koji bi uhvatilo. */
@@ -240,10 +243,10 @@
 
 /* ─── TRUCKERS LOUNGE ─────────────────────────────────────────────────────────*/
 .post-list{display:flex;flex-direction:column;gap:30px;max-width:820px}
-.post-card{padding:28px 26px;border:1px solid rgba(28,28,27,.22);border-radius:14px;background:rgba(255,255,255,.5)}
+.post-card{padding:28px 26px;border:1px solid rgba(28,28,28,.22);border-radius:14px;background:rgba(255,255,255,.5)}
 .post-meta{display:flex;flex-wrap:wrap;align-items:center;gap:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 .post-meta--article{margin-bottom:28px}
-.post-tag{padding:5px 10px;border:1px solid rgba(28,28,27,.3);border-radius:999px;font-weight:800;opacity:.9}
+.post-tag{padding:5px 10px;border:1px solid rgba(28,28,28,.3);border-radius:999px;font-weight:800;opacity:.9}
 .post-card h2{margin:16px 0 12px;font-size:21px;line-height:1.2;letter-spacing:-.025em}
 .post-card p{margin:0;font-size:14px;line-height:1.7;opacity:.78;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .post-read{display:inline-block;margin-top:18px;font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;border-bottom:1px solid currentColor;padding-bottom:2px}
@@ -253,9 +256,9 @@
 .post-body p{margin:0;opacity:.85}
 .post-subhead{margin:14px 0 0;font-size:18px;letter-spacing:-.02em;opacity:1}
 .post-callout{padding:20px 22px;border-left:3px solid var(--clay);background:rgba(226,17,26,.07);font-size:14px;line-height:1.7}
-.post-source{margin-top:10px!important;padding-top:16px;border-top:1px solid rgba(28,28,27,.2);font-size:12.5px;opacity:.68!important}
+.post-source{margin-top:10px!important;padding-top:16px;border-top:1px solid rgba(28,28,28,.2);font-size:12.5px;opacity:.68!important}
 .post-source a{text-decoration:underline;text-underline-offset:2px}
-.post-cta{margin-top:10px;padding:26px;border-radius:14px;background:rgba(28,28,27,.06);text-align:center}
+.post-cta{margin-top:10px;padding:26px;border-radius:14px;background:rgba(28,28,28,.06);text-align:center}
 .post-cta p{margin:0 0 16px;font-weight:700;opacity:1}
 
 /* ─── CONTACT ─────────────────────────────────────────────────────────────────*/
@@ -274,9 +277,9 @@
 }
 @media(max-width:720px){
 .nav{padding:16px 20px;flex-wrap:wrap}
-.nav-links{display:none;order:3;flex-basis:100%;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid rgba(28,28,27,.2)}
+.nav-links{display:none;order:3;flex-basis:100%;flex-direction:column;gap:0;margin-top:8px;border-top:1px solid rgba(28,28,28,.2)}
 .nav-links.is-open{display:flex}
-.nav-links a{padding:15px 2px;border-bottom:1px solid rgba(28,28,27,.12);font-size:13px}
+.nav-links a{padding:15px 2px;border-bottom:1px solid rgba(28,28,28,.12);font-size:13px}
 .nav-call{display:none}
 .nav-toggle{display:grid;place-items:center}
 .foot{padding:44px 20px 100px}
@@ -292,30 +295,30 @@
 .brand{display:inline-flex;align-items:center;gap:12px;font-size:15px;font-weight:800;letter-spacing:.2em}
 .eyebrow{margin:0 0 18px;font-size:12px;font-weight:700;letter-spacing:.2em}
 .home{background:var(--bone);color:var(--ink)}
-.home .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
-.home .nav-cta{background:var(--bone);color:var(--ink)}
-.home .nav-toggle{color:var(--bone);border-color:var(--line)}
-.home .nav-links{border-color:var(--line)}
-.home .nav-links a{border-color:var(--line)}
+.home .nav{background:#fff;color:var(--ink);border-color:rgba(17,17,17,.1)}
+.home .nav-cta{background:var(--clay);color:#fff}
+.home .nav-toggle{color:var(--ink);border-color:rgba(17,17,17,.25)}
+.home .nav-links{border-color:rgba(17,17,17,.12)}
+.home .nav-links a{border-color:rgba(17,17,17,.12)}
 .skip-link{position:fixed;left:16px;top:12px;z-index:100;padding:14px 20px;background:var(--bone);color:var(--ink);transform:translateY(-200%)}
 .skip-link:focus{transform:none}
 /* Polish 2026-09-15: zatamnjenje je lokalno. Tamna zona drzi kolonu teksta levo, sredina i kamion
    ostaju otvoreni, vignette je blag, a dno ostaje tamno za prelaz u stranicu. Do sada je leva
    polovina kadra bila pod 93 % crne. Pravilo za <=900 px (telefon i fotografija) se ne menja. */
-.journey-eyebrow{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--clay-light);margin:0 0 28px}
+.journey-eyebrow{font-size:12px;font-weight:800;font-style:italic;letter-spacing:.2em;color:#ff8a8f;margin:0 0 28px}
 .home-section h2 em{font-weight:500;font-style:normal;color:inherit}
 @supports(-webkit-text-stroke:1px currentColor){
   /* T1 (Pavle 2026-09-14, varijanta 2): debela slova i ivica 2 px. Tanka ivica od 1 px bila je
      najslabiji deo naslova. Tezina ide SAMO ovde, pod `@supports` — bez obrisa drugi red ostaje 500. */
   .home-section h2 em{color:transparent;-webkit-text-stroke:2px currentColor;color:var(--ink);-webkit-text-fill-color:transparent;font-weight:800}
 }
-.journey-lede{font-size:17px;line-height:1.7;max-width:46ch;margin:24px 0 28px;color:#e3ded1}
+.journey-lede{font-size:19px;line-height:1.7;max-width:52ch;margin:24px 0 28px;color:#ececec}
 .journey-actions{display:flex;align-items:center;gap:18px 26px;flex-wrap:wrap}
-.journey-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:56px;padding:8px 8px 8px 22px;border-radius:40px;background:var(--bone);color:var(--ink);font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
-.journey-cta b{display:grid;place-items:center;width:40px;height:40px;flex-shrink:0;background:var(--clay);border-radius:50%;color:#fff;font-size:22px;transition:transform .2s}
+.journey-cta{display:inline-flex;align-items:center;justify-content:space-between;gap:28px;min-height:56px;padding:8px 8px 8px 22px;border-radius:40px;background:var(--clay);color:#fff;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase}
+.journey-cta b{display:grid;place-items:center;width:40px;height:40px;flex-shrink:0;background:#fff;border-radius:50%;color:var(--clay);font-size:22px;transition:transform .2s}
 .journey-cta:hover b{transform:rotate(45deg)}
 .journey-call{font-size:14px;line-height:1.5;padding:12px 0;text-decoration:underline;text-underline-offset:5px;color:var(--bone)}
-.journey-reassure{margin:16px 0 0;font-size:13px;line-height:1.5;color:#e3ded1;opacity:.72}
+.journey-reassure{margin:16px 0 0;font-size:13px;line-height:1.5;color:#e6e6e6;opacity:1}
 
 /* Strane poglavlja (`RD15`): 01 desno, finale centrirano; kadar ide na suprotnu stranu (`shiftForSide`).
    ⚠️ Centriranje ide kroz `left`, ne kroz `transform` -- transform svaki frejm postavlja `HeroExperience`. */
@@ -334,13 +337,13 @@
    brisanje tiho pojelo NJIHOV razdelnik.
    `:not([data-line])` resava to samo od sebe: ko dobije primitiv, gubi staticnu ivicu —
    bez spiska imena koji neko mora da odrzava. */
-.home-section:not([data-line]){border-top:1px solid rgba(28,28,27,.2)}
-.home-section h2{font-size:clamp(40px,5.4vw,82px);line-height:1;letter-spacing:-.055em;margin:30px 0 32px;font-weight:800}
+.home-section:not([data-line]){border-top:1px solid rgba(28,28,28,.2)}
+.home-section h2{font-size:clamp(40px,5.4vw,82px);line-height:1;letter-spacing:-.03em;margin:30px 0 32px;font-weight:800;font-style:italic}
 .home-editorial{display:grid;grid-template-columns:1fr 1fr;gap:8vw;align-items:start;margin-top:28px}
 .home-text-link{display:inline-block;padding:12px 0;font-size:14px;font-weight:700;border-bottom:1px solid currentColor}
 .home-steps{list-style:none;padding:0;margin:0}
-.home-steps li{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(28,28,27,.22)}
-.home-steps li:first-child{border-top:1px solid rgba(28,28,27,.22)}
+.home-steps li{display:flex;gap:24px;padding:28px 0;border-bottom:1px solid rgba(28,28,28,.22)}
+.home-steps li:first-child{border-top:1px solid rgba(28,28,28,.22)}
 .home-steps li>span{font-size:12px;color:var(--clay-mid);padding-top:5px;letter-spacing:.1em}
 .home-steps h3{font-size:22px;line-height:1.2;letter-spacing:-.025em;margin:0 0 10px}
 .home-steps p,.home-founder p{font-size:16px;line-height:1.7;margin:0;color:var(--stone)}
@@ -348,7 +351,7 @@
 .home-founder .home-signature{font-size:12px;text-transform:uppercase;letter-spacing:.12em;margin:0 0 30px}
 .home-faq{background:var(--bone-dim)}
 .home-faq .faqlist{max-width:none}
-.home-close{background:var(--asphalt);color:var(--bone)}
+.home-close{--bone:#111111;--line:rgba(17,17,17,.14);background:#fff;color:var(--ink);border-top:1px solid rgba(17,17,17,.1)}
 .home-close h2 em{-webkit-text-stroke-color:var(--bone)}
 .home-close-copy>p{font-size:16px;margin:30px 0 6px}
 .home-close-copy>p a{text-decoration:underline;text-underline-offset:4px}
@@ -394,7 +397,7 @@
 @media(max-width:900px){
   .home-editorial{grid-template-columns:1fr;gap:28px;margin-top:20px}
   .home-section{padding:60px 6vw}
-  .journey-lede{font-size:16px;line-height:1.6;max-width:46ch}
+  .journey-lede{line-height:1.6}
   .journey-eyebrow{font-size:11px;margin-bottom:24px}
   .journey-cta{font-size:11px;gap:18px}
 }
@@ -419,8 +422,8 @@
 /* Shared editorial rhythm across the full site. */
 main:focus{outline:none}
 .subpage .nav{background:var(--asphalt);color:var(--bone);border-color:var(--line)}
-.subpage .nav-cta{background:var(--bone);color:var(--ink)}
-.subpage .nav-toggle{color:var(--bone);border-color:var(--line)}
+.subpage .nav-cta{background:var(--clay);color:#fff}
+.subpage .nav-toggle{color:var(--ink);border-color:rgba(17,17,17,.25)}
 .subpage .nav-links,.subpage .nav-links a{border-color:var(--line)}
 .nav-links{gap:20px}
 .nav-links a{font-size:12px;letter-spacing:.035em;min-height:44px;display:flex;align-items:center;position:relative;opacity:1}
@@ -433,19 +436,19 @@ main:focus{outline:none}
 .sub-hero h1{max-width:24ch;font-size:clamp(3rem,5.8vw,5.5rem);line-height:1.02;letter-spacing:-.055em;font-weight:800;text-wrap:balance}
 .sub-hero h1 em{color:var(--bone)}
 @supports(-webkit-text-stroke:1px currentColor){.sub-hero h1 em{color:transparent;-webkit-text-stroke:2px var(--bone);font-weight:800}}
-.sub-lede{font-size:18px;line-height:1.65;max-width:62ch;opacity:1;color:#ddd7ca;margin-top:24px}
+.sub-lede{font-size:18px;line-height:1.65;max-width:62ch;opacity:1;color:#d7d7d7;margin-top:24px}
 .subpage--form .sub-hero{padding-top:44px;padding-bottom:44px}
 .subpage--form .sub-hero h1{font-size:clamp(2.8rem,4.8vw,4.75rem)}
 .subpage--article .sub-hero h1{max-width:25ch;font-size:clamp(2.4rem,4.5vw,4.5rem);line-height:1.12}
 .sub-body{padding:56px 6vw 88px}
 .sub-grid{grid-template-columns:minmax(0,1fr) minmax(260px,320px);gap:5vw;max-width:1400px}
 .sub-main,.sub-rail,.af,.af-field,.qa-field{min-width:0}
-.sub-trust{margin:0 0 36px;padding-bottom:24px;border-bottom:1px solid rgba(28,28,27,.2);font-size:12px;opacity:1;color:var(--stone);line-height:1.6;letter-spacing:.055em}
+.sub-trust{margin:0 0 36px;padding-bottom:24px;border-bottom:1px solid rgba(28,28,28,.2);font-size:12px;opacity:1;color:var(--stone);line-height:1.6;letter-spacing:.055em}
 .step p,.card p,.prose,.prose--legal,.post-body,.post-card p,.sub-caveat,.post-callout,.contact-email{font-size:16px;line-height:1.75;opacity:1}
 .step-n,.sub-num{font-size:12px}
 .card{padding:28px;border-radius:0;border-width:1px 0 0;background:transparent}
 .card h2,.card h3{font-size:23px;line-height:1.2;letter-spacing:-.035em;margin:0 0 14px}
-.card--cta{background:var(--bone-dim);border:1px solid rgba(28,28,27,.25);position:static;padding:28px}
+.card--cta{background:var(--bone-dim);border:1px solid rgba(28,28,28,.25);position:static;padding:28px}
 
 /* ─── KNOW BEFORE YOU GO — preneto sa naslovne 2026-09-06 (Faza 6) ──────────────
    ⚠️ MAIN-ov `.kbyg-*` grid NIJE prenet. Sekcija koristi `.sub-3up` i `.card` koje stranica
@@ -457,7 +460,7 @@ main:focus{outline:none}
 .kbyg-lead{margin:0 0 8px;max-width:34ch;font-size:clamp(1.15rem,2vw,1.6rem);line-height:1.25;letter-spacing:-.035em;text-wrap:balance}
 .kbyg-ask{margin:18px 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep);opacity:1}
 .kbyg-questions{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:10px;font-size:15px;line-height:1.65}
-.kbyg-mods{margin-top:44px;padding-top:28px;border-top:1px solid rgba(28,28,27,.2)}
+.kbyg-mods{margin-top:44px;padding-top:28px;border-top:1px solid rgba(28,28,28,.2)}
 .kbyg-mods-lead{margin:0 0 20px;font-size:16px;font-weight:700;letter-spacing:-.02em}
 .kbyg-mods dl{margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
 .kbyg-mod dt{margin:0 0 10px;font-size:12px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-deep)}
@@ -470,12 +473,12 @@ main:focus{outline:none}
 .rail-steps li{padding-left:5px}
 .rail-steps li::marker{color:var(--clay-mid);font-size:13px;font-weight:700}
 .form-heading{margin-bottom:28px}
-.form-heading h2{font-size:26px;letter-spacing:-.03em;margin:0 0 10px}
+.form-heading h2{font-size:26px;letter-spacing:-.03em;margin:0 0 10px;font-weight:800;font-style:italic}
 .form-heading p{font-size:16px;line-height:1.65;margin:0;color:var(--stone);max-width:60ch}
 .af{max-width:none;position:relative;gap:28px}
 .af-row{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
 .af-field label,.qa-field label{font-size:14px;text-transform:none;letter-spacing:0;opacity:1;line-height:1.5;font-weight:700}
-.af-field input,.af-field select,.af-field textarea{width:100%;min-width:0;min-height:52px;border-radius:4px;background:#fffcf5;border-color:#7c8274}
+.af-field input,.af-field select,.af-field textarea{width:100%;min-width:0;min-height:52px;border-radius:4px;background:#fcfcfc;border-color:#808080}
 .af-field select{padding-right:30px}
 .af-field textarea{min-height:100px}
 .field-hint{font-size:13px;line-height:1.5;letter-spacing:0;text-transform:none;opacity:1;color:var(--stone)}
@@ -483,8 +486,7 @@ main:focus{outline:none}
 .af-submit,.qa-submit{font-size:13px;min-height:56px;letter-spacing:.08em}
 .qa{grid-template-columns:minmax(160px,1fr) minmax(150px,1fr) minmax(150px,1fr) auto;align-items:start;gap:24px}
 .qa-field{min-width:0}
-.qa-field input{min-width:0;min-height:52px;border-color:#8d9386}
-.qa .field-hint{color:#d8d5c9}
+.qa-field input{min-width:0;min-height:52px;border-color:#8a8a8a}
 .qa-submit{margin-top:30px}
 .qa-copy{padding-top:24px}
 .qa .consent{grid-row:auto}
@@ -493,8 +495,8 @@ main:focus{outline:none}
 .form-error a{display:inline-block;padding:8px 0}
 .af .form-error{color:#942b14}
 .form-done p{font-size:16px;opacity:1}
-.consent{border-radius:4px;border-color:#7c8274}
-.consent--compact{border-color:#8d9386}
+.consent{border-radius:4px;border-color:#808080}
+.consent--compact{border-color:#919191}
 .consent span{font-size:14px;line-height:1.65}
 .af-field:has(select) label{min-height:42px}
 .contact-direct{display:flex;justify-content:space-between;align-items:center;gap:24px;max-width:1100px}
@@ -502,23 +504,23 @@ main:focus{outline:none}
 .contact-number{display:inline-block;font-size:clamp(30px,4vw,54px);letter-spacing:-.04em;font-weight:700;padding:4px 0}
 .contact-number:hover{text-decoration:underline;text-underline-offset:6px}
 .contact-email{overflow-wrap:anywhere}
-.contact-callback{margin-top:48px;padding-top:36px;border-top:1px solid rgba(28,28,27,.25)}
-.contact-callback>h2{font-size:30px;letter-spacing:-.035em;margin:0 0 10px}
+.contact-callback{margin-top:48px;padding-top:36px;border-top:1px solid rgba(28,28,28,.25)}
+.contact-callback>h2{font-size:30px;letter-spacing:-.03em;margin:0 0 10px;font-weight:800;font-style:italic}
 .contact-callback>p{font-size:16px;line-height:1.7;margin:0 0 28px}
 .contact-quick{border-radius:0;color:var(--bone)}
 .contact-quick .qa{max-width:none;padding:28px}
 .contact-quick .form-nojs{padding:28px}
-.page-next{display:flex;align-items:center;flex-wrap:wrap;gap:20px 32px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(28,28,27,.25)}
+.page-next{display:flex;align-items:center;flex-wrap:wrap;gap:20px 32px;margin-top:56px;padding-top:28px;border-top:1px solid rgba(28,28,28,.25)}
 .page-next p{font-size:20px;line-height:1.4;margin:0;letter-spacing:-.02em}
 .prose{max-width:68ch;font-size:18px;gap:24px}
 .prose--legal{font-size:16px;max-width:76ch}
 .prose--legal h2{font-size:24px}
 .prose a{text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
 .post-list{max-width:1300px;gap:0}
-.post-card{border:0;border-top:1px solid rgba(28,28,27,.3);border-radius:0;background:transparent;padding:32px 0;display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,2fr);gap:12px 40px}
+.post-card{border:0;border-top:1px solid rgba(28,28,28,.3);border-radius:0;background:transparent;padding:32px 0;display:grid;grid-template-columns:minmax(180px,.7fr) minmax(0,2fr);gap:12px 40px}
 .post-meta{font-size:12px;letter-spacing:.02em;opacity:1;color:var(--stone);line-height:1.7}
 .post-card .post-meta{grid-row:1/4;flex-direction:column;align-items:flex-start;gap:16px}
-.post-tag{font-size:12px;letter-spacing:.05em;color:#704120;border-color:#9b8c70;opacity:1}
+.post-tag{font-size:12px;letter-spacing:.05em;color:#494949;border-color:#8d8d8d;opacity:1}
 .post-card h2{font-size:clamp(24px,2.6vw,36px);line-height:1.2;margin:0;letter-spacing:-.035em}
 .post-card h2 a:hover{text-decoration:underline;text-underline-offset:5px}
 .post-card p{display:block;overflow:visible;max-width:65ch;color:var(--stone)}
@@ -562,9 +564,9 @@ main:focus{outline:none}
 .error-page{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;min-height:100vh;min-height:100svh;max-width:760px;margin:0 auto;padding:8vh 6vw}
 .error-page .eyebrow{margin:0 0 20px;font-size:10px;font-weight:700;letter-spacing:.3em;color:var(--clay-deep)}
 .error-page h1{margin:0;font-size:clamp(2rem,5vw,3.6rem);line-height:1.02;letter-spacing:-.045em;font-weight:850}
-.error-page h1 em{font-style:normal;font-weight:500;color:rgba(28,28,27,.62)}
+.error-page h1 em{font-style:normal;font-weight:500;color:rgba(28,28,28,.62)}
 @supports (-webkit-text-stroke: 1px currentColor){
-  .error-page h1 em{color:transparent;-webkit-text-stroke:2px rgba(28,28,27,.6);font-weight:800}
+  .error-page h1 em{color:transparent;-webkit-text-stroke:2px rgba(28,28,28,.6);font-weight:800}
 }
 .error-page .sub-lede{margin:26px 0 0;max-width:56ch}
 .error-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:34px}
@@ -574,7 +576,7 @@ main:focus{outline:none}
 
 /* Traka na vrhu umesto punog ekrana: na prerenderovanim rutama pun overlay bi
    pravio bljesak umesto da resava problem. */
-.route-loading{position:fixed;z-index:90;left:0;right:0;top:0;height:2px;background:rgba(28,28,27,.12);overflow:hidden}
+.route-loading{position:fixed;z-index:90;left:0;right:0;top:0;height:2px;background:rgba(28,28,28,.12);overflow:hidden}
 .route-loading-bar{display:block;width:38%;height:100%;background:var(--clay);animation:route-slide 1.05s ease-in-out infinite}
 @keyframes route-slide{0%{transform:translateX(-105%)}100%{transform:translateX(365%)}}
 @media(prefers-reduced-motion:reduce){
@@ -614,7 +616,7 @@ main:focus{outline:none}
 
    Nijedna nova vrednost: `--bone-dim` podloga, `--clay-mid` labele, `--stone` telo,
    `rgba(28,28,27,.22)` linija — ista alfa koju `.home-steps li` vec koristi. */
-.home-pay{background:var(--asphalt);color:var(--bone)}
+.home-pay{--bone:#111111;--line:rgba(17,17,17,.14);background:#fff;color:var(--ink);border-top:1px solid rgba(17,17,17,.1)}
 .home-pay h2{font-size:clamp(23px,2.2vw,31px);line-height:1.2;letter-spacing:-.03em;margin:26px 0 0}
 .pay-ledger{display:grid;grid-template-columns:minmax(170px,.42fr) 1fr;gap:4vw;align-items:start;margin-top:38px}
 .pay-figure{margin:0}
@@ -628,7 +630,7 @@ main:focus{outline:none}
 .pay-rows dt{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--clay-light);padding-top:6px}
 .pay-rows dd{margin:0}
 .pay-rows dd b{display:block;font-size:22px;line-height:1.2;letter-spacing:-.025em;color:var(--bone)}
-.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:#e3ded1}
+.pay-rows dd span{display:block;margin-top:8px;font-size:16px;line-height:1.7;color:#3d3d3d}
 
 /* ⚠️ Dva lokalna preloma, jer ih dvokolonski ledger stvarno trazi — `.home-section`
    nasledjuje padding i skalu naslova, ali ne i broj kolona. Tacke su postojece
@@ -725,7 +727,7 @@ main:focus{outline:none}
 /* „What we don't do." — nasledjuje `.home-steps`, menja samo kolonu labele.
    `min-width` postoji da se „WE DON'T" i „WE DO" ne razidju, pa tekstualna
    kolona ostaje poravnata niz celu listu. */
-.home-guard-list li>span{min-width:92px;font-weight:700;color:#81807b}
+.home-guard-list li>span{min-width:92px;font-weight:700;color:#808080}
 .home-guard-list li>span.is-do{color:var(--clay-mid)}
 
 @media(max-width:720px){
@@ -759,17 +761,17 @@ main:focus{outline:none}
    samo od sebe daje svetlu liniju. Deklaracija stoji kao mreza: ako neko ikad skine
    `data-line` sa ove dve, staticna ivica se vraca i mora se vratiti U SVETLOJ boji, inace
    je tamna ivica na tamnoj podlozi — nevidljiva, i nijedna kapija to ne meri (L8). */
-.home-guard{background:var(--asphalt);color:var(--bone);border-top-color:var(--line)}
+.home-guard{--bone:#111111;--line:rgba(17,17,17,.14);background:#fff;color:var(--ink);border-top:1px solid rgba(17,17,17,.1)}
 .home-guard h2 em{-webkit-text-stroke-color:var(--bone)}
 .home-guard .home-kicker{color:var(--clay-light)}
 /* Telesni tekst: `#e3ded1` je vec „telo na forestu" u ovom fajlu (`.journey-lede`),
    ne nova vrednost. Preboj ide ovde jer je `.home-steps p` deljen sa `process`-om,
    koji ostaje krem — deljeni selektor se ne dira, dodaje se uzi. */
-.home-guard p{color:#e3ded1}
+.home-guard p{color:#3d3d3d}
 .home-guard .home-steps li,.home-guard .home-steps li:first-child{border-color:var(--line)}
 /* WE DON'T se prigusuje, WE DO nosi clay — ista podela kao na kremu, drugim sredstvom.
    `opacity` umesto nove rgba vrednosti: fajl to vec radi (`.qa-lede`, `.consent-body`). */
-.home-guard-list li>span{color:var(--bone);opacity:.5}
+.home-guard-list li>span{color:var(--bone);opacity:.65}
 .home-guard-list li>span.is-do{color:var(--clay-light);opacity:1}
 
 /* ─── CONSENT BANER ───────────────────────────────────────────────────────────
@@ -787,8 +789,8 @@ main:focus{outline:none}
 .consent-panel .btn{font-family:inherit;cursor:pointer;border-width:1px;border-style:solid}
 .consent-panel .btn-primary{background:var(--bone);color:var(--ink);border-color:var(--bone)}
 .consent-panel .btn-primary:hover,.consent-panel .btn-primary:focus-visible{background:#fff}
-.consent-panel .btn-ghost{background:transparent;color:var(--bone);border-color:rgba(241,231,213,.5)}
-.consent-panel .btn-ghost:hover,.consent-panel .btn-ghost:focus-visible{background:rgba(241,231,213,.1)}
+.consent-panel .btn-ghost{background:transparent;color:var(--bone);border-color:rgba(232,232,232,.5)}
+.consent-panel .btn-ghost:hover,.consent-panel .btn-ghost:focus-visible{background:rgba(232,232,232,.1)}
 
 /* „Choose what to allow" je trece po vaznosti, pa nije dugme — ali JESTE <button>,
    jer otvara panel a ne vodi nikuda. Izgled prati `.home-text-link`. */
@@ -1001,15 +1003,15 @@ main:focus{outline:none}
    ⚠️ Selektori ovde ne nose zareze unutar `:is()`/`:has()`: census `K1/A` deli selektore po zarezu. */
 .nav-pill{display:none}
 @media(min-width:1025px){
-  .subpage .nav{--glass:rgba(18,19,20,.62);--glass-edge:rgba(241,231,213,.22);--glass-lift:inset 0 1px 0 rgba(255,255,255,.1),0 10px 30px rgba(0,0,0,.18);position:fixed;inset:0;z-index:60;display:block;padding:0;border:0;background:none;pointer-events:none}
+  .subpage .nav{--glass:rgba(19,19,19,.62);--glass-edge:rgba(232,232,232,.22);--glass-lift:inset 0 1px 0 rgba(255,255,255,.1),0 10px 30px rgba(0,0,0,.18);position:fixed;inset:0;z-index:60;display:block;padding:0;border:0;background:none;pointer-events:none}
   .subpage .nav .brand{position:fixed;top:20px;left:20px;height:60px;padding:0 24px 0 12px;border:1px solid var(--glass-edge);border-radius:999px;background:var(--glass);box-shadow:var(--glass-lift);font-size:15px;pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
   .subpage .nav .nav-actions{position:fixed;top:20px;right:20px;height:60px;padding:0 6px 0 24px;gap:18px;border:1px solid var(--glass-edge);border-radius:999px;background:var(--glass);box-shadow:var(--glass-lift);pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4)}
   .subpage .nav .nav-call{opacity:1;font-size:15px}
   .subpage .nav .nav-cta{min-height:48px;padding:0 24px;font-size:13px}
   .subpage .nav .nav-toggle{display:none}
   .subpage .nav .nav-links{position:fixed;top:calc(50% - 75px);right:16px;display:flex;width:64px;height:150px;flex-direction:column;align-items:flex-end;justify-content:center;gap:0;margin:0;padding:0;overflow:hidden;border:1px solid var(--glass-edge);border-radius:32px;background:var(--glass);box-shadow:var(--glass-lift);pointer-events:auto;-webkit-backdrop-filter:blur(18px) saturate(1.4);backdrop-filter:blur(18px) saturate(1.4);transition:top .36s var(--ease-out),width .36s var(--ease-out),height .36s var(--ease-out),border-radius .36s var(--ease-out),background-color .3s ease,border-color .3s ease,box-shadow .36s var(--ease-out)}
-  .subpage .nav:not([data-tone=light]) .nav-links{border-color:rgba(255,255,255,.55);background-color:rgba(241,231,213,.95);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 32px rgba(0,0,0,.35)}
-  .subpage .nav .nav-links a{flex-shrink:0;width:352px;min-height:66px;margin:0 44px 0 0;padding:0;border-bottom:1px solid rgba(241,231,213,.14);color:var(--bone);font-size:30px;font-weight:700;letter-spacing:-.02em;text-transform:none;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease,color .2s ease}
+  .subpage .nav:not([data-tone=light]) .nav-links{border-color:rgba(255,255,255,.55);background-color:rgba(232,232,232,.95);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 12px 32px rgba(0,0,0,.35)}
+  .subpage .nav .nav-links a{flex-shrink:0;width:352px;min-height:66px;margin:0 44px 0 0;padding:0;border-bottom:1px solid rgba(232,232,232,.14);color:var(--bone);font-size:30px;font-weight:700;letter-spacing:-.02em;text-transform:none;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s ease,color .2s ease}
   .subpage .nav .nav-links a:last-child{border-bottom:0}
   .subpage .nav .nav-links a::after{display:none}
   .subpage .nav .nav-links a:hover,.subpage .nav .nav-links a[aria-current=page]{color:var(--clay-light)}
@@ -1038,24 +1040,34 @@ main:focus{outline:none}
   .subpage .nav-pill{top:calc(50% - 66px);right:8px;width:52px;height:132px;gap:8px;border-radius:26px;font-size:11px}
 }
 
-/* ─── TTI1 — obican staticni heroj naslovne (2026-09-23) ─────────────────────────
-   Zamenjuje 3D scenu; pravila scene (`.journey`, `.journey-stage/-photo/-canvas/-shade/-story/-beat/-tools`) i
-   pokreta (`html.js-motion ... .is-in`) obrisana su u istom batchu, jer ih je `K1/B` prijavio kao mrtve. Fotografija je ista
-   `hero-01-night` koja je bila rezerva scene; preliv sleva drzi tekst citljivim. Tipografija naslova je
-   prepisana sa `.journey h1`, da naslovna izgleda isto kao i do sada, samo bez scene. */
-.home-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(820px,calc(100svh - 80px));padding:140px 6vw 96px;background:var(--asphalt);color:var(--bone);overflow:hidden}
+/* ─── Heroj naslovne ──────────────────────────────────────────────────────────────
+   TTI1 (2026-09-23) je zamenio 3D scenu staticnim herojem. TTI4 (2026-09-24): Pavlova slika terminala (vozac s ledja,
+   redovi kamiona, crvena kabina) preko celog heroja; tamni preliv sleva nosi beli naslov. Sunce na slici stoji iza
+   „answers.", pa je preliv jak do ~40% sirine -- izmereno: drugi red naslova najmanje 4,2:1 i na najsvetlijim tackama.
+   Na telefonu tekst ne ide preko vozaca: slika je traka na vrhu, tekst ispod na belom. */
+.home-hero{position:relative;isolation:isolate;display:flex;align-items:center;min-height:min(780px,calc(100svh - 70px));padding:96px max(24px,calc((100% - 1200px)/2)) 104px;background:#1a1a1a;color:#fff;overflow:hidden}
 .home-hero-photo{position:absolute;inset:0;z-index:-2}
-.home-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:65% center}
-.home-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--asphalt) 0%,rgba(18,19,20,.78) 38%,rgba(18,19,20,.15) 78%),linear-gradient(0deg,var(--asphalt) 0%,transparent 30%)}
-.home-hero-copy{max-width:720px}
-.home-hero h1{font-size:clamp(48px,6.4vw,108px);line-height:.98;letter-spacing:-.065em;font-weight:800;margin:0;max-width:13ch}
+.home-hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:62% 55%}
+.home-hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(10,10,10,.88) 0%,rgba(10,10,10,.78) 36%,rgba(10,10,10,.38) 56%,rgba(10,10,10,0) 74%)}
+.home-hero-copy{max-width:620px}
+.home-hero h1{font-size:clamp(46px,5.6vw,92px);line-height:.98;letter-spacing:-.03em;font-weight:800;font-style:italic;margin:0;max-width:14ch}
 .home-hero h1 em{font-weight:500;font-style:normal;color:inherit}
 @supports(-webkit-text-stroke:1px currentColor){.home-hero h1 em{color:transparent;-webkit-text-stroke:2px var(--bone);font-weight:800}}
 @media(forced-colors:active){.home-hero h1 em{-webkit-text-fill-color:CanvasText;-webkit-text-stroke:0;color:CanvasText}}
+/* Tablet: tekst zauzima veci deo sirine i prilazi svetlom delu slike -- izmereno na 800 px nadnaslov 3,9:1, pa preliv
+   ide dalje udesno. */
+@media(min-width:768px) and (max-width:1024px){.home-hero::after{background:linear-gradient(90deg,rgba(10,10,10,.9) 0%,rgba(10,10,10,.84) 50%,rgba(10,10,10,.5) 74%,rgba(10,10,10,.12) 100%)}}
 @media(max-width:767px){
-  .home-hero{align-items:flex-end;min-height:calc(100svh - 64px);padding:120px 20px 48px}
-  .home-hero::after{background:linear-gradient(0deg,var(--asphalt) 10%,rgba(18,19,20,.72) 55%,rgba(18,19,20,.3) 100%)}
-  .home-hero h1{font-size:clamp(38px,10.5vw,56px);max-width:14ch}
+  .home-hero{display:block;min-height:0;padding:0 0 44px;background:#fff;color:var(--ink)}
+  .home-hero-photo{display:block;position:relative;inset:auto;z-index:auto;height:360px}
+  .home-hero-photo img{object-position:70% 45%}
+  .home-hero::after{display:none}
+  .home-hero-copy{padding:28px 20px 0}
+  .home-hero h1{font-size:clamp(42px,11.5vw,62px)}
+  .journey-eyebrow{color:var(--clay)}
+  .journey-lede{font-size:17px;color:#333}
+  .journey-call{color:var(--ink)}
+  .journey-reassure{color:#4a4a4a}
 }
 /* TTI1: bez telefona mobilna traka ima dve akcije (Email + Apply). */
 .mobar--two{grid-template-columns:1fr 1.3fr}
@@ -1066,7 +1078,7 @@ main:focus{outline:none}
    Isproban u kopiji van repoa kao pravac „B": tamna gornja traka sa linkovima, tamno zaglavlje sa fotografijom,
    pun tekst u naslovima, siri raspored, kartice, tamno podnozje. Prefiks `html:root` (0,1,1) je namerno jaci od
    pravila iz RD4 (staklena pilula), koja ostaju iznad nepromenjena -- ovde ih samo nadjacavamo, ne brisemo. */
-html:root{--pg:var(--bone);--hd-bg:var(--asphalt);--hd-fg:var(--bone);--hd-em:var(--clay-light);--hd-lede:#d9d3c6;--nv-bg:var(--asphalt);--nv-fg:var(--bone);--nv-line:rgba(241,231,213,.14);--card:#fffdf8;--card-line:rgba(28,28,27,.14);--card-shadow:0 1px 2px rgba(28,28,27,.05);--muted:#4b4a47;--btn:var(--ink);--btn-fg:var(--bone);--btn-hover:var(--clay-deep)}
+html:root{--pg:#f5f5f4;--hd-bg:var(--asphalt);--hd-fg:var(--bone);--hd-em:var(--clay);--hd-lede:#3d3d3d;--nv-bg:#fff;--nv-fg:var(--ink);--nv-line:rgba(17,17,17,.1);--card:#ffffff;--card-line:rgba(28,28,28,.14);--card-shadow:0 1px 2px rgba(28,28,28,.05);--muted:#4a4a4a;--btn:var(--clay);--btn-fg:#fff;--btn-hover:var(--clay-deep)}
 
 html:root .subpage{background:var(--pg)}
 
@@ -1086,20 +1098,20 @@ html:root .subpage .nav{background:var(--nv-bg);color:var(--nv-fg);border-bottom
 }
 
 /* Zaglavlje podstranice */
-html:root .sub-hero{padding:72px max(24px,calc((100% - 1200px)/2)) 64px;background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.72) 62%,rgba(18,19,20,.35) 100%),url(/images/hero-01-night.jpg) 80% 55%/cover no-repeat var(--asphalt);color:var(--hd-fg);border-bottom:0}
-html:root .sub-hero .eyebrow{font-size:13px;letter-spacing:.16em;color:var(--hd-em);margin-bottom:18px}
-html:root .sub-hero h1{font-size:clamp(2.5rem,4.6vw,4.4rem);line-height:1.05;letter-spacing:-.04em;font-weight:800;max-width:22ch}
+html:root .sub-hero{padding:72px max(24px,calc((100% - 1200px)/2)) 64px;background:#fff;color:var(--ink);border-bottom:4px solid var(--clay)}
+html:root .sub-hero .eyebrow{font-size:13px;font-weight:800;font-style:italic;letter-spacing:.16em;color:var(--hd-em);margin-bottom:18px}
+html:root .sub-hero h1{font-size:clamp(2.5rem,4.6vw,4.4rem);line-height:1.05;letter-spacing:-.03em;font-weight:800;font-style:italic;max-width:22ch}
 html:root .sub-hero h1 em{color:var(--hd-em);-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
 html:root .sub-lede{font-size:19px;line-height:1.6;color:var(--hd-lede);max-width:60ch}
 
 /* Telo: sira kolona, jedna numeracija, veci tekst */
 html:root .sub-body{max-width:1248px;margin:0 auto;padding:64px 24px 104px}
 html:root .sub-grid{grid-template-columns:minmax(0,1fr) 340px;gap:56px;max-width:none}
-html:root .sub-trust{margin:0 0 48px;padding:0 0 24px;font-size:13px;letter-spacing:.06em;color:var(--muted);opacity:1;border-bottom:1px solid rgba(28,28,27,.12)}
+html:root .sub-trust{margin:0 0 48px;padding:0 0 24px;font-size:13px;letter-spacing:.06em;color:var(--muted);opacity:1;border-bottom:1px solid rgba(28,28,28,.12)}
 html:root .sub-head .sub-num,
 html:root .sub-3up .sub-section .sub-num{display:none}
 html:root .sub-head{border:0;padding:0;margin-bottom:24px}
-html:root .sub-head h2{font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:800;letter-spacing:-.035em}
+html:root .sub-head h2{font-size:clamp(1.7rem,2.6vw,2.3rem);font-weight:800;font-style:italic;letter-spacing:-.03em}
 html:root .sub-section{margin-bottom:80px}
 html:root .sub-section > p,
 html:root .prose,
@@ -1115,11 +1127,11 @@ html:root .card{padding:28px;border:1px solid var(--card-line);border-radius:16p
 html:root .card h2,
 html:root .card h3{font-size:21px;font-weight:800}
 html:root .card p{font-size:16px;opacity:1;color:var(--muted)}
-html:root .card--cta{top:96px;background:var(--asphalt);color:var(--bone);border-color:transparent}
+html:root .card--cta{--bone:#111111;top:96px;background:#fff;color:var(--ink);border:1px solid var(--card-line);border-top:4px solid var(--clay)}
 html:root .card--cta p,
-html:root .card--cta .rail-steps{color:#d9d3c6}
-html:root .card--cta .btn-ghost{border-color:rgba(241,231,213,.4);color:var(--bone)}
-html:root .card--cta .btn-primary{background:var(--bone);color:var(--ink)}
+html:root .card--cta .rail-steps{color:#3d3d3d}
+html:root .card--cta .btn-ghost{border-color:rgba(17,17,17,.3);color:var(--ink)}
+html:root .card--cta .btn-primary{background:var(--clay);color:#fff}
 html:root .sub-caveat{border-radius:0 12px 12px 0;font-size:16px}
 html:root .kbyg-questions{font-size:16px}
 html:root .btn{font-size:13px;letter-spacing:.08em;padding:15px 24px}
@@ -1138,35 +1150,30 @@ html:root .contact-direct{padding:32px;border:1px solid var(--card-line);border-
 html:root .sub-3up .sub-section{margin:0;padding:24px;border-radius:14px;background:var(--card);border:1px solid var(--card-line)}
 html:root .sub-3up .sub-section h2{font-size:19px;font-weight:800;margin:0 0 8px}
 html:root .contact-callback{margin-top:56px;padding:0;border:0}
-html:root .contact-quick{border-radius:18px;overflow:hidden}
+html:root .contact-quick{--bone:#111111;--line:rgba(17,17,17,.14);border-radius:18px;overflow:hidden;background:#fff;color:var(--ink);border:1px solid var(--card-line)}
 html:root .page-next{padding:28px 32px;border-radius:18px;background:var(--card);border:1px solid var(--card-line)}
 @media(max-width:1024px){html:root .sub-grid{grid-template-columns:1fr}}
 @media(max-width:767px){
-  html:root .sub-hero{padding:48px 20px 44px;background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-01-night-mobile.jpg) 70% 40%/cover no-repeat var(--asphalt)}
+  html:root .sub-hero{padding:48px 20px 44px}
   html:root .sub-hero h1{font-size:clamp(2.2rem,9vw,3rem)}
   html:root .sub-body{padding:40px 20px 88px}
   html:root .steps,
   html:root .post-list{grid-template-columns:1fr}
 }
 /* Podnozje: B i C tamno, A belo */
-html:root .foot h2{color:var(--clay-light)}
-html:root .foot-tag{color:#c9c2b5;opacity:1}
-html:root .foot-legal{color:#b9b2a5;border-top-color:var(--line)}
+html:root .foot h2{color:var(--clay-deep)}
+html:root .foot-tag{color:#4a4a4a;opacity:1}
+html:root .foot-legal{color:#4a4a4a;border-top-color:var(--line)}
 /* Pokret: blago podizanje pri skrolu (samo uz JS i bez reduced-motion) */
 @media(prefers-reduced-motion:no-preference){
   .rv{opacity:0;transform:translateY(18px);transition:opacity .6s var(--ease-out),transform .6s var(--ease-out)}
   .rv.rv-in{opacity:1;transform:none}
   html:root .post-card,html:root .sub-3up .sub-section{transition:opacity .6s var(--ease-out),transform .6s var(--ease-out),box-shadow .25s ease}
-  html:root .post-card:hover,html:root .sub-3up .sub-section:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(28,28,27,.1)}
+  html:root .post-card:hover,html:root .sub-3up .sub-section:hover{transform:translateY(-3px);box-shadow:0 12px 30px rgba(28,28,28,.1)}
 }
 
-/* Fotografija u zaglavlju po vrsti stranice: obicne -- vozac za volanom, forme -- kamion u izlasku sunca, clanci -- noc. */
-html:root .subpage--form .sub-hero{background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.72) 62%,rgba(18,19,20,.3) 100%),url(/images/hero-03-sunrise.jpg) 75% 32%/cover no-repeat var(--asphalt)}
-html:root .subpage--default .sub-hero{background:linear-gradient(90deg,var(--asphalt) 0%,var(--asphalt) 38%,rgba(18,19,20,.7) 62%,rgba(18,19,20,.25) 100%),url(/images/hero-02-dawn.jpg) 80% 45%/cover no-repeat var(--asphalt)}
-@media(max-width:767px){
-  html:root .subpage--form .sub-hero{background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-03-sunrise-mobile.jpg) 70% 30%/cover no-repeat var(--asphalt)}
-  html:root .subpage--default .sub-hero{background:linear-gradient(0deg,var(--asphalt) 30%,rgba(18,19,20,.7)),url(/images/hero-02-dawn-mobile.jpg) 70% 40%/cover no-repeat var(--asphalt)}
-}
+/* TTI4: fotografije po vrsti stranice (vozac, izlazak sunca, noc) su uklonjene -- zaglavlje podstranice je belo, samo
+   tekst, sa crvenom linijom ispod (Pavle 2026-09-24: tamne slike „se ne uklapaju" u svetao sajt). */
 /* Traka navigacije je sada u toku strane: tastatura i otvoren meni ne smeju da je vrate u panel iz RD4. */
 @media(min-width:1025px){
   html:root .subpage .nav .nav-links.is-open,
@@ -1175,7 +1182,7 @@ html:root .subpage--default .sub-hero{background:linear-gradient(90deg,var(--asp
   html:root [id]{scroll-margin-top:88px}
 }
 /* Naslovna i podnozje: isto tamno podnozje svuda; od zavrsnog poziva ga deli linija. */
-html:root .foot{background:var(--asphalt);color:var(--bone);border-top:1px solid var(--line)}
+html:root .foot{--line:rgba(17,17,17,.14);background:#f1f1f0;color:var(--ink);border-top:4px solid var(--clay)}
 /* Ulaz zaglavlja: cist CSS na ucitavanju (bez JS-a i bez kapije), blag i kratak. */
 @media(prefers-reduced-motion:no-preference){
   html:root .sub-hero>*,html:root .home-hero-copy>*{animation:motion-rise .8s var(--ease-out) both}
@@ -1183,7 +1190,7 @@ html:root .foot{background:var(--asphalt);color:var(--bone);border-top:1px solid
   html:root .sub-hero>:nth-child(n+3),html:root .home-hero-copy>:nth-child(n+3){animation-delay:.16s}
 }
 /* Naslovna: i tamo pun tekst umesto obrisa -- na svetlim sekcijama tamna glina, na tamnim svetla. */
-html:root .home-hero h1 em{color:var(--clay-light);-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
+html:root .home-hero h1 em{color:#ff6a70;-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;font-weight:800}
 html:root .home-section h2 em{-webkit-text-stroke:0;-webkit-text-fill-color:currentColor;color:var(--clay-deep);font-weight:800}
 html:root .home-pay h2 em,html:root .home-guard h2 em,html:root .home-close h2 em{color:var(--clay-light)}
 /* TTI3: logo firme (krug sa crvenim „TTI") umesto znaka „TTI" iz TTI1. Ime pored ostaje -- na 44 px „RECRUITING" u
@@ -1193,3 +1200,11 @@ html:root .home-pay h2 em,html:root .home-guard h2 em,html:root .home-close h2 e
 @media(max-width:767px){.nav .brand-logo{width:38px;height:38px}}
 /* TTI3: nadnaslov u tamnoj bocnoj kartici -- tamna crvena na asfaltu se ne cita; svetla crvena 5,4:1. */
 html:root .card--cta .rail-eyebrow{color:var(--clay-light)!important}
+
+/* ═══ TTI4 — identitet loga (Pavle 2026-09-24): sve svetlo, tamnija crvena, heroj sa slikom terminala ═══════════
+   Izbor je pao na poredjenju u kopiji van repoa. Vrednosti su spojene u postojeca pravila gde isti selektor vec
+   postoji; ovde stoji samo ono sto nema gde drugde. */
+html:root .brand>span{font-style:italic;letter-spacing:.08em}
+/* Na telefonu je naslov na belom, pa drugi red dobija tamnocrvenu (pravilo `html:root .home-hero h1 em` iznad nosi
+   svetliju crvenu za tekst preko slike). */
+@media(max-width:767px){html:root .home-hero h1 em{color:var(--clay)}}

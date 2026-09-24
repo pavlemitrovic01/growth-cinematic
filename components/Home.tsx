@@ -23,11 +23,12 @@ export default function Home() {
         {/*
           TTI1 (2026-09-23): obican staticni heroj umesto 3D scene. Tekst je prvo poglavlje stare scene, doslovno;
           ostala tri poglavlja su otpala („20+ Partner carriers" vise nije na naslovnoj, `$0` nosi sekcija naplate).
+          TTI4 (2026-09-24): Pavlova slika terminala, jedna za sve sirine -- na telefonu je traka iznad teksta, pa isti
+          kadar radi i tamo (CSS bira isecak).
         */}
         <section className="home-hero" aria-labelledby="hero-heading">
           <picture className="home-hero-photo">
-            <source media="(max-width: 767px)" srcSet="/images/hero-01-night-mobile.jpg" />
-            <img src="/images/hero-01-night.jpg" alt="" width="1672" height="941" fetchPriority="high" />
+            <img src="/images/hero-04-terminal.jpg" alt="" width="1536" height="1024" fetchPriority="high" />
           </picture>
           <div className="home-hero-copy">
             <p className="journey-eyebrow">CDL-A RECRUITING / YOUR ROAD FORWARD</p>

@@ -573,6 +573,6 @@ test('TTI1 — naslovna bez 3D scene: staticni heroj sa fotografijom', async () 
   assert.ok(!html.includes('journey-canvas') && !/class="journey[ "]/.test(html), 'naslovna ne sme imati markup 3D scene');
   const hero = html.search(/<section[^>]*class="home-hero[ "]/);
   assert.ok(hero >= 0, 'heroj `home-hero` ne postoji');
-  assert.ok(html.indexOf('/images/hero-01-night.jpg', hero) > hero, 'heroj mora imati fotografiju');
+  assert.ok(html.indexOf('/images/hero-04-terminal.jpg', hero) > hero, 'heroj mora imati fotografiju');
   assert.ok(html.indexOf('<h1', hero) > hero, '<h1> mora biti u heroju');
 });
