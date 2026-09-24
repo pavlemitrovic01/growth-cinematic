@@ -68,6 +68,22 @@
 
 ## ZATVORENO
 
+### `TTI4-LOOK` — sajt u identitetu loga: sve svetlo, tamnija crvena, heroj sa slikom terminala · 2026-09-24
+- **Pavle:** *„treba prilagoditi i ostatak sajta logo-u i generalno TTI-u"*. Izbori sa poređenja u kopiji van repoa:
+  - **sve svetlo** (varijanta 2 od tri) — posle *„ne bih crno i mracno"* i snimka tamnog heroja (*„bas i ne izgleda
+    dobro"*); crno-bele fotografije odbačene istom rečenicom;
+  - **crvena tamnija** — *„crvena je malo prejaka"* → varijanta 1 od četiri: `#b81920` na istim mestima (naslovi
+    zadržavaju crveni drugi red); logo zadržava svoju crvenu;
+  - **heroj A** — Pavlova slika napravljena u ChatGPT-u (vozač s leđa, redovi kamiona na terminalu u zoru, crvena
+    kabina; *„ovo je vec bolja prica"*), beli naslov na tamnom prelivu sleva; taman naslov na belom prelivu (B) odbačen.
+    Na telefonu slika je traka iznad teksta.
+- **Odbačeno usput** (da se ne nudi ponovo): postojeće tamne fotografije u okviru (*„apsolutno ne uklapa"*), prazni
+  kadrovi „kamion na putu" (*„previse je prazno samo jedan ... kamion"*), kompozicija sa karticama procesa umesto
+  slike (*„ne svidja mi se"*), zaglavlja bez ikakve slike na naslovnoj.
+- **Posledice:** podstranice imaju belo zaglavlje samo sa tekstom; šest starih fotografija (`hero-01`–`hero-03`, sa
+  mobilnim verzijama) obrisano u `TTI4` — time je zatvoreno i otvoreno pitanje iz „Hero ostaje 3D scena" ispod.
+- ⚠️ Slika je široka 1536 px; uvećana verzija (~3000 px) je kasnija zamena jednog fajla.
+
 ### `TTI-IME` — običan sajt pod imenom TTIrecruiting, isporuka isti dan · 2026-09-23
 - **Pavle:** *„stani sve ovo treba da prepravimo u najobicniji recruiting sajt koji isporucujemo danas menjamo ime
   firme u ttirecruiting kupili smo domen ttirecruiting.us mail je info@ttirecruiting.us"*.
@@ -321,8 +337,9 @@ CTA, custom cursor-a, paper grain-a. Nema deljenja teksta na slova.
 ### Hero ostaje 3D scena · 2026-09-08
 Fotografije u hero **ne idu** — kamion, pokret i izlazak sunca već postoje u sceni; fotografija
 je tamo **samo fallback**.
-- ⚠️ **Otvoreno pitanje, ne zadatak:** `public/images/` ima šest fotografija; `hero-02-dawn` i
-  `hero-03-sunrise` su **neiskorišćene**. Da li i gde idu drugde **nije odlučeno**.
+- ~~Otvoreno pitanje: šest fotografija u `public/images/`, `hero-02-dawn` i `hero-03-sunrise` neiskorišćene.~~
+  **Zatvoreno u `TTI4` (2026-09-24):** korišćene su u zaglavljima podstranica (`TTI2`), pa su sve obrisane kad je sajt
+  postao svetao — vidi `TTI4-LOOK`.
 
 ### Redosled: dizajn i pokret ispred Resenda · 2026-09-08
 Sajt je funkcionalno kompletan ali vizuelno „skelet". Dva nezavisna pregleda pala su na isti

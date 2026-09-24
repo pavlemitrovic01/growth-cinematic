@@ -6,6 +6,41 @@
 
 ---
 
+## `TTI4` — Sajt u identitetu loga: sve svetlo, tamnija crvena, heroj sa slikom terminala · 2026-09-24
+
+**Changed files:** `app/globals.css` · `components/Home.tsx` · `app/global-error.tsx` · `tests/rendered-html.test.mjs` ·
+`public/images/hero-04-terminal.jpg` (nov) · `public/images/hero-01-night.jpg`, `hero-01-night-mobile.jpg`,
+`hero-02-dawn.jpg`, `hero-02-dawn-mobile.jpg`, `hero-03-sunrise.jpg`, `hero-03-sunrise-mobile.jpg` (obrisani) —
+implementacija `9ce51c0`; close: `batches/TTI4.md`, `DECISIONS.md` (`TTI4-LOOK`), `STATE.md`, ovaj `LOG.md`,
+`ROADMAP.md`. **Grana:** `tti4-identitet` (sa `master` `91bc9d3`) · **Tier:** STANDARD + `manual`.
+
+Pravac biran na poredjenju u kopiji van repoa: crno-bele fotografije odbacene (*„ne bih crno i mracno"*), zatim **sve
+svetlo** (2 od 3), **crvena `#b81920`** (1 od 4, *„crvena je malo prejaka"*) i **heroj A** — Pavlova slika iz ChatGPT-a
+(*„ovo je vec bolja prica"*) preko celog heroja, beli naslov na tamnom prelivu. Usput odbaceno: tamne slike u okviru,
+prazni kadrovi „kamion na putu", kompozicija sa karticama. Prenos: `neutral.py` na repo `globals.css` (osnova proverena
+bajt po bajt protiv kopije), pa 52 zamene koje spajaju vrednosti u postojeca pravila; `K1/A` ostaje 139.
+
+**VERIFICATION** (lokalno, `next start`, PID 13444, `meri se: http://localhost:3000`): `quick` exit 0 · `typecheck`
+exit 0 · `test` exit 0, 135/135 · `full` exit 0 · `verify` exit 0, 14 + 13 · `rendered` exit 0, 21/21. Test fotografije
+u heroju: slika sklonjena → 20/21, exit 1 → vraceno → 21/21. Kontrast (skripta van repoa, `LESSONS` L8): 14 ruta ×
+1440/390, 1738 tekstova, 0 pada, 0 tamnih podloga; preko slike 1440/1024/800 najmanje 4,25:1. ⚠️ Provera je prvo vracala
+cistu nulu jer je regex u stringu izgubio escape (`L24`) i sve boje su bile NaN — otkriveno namernim prekrsajem pre
+nego sto je nula prijavljena. Ispravljena cetiri defekta iz odobrenog pregleda (tri kontrasta + preliv na tabletu).
+Poredjenje piksela sa pregledom: 10 snimaka, razlike samo na svesnim odstupanjima (krug strelice na dugmetu forme,
+naslov na telefonu 44,9 umesto 46 px, popravke kontrasta). **`manual`:** Pavle pregledao build (snimak FAQ sekcije),
+*„moze, radicemo close pa tek onda posle dodati sliku ako dogovorimo"*; telefon i otvoren meni nije posebno potvrdio.
+
+**SCOPE DRIFT:** nema — 14 stvarno izmenjenih fajlova, svi u manifestu; `__tests__/globals-css.test.js` iz manifesta
+nije menjan (census izmeren 139).
+
+**Poznato, van batcha:** traka za kolacice je i dalje tamna sa crvenim tekstom slabog kontrasta (`--clay-light` je sada
+ista crvena) — ugasena dok je ugasena analitika; srediti pre paljenja. Slika heroja je siroka 1536 px (meka na Retini).
+
+**NEXT STEP:** release na Pavlovu rec (spajanje u `master` + push); zatim, ako se dogovori, FAQ na naslovnoj (dve kolone
+ili slika) kao zaseban mali batch; pa domen/DNS/Resend/env.
+
+---
+
 ## non-batch(workflow) — predaja sesije: `TTI4` predlog čeka „idi" · 2026-09-24
 
 **Changed files:** `workflow/STATE.md` · ovaj `LOG.md`

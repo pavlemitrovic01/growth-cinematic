@@ -7,43 +7,38 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **`TTI4` — ostatak sajta u identitetu loga** (Pavle 2026-09-24: *„treba prilagoditi i ostatak sajta
-  logo-u i generalno TTI-u"*). Predlog je prikazan (danas | predlog, naslovna/How it works/Apply), **čeka Pavlovo „idi"**
-  ili izbacivanje neke tačke: (1) krem i topla siva → bela i neutralna siva, (2) fotografije crno-bele, (3) naslovi u
-  masnom kurzivu kao „TTI", (4) crvena dugmad sa belim tekstom (i APPLY NOW, forme), (5) crvena linija ispod zaglavlja i
-  iznad podnožja. Tekst, forme i raspored isti. Plan: STANDARD + `manual`, grana `tti4-identitet`, EXPECTED
-  `app/globals.css` · `app/global-error.tsx` · `__tests__/globals-css.test.js` + workflow fajlovi. Isproban u kopiji van
-  repoa: `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/app` (prekidač nije potreban — kopija je ceo predlog; `tti4-preview` u `.claude/launch.json`, port 3100),
-  transformacija boja `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/neutral.py` (sve ne-crvene boje van komentara → ista svetlina u sivoj), poređenje
-  `C:/Users/Klemenca/AppData/Local/Temp/claude/C--dev-growth-cinematic/7537b05b-f2f0-4a56-8bb1-d7d247c616f5/scratchpad/tti4/shots/cmp.jpg`. ⚠️ Pri prenosu u repo **spojiti** pravila sa postojećim `html:root .sub-hero`, `.foot`,
-  `.btn-primary`, `.card--cta .btn-primary` umesto dopisivanja (census `K1/A`); `global-error.tsx` ima boje upisane u kod.
-  Posle toga — domen i mejl za `TTI1`, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
+- **Sledeće:** **release `TTI4`** (spajanje `tti4-identitet` u `master` + push) — čeka Pavlovu reč. Zatim, **ako se
+  dogovori**, FAQ sekcija na naslovnoj: desna polovina je prazna (lista ograničena na 900 px); agentova preporuka su dve
+  kolone kao sekcija 01 (samo CSS), slika tek posle toga kao zaseban mali batch (Pavle: *„pa tek onda posle dodati sliku
+  ako dogovorimo"*). Posle toga — domen i mejl za `TTI1`, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
   `CNAME www → cname.vercel-dns.com`, **MX GoDaddy pošte se ne dira**) i Resend domen `ttirecruiting.us` radi Pavle;
   Vercel domen + env (`NEXT_PUBLIC_SITE_URL`, `LEAD_NOTIFICATION_EMAIL`, `LEAD_FROM_EMAIL` posle potvrde Resend-a)
   radi agent uz Pavlovo „da"; zatim `verify` + `rendered` na `ttirecruiting.us` i probna prijava. Google indeks:
   Pavle *„moze a i ne mora"* — ostaje `noindex` dok ne kaže (ako da, `rendered` test za `noindex` se menja).
   Kinematski kolosek (`RD5`, `T1b`, `M2c`–`M6`, `RD8`) je **napušten** (`TTI-IME`). Ostatak lanca lansiranja —
   `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
-- **Poslednji završen:** **`TTI3`** (2026-09-24, `9c83a2e`) — **Logo firme i crveni akcenti**: crveni „TTI" u krugu
-  u navigaciji, podnožju, faviconu, ikonici na telefonu, JSON-LD-u i slici za deljenje; `--clay*` nose crvenu iz loga
-  (`#e2111a` / `#b10713`). Kapije lokalno sve exit 0; Pavle: *„da za test, manual pass pushuj"*. Spojen i pušen
-  2026-09-24 (`9747839..6091a5b`); build živ u 01:08, **deploy nije meren** (odloženo do domena).
-- **Pretposlednji:** **`TTI2`** (2026-09-23, `9d19efa`) — **Lepše podstranice**: obična gornja navigacija sa
-  linkovima, tamno zaglavlje sa fotografijom (obične strane — vozač, forme — izlazak sunca, članci — noć), pun tekst u
-  naslovima i na naslovnoj, veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret (`Reveal.tsx`; bez
-  JS-a ništa skriveno). Forme netaknute. Kapije lokalno sve exit 0; Pavle: *„manual pass spoji pushuj"*. Spojen i pušen
-  2026-09-23 (`9523a66..553c902`); build živ u 15:28, **deploy nije meren** (odloženo do domena).
+- **Poslednji završen:** **`TTI4`** (2026-09-24, `9ce51c0`) — **Sajt u identitetu loga**: sve svetlo, crvena `#b81920`,
+  naslovi u kurzivu, crvena dugmad; heroj sa Pavlovom slikom terminala (`hero-04-terminal.jpg`, beli naslov na tamnom
+  prelivu; na telefonu slika iznad teksta); podstranice bez fotografija, šest starih slika obrisano (`TTI4-LOOK`).
+  Kapije lokalno sve exit 0; kontrast izmeren na 14 ruta (0 pada); Pavle: *„moze, radicemo close"*. **Nije spojen ni
+  pušen.** ⚠️ Slika je široka 1536 px (meka na Retini) — uvećana verzija je zamena jednog fajla. ⚠️ Traka za kolačiće
+  (ugašena) ostala je tamna sa slabim crvenim tekstom — srediti pre paljenja analitike.
+- **Pretposlednji:** **`TTI3`** (2026-09-24, `9c83a2e`) — **Logo firme i crveni akcenti** u navigaciji, podnožju,
+  faviconu, ikonici, JSON-LD-u i slici za deljenje. Spojen i pušen 2026-09-24 (`9747839..6091a5b`); **deploy nije meren**.
 - ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
   uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`TTI1` običan sajt pod imenom TTIrecruiting — spojen i pušen 2026-09-23, `RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`TTI2` lepše podstranice — spojen i pušen 2026-09-23, `TTI1` običan sajt pod imenom TTIrecruiting — spojen i pušen 2026-09-23, `RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).
 
 ## Git
 
+- `TTI4` zatvoren na grani **`tti4-identitet`** (sa `master` `91bc9d3`; implementacija `9ce51c0` + close commit) —
+  **nije spojen ni pušen**; čeka Pavlov release. `master` je i dalje 1 commit ispred `origin/master` (`91bc9d3`, predaja
+  sesije).
 - `TTI3` (`9747839..6091a5b`, implementacija `9c83a2e`) spojen fast-forward-om i pušen 2026-09-24 (Pavle: „manual pass
   pushuj"). **Deploy nije meren**; potvrđeno samo da vercel.app služi logo i crveni CSS (01:08:38).
 - `TTI2` (`9523a66..553c902`, implementacija `9d19efa`) spojen fast-forward-om i pušen 2026-09-23 (Pavle: „manual pass
