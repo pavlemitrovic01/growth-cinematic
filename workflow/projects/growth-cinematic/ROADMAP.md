@@ -103,14 +103,14 @@ kapije je **decision point**, ne prepreka.
 | ID | Posao | Tier | Status |
 |---|---|---|---|
 | `A1` | Analitika + paljenje consent kapije (idu **zajedno**, ne odvojeno) | STRICT | OPEN |
-| `V1` | Selidba Vercel projekta sa ličnog Hobby naloga na tim | STRICT | OPEN |
+| `V1` | Selidba Vercel projekta sa ličnog Hobby naloga na tim | STRICT | **odbačen** 2026-09-24 — Pavle: ostaje Hobby, prihvaćen rizik (`V1-HOBBY`) |
 | `P1` | Lighthouse na hostingu + 3D hero na pravom telefonu | LEAN | OPEN |
 | `X1` | Odluka o prelasku — **tek kad postoje brojke** | — | čeka `A1` |
 
 ✅ **`R1` zatvoren 2026-09-13** — lanac forma → Neon → Resend → inbox dokazan merenjem (`503 → 200`
 na deploy-u, mejl potvrđen u inbox-u). Sa „poslednji" prebačen na „prvi" Pavlovom odlukom
-2026-09-12: jedina nedokazana karika je rizik, ne rad. **Ostatak lanca lansiranja: `V1` i pravni
-tekstovi advokatu.**
+2026-09-12: jedina nedokazana karika je rizik, ne rad. **Ostatak lanca lansiranja: domen i mejl, pa pravni
+tekstovi advokatu** (`V1` odbačen 2026-09-24, `V1-HOBBY`).
 
 Nalaz iz `R1` — prijave sa starog i novog sajta se u inbox-u ne razlikuju (isti pošiljalac, isti
 naslov) — **Pavle 2026-09-13: nebitno, stari sajt uskoro ide offline.** Ne radi se.

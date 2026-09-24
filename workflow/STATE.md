@@ -15,7 +15,7 @@
   radi agent uz Pavlovo „da"; zatim `verify` + `rendered` na `ttirecruiting.us` i probna prijava. Google indeks:
   Pavle *„moze a i ne mora"* — ostaje `noindex` dok ne kaže (ako da, `rendered` test za `noindex` se menja).
   Kinematski kolosek (`RD5`, `T1b`, `M2c`–`M6`, `RD8`) je **napušten** (`TTI-IME`). Ostatak lanca lansiranja —
-  `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
+  pravni tekstovi advokatu (`LEG-1`, `LEG-2`); `V1` odbačen (Pavle: ostaje Hobby, `V1-HOBBY`).
 - **Poslednji završen:** **`TTI5`** (2026-09-24, `c477068`) — **Prijava u prozoru**: „Start your application" u heroju
   otvara `<dialog>` sa punom prijavom (ista kao `/apply`), bez JS-a link na `/apply`; `ApplyForm`, API i pristanak
   nedirnuti (`TTI5-LOOK`). Kapije sve exit 0 (`rendered` 22/22, nov test oboren pa vraćen); repo = pregled, 0% piksela;
@@ -129,8 +129,9 @@
   preusmerenje (preporuka: 301 na `ttirecruiting.us`) radi Pavle; ovaj projekat MAIN ne dira.
 - ⚠️ **Obaveštenje o prijavi stiže na `info@ttirecruiting.us` tek kad Resend potvrdi domen.** Do tada je pošiljalac
   sandbox, koji isporučuje samo na adresu Resend naloga; prijava se i dalje upisuje u bazu.
-- ⚠️ **Vercel projekat je na ličnom Hobby nalogu**, koji je po uslovima nekomercijalan, a sajt
-  prima prave prijave. Selidba na tim = ponovo env promenljive i ponovo Neon integracija (`V1`).
+- ⚠️ **Vercel projekat ostaje na ličnom Hobby nalogu** (Pavle 2026-09-24, `V1-HOBBY`) — po uslovima nekomercijalan, a
+  sajt prima prave prijave; **prihvaćen rizik** da Vercel pauzira projekat. Ako se ikad seli: Pro tim sa jednim članom,
+  pa ponovo env promenljive i Neon integracija.
 - **Sedam OPEN odluka blokira svoj posao** (`RULES §8`): `C-ROK`, `LEG-1`, `LEG-2`, `C52` + tri
   iz audita (`SAP-TEKST`, `CB-API`, `AUD-OBIM`).
   Tri traže **advokata**, ne Pavla i ne agenta.

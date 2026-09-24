@@ -68,6 +68,12 @@
 
 ## ZATVORENO
 
+### `V1-HOBBY` — Vercel projekat ostaje na Hobby nalogu · 2026-09-24
+- **Pavle:** *„Ostaje hobby"* — posle objašnjenja da je Hobby po Vercel uslovima samo za lične, nekomercijalne
+  projekte, da „tim" znači Pro nalog i sa jednim članom (oko 20 USD mesečno po članu — nije provereno sa cenovnika) i
+  da je rizik pauziranje projekta zbog kršenja uslova.
+- **Posledica:** `V1` odbačen; lanac lansiranja ide pravo na domen i mejl. Rizik je Pavlov, svesno prihvaćen.
+
 ### `TTI5-LOOK` — glavno dugme heroja otvara prozor sa punom prijavom · 2026-09-24
 - **Pavle:** *„quick apply kao prozorcic na HERO ... ne da vodi do FORME nego da mozes da kliknes i odma tu da
   apliciras"*; posle pregleda sa brzom formom u prozoru: *„premalo informacija se dobija iz quick apply"*; posle pregleda

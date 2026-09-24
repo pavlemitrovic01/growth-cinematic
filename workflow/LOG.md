@@ -6,6 +6,19 @@
 
 ---
 
+## non-batch(docs) — `V1` odbačen: projekat ostaje na Hobby nalogu · 2026-09-24
+
+**Changed files:** `workflow/projects/growth-cinematic/DECISIONS.md` (`V1-HOBBY`) · `ROADMAP.md` · `CONTEXT.md` ·
+`workflow/STATE.md` · ovaj `LOG.md`
+
+Pavle je pitao zašto tim kad projektom upravlja sam; objašnjeno da je Hobby po Vercel uslovima nekomercijalan, a da je
+„tim" Pro nalog i sa jednim članom. Odgovor: *„Ostaje hobby"*. Zapisano kao prihvaćen rizik; `V1` odbačen, lanac
+lansiranja ide na domen i mejl. Kod nije diran.
+
+**NEXT STEP:** domen i mejl — Pavle radi GoDaddy DNS i Resend domen, agent Vercel domen i env uz Pavlovo „da".
+
+---
+
 ## non-batch(release) — `TTI5` spojen i pušen; build živ · 2026-09-24
 
 **Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`

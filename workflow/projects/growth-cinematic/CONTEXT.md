@@ -7,8 +7,8 @@
 ## Stack
 - **Next.js 16.3.4** (app router) · React 19.2.6 · **TypeScript** · Tailwind 4 · three.js **uklonjen** u `TTI1`
 - **Deploy: Vercel** (`growth-cinematic`, nalog „pavle's projects" — **Hobby**), git-connected:
-  push na `master` triggeruje deploy. ⚠️ Hobby je nekomercijalan po Vercel uslovima; **pre pravog
-  saobraćaja projekat se seli na tim** (`team_lFVUISCch3euonXJEBmOdfiA`).
+  push na `master` triggeruje deploy. ⚠️ Hobby je nekomercijalan po Vercel uslovima; Pavle je
+  2026-09-24 odlučio da ostane (`V1-HOBBY`, prihvaćen rizik pauziranja).
 - **Baza: Neon** (Postgres, `iad1`, Free) kroz Marketplace. `DATABASE_URL` postavljen; migracija
   puštena, obe tabele postoje. ⚠️ Neon ubacio još 15 `DATABASE_*` — **ne dirati**.
 - Git: `master` → `github.com/pavlemitrovic01/growth-cinematic` (privatan). Rad ide po granama.
