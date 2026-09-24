@@ -6,6 +6,25 @@
 
 ---
 
+## non-batch(release) — `TTI4` spojen i pušen; build živ · 2026-09-24
+
+**Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `608a1ee..dd260dd` fast-forward (nosi i non-batch `91bc9d3`), push 14:06:38 (Pavle: *„spoji i pushuj"*).
+Provera da je build živ (nije kapija): u 14:07:38 naslovna na `growth-cinematic.vercel.app` nosi `hero-04-terminal`
+(2×, `hero-01-night` 0); u 14:07:56 CSS `3ji959juzrrru.css` ima `#b81920` 3× i `#ff6a70` 1×, `/images/hero-04-terminal.jpg`
+200 (211 261 B), `/images/hero-01-night.jpg` 404. **Merenje `verify`/`rendered` na deploy-u: NIJE POKRENUTO** —
+odloženo do domena (Pavle, kao kod `TTI1`–`TTI3`).
+
+Sitnica, van batcha: u CSS-u su ostale tri providne nijanse stare crvene (`rgba(226,17,26,.18/.07)` → `#e2111a2e`,
+`#e2111a12`: senka fokusa na poljima forme, podloga `.sub-caveat` i `.post-callout`). Bile su takve i u pregledu; vizuelno
+skoro iste kao `#b81920`, ali za doslednost ih vredi prevesti kad se sledeći put dira CSS.
+
+**NEXT STEP:** FAQ na naslovnoj (dve kolone, pa slika) ako se dogovori; zatim domen/DNS/Resend/env i merenje na
+`ttirecruiting.us`.
+
+---
+
 ## `TTI4` — Sajt u identitetu loga: sve svetlo, tamnija crvena, heroj sa slikom terminala · 2026-09-24
 
 **Changed files:** `app/globals.css` · `components/Home.tsx` · `app/global-error.tsx` · `tests/rendered-html.test.mjs` ·
