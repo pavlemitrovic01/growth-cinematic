@@ -7,7 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **ako se dogovori**, FAQ sekcija na naslovnoj: desna polovina je prazna (lista ograničena na 900 px); agentova preporuka su dve
+- **Sledeće:** **release `TTI5`** (Pavle je već rekao *„moze push"*). Zatim, **ako se dogovori**, FAQ sekcija na naslovnoj: desna polovina je prazna (lista ograničena na 900 px); agentova preporuka su dve
   kolone kao sekcija 01 (samo CSS), slika tek posle toga kao zaseban mali batch (Pavle: *„pa tek onda posle dodati sliku
   ako dogovorimo"*). Posle toga — domen i mejl za `TTI1`, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
   `CNAME www → cname.vercel-dns.com`, **MX GoDaddy pošte se ne dira**) i Resend domen `ttirecruiting.us` radi Pavle;
@@ -16,19 +16,22 @@
   Pavle *„moze a i ne mora"* — ostaje `noindex` dok ne kaže (ako da, `rendered` test za `noindex` se menja).
   Kinematski kolosek (`RD5`, `T1b`, `M2c`–`M6`, `RD8`) je **napušten** (`TTI-IME`). Ostatak lanca lansiranja —
   `V1` (Hobby nalog) i pravni tekstovi advokatu (`LEG-1`, `LEG-2`).
-- **Poslednji završen:** **`TTI4`** (2026-09-24, `9ce51c0`) — **Sajt u identitetu loga**: sve svetlo, crvena `#b81920`,
+- **Poslednji završen:** **`TTI5`** (2026-09-24, `c477068`) — **Prijava u prozoru**: „Start your application" u heroju
+  otvara `<dialog>` sa punom prijavom (ista kao `/apply`), bez JS-a link na `/apply`; `ApplyForm`, API i pristanak
+  nedirnuti (`TTI5-LOOK`). Kapije sve exit 0 (`rendered` 22/22, nov test oboren pa vraćen); repo = pregled, 0% piksela;
+  Pavle: *„Moze to je okej, moze push"*. ⚠️ Slanje iz prozora nije probano (lokalno nema baze; na produkciji je prava
+  prijava).
+- **Pretposlednji:** **`TTI4`** (2026-09-24, `9ce51c0`) — **Sajt u identitetu loga**: sve svetlo, crvena `#b81920`,
   naslovi u kurzivu, crvena dugmad; heroj sa Pavlovom slikom terminala (`hero-04-terminal.jpg`, beli naslov na tamnom
   prelivu; na telefonu slika iznad teksta); podstranice bez fotografija, šest starih slika obrisano (`TTI4-LOOK`).
   Kapije lokalno sve exit 0; kontrast izmeren na 14 ruta (0 pada); Pavle: *„moze, radicemo close"*. Spojen i pušen
   2026-09-24 (`608a1ee..dd260dd`); build živ u 14:07, **deploy nije meren** (odloženo do domena). ⚠️ Slika je široka 1536 px (meka na Retini) — uvećana verzija je zamena jednog fajla. ⚠️ Traka za kolačiće
   (ugašena) ostala je tamna sa slabim crvenim tekstom — srediti pre paljenja analitike.
-- **Pretposlednji:** **`TTI3`** (2026-09-24, `9c83a2e`) — **Logo firme i crveni akcenti** u navigaciji, podnožju,
-  faviconu, ikonici, JSON-LD-u i slici za deljenje. Spojen i pušen 2026-09-24 (`9747839..6091a5b`); **deploy nije meren**.
 - ⚠️ Iz `RD7` (2026-09-22, spojen i pušen): brza forma je živa na kraju naslovne; slanje na produkciji još niko nije
   uradio — prvo pravo slanje je prava prijava.
 - ⚠️ Iz `R1`, i dalje živo: **`LEAD_FROM_EMAIL` je namerno prazan** (bez DKIM-a bi tiho ugasio
   isporuku); **test red ostaje u produkcijskoj bazi** (`TEST verifikacija R1`, `555-010-0199`).
-- Starije (`TTI2` lepše podstranice — spojen i pušen 2026-09-23, `TTI1` običan sajt pod imenom TTIrecruiting — spojen i pušen 2026-09-23, `RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
+- Starije (`TTI3` logo i crveni akcenti — spojen i pušen 2026-09-24, `TTI2` lepše podstranice — spojen i pušen 2026-09-23, `TTI1` običan sajt pod imenom TTIrecruiting — spojen i pušen 2026-09-23, `RD4` navigacija — spojen i pušen 2026-09-23, `RD7` ritam naslovne i `RD17` paleta asfalt — spojeni i pušeni 2026-09-22, `RD16`, `RD15`, `RD13`, `RD14` napušten, `RD3`, `RD11`, `RD12`, `RD10`, `RD2`, `RD1`, `S1`, `T1`, `B1`, `R1`, `K1`, `U1`, `M7`, `M2b`, `M2`, `G2`, `G1`, `M1`, `D1`, `D4`, faze) → `ROADMAP` → `Zatvoreno`,
   manifesti u `batches/` i `docs/STATUS-ARCHIVE.md`. Žive napomene: hero poglavlje **klizi 28 px**
   dok je na punoj vidljivosti (`M7`, prihvaćeno); **`data-reveal` nema nijednog korisnika** (briše
   se u `H1`, odluka nije doneta); **linija je na svetlim sekcijama dvostruko jača** (`L22`).

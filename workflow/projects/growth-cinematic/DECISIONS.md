@@ -68,6 +68,17 @@
 
 ## ZATVORENO
 
+### `TTI5-LOOK` — glavno dugme heroja otvara prozor sa punom prijavom · 2026-09-24
+- **Pavle:** *„quick apply kao prozorcic na HERO ... ne da vodi do FORME nego da mozes da kliknes i odma tu da
+  apliciras"*; posle pregleda sa brzom formom u prozoru: *„premalo informacija se dobija iz quick apply"*; posle pregleda
+  sa punom: *„Moze to je okej, moze push"*.
+- **Odluka:** „Start your application" u heroju otvara `<dialog>` sa **punom** prijavom (ista forma i tekst kao `/apply`);
+  bez JS-a ostaje link na `/apply`. Posebno dugme „Quick apply" odbačeno — radilo bi isto što i glavno.
+- **Zašto puna, a ne proširena brza:** server brzu prijavu proverava samo po imenu i telefonu; dodata polja bi stizala
+  neproverena (`LEAD1/SEC-1`), a proširenje bi diralo API (lock zona). Puna je već potpuno proverena.
+- **Odnos prema `RD7-LOOK`:** brza forma i dalje stoji samo u završnom pozivu (`#get-started`); prozor se otvara tek na
+  klik vozača, pa se telefon ne traži pre nego što vozač sam odluči da aplicira (suština `U2` ostaje).
+
 ### `TTI4-LOOK` — sajt u identitetu loga: sve svetlo, tamnija crvena, heroj sa slikom terminala · 2026-09-24
 - **Pavle:** *„treba prilagoditi i ostatak sajta logo-u i generalno TTI-u"*. Izbori sa poređenja u kopiji van repoa:
   - **sve svetlo** (varijanta 2 od tri) — posle *„ne bih crno i mracno"* i snimka tamnog heroja (*„bas i ne izgleda

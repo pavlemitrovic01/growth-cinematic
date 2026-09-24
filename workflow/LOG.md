@@ -6,6 +6,28 @@
 
 ---
 
+## `TTI5` — Prijava u prozoru: glavno dugme heroja otvara punu prijavu · 2026-09-24
+
+**Changed files:** `components/ApplyDialog.tsx` (nov) · `components/Home.tsx` · `app/globals.css` ·
+`tests/rendered-html.test.mjs` — implementacija `c477068`; close: `batches/TTI5.md`, `DECISIONS.md` (`TTI5-LOOK`),
+`STATE.md`, ovaj `LOG.md`, `ROADMAP.md`. **Grana:** `tti5-prijava-u-prozoru` (sa `master` `1bf90d1`) · **Tier:** STRICT.
+
+Pavle je tražio da se aplicira odmah u heroju. Pregled u kopiji van repoa: prvo dugme „Quick apply" sa brzom formom u
+prozoru (*„premalo informacija"*), pa glavno dugme sa punom prijavom (*„Moze to je okej, moze push"*). Puna, a ne
+proširena brza: server brzu proverava samo po imenu i telefonu (`LEAD1/SEC-1`), pa bi proširenje diralo API.
+
+**VERIFICATION** (lokalno, `next start`, PID 25000, `meri se: http://localhost:3000`): `quick` exit 0 · `typecheck`
+exit 0 · `test` exit 0, 135/135 · `full` exit 0 · `verify` exit 0, 14 + 13 · `rendered` exit 0, 22/22. Nov test `TTI5`
+oboren (brza forma u prozoru → 20/22, exit 1) pa vraćen. Prozor: modal, fokus, zaključan skrol, Esc/×, bez duplih
+`id`-jeva, konzola 0; kontrast u prozoru 20 tekstova, 0 pada. Repo = pregled, 0,000% piksela (heroj i prozor,
+1440/390). **`manual`:** Pavle na istom UI-u u pregledu, *„Moze to je okej, moze push"*. Slanje nije probano.
+
+**SCOPE DRIFT:** nema — 7 fajlova, svi u manifestu; `__tests__/globals-css.test.js` nije menjan (`K1/A` 139).
+
+**NEXT STEP:** release (Pavle: „moze push"); zatim FAQ na naslovnoj ako se dogovori; pa domen/DNS/Resend/env.
+
+---
+
 ## non-batch(release) — `TTI4` spojen i pušen; build živ · 2026-09-24
 
 **Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
