@@ -576,3 +576,30 @@ test('TTI1 — naslovna bez 3D scene: staticni heroj sa fotografijom', async () 
   assert.ok(html.indexOf('/images/hero-04-terminal.jpg', hero) > hero, 'heroj mora imati fotografiju');
   assert.ok(html.indexOf('<h1', hero) > hero, '<h1> mora biti u heroju');
 });
+
+/**
+ * `TTI5` (`TTI5-LOOK`, Pavle 2026-09-24) — glavno dugme heroja otvara prozor sa PUNOM prijavom.
+ *
+ * ⚠️ ZASTO KAPIJA. Tri stvari bi tiho mogle da se pokvare:
+ *  1. Bez JS-a dugme mora ostati pravi link na `/apply` — prozor se otvara skriptom, pa bi `<button>` bez JS-a bio mrtav.
+ *  2. U prozoru mora biti PUNA forma sa pristankom — brza (ime + telefon) je Pavle odbio (*„premalo informacija"*), a
+ *     server dodata polja uz brzu ne proverava (`LEAD1/SEC-1`).
+ *  3. Puna forma sme biti na naslovnoj samo jednom — drugi primerak bi ponovio `af-*` `id`-jeve i pomesao labele.
+ */
+test('TTI5 — heroj: prijava u prozoru, bez JS-a link na /apply', async () => {
+  const html = await (await get('/')).text();
+  const hero = html.search(/<section[^>]*class="home-hero[ "]/);
+  const next = html.search(/<section[^>]*class="home-process[ "]/);
+  assert.ok(hero >= 0 && next > hero, 'heroj i sekcija posle njega moraju postojati');
+  const heroHtml = html.slice(hero, next);
+  assert.ok(/<a[^>]*class="journey-cta"[^>]*href="\/apply"/.test(heroHtml), 'glavno dugme heroja mora biti link na /apply');
+  const dlg = heroHtml.search(/<dialog[^>]*class="apply-dialog"/);
+  assert.ok(dlg >= 0, 'heroj mora imati prozor sa prijavom');
+  const dialogHtml = heroHtml.slice(dlg);
+  for (const id of ['af-first', 'af-email', 'af-cdl', 'af-exp']) {
+    assert.ok(dialogHtml.includes(`id="${id}"`), `u prozoru mora biti puna prijava (nema #${id})`);
+  }
+  assert.ok(dialogHtml.includes('name="tcpaConsent"'), 'prijava u prozoru mora imati pristanak');
+  assert.ok(dialogHtml.includes('action="/api/apply"'), 'prijava u prozoru mora slati na /api/apply');
+  assert.equal((html.match(/id="af-first"/g) || []).length, 1, 'tacno jedna puna forma na naslovnoj');
+});

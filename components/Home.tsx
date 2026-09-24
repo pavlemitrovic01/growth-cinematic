@@ -7,6 +7,7 @@ import MobileBar from './MobileBar';
 import Reveal from './Reveal';
 import ApplyForm from './ApplyForm';
 import Accordion from './Accordion';
+import ApplyDialog from './ApplyDialog';
 import { homeFaqItems } from '@/lib/faq';
 import { HAS_PHONE, PHONE_DISPLAY, PHONE_TEL_HREF } from '@/lib/contact';
 
@@ -25,6 +26,7 @@ export default function Home() {
           ostala tri poglavlja su otpala („20+ Partner carriers" vise nije na naslovnoj, `$0` nosi sekcija naplate).
           TTI4 (2026-09-24): Pavlova slika terminala, jedna za sve sirine -- na telefonu je traka iznad teksta, pa isti
           kadar radi i tamo (CSS bira isecak).
+          TTI5 (2026-09-24): glavno dugme otvara prozor sa punom prijavom (`ApplyDialog`); bez JS-a ostaje link na /apply.
         */}
         <section className="home-hero" aria-labelledby="hero-heading">
           <picture className="home-hero-photo">
@@ -34,7 +36,7 @@ export default function Home() {
             <p className="journey-eyebrow">CDL-A RECRUITING / YOUR ROAD FORWARD</p>
             <h1 id="hero-heading">Your next route.<br /><em>Straight answers.</em></h1>
             <p className="journey-lede">Pay, home time, equipment. Know the details before you commit. We connect CDL-A drivers with partner carriers — free for drivers, always.</p>
-            <div className="journey-actions"><ApplyLink />{HAS_PHONE ? <a className="journey-call" href={PHONE_TEL_HREF}>Or call {PHONE_DISPLAY}</a> : null}</div>
+            <div className="journey-actions"><ApplyDialog />{HAS_PHONE ? <a className="journey-call" href={PHONE_TEL_HREF}>Or call {PHONE_DISPLAY}</a> : null}</div>
             {/*
               PRENETO iz `app/apply/page.tsx:49`, gde je stajalo u bocnoj traci -- dakle vozac
               ga je video TEK POSTO klikne. C53 zabranjuje da dugme obecava bilo sta osim onoga

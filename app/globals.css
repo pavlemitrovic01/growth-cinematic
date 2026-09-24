@@ -1208,3 +1208,20 @@ html:root .brand>span{font-style:italic;letter-spacing:.08em}
 /* Na telefonu je naslov na belom, pa drugi red dobija tamnocrvenu (pravilo `html:root .home-hero h1 em` iznad nosi
    svetliju crvenu za tekst preko slike). */
 @media(max-width:767px){html:root .home-hero h1 em{color:var(--clay)}}
+
+/* ─── TTI5 — prijava u prozoru (Pavle 2026-09-24, `TTI5-LOOK`) ────────────────────────────────────────────────────
+   Glavno dugme heroja otvara `<dialog>` sa punom prijavom. Prozor zivi u DOM-u heroja, ali `showModal()` ga nosi u top
+   layer, pa ga `overflow:hidden` i boje heroja ne diraju; tokeni se lokalno okrecu kao u svetlim sekcijama. Na telefonu
+   izlazi odozdo i skroluje se do dugmeta za slanje. */
+.apply-dialog{--bone:#111111;--line:rgba(17,17,17,.14);position:fixed;width:min(680px,calc(100% - 32px));max-height:calc(100dvh - 48px);margin:auto;padding:34px 34px 30px;overflow:auto;border:0;border-top:4px solid var(--clay);border-radius:20px;background:#fff;color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.35)}
+.apply-dialog::backdrop{background:rgba(10,10,10,.55);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+.apply-dialog-close{position:absolute;top:14px;right:14px;display:grid;place-items:center;width:40px;height:40px;border:0;border-radius:50%;background:#f1f1f0;color:var(--ink);font:inherit;font-size:22px;line-height:1;cursor:pointer}
+.apply-dialog-close:hover,.apply-dialog-close:focus-visible{background:var(--ink);color:#fff}
+.apply-dialog-eyebrow{margin:0 0 10px;font-size:12px;font-weight:800;font-style:italic;letter-spacing:.16em;color:var(--clay)}
+.apply-dialog h2{margin:0 0 10px;padding-right:44px;font-size:34px;line-height:1.05;font-weight:800;font-style:italic;letter-spacing:-.03em}
+.apply-dialog h2 em{color:var(--clay);font-style:italic}
+.apply-dialog-lede{margin:0 0 24px;font-size:16px;line-height:1.6;color:#3d3d3d}
+.apply-dialog .af{max-width:none}
+html:has(.apply-dialog[open]){overflow:hidden}
+@media(max-width:767px){.apply-dialog{width:100%;max-width:100%;margin:auto 0 0;padding:28px 20px 24px;border-radius:20px 20px 0 0;max-height:92dvh}.apply-dialog h2{font-size:28px}}
+@media(prefers-reduced-motion:no-preference){.apply-dialog[open]{animation:apply-dialog-in .3s var(--ease-out)}@keyframes apply-dialog-in{from{opacity:0;transform:translateY(18px)}}}
