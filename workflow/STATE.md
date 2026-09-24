@@ -7,7 +7,7 @@
 
 - **Aktivan projekat:** `growth-cinematic` (`workflow/projects/growth-cinematic/`)
 - **Aktivan batch:** **NONE** — nema OPEN manifesta.
-- **Sledeće:** **release `TTI5`** (Pavle je već rekao *„moze push"*). Zatim, **ako se dogovori**, FAQ sekcija na naslovnoj: desna polovina je prazna (lista ograničena na 900 px); agentova preporuka su dve
+- **Sledeće:** **ako se dogovori**, FAQ sekcija na naslovnoj: desna polovina je prazna (lista ograničena na 900 px); agentova preporuka su dve
   kolone kao sekcija 01 (samo CSS), slika tek posle toga kao zaseban mali batch (Pavle: *„pa tek onda posle dodati sliku
   ako dogovorimo"*). Posle toga — domen i mejl za `TTI1`, kad Pavle kaže (*„kad sve završimo"*): GoDaddy DNS (`A @ → 76.76.21.21`,
   `CNAME www → cname.vercel-dns.com`, **MX GoDaddy pošte se ne dira**) i Resend domen `ttirecruiting.us` radi Pavle;
@@ -19,7 +19,8 @@
 - **Poslednji završen:** **`TTI5`** (2026-09-24, `c477068`) — **Prijava u prozoru**: „Start your application" u heroju
   otvara `<dialog>` sa punom prijavom (ista kao `/apply`), bez JS-a link na `/apply`; `ApplyForm`, API i pristanak
   nedirnuti (`TTI5-LOOK`). Kapije sve exit 0 (`rendered` 22/22, nov test oboren pa vraćen); repo = pregled, 0% piksela;
-  Pavle: *„Moze to je okej, moze push"*. ⚠️ Slanje iz prozora nije probano (lokalno nema baze; na produkciji je prava
+  Pavle: *„Moze to je okej, moze push"*. Spojen i pušen 2026-09-24 (`1bf90d1..b3c191a`); build živ u
+  14:44, **deploy nije meren** (odloženo do domena). ⚠️ Slanje iz prozora nije probano (lokalno nema baze; na produkciji je prava
   prijava).
 - **Pretposlednji:** **`TTI4`** (2026-09-24, `9ce51c0`) — **Sajt u identitetu loga**: sve svetlo, crvena `#b81920`,
   naslovi u kurzivu, crvena dugmad; heroj sa Pavlovom slikom terminala (`hero-04-terminal.jpg`, beli naslov na tamnom
@@ -38,6 +39,8 @@
 
 ## Git
 
+- `TTI5` (`1bf90d1..b3c191a`, implementacija `c477068`) spojen fast-forward-om i pušen 2026-09-24 u 14:43:12
+  (Pavle: „moze push"). **Deploy nije meren**; potvrđeno samo da vercel.app u 14:44 služi `apply-dialog` u HTML-u i CSS-u.
 - `TTI4` (`608a1ee..dd260dd`, implementacija `9ce51c0`; nosi i non-batch `91bc9d3`) spojen fast-forward-om i pušen
   2026-09-24 u 14:06:38 (Pavle: „spoji i pushuj"). **Deploy nije meren**; potvrđeno samo da vercel.app u 14:07:56
   služi `hero-04-terminal` (200, 211 261 B), CSS sa `#b81920` i `#ff6a70`, a `hero-01-night.jpg` 404.
@@ -106,8 +109,8 @@
   build se po sadržaju ne može dokazati, jer push nosi samo dokumente.
 - `K1` (`2aebd07..d5d3ce5`, implementacija `eb2d6d5`) spojen fast-forward-om i pušen 2026-09-12;
   **deploy izmeren protiv njega**, uz nov build potvrđen nestankom mrtvih klasa iz CSS-a.
-- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI4`; origin nosi `M7`, `U1`, `K1`,
-  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2`, `TTI1`, `TTI2`, `TTI3` i `TTI4`.
+- Grana istine **`master`**: jednak `origin/master` posle release zapisa `TTI5`; origin nosi `M7`, `U1`, `K1`,
+  `R1`, `B1`, `T1`, `S1`, `RD1`, `RD2`, `RD10`, `RD12`, `RD11`, `RD3`, `RD13`, `RD15`, `RD16`, `RD17`, `RD7`, `RD4`, `H2`, `TTI1`, `TTI2`, `TTI3`, `TTI4` i `TTI5`.
 - `U1` (`819dd63..6fd1ad2`) i `M7` (`d733178..b60a140`) spojeni fast-forward-om i pušeni
   2026-09-12; **deploy izmeren protiv oba**, uz nov build potvrđen diskriminatorom PRE merenja.
 - `M2b` + zapis audita pušeni 2026-09-11 (census `0/4/9/9`); `M2`, `G1`, `G2` 2026-09-09.
@@ -118,7 +121,7 @@
   `b1-social-slika-kes`, `t1-arial-arimo-drugi-red`, `s1-hero-svetlo`,
   `rd1-naslov-podstranice`, `rd2-kamera-prikolica`, `rd10-izgled-scene`, `rd12-americki-kamion`, `rd11-americki-put`,
   `rd3-svetlo-scene`, `rd13-zora-na-tlu`, `rd15-smena-strana`, `rd16-boja-zavrsnog-kadra`, `rd17-paleta-asfalt`, `rd7-ritam-naslovne`,
-  `tti1-obican-sajt`, `tti2-lepse-podstranice`, `tti3-logo`, `tti4-identitet`.
+  `tti1-obican-sajt`, `tti2-lepse-podstranice`, `tti3-logo`, `tti4-identitet`, `tti5-prijava-u-prozoru`.
 
 ## Žive prepreke
 

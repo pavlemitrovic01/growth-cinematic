@@ -133,7 +133,7 @@ Detalji i obrazloženja → `DECISIONS.md`.
 
 | ID | Posao | Zatvoren |
 |---|---|---|
-| `TTI5` | **Prijava u prozoru** — „Start your application" u heroju otvara prozor sa punom prijavom (ista kao `/apply`), bez JS-a link na `/apply`; `ApplyForm`, API i pristanak nedirnuti; `manual` PASS (pregled + pikseli) | 2026-09-24 |
+| `TTI5` | **Prijava u prozoru** — „Start your application" u heroju otvara prozor sa punom prijavom (ista kao `/apply`), bez JS-a link na `/apply`; `ApplyForm`, API i pristanak nedirnuti; `manual` PASS (pregled + pikseli); spojen i pušen 2026-09-24, build živ, deploy nije meren | 2026-09-24 |
 | `TTI4` | **Sajt u identitetu loga** — sve svetlo, tamnija crvena `#b81920`, naslovi u kurzivu, crvena dugmad; heroj sa Pavlovom slikom terminala (beli naslov na tamnom prelivu, na telefonu slika iznad teksta); podstranice bez fotografija; kontrast izmeren na 14 ruta; `manual` PASS; spojen i pušen 2026-09-24, build živ, deploy nije meren | 2026-09-24 |
 | `TTI3` | **Logo firme i crveni akcenti** — crveni „TTI" u krugu u navigaciji, podnožju, faviconu, ikonici na telefonu, JSON-LD-u i slici za deljenje; `--clay*` nose crvenu iz loga; `manual` PASS; spojen i pušen 2026-09-24, build živ, deploy nije meren | 2026-09-24 |
 | `TTI2` | **Lepše podstranice** — obična gornja navigacija sa linkovima, tamno zaglavlje sa fotografijom po vrsti stranice, pun tekst u naslovima (i na naslovnoj), veća tipografija, širi raspored, kartice, tamno podnožje, blag pokret pri skrolu (`Reveal.tsx`, bez JS-a ništa skriveno); forme netaknute; `manual` PASS; spojen i pušen 2026-09-23, build živ, deploy nije meren | 2026-09-23 |

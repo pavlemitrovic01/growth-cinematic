@@ -6,6 +6,19 @@
 
 ---
 
+## non-batch(release) — `TTI5` spojen i pušen; build živ · 2026-09-24
+
+**Changed files:** `workflow/STATE.md` · `workflow/projects/growth-cinematic/ROADMAP.md` · ovaj `LOG.md`
+
+`master` `1bf90d1..b3c191a` fast-forward, push 14:43:12 (Pavle: *„Moze to je okej, moze push"*). Provera da je build
+živ (nije kapija): u 14:44:08 naslovna na `growth-cinematic.vercel.app` nosi `class="apply-dialog"` 1×, `af-first` 1×,
+`qa-first` 1×, a CSS `apply-dialog-close`. **Merenje `verify`/`rendered` na deploy-u: NIJE POKRENUTO** — odloženo do
+domena. Slanje prijave iz prozora na produkciji nije probano (prava prijava; samo na Pavlovu reč).
+
+**NEXT STEP:** FAQ na naslovnoj ako se dogovori; zatim domen/DNS/Resend/env i merenje na `ttirecruiting.us`.
+
+---
+
 ## `TTI5` — Prijava u prozoru: glavno dugme heroja otvara punu prijavu · 2026-09-24
 
 **Changed files:** `components/ApplyDialog.tsx` (nov) · `components/Home.tsx` · `app/globals.css` ·
